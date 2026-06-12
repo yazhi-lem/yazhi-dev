@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 export default function Hero() {
-  const [theme, setTheme] = useState<"agam" | "puram">("puram");
-  const [language, setLanguage] = useState<"ta" | "en">("ta");
+  const [theme, setTheme] = useState<"agam" | "puram" | "ocean">("puram");
+  const [language, setLanguage] = useState<"ta" | "en" | "both">("ta");
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -24,7 +24,11 @@ export default function Hero() {
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === "agam" ? "puram" : "agam";
+    // Cycle through three themes: puram → agam → ocean → puram
+    const themeOrder: Array<"puram" | "agam" | "ocean"> = ["puram", "agam", "ocean"];
+    const currentIndex = themeOrder.indexOf(theme);
+    const newTheme = themeOrder[(currentIndex + 1) % themeOrder.length];
+
     console.log("🎨 Toggling theme from", theme, "to", newTheme);
 
     // Update state
@@ -52,8 +56,12 @@ export default function Hero() {
   };
 
   const toggleLanguage = () => {
-    const newLang = language === "ta" ? "en" : "ta";
-    console.log("Toggling language from", language, "to", newLang);
+    // Cycle through: ta → en → both → ta
+    const langOrder: Array<"ta" | "en" | "both"> = ["ta", "en", "both"];
+    const currentIndex = langOrder.indexOf(language);
+    const newLang = langOrder[(currentIndex + 1) % langOrder.length];
+
+    console.log("🌐 Toggling language from", language, "to", newLang);
     setLanguage(newLang);
   };
 
@@ -110,9 +118,10 @@ export default function Hero() {
       <div className="absolute top-6 right-6 z-50 flex gap-3">
         {/* Language Toggle */}
         <motion.button
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1 }}
+          key={language}
+          initial={{ opacity: 0, x: 20, scale: 0.8 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ delay: 1, type: "spring" }}
           onClick={toggleLanguage}
           className="px-6 py-3 rounded-full backdrop-blur-sm cursor-pointer group transition-all hover:scale-105"
           style={{
@@ -125,14 +134,8 @@ export default function Hero() {
         >
           <div className="flex items-center gap-2">
             <span className="font-bold text-lg">
-              {language === "ta" ? "த" : "EN"}
+              {language === "ta" ? "த" : language === "en" ? "EN" : "த+EN"}
             </span>
-            <motion.div
-              animate={{ rotate: language === "ta" ? 0 : 180 }}
-              transition={{ duration: 0.3 }}
-            >
-              ⇄
-            </motion.div>
           </div>
         </motion.button>
 
@@ -149,8 +152,8 @@ export default function Hero() {
             color: 'var(--text)',
           }}
         >
-          <span className="tamil-title text-2xl">
-            {theme === "agam" ? "அகம்" : "புறம்"}
+          <span className="tamil-title text-xl">
+            {theme === "agam" ? "அகம்" : theme === "puram" ? "புறம்" : "கடல்"}
           </span>
         </motion.div>
       </div>
@@ -165,13 +168,13 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mb-6"
           style={{
-            fontSize: 'clamp(4rem, 15vw, 14rem)',
+            fontSize: language === "both" ? 'clamp(3.5rem, 12vw, 12rem)' : 'clamp(4rem, 15vw, 14rem)',
             color: 'var(--text)',
-            fontFamily: language === "ta" ? 'var(--font-tamil-display)' : 'inherit',
+            fontFamily: language !== "en" ? 'var(--font-tamil-display)' : 'inherit',
             fontWeight: 900,
           }}
         >
-          {language === "ta" ? "யாழி" : "YAZHI"}
+          {language === "ta" ? "யாழி" : language === "en" ? "YAZHI" : "யாழி • YAZHI"}
         </motion.h1>
 
         {/* Subtitle */}
@@ -182,10 +185,14 @@ export default function Hero() {
           className="text-3xl md:text-5xl mb-4 font-bold"
           style={{
             color: 'var(--accent)',
-            fontFamily: language === "ta" ? 'var(--font-tamil)' : 'inherit'
+            fontFamily: language !== "en" ? 'var(--font-tamil)' : 'inherit'
           }}
         >
-          {language === "ta" ? "தமிழ் செயற்கை நுண்ணறிவு" : "Tamil Artificial Intelligence"}
+          {language === "ta"
+            ? "தமிழ் செயற்கை நுண்ணறிவு"
+            : language === "en"
+            ? "Tamil Artificial Intelligence"
+            : "தமிழ் செயற்கை நுண்ணறிவு • Tamil AI"}
         </motion.p>
 
         <motion.p
@@ -195,10 +202,14 @@ export default function Hero() {
           className="text-xl md:text-2xl mb-12 font-semibold"
           style={{
             color: 'var(--text-soft)',
-            fontFamily: language === "ta" ? 'var(--font-tamil)' : 'inherit'
+            fontFamily: language !== "en" ? 'var(--font-tamil)' : 'inherit'
           }}
         >
-          {language === "ta" ? "அகமும் புறமும்" : "Sovereign AI Model"}
+          {language === "ta"
+            ? "அகமும் புறமும்"
+            : language === "en"
+            ? "Sovereign AI Model"
+            : "அகமும் புறமும் • Sovereign AI"}
         </motion.p>
 
         {/* Philosophy */}

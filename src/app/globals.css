@@ -36,6 +36,16 @@
   --accent-light: #D4A574;
 }
 
+/* கடல் - Deep Ocean (Dark/Blue) */
+:root[data-theme="ocean"] {
+  --bg: #0A1628;
+  --surface: #132337;
+  --text: #E8F1F5;
+  --text-soft: #94B8C8;
+  --accent: #4A9ECC;
+  --accent-light: #6BB5D9;
+}
+
 /* இருள் - Darkness Mode (Optional - only when no theme set) */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
