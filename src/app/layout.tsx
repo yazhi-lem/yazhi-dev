@@ -28,24 +28,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSerifDisplay.variable} ${jost.variable} scroll-smooth`}>
+    <html lang="ta" className={`${dmSerifDisplay.variable} ${jost.variable} scroll-smooth`} data-theme="puram">
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var theme = localStorage.getItem('theme');
-                  if (theme === 'light') {
-                    document.documentElement.classList.add('light');
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700;900&family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-jost bg-ocean-depth text-palm-parchment overflow-x-hidden antialiased transition-colors duration-300">
+      <body className="overflow-x-hidden antialiased">
         <ThemeProvider>
           {children}
         </ThemeProvider>
