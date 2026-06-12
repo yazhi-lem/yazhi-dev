@@ -1,4 +1,3 @@
-import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import AdhanShowcase from "@/components/AdhanShowcase";
 import SangamShowcase from "@/components/SangamShowcase";
@@ -9,7 +8,6 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <main className="relative overflow-hidden">
-      <Navigation />
       <Hero />
       <AdhanShowcase />
       <SangamShowcase />
