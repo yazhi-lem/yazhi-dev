@@ -79,26 +79,146 @@ export default function Hero() {
 
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto text-center">
-        {/* யாழி Logo */}
+        {/* யாழி V-Logo - Three Elements */}
         <motion.div
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ duration: 0.8, type: "spring" }}
           className="mb-8 inline-block"
         >
-          <svg width="120" height="120" viewBox="0 0 120 120">
+          <svg width="140" height="140" viewBox="0 0 140 140">
             <defs>
-              <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: 'var(--accent)' }} />
-                <stop offset="100%" style={{ stopColor: 'var(--accent-light)' }} />
-              </linearGradient>
+              {/* Stone Pattern */}
+              <pattern id="stonePattern" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+                <rect width="8" height="8" fill="#8B7355" />
+                <circle cx="2" cy="2" r="1" fill="#6B5345" opacity="0.5" />
+                <circle cx="6" cy="5" r="0.8" fill="#5B4335" opacity="0.3" />
+              </pattern>
+              <radialGradient id="stoneGrad">
+                <stop offset="0%" stopColor="#A0826D" />
+                <stop offset="100%" stopColor="#5B4335" />
+              </radialGradient>
+
+              {/* Water Ripple */}
+              <radialGradient id="waterGrad">
+                <stop offset="0%" stopColor="#4FC3F7" />
+                <stop offset="50%" stopColor="#29B6F6" />
+                <stop offset="100%" stopColor="#0288D1" />
+              </radialGradient>
+
+              {/* Grass/Nature */}
+              <radialGradient id="grassGrad">
+                <stop offset="0%" stopColor="#8BC34A" />
+                <stop offset="100%" stopColor="#558B2F" />
+              </radialGradient>
+
+              {/* Volcano Smoke */}
+              <radialGradient id="smokeGrad">
+                <stop offset="0%" stopColor="#FF6B35" />
+                <stop offset="40%" stopColor="#BFC0C0" />
+                <stop offset="100%" stopColor="#6C757D" />
+              </radialGradient>
             </defs>
-            <circle cx="60" cy="35" r="15" fill="url(#logoGrad)" />
-            <circle cx="35" cy="75" r="15" fill="url(#logoGrad)" />
-            <circle cx="85" cy="75" r="15" fill="url(#logoGrad)" />
-            <line x1="60" y1="35" x2="35" y2="75" stroke="var(--accent)" strokeWidth="4" />
-            <line x1="60" y1="35" x2="85" y2="75" stroke="var(--accent)" strokeWidth="4" />
-            <line x1="35" y1="75" x2="85" y2="75" stroke="var(--accent)" strokeWidth="4" />
+
+            {/* Top - Small (Volcano Smoke) */}
+            <g>
+              <motion.circle
+                cx="70"
+                cy="30"
+                r="12"
+                fill="url(#smokeGrad)"
+                animate={{ opacity: [0.8, 1, 0.8] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              {/* Smoke wisps */}
+              {[0, 1, 2].map((i) => (
+                <motion.path
+                  key={i}
+                  d={`M ${70 + i * 3 - 3} 30 Q ${70 + i * 2} ${20 - i * 2} ${70 + i * 4 - 6} 15`}
+                  stroke="#BFC0C0"
+                  strokeWidth="1.5"
+                  fill="none"
+                  opacity="0.4"
+                  animate={{
+                    d: [
+                      `M ${70 + i * 3 - 3} 30 Q ${70 + i * 2} ${20 - i * 2} ${70 + i * 4 - 6} 15`,
+                      `M ${70 + i * 3 - 3} 30 Q ${70 + i * 3} ${18 - i * 2} ${70 + i * 3 - 4} 12`,
+                      `M ${70 + i * 3 - 3} 30 Q ${70 + i * 2} ${20 - i * 2} ${70 + i * 4 - 6} 15`,
+                    ],
+                  }}
+                  transition={{ duration: 4, repeat: Infinity, delay: i * 0.5 }}
+                />
+              ))}
+            </g>
+
+            {/* Bottom Left - Large (Stone/Earth) */}
+            <g>
+              <circle cx="35" cy="95" r="22" fill="url(#stoneGrad)" />
+              <circle cx="35" cy="95" r="22" fill="url(#stonePattern)" opacity="0.4" />
+              {/* Stone cracks */}
+              <path d="M 25 95 L 45 95" stroke="#3B2315" strokeWidth="1" opacity="0.6" />
+              <path d="M 35 85 L 38 105" stroke="#3B2315" strokeWidth="0.8" opacity="0.4" />
+            </g>
+
+            {/* Bottom Right - Large (Water) */}
+            <g>
+              <motion.circle
+                cx="105"
+                cy="95"
+                r="22"
+                fill="url(#waterGrad)"
+                animate={{ opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              {/* Water ripples */}
+              {[0, 1, 2].map((i) => (
+                <motion.circle
+                  key={i}
+                  cx="105"
+                  cy="95"
+                  r="22"
+                  fill="none"
+                  stroke="#4FC3F7"
+                  strokeWidth="1"
+                  opacity="0"
+                  animate={{
+                    r: [18, 26],
+                    opacity: [0.6, 0],
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    delay: i * 0.8,
+                  }}
+                />
+              ))}
+            </g>
+
+            {/* Grass blades on water circle */}
+            <g>
+              {[0, 1, 2, 3].map((i) => (
+                <motion.path
+                  key={i}
+                  d={`M ${105 + i * 5 - 7} 95 Q ${105 + i * 5 - 7} 88 ${105 + i * 6 - 9} 82`}
+                  stroke="url(#grassGrad)"
+                  strokeWidth="2"
+                  fill="none"
+                  animate={{
+                    d: [
+                      `M ${105 + i * 5 - 7} 95 Q ${105 + i * 5 - 7} 88 ${105 + i * 6 - 9} 82`,
+                      `M ${105 + i * 5 - 7} 95 Q ${105 + i * 5 - 5} 88 ${105 + i * 6 - 7} 82`,
+                      `M ${105 + i * 5 - 7} 95 Q ${105 + i * 5 - 7} 88 ${105 + i * 6 - 9} 82`,
+                    ],
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, delay: i * 0.3 }}
+                />
+              ))}
+            </g>
+
+            {/* Connecting lines - V shape */}
+            <line x1="70" y1="30" x2="35" y2="95" stroke="var(--accent)" strokeWidth="3" opacity="0.3" />
+            <line x1="70" y1="30" x2="105" y2="95" stroke="var(--accent)" strokeWidth="3" opacity="0.3" />
+            <line x1="35" y1="95" x2="105" y2="95" stroke="var(--accent)" strokeWidth="4" opacity="0.3" />
           </svg>
         </motion.div>
 
