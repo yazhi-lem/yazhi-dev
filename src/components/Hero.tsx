@@ -25,18 +25,30 @@ export default function Hero() {
 
   const toggleTheme = () => {
     const newTheme = theme === "agam" ? "puram" : "agam";
-    console.log("Toggling theme from", theme, "to", newTheme);
+    console.log("🎨 Toggling theme from", theme, "to", newTheme);
 
     // Update state
     setTheme(newTheme);
 
-    // Update DOM attribute
-    document.documentElement.setAttribute("data-theme", newTheme);
+    // Update DOM attribute on html element
+    const html = document.documentElement;
+    html.setAttribute("data-theme", newTheme);
 
-    // Force repaint
-    void document.documentElement.offsetHeight;
+    // Save to localStorage for persistence
+    try {
+      localStorage.setItem("theme", newTheme);
+    } catch (e) {
+      console.error("Failed to save theme to localStorage:", e);
+    }
 
-    console.log("Theme attribute set to:", document.documentElement.getAttribute("data-theme"));
+    // Force style recalculation
+    void html.offsetHeight;
+
+    console.log("✅ Theme updated:", {
+      state: newTheme,
+      attribute: html.getAttribute("data-theme"),
+      computedBg: getComputedStyle(html).getPropertyValue('--bg')
+    });
   };
 
   const toggleLanguage = () => {
@@ -126,9 +138,10 @@ export default function Hero() {
 
         {/* Theme Indicator */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.1 }}
+          key={theme}
+          initial={{ opacity: 0, x: 20, scale: 0.8 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ delay: 1.1, type: "spring" }}
           className="px-6 py-3 rounded-full backdrop-blur-sm"
           style={{
             background: 'var(--surface)',
@@ -145,18 +158,20 @@ export default function Hero() {
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto text-center">
 
-        {/* தமிழ் Title */}
+        {/* Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="tamil-title mb-6"
+          className="mb-6"
           style={{
             fontSize: 'clamp(4rem, 15vw, 14rem)',
             color: 'var(--text)',
+            fontFamily: language === "ta" ? 'var(--font-tamil-display)' : 'inherit',
+            fontWeight: 900,
           }}
         >
-          யாழி
+          {language === "ta" ? "யாழி" : "YAZHI"}
         </motion.h1>
 
         {/* Subtitle */}
@@ -386,21 +401,23 @@ export default function Hero() {
       </div>
 
       {/* Floating Wisdom Quote */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 0.6, 0] }}
-        transition={{ duration: 10, repeat: Infinity, repeatDelay: 5 }}
-        className="absolute top-1/4 right-12 max-w-xs text-right pointer-events-none"
-        style={{ zIndex: 3 }}
-      >
-        <p className="tamil-body text-sm italic" style={{ color: 'var(--accent)' }}>
-          "யாமறிந்த மொழிகளிலே தமிழ்மொழி போல்<br />
-          இனிதாவது எங்கும் காணோம்"
-        </p>
-        <p className="text-xs mt-2 font-semibold" style={{ color: 'var(--text-soft)' }}>
-          - பாரதியார்
-        </p>
-      </motion.div>
+      {language === "ta" && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: [0, 0.6, 0] }}
+          transition={{ duration: 10, repeat: Infinity, repeatDelay: 5 }}
+          className="absolute top-1/4 right-12 max-w-xs text-right pointer-events-none"
+          style={{ zIndex: 3 }}
+        >
+          <p className="tamil-body text-sm italic" style={{ color: 'var(--accent)' }}>
+            "யாமறிந்த மொழிகளிலே தமிழ்மொழி போல்<br />
+            இனிதாவது எங்கும் காணோம்"
+          </p>
+          <p className="text-xs mt-2 font-semibold" style={{ color: 'var(--text-soft)' }}>
+            - பாரதியார்
+          </p>
+        </motion.div>
+      )}
 
       {/* Scroll */}
       <motion.div
