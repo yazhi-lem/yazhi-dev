@@ -5,11 +5,21 @@ import { useState, useEffect } from "react";
 
 export default function Hero() {
   const [theme, setTheme] = useState<"agam" | "puram">("puram");
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Set initial theme on mount
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
+    // Get initial theme from DOM or set default
+    const currentTheme = document.documentElement.getAttribute("data-theme") as "agam" | "puram" || "puram";
+    setTheme(currentTheme);
+    document.documentElement.setAttribute("data-theme", currentTheme);
+
+    // Track mouse position for interactive effects
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === "agam" ? "puram" : "agam";
@@ -22,12 +32,15 @@ export default function Hero() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-6"
       style={{ background: 'var(--bg)' }}
     >
-      {/* Indian Gradient Sphere */}
+      {/* Interactive Gradient Sphere - Click to toggle theme */}
       <motion.div
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
-        className="absolute top-6 left-6 z-50"
+        className="absolute top-6 left-6 z-50 cursor-pointer group"
+        onClick={toggleTheme}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
       >
         <motion.svg
           width="100"
@@ -43,26 +56,42 @@ export default function Hero() {
               <stop offset="70%" stopColor="#138808" stopOpacity="1" />
               <stop offset="100%" stopColor="#000080" stopOpacity="0.8" />
             </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+              <feMerge>
+                <feMergeNode in="coloredBlur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
-          <circle cx="50" cy="50" r="45" fill="url(#indianSphere)" opacity="0.9" />
-          <circle cx="50" cy="50" r="45" fill="none" stroke="var(--accent)" strokeWidth="2" opacity="0.3" />
+          <circle cx="50" cy="50" r="45" fill="url(#indianSphere)" opacity="0.9" filter="url(#glow)" />
+          <circle cx="50" cy="50" r="45" fill="none" stroke="var(--accent)" strokeWidth="2" opacity="0.3"
+            className="group-hover:opacity-100 transition-opacity" />
         </motion.svg>
+        <motion.div
+          className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity"
+          style={{ color: 'var(--accent)' }}
+        >
+          {theme === "agam" ? "புறம்" : "அகம்"}
+        </motion.div>
       </motion.div>
 
-      {/* அகமும் புறமும் Toggle */}
-      <motion.button
-        onClick={toggleTheme}
-        className="absolute top-6 right-6 z-50 px-8 py-3 rounded-full font-bold transition-all hover:scale-105"
+      {/* Theme Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        className="absolute top-6 right-6 z-50 px-6 py-3 rounded-full backdrop-blur-sm"
         style={{
-          background: 'var(--accent)',
-          color: 'var(--bg)',
-          fontFamily: 'var(--font-tamil-display)',
+          background: 'var(--surface)',
+          border: '2px solid var(--accent)',
+          color: 'var(--text)',
         }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
       >
-        {theme === "agam" ? "அகம்" : "புறம்"}
-      </motion.button>
+        <span className="tamil-title text-2xl">
+          {theme === "agam" ? "அகம்" : "புறம்"}
+        </span>
+      </motion.div>
 
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto text-center">
@@ -184,6 +213,89 @@ export default function Hero() {
         </motion.div>
       </div>
 
+      {/* Tamil Constellation - Connected Stars */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20" style={{ zIndex: 1 }}>
+        <defs>
+          <filter id="starGlow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+        {/* Constellation lines */}
+        {[
+          { x1: '20%', y1: '30%', x2: '35%', y2: '25%' },
+          { x1: '35%', y1: '25%', x2: '50%', y2: '35%' },
+          { x1: '50%', y1: '35%', x2: '65%', y2: '28%' },
+          { x1: '65%', y1: '28%', x2: '80%', y2: '40%' },
+          { x1: '20%', y1: '60%', x2: '40%', y2: '70%' },
+          { x1: '40%', y1: '70%', x2: '60%', y2: '65%' },
+          { x1: '60%', y1: '65%', x2: '75%', y2: '75%' },
+        ].map((line, i) => (
+          <motion.line
+            key={i}
+            x1={line.x1}
+            y1={line.y1}
+            x2={line.x2}
+            y2={line.y2}
+            stroke="var(--accent)"
+            strokeWidth="1"
+            opacity="0.3"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 2, delay: i * 0.3 }}
+          />
+        ))}
+        {/* Stars at constellation points */}
+        {['20%,30%', '35%,25%', '50%,35%', '65%,28%', '80%,40%', '20%,60%', '40%,70%', '60%,65%', '75%,75%'].map((pos, i) => {
+          const [x, y] = pos.split(',');
+          return (
+            <motion.circle
+              key={i}
+              cx={x}
+              cy={y}
+              r="3"
+              fill="var(--accent)"
+              filter="url(#starGlow)"
+              animate={{
+                opacity: [0.4, 1, 0.4],
+                r: [3, 4, 3],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                delay: i * 0.4,
+              }}
+            />
+          );
+        })}
+      </svg>
+
+      {/* Interactive Mouse Followers */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 2 }}>
+        {[0, 1, 2, 3, 4].map((i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 rounded-full"
+            style={{
+              background: 'var(--accent)',
+              opacity: 0.3,
+            }}
+            animate={{
+              x: mousePos.x - 600 + i * 100,
+              y: mousePos.y - 300 + i * 50,
+            }}
+            transition={{
+              type: "spring",
+              damping: 20 + i * 5,
+              stiffness: 100 - i * 10,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Decorative Tamil Letters */}
       <div className="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
         {['அ', 'ஆ', 'இ', 'ஈ', 'உ', 'ஊ', 'எ', 'ஏ'].map((letter, i) => (
@@ -209,6 +321,23 @@ export default function Hero() {
           </motion.div>
         ))}
       </div>
+
+      {/* Floating Wisdom Quote */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 0.6, 0] }}
+        transition={{ duration: 10, repeat: Infinity, repeatDelay: 5 }}
+        className="absolute top-1/4 right-12 max-w-xs text-right pointer-events-none"
+        style={{ zIndex: 3 }}
+      >
+        <p className="tamil-body text-sm italic" style={{ color: 'var(--accent)' }}>
+          "யாமறிந்த மொழிகளிலே தமிழ்மொழி போல்<br />
+          இனிதாவது எங்கும் காணோம்"
+        </p>
+        <p className="text-xs mt-2 font-semibold" style={{ color: 'var(--text-soft)' }}>
+          - பாரதியார்
+        </p>
+      </motion.div>
 
       {/* Scroll */}
       <motion.div
