@@ -1,53 +1,48 @@
 @import "tailwindcss";
 
-:root {
-  /* Light mode - High contrast */
-  --soft-cream: #FFFFFF;
-  --pastel-gold: #D4A574;
-  --pastel-coral: #E87461;
-  --pastel-sage: #6B9F7F;
-  --soft-charcoal: #1A1A1A;
-  --pastel-lavender: #9B7EBD;
-  --pastel-mint: #5FA88C;
-  --accent-glow: rgba(212, 165, 116, 0.5);
-
-  /* Legacy names - High contrast */
-  --night-soil: #1A1A1A;
-  --red-clay: #E87461;
-  --turmeric: #D4A574;
-  --palm-parchment: #1A1A1A;
-  --neem-leaf: #6B9F7F;
-  --ocean-depth: #FFFFFF;
+/* Agam (Interior) Theme - Soft, intimate colors */
+:root[data-theme="agam"] {
+  --bg-primary: #FFF8F0;
+  --bg-secondary: #FFF0E6;
+  --text-primary: #1A1A1A;
+  --text-secondary: #4A4A4A;
+  --accent-primary: #D4A574;
+  --accent-secondary: #B8956A;
+  --accent-tertiary: #E8D5C4;
 }
 
-/* Dark mode - Cobalt Deep Ocean */
+/* Puram (Exterior) Theme - Bold, heroic colors */
+:root[data-theme="puram"], :root {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F5;
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --accent-primary: #C17B3D;
+  --accent-secondary: #8B5E3C;
+  --accent-tertiary: #D4A574;
+}
+
+/* Dark mode - Deep Marutham (Agricultural land at night) */
 @media (prefers-color-scheme: dark) {
   :root {
-    --soft-cream: #0A1628;
-    --pastel-gold: #FDB750;
-    --pastel-coral: #FF6B6B;
-    --pastel-sage: #4ECDC4;
-    --soft-charcoal: #E8F4F8;
-    --pastel-lavender: #9D84B7;
-    --pastel-mint: #52B788;
-    --accent-glow: rgba(253, 183, 80, 0.3);
-
-    --night-soil: #E8F4F8;
-    --red-clay: #FF6B6B;
-    --turmeric: #FDB750;
-    --palm-parchment: #E8F4F8;
-    --neem-leaf: #4ECDC4;
-    --ocean-depth: #0A1628;
+    --bg-primary: #0D1B2A;
+    --bg-secondary: #1B263B;
+    --text-primary: #E0E1DD;
+    --text-secondary: #C5C6C4;
+    --accent-primary: #E5B181;
+    --accent-secondary: #C9A961;
+    --accent-tertiary: #8B7355;
   }
 }
 
 @theme {
-  --color-night-soil: var(--night-soil);
-  --color-red-clay: var(--red-clay);
-  --color-turmeric: var(--turmeric);
-  --color-palm-parchment: var(--palm-parchment);
-  --color-neem-leaf: var(--neem-leaf);
-  --color-ocean-depth: var(--ocean-depth);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
 
   --font-dm-serif: var(--font-dm-serif), serif;
   --font-jost: var(--font-jost), sans-serif;
@@ -55,8 +50,9 @@
 
 @layer base {
   body {
-    @apply font-jost antialiased text-palm-parchment;
-    background: var(--soft-cream);
+    @apply font-jost antialiased;
+    background: var(--bg-primary);
+    color: var(--text-primary);
     scroll-behavior: smooth;
     overflow-x: hidden;
   }
@@ -67,110 +63,42 @@
 }
 
 @layer utilities {
-  .glow-text {
-    text-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow);
-  }
-
-  .glass-effect {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .gradient-mesh {
-    background:
-      radial-gradient(at 27% 37%, rgba(245, 158, 11, 0.15) 0px, transparent 50%),
-      radial-gradient(at 97% 21%, rgba(16, 185, 129, 0.1) 0px, transparent 50%),
-      radial-gradient(at 52% 99%, rgba(239, 68, 68, 0.1) 0px, transparent 50%);
+  .theme-transition {
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
 
-/* Modern animations */
+/* Minimal animations */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
 }
 
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 30px rgba(245, 158, 11, 0.4), 0 0 60px rgba(245, 158, 11, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 50px rgba(245, 158, 11, 0.6), 0 0 90px rgba(245, 158, 11, 0.3);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes rise {
+  0% { transform: translateY(0); opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { transform: translateY(-100vh); opacity: 0; }
 }
 
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(245, 158, 11, 0.15) 50%,
-    transparent 100%
-  );
-  background-size: 1000px 100%;
-  animation: shimmer 3s infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
-}
-
-/* Modern scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: var(--bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #F59E0B 0%, #10B981 100%);
+  background: var(--accent-primary);
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #FBBF24 0%, #34D399 100%);
-}
-
-/* Selection */
 ::selection {
-  background: rgba(245, 158, 11, 0.4);
-  color: #FFFFFF;
-}
-
-/* Smooth focus states */
-*:focus-visible {
-  outline: 2px solid rgba(245, 158, 11, 0.6);
-  outline-offset: 2px;
+  background: var(--accent-primary);
+  color: var(--bg-primary);
 }
