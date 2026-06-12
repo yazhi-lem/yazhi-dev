@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+:root {
+  --night-soil: #2B1A0F;
+  --red-clay: #8B5E3C;
+  --turmeric: #C4956A;
+  --palm-parchment: #F0DFC0;
+  --neem-leaf: #4A6741;
+  --ocean-depth: #1a120b;
+  --nav-bg: rgba(26, 18, 11, 0.95);
+  --caustics: rgba(240, 223, 192, 0.05);
+  --bubble-bg: rgba(240, 223, 192, 0.15);
+  --bubble-border: rgba(240, 223, 192, 0.2);
+  --overlay-bg: #2b1a0f;
+  --overlay-blend: multiply;
+  --hero-img-opacity: 0.5;
+}
+
+.light {
+  --night-soil: #3D2B1F;
+  --red-clay: #8B5E3C;
+  --turmeric: #A67B5B;
+  --palm-parchment: #2B1A0F;
+  --neem-leaf: #3D5A35;
+  --ocean-depth: #FDFBF7;
+  --nav-bg: rgba(253, 251, 247, 0.9);
+  --caustics: rgba(74, 55, 40, 0.05);
+  --bubble-bg: rgba(74, 55, 40, 0.08);
+  --bubble-border: rgba(74, 55, 40, 0.1);
+  --overlay-bg: #FDFBF7;
+  --overlay-blend: normal;
+  --hero-img-opacity: 0.15;
+}
+
+@theme {
+  --color-night-soil: var(--night-soil);
+  --color-red-clay: var(--red-clay);
+  --color-turmeric: var(--turmeric);
+  --color-palm-parchment: var(--palm-parchment);
+  --color-neem-leaf: var(--neem-leaf);
+  --color-ocean-depth: var(--ocean-depth);
+
+  --font-dm-serif: var(--font-dm-serif), serif;
+  --font-jost: var(--font-jost), sans-serif;
+}
+
+@layer base {
+  body {
+    @apply font-jost bg-[--color-ocean-depth] text-[--color-palm-parchment];
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  .serif {
+    @apply font-dm-serif;
+  }
+}
+
+@layer utilities {
+  .nav-glass {
+    background: var(--nav-bg);
+    backdrop-filter: blur(30px);
+  }
+
+  .theme-overlay {
+    background-color: var(--overlay-bg);
+    mix-blend-mode: var(--overlay-blend);
+  }
+
+  .text-dense {
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Custom Animations */
+
+.ack-container {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fire-dot {
+  border: 1.5px solid var(--color-turmeric);
+  border-radius: 50%;
+  position: absolute;
+  background: var(--color-night-soil);
+  box-shadow: 0 0 12px var(--color-red-clay), inset 0 0 1px var(--color-turmeric);
+  animation: ayutha-float 8s infinite ease-in-out;
+}
+
+@keyframes ayutha-float {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(1px, -2px);
+  }
+}
+
+.fire-dot:nth-child(1) {
+  width: 14px;
+  height: 14px;
+  bottom: 15px;
+  /* Inverted from top */
+  animation-delay: 0s;
+}
+
+.fire-dot:nth-child(2) {
+  width: 10px;
+  height: 10px;
+  top: 18px;
+  left: 12px;
+  /* Inverted from bottom */
+  animation-delay: -2s;
+}
+
+.fire-dot:nth-child(3) {
+  width: 12px;
+  height: 12px;
+  top: 18px;
+  right: 12px;
+  /* Inverted from bottom */
+  animation-delay: -4s;
+}
+
+.caustics {
+  background: repeating-linear-gradient(45deg, transparent, transparent 10%, var(--caustics) 15%, transparent 20%);
+  animation: move-rays 18s linear infinite;
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+@keyframes move-rays {
+  from {
+    transform: translateX(-15%) translateY(-15%);
+  }
+
+  to {
+    transform: translateX(15%) translateY(15%);
+  }
+}
+
+.bubble {
+  position: absolute;
+  background: var(--bubble-bg);
+  border: 1px solid var(--bubble-border);
+  border-radius: 50%;
+  bottom: -50px;
+  animation: rise 15s infinite ease-in;
+  pointer-events: none;
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.4;
+  }
+
+  80% {
+    opacity: 0.2;
+  }
+
+  100% {
+    transform: translateY(-130vh) translateX(80px);
+    opacity: 0;
+  }
+}
