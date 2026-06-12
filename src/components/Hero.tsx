@@ -31,16 +31,16 @@ export default function Hero() {
     <section
       ref={containerRef}
       className="relative h-screen flex items-center justify-center overflow-hidden"
-      style={{ background: '#FEF9F3' }}
+      style={{ background: '#FFFFFF' }}
     >
       {/* Animated gradient mesh background */}
       <motion.div
         className="absolute inset-0"
         style={{
           background: `radial-gradient(circle at ${50 + mousePosition.x}% ${50 + mousePosition.y}%,
-            rgba(245, 217, 159, 0.3) 0%,
-            rgba(255, 181, 167, 0.2) 25%,
-            rgba(197, 225, 165, 0.15) 50%,
+            rgba(212, 165, 116, 0.25) 0%,
+            rgba(232, 116, 97, 0.15) 25%,
+            rgba(107, 159, 127, 0.12) 50%,
             transparent 70%)`,
         }}
       />
@@ -58,7 +58,7 @@ export default function Hero() {
             ease: "linear",
           }}
           style={{
-            background: 'radial-gradient(circle, rgba(245, 217, 159, 0.3) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(212, 165, 116, 0.35) 0%, transparent 70%)',
           }}
           className="absolute top-0 left-1/4 w-[800px] h-[800px] rounded-full blur-3xl"
         />
@@ -73,7 +73,7 @@ export default function Hero() {
             ease: "linear",
           }}
           style={{
-            background: 'radial-gradient(circle, rgba(197, 225, 165, 0.3) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(107, 159, 127, 0.35) 0%, transparent 70%)',
           }}
           className="absolute bottom-0 right-1/4 w-[900px] h-[900px] rounded-full blur-3xl"
         />
@@ -88,7 +88,7 @@ export default function Hero() {
             ease: "linear",
           }}
           style={{
-            background: 'radial-gradient(circle, rgba(255, 181, 167, 0.25) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(232, 116, 97, 0.3) 0%, transparent 70%)',
           }}
           className="absolute top-1/2 right-1/3 w-[700px] h-[700px] rounded-full blur-3xl"
         />
@@ -110,9 +110,9 @@ export default function Hero() {
         <svg width="80" height="80" viewBox="0 0 80 80">
           <defs>
             <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#F5D99F" />
-              <stop offset="50%" stopColor="#FFB5A7" />
-              <stop offset="100%" stopColor="#C5E1A5" />
+              <stop offset="0%" stopColor="#D4A574" />
+              <stop offset="50%" stopColor="#E87461" />
+              <stop offset="100%" stopColor="#6B9F7F" />
             </linearGradient>
           </defs>
           {/* Three marks representing trinity */}
@@ -154,9 +154,9 @@ export default function Hero() {
           <svg width="120" height="120" viewBox="0 0 120 120" className="drop-shadow-lg">
             <defs>
               <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#F5D99F" />
-                <stop offset="50%" stopColor="#FFB5A7" />
-                <stop offset="100%" stopColor="#C5E1A5" />
+                <stop offset="0%" stopColor="#D4A574" />
+                <stop offset="50%" stopColor="#E87461" />
+                <stop offset="100%" stopColor="#6B9F7F" />
               </linearGradient>
             </defs>
             <motion.circle
@@ -179,7 +179,7 @@ export default function Hero() {
               fontSize="48"
               fontWeight="bold"
               textAnchor="middle"
-              fill="#4A4A4A"
+              fill="#1A1A1A"
               fontFamily="serif"
             >
               ழ
@@ -196,9 +196,9 @@ export default function Hero() {
         >
           <span className="inline-block px-6 py-2 rounded-full border-2 text-sm font-bold uppercase tracking-[0.3em]"
             style={{
-              background: 'rgba(245, 217, 159, 0.2)',
-              borderColor: 'rgba(245, 217, 159, 0.4)',
-              color: '#4A4A4A',
+              background: 'rgba(212, 165, 116, 0.15)',
+              borderColor: '#D4A574',
+              color: '#1A1A1A',
             }}
           >
             குமரிக்கண்டம் • Sovereign Tamil AI
@@ -213,11 +213,11 @@ export default function Hero() {
           className="text-7xl md:text-[10rem] font-black mb-4 leading-[0.85] tracking-tight"
         >
           <span style={{
-            background: 'linear-gradient(135deg, #F5D99F 0%, #FFB5A7 50%, #C5E1A5 100%)',
+            background: 'linear-gradient(135deg, #D4A574 0%, #E87461 50%, #6B9F7F 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
-            filter: 'drop-shadow(0 2px 8px rgba(245, 217, 159, 0.3))',
+            filter: 'drop-shadow(0 4px 12px rgba(212, 165, 116, 0.4))',
           }}>
             YAZHI
           </span>
@@ -229,12 +229,12 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
           className="text-xl md:text-3xl font-medium mb-8 max-w-4xl mx-auto leading-relaxed"
-          style={{ color: '#2A2A2A' }}
+          style={{ color: '#1A1A1A' }}
         >
           Building the future of Tamil intelligence with{" "}
-          <span style={{ color: '#F5D99F', fontWeight: 700 }}>Adhan AI</span>,{" "}
-          <span style={{ color: '#C5E1A5', fontWeight: 700 }}>Project Sangam</span>, and{" "}
-          <span style={{ color: '#FFB5A7', fontWeight: 700 }}>Yazh Guardian</span>
+          <span style={{ color: '#D4A574', fontWeight: 800 }}>Adhan AI</span>,{" "}
+          <span style={{ color: '#6B9F7F', fontWeight: 800 }}>Project Sangam</span>, and{" "}
+          <span style={{ color: '#E87461', fontWeight: 800 }}>Yazh Guardian</span>
         </motion.p>
 
         {/* CTA buttons */}
@@ -250,8 +250,8 @@ export default function Hero() {
             whileTap={{ scale: 0.95 }}
             className="group relative px-10 py-4 font-bold text-lg rounded-full shadow-lg overflow-hidden"
             style={{
-              background: 'linear-gradient(135deg, #F5D99F, #FFB5A7)',
-              color: '#4A4A4A',
+              background: 'linear-gradient(135deg, #D4A574, #E87461)',
+              color: '#FFFFFF',
             }}
           >
             <span className="relative z-10">Explore Ecosystem</span>
@@ -266,9 +266,9 @@ export default function Hero() {
             whileTap={{ scale: 0.95 }}
             className="px-10 py-4 border-2 font-bold text-lg rounded-full transition-all"
             style={{
-              borderColor: 'rgba(74, 74, 74, 0.2)',
-              color: '#4A4A4A',
-              background: 'rgba(255, 255, 255, 0.5)',
+              borderColor: '#1A1A1A',
+              color: '#1A1A1A',
+              background: 'rgba(255, 255, 255, 0.8)',
             }}
           >
             Join Community
@@ -283,9 +283,9 @@ export default function Hero() {
           className="mt-12 grid grid-cols-3 gap-6 max-w-3xl mx-auto"
         >
           {[
-            { value: "7B", label: "Parameters", color: "#F5D99F" },
-            { value: "3", label: "Core Projects", color: "#FFB5A7" },
-            { value: "∞", label: "Tamil Heritage", color: "#C5E1A5" },
+            { value: "7B", label: "Parameters", color: "#D4A574" },
+            { value: "3", label: "Core Projects", color: "#E87461" },
+            { value: "∞", label: "Tamil Heritage", color: "#6B9F7F" },
           ].map((stat, i) => (
             <motion.div
               key={i}

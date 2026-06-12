@@ -38,7 +38,7 @@ export default function AdhanShowcase() {
       id="adhan"
       ref={ref}
       className="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #FEF9F3 0%, #FFF5E6 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #F8F8F8 100%)' }}
     >
       {/* DENSE Tamil letter particles background */}
       <div className="absolute inset-0 overflow-hidden">
@@ -50,7 +50,7 @@ export default function AdhanShowcase() {
               left: `${particle.x}%`,
               top: `${particle.y}%`,
               fontSize: `${particle.size}px`,
-              color: particle.id % 3 === 0 ? '#F5D99F' : particle.id % 3 === 1 ? '#FFB5A7' : '#C5E1A5',
+              color: particle.id % 3 === 0 ? '#D4A574' : particle.id % 3 === 1 ? '#E87461' : '#6B9F7F',
               opacity: particle.opacity,
             }}
             animate={{
@@ -114,10 +114,10 @@ export default function AdhanShowcase() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-6xl md:text-8xl mb-4 leading-[0.9] tracking-tighter font-dm-serif font-bold"
-            style={{ color: '#2A2A2A' }}
+            style={{ color: '#1A1A1A' }}
           >
             Adhan
-            <span className="block italic text-5xl md:text-6xl mt-1" style={{ color: '#F5D99F', fontWeight: 700 }}>
+            <span className="block italic text-5xl md:text-6xl mt-1" style={{ color: '#D4A574', fontWeight: 800 }}>
               Tamil-First Model
             </span>
           </motion.h2>
@@ -126,8 +126,8 @@ export default function AdhanShowcase() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-lg md:text-xl font-medium mb-6 leading-relaxed"
-            style={{ color: '#2A2A2A' }}
+            className="text-lg md:text-xl font-semibold mb-6 leading-relaxed"
+            style={{ color: '#1A1A1A' }}
           >
             A sovereign language model built for Tamil. Trained on the rich corpus of Tamil literature,
             modern discourse, and cultural wisdom. Adhan understands context, nuance, and the soul of Tamil language.

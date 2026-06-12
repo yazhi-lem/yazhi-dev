@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  /* Light pastel color palette */
-  --soft-cream: #FEF9F3;
-  --pastel-gold: #F5D99F;
-  --pastel-coral: #FFB5A7;
-  --pastel-sage: #C5E1A5;
-  --soft-charcoal: #2A2A2A;
-  --pastel-lavender: #E1D5E7;
-  --pastel-mint: #B8E6D5;
-  --accent-glow: rgba(245, 217, 159, 0.4);
+  /* Light mode - High contrast */
+  --soft-cream: #FFFFFF;
+  --pastel-gold: #D4A574;
+  --pastel-coral: #E87461;
+  --pastel-sage: #6B9F7F;
+  --soft-charcoal: #1A1A1A;
+  --pastel-lavender: #9B7EBD;
+  --pastel-mint: #5FA88C;
+  --accent-glow: rgba(212, 165, 116, 0.5);
 
-  /* Legacy names mapped to new pastel colors */
-  --night-soil: #2A2A2A;
-  --red-clay: #FFB5A7;
-  --turmeric: #F5D99F;
-  --palm-parchment: #2A2A2A;
-  --neem-leaf: #C5E1A5;
-  --ocean-depth: #FEF9F3;
+  /* Legacy names - High contrast */
+  --night-soil: #1A1A1A;
+  --red-clay: #E87461;
+  --turmeric: #D4A574;
+  --palm-parchment: #1A1A1A;
+  --neem-leaf: #6B9F7F;
+  --ocean-depth: #FFFFFF;
 }
 
 /* Dark mode - Cobalt Deep Ocean */
