@@ -17,6 +17,35 @@ export default function Hero() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-6"
       style={{ background: 'var(--bg)' }}
     >
+      {/* Indian Flag */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="absolute top-6 left-6 z-50"
+      >
+        <svg width="80" height="54" viewBox="0 0 80 54">
+          <rect width="80" height="18" fill="#FF9933" />
+          <rect y="18" width="80" height="18" fill="#FFFFFF" />
+          <rect y="36" width="80" height="18" fill="#138808" />
+          <circle cx="40" cy="27" r="8" fill="none" stroke="#000080" strokeWidth="0.8" />
+          <g transform="translate(40, 27)">
+            {Array.from({ length: 24 }).map((_, i) => (
+              <line
+                key={i}
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="-7"
+                stroke="#000080"
+                strokeWidth="0.5"
+                transform={`rotate(${i * 15})`}
+              />
+            ))}
+          </g>
+        </svg>
+      </motion.div>
+
       {/* அகமும் புறமும் Toggle */}
       <motion.button
         onClick={toggleTheme}
