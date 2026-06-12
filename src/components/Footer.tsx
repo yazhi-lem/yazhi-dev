@@ -96,61 +96,9 @@ export default function Footer() {
       {/* Links & Info */}
       <div className="relative z-10 max-w-7xl mx-auto border-t pt-12 mb-12" style={{ borderColor: 'var(--accent)', opacity: 0.2 }}>
         <div className="grid md:grid-cols-4 gap-8 mb-12">
-          {/* Yazhi Logo */}
+          {/* Yazhi Branding */}
           <div>
-            <svg width="100" height="100" viewBox="0 0 140 140" className="mb-4">
-              <defs>
-                <pattern id="footerStonePattern" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
-                  <rect width="8" height="8" fill="#8B7355" />
-                  <circle cx="2" cy="2" r="1" fill="#6B5345" opacity="0.5" />
-                </pattern>
-                <radialGradient id="footerStoneGrad">
-                  <stop offset="0%" stopColor="#A0826D" />
-                  <stop offset="100%" stopColor="#5B4335" />
-                </radialGradient>
-                <radialGradient id="footerWaterGrad">
-                  <stop offset="0%" stopColor="#4FC3F7" />
-                  <stop offset="50%" stopColor="#29B6F6" />
-                  <stop offset="100%" stopColor="#0288D1" />
-                </radialGradient>
-                <radialGradient id="footerGrassGrad">
-                  <stop offset="0%" stopColor="#8BC34A" />
-                  <stop offset="100%" stopColor="#558B2F" />
-                </radialGradient>
-                <radialGradient id="footerSmokeGrad">
-                  <stop offset="0%" stopColor="#FF6B35" />
-                  <stop offset="40%" stopColor="#BFC0C0" />
-                  <stop offset="100%" stopColor="#6C757D" />
-                </radialGradient>
-              </defs>
-
-              {/* Top - Volcano Smoke */}
-              <circle cx="70" cy="30" r="12" fill="url(#footerSmokeGrad)" opacity="0.9" />
-
-              {/* Bottom Left - Stone */}
-              <circle cx="35" cy="95" r="22" fill="url(#footerStoneGrad)" />
-              <circle cx="35" cy="95" r="22" fill="url(#footerStonePattern)" opacity="0.4" />
-
-              {/* Bottom Right - Water with Grass */}
-              <circle cx="105" cy="95" r="22" fill="url(#footerWaterGrad)" opacity="0.8" />
-
-              {/* Grass blades */}
-              {[0, 1, 2, 3].map((i) => (
-                <path
-                  key={i}
-                  d={`M ${105 + i * 5 - 7} 95 Q ${105 + i * 5 - 7} 88 ${105 + i * 6 - 9} 82`}
-                  stroke="url(#footerGrassGrad)"
-                  strokeWidth="2"
-                  fill="none"
-                />
-              ))}
-
-              {/* V-shape connections */}
-              <line x1="70" y1="30" x2="35" y2="95" stroke="var(--accent)" strokeWidth="3" opacity="0.3" />
-              <line x1="70" y1="30" x2="105" y2="95" stroke="var(--accent)" strokeWidth="3" opacity="0.3" />
-              <line x1="35" y1="95" x2="105" y2="95" stroke="var(--accent)" strokeWidth="4" opacity="0.3" />
-            </svg>
-            <h3 className="tamil-title text-3xl mb-2" style={{ color: 'var(--text)' }}>
+            <h3 className="tamil-title text-4xl mb-2" style={{ color: 'var(--text)' }}>
               யாழி
             </h3>
             <p className="text-sm" style={{ color: 'var(--text-soft)' }}>
