@@ -10,53 +10,63 @@ export default function YazhAppShowcase() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center px-6 py-16 overflow-hidden theme-transition"
-      style={{ background: 'var(--bg-secondary)' }}
+      className="relative min-h-screen flex items-center justify-center px-6 py-16 overflow-hidden"
+      style={{ background: 'var(--surface)' }}
     >
-      <div className="relative z-10 max-w-6xl mx-auto text-center">
+      <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          className="text-7xl font-black mb-3"
-          style={{ color: 'var(--text-primary)' }}
+          className="tamil-title text-8xl mb-4"
+          style={{ color: 'var(--text)' }}
         >
-          Yazh Guardian
+          யாழ்
         </motion.h2>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.2 }}
-          className="text-3xl font-bold mb-6"
-          style={{ color: 'var(--accent-primary)' }}
+          className="text-4xl font-bold mb-6"
+          style={{ color: 'var(--accent)' }}
         >
-          யாழி Mythical Protector
+          Yazh Guardian
         </motion.p>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
-          className="text-xl max-w-3xl mx-auto mb-12 font-medium"
-          style={{ color: 'var(--text-secondary)' }}
+          className="tamil-body text-2xl mb-6"
+          style={{ color: 'var(--text)' }}
         >
-          Guardian app inspired by the mythical Yazhi creature. Protective wisdom for the digital age, watching over Tamil heritage and community.
+          யாழி • புராண காவலன்
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.4 }}
+          className="text-lg max-w-2xl mx-auto mb-12 font-semibold leading-relaxed"
+          style={{ color: 'var(--text-soft)' }}
+        >
+          Guardian application inspired by the mythical Yazhi creature. Protecting Tamil digital heritage and community wisdom.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5 }}
-          className="flex justify-center gap-4"
+          transition={{ delay: 0.6 }}
         >
           <button
-            className="px-8 py-3 font-bold rounded-full transition-all hover:scale-105"
+            className="px-8 py-3 rounded-full font-bold transition-all hover:scale-105"
             style={{
-              background: 'var(--accent-primary)',
-              color: 'var(--bg-primary)',
+              background: 'var(--accent)',
+              color: 'var(--bg)',
+              fontFamily: 'var(--font-tamil)',
             }}
           >
-            Launch App
+            தொடங்குக
           </button>
         </motion.div>
       </div>

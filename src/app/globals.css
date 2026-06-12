@@ -1,104 +1,112 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700;900&family=Mukta+Malar:wght@400;600;700;800&display=swap');
 
-/* Agam (Interior) Theme - Soft, intimate colors */
+/* தமிழ் அழகு - Tamil Beauty */
+
+/* அகமும் புறமும் - Interior and Exterior Themes */
+
+/* அகம் - Interior (Soft, Personal) */
 :root[data-theme="agam"] {
-  --bg-primary: #FFF8F0;
-  --bg-secondary: #FFF0E6;
-  --text-primary: #1A1A1A;
-  --text-secondary: #4A4A4A;
-  --accent-primary: #D4A574;
-  --accent-secondary: #B8956A;
-  --accent-tertiary: #E8D5C4;
+  --bg: #FFF8F0;
+  --surface: #FFF0E0;
+  --text: #2C1810;
+  --text-soft: #6B4423;
+  --accent: #C17B3D;
+  --accent-light: #D4A574;
 }
 
-/* Puram (Exterior) Theme - Bold, heroic colors */
+/* புறம் - Exterior (Bold, Public) */
 :root[data-theme="puram"], :root {
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F5F5F5;
-  --text-primary: #000000;
-  --text-secondary: #333333;
-  --accent-primary: #C17B3D;
-  --accent-secondary: #8B5E3C;
-  --accent-tertiary: #D4A574;
+  --bg: #FFFEF9;
+  --surface: #FFF8E7;
+  --text: #1A0F0A;
+  --text-soft: #4A3420;
+  --accent: #B8651B;
+  --accent-light: #D4A574;
 }
 
-/* Dark mode - Deep Marutham (Agricultural land at night) */
+/* இருள் - Darkness Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-primary: #0D1B2A;
-    --bg-secondary: #1B263B;
-    --text-primary: #E0E1DD;
-    --text-secondary: #C5C6C4;
-    --accent-primary: #E5B181;
-    --accent-secondary: #C9A961;
-    --accent-tertiary: #8B7355;
+    --bg: #0F0A08;
+    --surface: #1A1210;
+    --text: #F5E6D3;
+    --text-soft: #C4A77D;
+    --accent: #E5B181;
+    --accent-light: #C9A961;
   }
 }
 
 @theme {
-  --color-bg-primary: var(--bg-primary);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-accent-primary: var(--accent-primary);
-  --color-accent-secondary: var(--accent-secondary);
-  --color-accent-tertiary: var(--accent-tertiary);
-
-  --font-dm-serif: var(--font-dm-serif), serif;
-  --font-jost: var(--font-jost), sans-serif;
+  --font-tamil: "Noto Sans Tamil", "Mukta Malar", sans-serif;
+  --font-tamil-display: "Mukta Malar", "Noto Sans Tamil", sans-serif;
 }
 
 @layer base {
+  * {
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+
   body {
-    @apply font-jost antialiased;
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    font-family: var(--font-tamil);
+    background: var(--bg);
+    color: var(--text);
     scroll-behavior: smooth;
     overflow-x: hidden;
+    transition: background 0.4s ease, color 0.4s ease;
   }
 
-  h1, h2, h3, .serif {
-    @apply font-dm-serif;
-  }
-}
-
-@layer utilities {
-  .theme-transition {
-    transition: background-color 0.3s ease, color 0.3s ease;
+  h1, h2, h3 {
+    font-family: var(--font-tamil-display);
+    font-weight: 900;
   }
 }
 
-/* Minimal animations */
+/* தமிழ் எழுத்துக்கள் - Tamil Typography */
+.tamil-title {
+  font-family: var(--font-tamil-display);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+}
+
+.tamil-body {
+  font-family: var(--font-tamil);
+  font-weight: 600;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+/* எளிய அசைவுகள் - Simple Animations */
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+  50% { transform: translateY(-12px); }
 }
 
-@keyframes rise {
-  0% { transform: translateY(0); opacity: 0; }
-  50% { opacity: 0.6; }
-  100% { transform: translateY(-100vh); opacity: 0; }
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-float {
-  animation: float 8s ease-in-out infinite;
+  animation: float 6s ease-in-out infinite;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: var(--surface);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-primary);
-  border-radius: 4px;
+  background: var(--accent);
+  border-radius: 3px;
 }
 
 ::selection {
-  background: var(--accent-primary);
-  color: var(--bg-primary);
+  background: var(--accent);
+  color: var(--bg);
 }

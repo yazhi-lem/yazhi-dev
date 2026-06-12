@@ -10,11 +10,11 @@ export default function SangamShowcase() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center px-6 py-16 overflow-hidden theme-transition"
-      style={{ background: 'var(--bg-primary)' }}
+      className="relative min-h-screen flex items-center justify-center px-6 py-16 overflow-hidden"
+      style={{ background: 'var(--bg)' }}
     >
       <div className="relative z-10 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        {/* Marutham Landscape - Pond & Farm */}
+        {/* மருதம் Landscape */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -23,32 +23,32 @@ export default function SangamShowcase() {
         >
           <svg viewBox="0 0 500 600" className="w-full h-full">
             <defs>
-              <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style={{ stopColor: 'var(--accent-tertiary)', stopOpacity: 0.6 }} />
-                <stop offset="100%" style={{ stopColor: 'var(--accent-secondary)', stopOpacity: 0.4 }} />
+              <linearGradient id="pond" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style={{ stopColor: 'var(--accent-light)', stopOpacity: 0.4 }} />
+                <stop offset="100%" style={{ stopColor: 'var(--accent)', stopOpacity: 0.3 }} />
               </linearGradient>
             </defs>
 
-            {/* Sky */}
-            <rect width="500" height="200" style={{ fill: 'var(--bg-secondary)' }} />
+            {/* வானம் - Sky */}
+            <rect width="500" height="200" style={{ fill: 'var(--surface)' }} />
 
-            {/* Farm fields - terraced */}
-            <rect y="200" width="500" height="100" style={{ fill: 'var(--accent-tertiary)', opacity: 0.3 }} />
-            <rect y="300" width="500" height="100" style={{ fill: 'var(--accent-tertiary)', opacity: 0.4 }} />
-            <rect y="400" width="500" height="200" style={{ fill: 'var(--accent-tertiary)', opacity: 0.5 }} />
+            {/* விளை நிலங்கள் - Farm Fields */}
+            <rect y="200" width="500" height="100" style={{ fill: 'var(--accent)', opacity: 0.15 }} />
+            <rect y="300" width="500" height="100" style={{ fill: 'var(--accent)', opacity: 0.2 }} />
+            <rect y="400" width="500" height="200" style={{ fill: 'var(--accent)', opacity: 0.25 }} />
 
-            {/* Pond - center */}
+            {/* குளம் - Pond */}
             <motion.ellipse
               cx="250"
               cy="400"
               rx="150"
               ry="100"
-              fill="url(#waterGrad)"
+              fill="url(#pond)"
               animate={{ ry: [100, 105, 100] }}
               transition={{ duration: 4, repeat: Infinity }}
             />
 
-            {/* Water ripples */}
+            {/* நீர் அலைகள் - Water Ripples */}
             {[0, 1, 2].map((i) => (
               <motion.ellipse
                 key={i}
@@ -57,12 +57,12 @@ export default function SangamShowcase() {
                 rx="150"
                 ry="100"
                 fill="none"
-                stroke="var(--accent-secondary)"
-                strokeWidth="2"
+                stroke="var(--accent)"
+                strokeWidth="1"
                 opacity="0"
                 animate={{
-                  scale: [0.8, 1.4],
-                  opacity: [0.6, 0],
+                  scale: [0.8, 1.5],
+                  opacity: [0.5, 0],
                 }}
                 transition={{
                   duration: 3,
@@ -72,18 +72,18 @@ export default function SangamShowcase() {
               />
             ))}
 
-            {/* Rice plants */}
-            {Array.from({ length: 20 }).map((_, i) => (
+            {/* நெல் - Rice Plants */}
+            {Array.from({ length: 24 }).map((_, i) => (
               <motion.line
                 key={i}
-                x1={50 + i * 20}
-                y1="500"
-                x2={50 + i * 20}
-                y2="470"
-                stroke="var(--accent-secondary)"
+                x1={30 + i * 20}
+                y1="520"
+                x2={30 + i * 20}
+                y2="490"
+                stroke="var(--accent)"
                 strokeWidth="2"
                 animate={{
-                  x2: [50 + i * 20, 52 + i * 20, 50 + i * 20],
+                  x2: [30 + i * 20, 32 + i * 20, 30 + i * 20],
                 }}
                 transition={{
                   duration: 2 + (i % 3),
@@ -92,17 +92,17 @@ export default function SangamShowcase() {
               />
             ))}
 
-            {/* Lotus in pond */}
+            {/* தாமரை - Lotus */}
             {[0, 1, 2].map((i) => (
               <motion.circle
                 key={i}
                 cx={200 + i * 50}
                 cy={390 + i * 10}
-                r="10"
-                style={{ fill: 'var(--accent-primary)' }}
+                r="12"
+                style={{ fill: 'var(--accent)' }}
                 animate={{
                   scale: [1, 1.1, 1],
-                  opacity: [0.7, 0.9, 0.7],
+                  opacity: [0.6, 0.9, 0.6],
                 }}
                 transition={{
                   duration: 3,
@@ -112,11 +112,11 @@ export default function SangamShowcase() {
               />
             ))}
 
-            {/* Farmers (silhouettes) */}
+            {/* உழவர் - Farmers */}
             {[0, 1].map((i) => (
               <g key={i}>
-                <circle cx={100 + i * 280} cy="510" r="12" style={{ fill: 'var(--text-primary)', opacity: 0.4 }} />
-                <rect x={93 + i * 280} y="522" width="14" height="25" style={{ fill: 'var(--text-primary)', opacity: 0.4 }} />
+                <circle cx={100 + i * 280} cy="530" r="10" style={{ fill: 'var(--text)', opacity: 0.3 }} />
+                <rect x={94 + i * 280} y="540" width="12" height="20" style={{ fill: 'var(--text)', opacity: 0.3 }} />
               </g>
             ))}
           </svg>
@@ -128,41 +128,52 @@ export default function SangamShowcase() {
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h2 className="text-7xl font-black mb-3" style={{ color: 'var(--text-primary)' }}>
-            Sangam
+          <h2 className="tamil-title text-8xl mb-4" style={{ color: 'var(--text)' }}>
+            சங்கம்
           </h2>
-          <p className="text-3xl font-bold mb-6" style={{ color: 'var(--accent-primary)' }}>
-            மருதம் Marutham
+          <p className="text-4xl font-bold mb-6" style={{ color: 'var(--accent)' }}>
+            Sangam
           </p>
-          <p className="text-xl mb-8 font-medium leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-            Classical Tamil literature analysis. Understanding Sangam poetry through the five landscapes—Marutham (agricultural), Kurinji (mountains), Mullai (forests), Neytal (coast), Palai (desert).
+          <p className="tamil-body text-2xl mb-4" style={{ color: 'var(--text)' }}>
+            மருதம் - விளை நிலம்
+          </p>
+          <p className="text-lg mb-8 font-semibold leading-relaxed" style={{ color: 'var(--text-soft)' }}>
+            Classical Tamil literature analysis through the five landscapes. Marutham represents agricultural fertile lands, union, and domestic happiness.
           </p>
 
           <div className="space-y-3 mb-8">
             {[
-              { label: "Poem Analysis", icon: "📜" },
-              { label: "Thinai Classification", icon: "🏞️" },
-              { label: "Linguistic Study", icon: "📖" },
+              { tamil: "செய்யுள் ஆய்வு", eng: "Poem Analysis", icon: "📜" },
+              { tamil: "திணை வகைப்பாடு", eng: "Thinai Classification", icon: "🏞️" },
+              { tamil: "மொழி ஆய்வு", eng: "Linguistic Study", icon: "📖" },
             ].map((item, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 p-3 rounded-lg"
-                style={{ background: 'var(--bg-secondary)' }}
+                className="flex items-center gap-3 p-4 rounded-lg"
+                style={{ background: 'var(--surface)' }}
               >
-                <span className="text-2xl">{item.icon}</span>
-                <span className="font-bold" style={{ color: 'var(--text-primary)' }}>{item.label}</span>
+                <span className="text-3xl">{item.icon}</span>
+                <div>
+                  <div className="tamil-body text-lg" style={{ color: 'var(--text)' }}>
+                    {item.tamil}
+                  </div>
+                  <div className="text-sm" style={{ color: 'var(--text-soft)' }}>
+                    {item.eng}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
 
           <button
-            className="px-8 py-3 font-bold rounded-full transition-all hover:scale-105"
+            className="px-8 py-3 rounded-full font-bold transition-all hover:scale-105"
             style={{
-              background: 'var(--accent-primary)',
-              color: 'var(--bg-primary)',
+              background: 'var(--accent)',
+              color: 'var(--bg)',
+              fontFamily: 'var(--font-tamil)',
             }}
           >
-            Explore Sangam →
+            மேலும் அறிக →
           </button>
         </motion.div>
       </div>
