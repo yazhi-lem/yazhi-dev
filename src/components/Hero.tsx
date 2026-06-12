@@ -1,10 +1,28 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
 export default function Hero() {
   const [theme, setTheme] = useState<"agam" | "puram">("puram");
+  const [currentLang, setCurrentLang] = useState(0);
+
+  const languages = [
+    { tamil: "தமிழ்", eng: "Tamil" },
+    { tamil: "செயற்கை நுண்ணறிவு", eng: "Artificial Intelligence" },
+  ];
+
+  useEffect(() => {
+    // Set initial theme on mount
+    document.documentElement.setAttribute("data-theme", theme);
+
+    // Rotate languages every 3 seconds
+    const interval = setInterval(() => {
+      setCurrentLang((prev) => (prev + 1) % languages.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === "agam" ? "puram" : "agam";
@@ -17,33 +35,31 @@ export default function Hero() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-6"
       style={{ background: 'var(--bg)' }}
     >
-      {/* Indian Flag */}
+      {/* Indian Gradient Sphere */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
         className="absolute top-6 left-6 z-50"
       >
-        <svg width="80" height="54" viewBox="0 0 80 54">
-          <rect width="80" height="18" fill="#FF9933" />
-          <rect y="18" width="80" height="18" fill="#FFFFFF" />
-          <rect y="36" width="80" height="18" fill="#138808" />
-          <circle cx="40" cy="27" r="8" fill="none" stroke="#000080" strokeWidth="0.8" />
-          <g transform="translate(40, 27)">
-            {Array.from({ length: 24 }).map((_, i) => (
-              <line
-                key={i}
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="-7"
-                stroke="#000080"
-                strokeWidth="0.5"
-                transform={`rotate(${i * 15})`}
-              />
-            ))}
-          </g>
-        </svg>
+        <motion.svg
+          width="100"
+          height="100"
+          viewBox="0 0 100 100"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        >
+          <defs>
+            <radialGradient id="indianSphere" cx="40%" cy="40%">
+              <stop offset="0%" stopColor="#FF9933" stopOpacity="1" />
+              <stop offset="40%" stopColor="#FFFFFF" stopOpacity="1" />
+              <stop offset="70%" stopColor="#138808" stopOpacity="1" />
+              <stop offset="100%" stopColor="#000080" stopOpacity="0.8" />
+            </radialGradient>
+          </defs>
+          <circle cx="50" cy="50" r="45" fill="url(#indianSphere)" opacity="0.9" />
+          <circle cx="50" cy="50" r="45" fill="none" stroke="var(--accent)" strokeWidth="2" opacity="0.3" />
+        </motion.svg>
       </motion.div>
 
       {/* அகமும் புறமும் Toggle */}
@@ -100,26 +116,38 @@ export default function Hero() {
           யாழி
         </motion.h1>
 
-        {/* Subtitle in Tamil */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="tamil-body text-3xl md:text-5xl mb-4"
-          style={{ color: 'var(--accent)' }}
-        >
-          தமிழ் செயற்கை நுண்ணறிவு
-        </motion.p>
+        {/* Rotating Language Text */}
+        <div className="h-20 md:h-24 mb-4 flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={currentLang}
+              initial={{ opacity: 0, y: 20, rotateX: -90 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              exit={{ opacity: 0, y: -20, rotateX: 90 }}
+              transition={{ duration: 0.5 }}
+              className="tamil-body text-3xl md:text-5xl"
+              style={{ color: 'var(--accent)' }}
+            >
+              {currentLang === 0 ? languages[0].tamil : languages[1].tamil}
+            </motion.p>
+          </AnimatePresence>
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="tamil-body text-xl md:text-2xl mb-12"
-          style={{ color: 'var(--text-soft)' }}
-        >
-          Tamizh AI • அகமும் புறமும்
-        </motion.p>
+        <div className="h-12 md:h-16 mb-12 flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={currentLang + 100}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-xl md:text-2xl font-semibold"
+              style={{ color: 'var(--text-soft)' }}
+            >
+              {currentLang === 0 ? languages[0].eng : languages[1].eng}
+            </motion.p>
+          </AnimatePresence>
+        </div>
 
         {/* தர்சர்பு - Philosophy */}
         <motion.div
@@ -133,6 +161,87 @@ export default function Hero() {
           </p>
           <p className="mt-2 text-base md:text-lg font-semibold" style={{ color: 'var(--text-soft)' }}>
             Sovereign AI Model for Indian Languages
+          </p>
+        </motion.div>
+
+        {/* Three Hatching Eggs - Incubation till 2027 */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.9 }}
+          className="mb-12 max-w-2xl mx-auto"
+        >
+          <p className="tamil-body text-base mb-6" style={{ color: 'var(--accent)' }}>
+            அடைகாக்கும் காலம் • Incubation Period
+          </p>
+          <div className="flex justify-center gap-8 mb-4">
+            {[0, 1, 2].map((i) => (
+              <motion.svg
+                key={i}
+                width="80"
+                height="100"
+                viewBox="0 0 80 100"
+                animate={{
+                  y: [0, -10, 0],
+                  rotate: [0, 5, -5, 0],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: i * 0.4,
+                }}
+              >
+                <defs>
+                  <linearGradient id={`eggGrad${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style={{ stopColor: 'var(--accent)', stopOpacity: 0.8 }} />
+                    <stop offset="100%" style={{ stopColor: 'var(--accent)', stopOpacity: 0.3 }} />
+                  </linearGradient>
+                </defs>
+                {/* Egg shape */}
+                <ellipse
+                  cx="40"
+                  cy="55"
+                  rx="28"
+                  ry="38"
+                  fill={`url(#eggGrad${i})`}
+                  stroke="var(--accent)"
+                  strokeWidth="2"
+                />
+                {/* Crack lines */}
+                <motion.path
+                  d="M 40 40 Q 45 50 40 60"
+                  stroke="var(--text)"
+                  strokeWidth="1.5"
+                  fill="none"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: [0, 1, 0] }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    delay: i * 0.6 + 1,
+                  }}
+                />
+                <motion.path
+                  d="M 35 45 Q 40 48 45 45"
+                  stroke="var(--text)"
+                  strokeWidth="1.5"
+                  fill="none"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: [0, 1, 0] }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    delay: i * 0.6 + 1.5,
+                  }}
+                />
+              </motion.svg>
+            ))}
+          </div>
+          <p className="text-sm font-semibold" style={{ color: 'var(--text-soft)' }}>
+            முட்டையிடல் 2025 → குஞ்சு பொரிக்கும் 2027
+          </p>
+          <p className="text-xs mt-1" style={{ color: 'var(--text-soft)' }}>
+            Laying 2025 → Hatching 2027
           </p>
         </motion.div>
 

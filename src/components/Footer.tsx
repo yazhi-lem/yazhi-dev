@@ -150,27 +150,25 @@ export default function Footer() {
             © 2025 யாழி • Yazhi. இறையாண்மை செயற்கை நுண்ணறிவு • Sovereign AI
           </p>
 
-          {/* Indian Flag */}
-          <svg width="60" height="40" viewBox="0 0 60 40">
-            <rect width="60" height="13.33" fill="#FF9933" />
-            <rect y="13.33" width="60" height="13.33" fill="#FFFFFF" />
-            <rect y="26.66" width="60" height="13.33" fill="#138808" />
-            <circle cx="30" cy="20" r="6" fill="none" stroke="#000080" strokeWidth="0.6" />
-            <g transform="translate(30, 20)">
-              {Array.from({ length: 24 }).map((_, i) => (
-                <line
-                  key={i}
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="-5"
-                  stroke="#000080"
-                  strokeWidth="0.4"
-                  transform={`rotate(${i * 15})`}
-                />
-              ))}
-            </g>
-          </svg>
+          {/* Indian Gradient Sphere */}
+          <motion.svg
+            width="70"
+            height="70"
+            viewBox="0 0 70 70"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          >
+            <defs>
+              <radialGradient id="footerIndianSphere" cx="40%" cy="40%">
+                <stop offset="0%" stopColor="#FF9933" stopOpacity="1" />
+                <stop offset="40%" stopColor="#FFFFFF" stopOpacity="1" />
+                <stop offset="70%" stopColor="#138808" stopOpacity="1" />
+                <stop offset="100%" stopColor="#000080" stopOpacity="0.8" />
+              </radialGradient>
+            </defs>
+            <circle cx="35" cy="35" r="32" fill="url(#footerIndianSphere)" opacity="0.9" />
+            <circle cx="35" cy="35" r="32" fill="none" stroke="var(--accent)" strokeWidth="1.5" opacity="0.3" />
+          </motion.svg>
         </div>
       </div>
     </footer>
