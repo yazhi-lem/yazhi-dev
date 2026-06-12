@@ -1,146 +1,355 @@
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-
-type BubbleData = {
-  id: number;
-  size: string;
-  left: string;
-  animationDelay: string;
-  animationDuration: string;
-};
-
-// Pre-computed static bubble data (fixed at module parse time on the client).
-// Using a stable seed avoids Math.random() inside render bodies and satisfies
-// the react-hooks/purity and react-hooks/set-state-in-effect lint rules.
-const BUBBLE_DATA: BubbleData[] = [
-  { id: 0, size: "12px", left: "5%", animationDelay: "0s", animationDuration: "13s" },
-  { id: 1, size: "8px", left: "12%", animationDelay: "1.2s", animationDuration: "15s" },
-  { id: 2, size: "16px", left: "20%", animationDelay: "2.5s", animationDuration: "11s" },
-  { id: 3, size: "6px", left: "28%", animationDelay: "3.7s", animationDuration: "14s" },
-  { id: 4, size: "14px", left: "35%", animationDelay: "0.8s", animationDuration: "16s" },
-  { id: 5, size: "10px", left: "42%", animationDelay: "4.1s", animationDuration: "12s" },
-  { id: 6, size: "18px", left: "50%", animationDelay: "1.9s", animationDuration: "10s" },
-  { id: 7, size: "7px", left: "57%", animationDelay: "5.3s", animationDuration: "17s" },
-  { id: 8, size: "13px", left: "63%", animationDelay: "2.0s", animationDuration: "13s" },
-  { id: 9, size: "9px", left: "70%", animationDelay: "6.5s", animationDuration: "11s" },
-  { id: 10, size: "15px", left: "76%", animationDelay: "0.4s", animationDuration: "15s" },
-  { id: 11, size: "11px", left: "82%", animationDelay: "3.2s", animationDuration: "14s" },
-  { id: 12, size: "8px", left: "88%", animationDelay: "7.1s", animationDuration: "12s" },
-  { id: 13, size: "17px", left: "93%", animationDelay: "1.5s", animationDuration: "16s" },
-  { id: 14, size: "6px", left: "8%", animationDelay: "4.8s", animationDuration: "10s" },
-  { id: 15, size: "12px", left: "17%", animationDelay: "2.3s", animationDuration: "13s" },
-  { id: 16, size: "9px", left: "24%", animationDelay: "6.0s", animationDuration: "17s" },
-  { id: 17, size: "14px", left: "31%", animationDelay: "0.7s", animationDuration: "11s" },
-  { id: 18, size: "7px", left: "38%", animationDelay: "5.5s", animationDuration: "15s" },
-  { id: 19, size: "16px", left: "46%", animationDelay: "1.1s", animationDuration: "13s" },
-  { id: 20, size: "10px", left: "54%", animationDelay: "3.9s", animationDuration: "16s" },
-  { id: 21, size: "13px", left: "61%", animationDelay: "7.3s", animationDuration: "12s" },
-  { id: 22, size: "8px", left: "68%", animationDelay: "2.7s", animationDuration: "10s" },
-  { id: 23, size: "11px", left: "75%", animationDelay: "4.4s", animationDuration: "14s" },
-  { id: 24, size: "15px", left: "83%", animationDelay: "0.2s", animationDuration: "17s" },
-];
-
-import { useTheme } from "./ThemeProvider";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 
 export default function Hero() {
-  const { theme } = useTheme();
-  // Lazy state initializer runs once on mount (client only), never on SSR.
-  const [bubbles] = useState<BubbleData[]>(() => BUBBLE_DATA);
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0]);
+
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
-    <section className="relative min-h-[60vh] flex flex-col justify-center items-center text-center px-6 overflow-hidden pt-32 pb-20">
-      {/* Hero Visual Layers */}
-      <div className="absolute inset-0 z-0 bg-ocean-depth">
-        <Image
-          src="/hero-bg.png"
-          alt="Sunken Disrupted Landscape of Thenmadurai"
-          fill
-          priority
-          className={`object-cover transition-all duration-1000 ${
-            theme === "light" ? "opacity-20 grayscale" : "opacity-[var(--hero-img-opacity)]"
-          }`}
-        />
-        <div className="theme-overlay absolute inset-0 opacity-80 z-[1] transition-all duration-1000"></div>
-        <div className="caustics absolute inset-0 z-[2]"></div>
+    <section
+      ref={containerRef}
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+      style={{ background: '#FEF9F3' }}
+    >
+      {/* Animated gradient mesh background */}
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(circle at ${50 + mousePosition.x}% ${50 + mousePosition.y}%,
+            rgba(245, 217, 159, 0.3) 0%,
+            rgba(255, 181, 167, 0.2) 25%,
+            rgba(197, 225, 165, 0.15) 50%,
+            transparent 70%)`,
+        }}
+      />
 
-        <div className="absolute inset-0 z-[3] pointer-events-none overflow-hidden">
-          {bubbles.map((b) => (
-            <div
-              key={b.id}
-              className="bubble"
-              style={{
-                width: b.size,
-                height: b.size,
-                left: b.left,
-                animationDelay: b.animationDelay,
-                animationDuration: b.animationDuration,
-              }}
-            />
-          ))}
-        </div>
+      {/* Organic blob shapes */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{
+            background: 'radial-gradient(circle, rgba(245, 217, 159, 0.3) 0%, transparent 70%)',
+          }}
+          className="absolute top-0 left-1/4 w-[800px] h-[800px] rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1.2, 1, 1.2],
+            rotate: [90, 0, 90],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{
+            background: 'radial-gradient(circle, rgba(197, 225, 165, 0.3) 0%, transparent 70%)',
+          }}
+          className="absolute bottom-0 right-1/4 w-[900px] h-[900px] rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, -90, 0],
+          }}
+          transition={{
+            duration: 30,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          style={{
+            background: 'radial-gradient(circle, rgba(255, 181, 167, 0.25) 0%, transparent 70%)',
+          }}
+          className="absolute top-1/2 right-1/3 w-[700px] h-[700px] rounded-full blur-3xl"
+        />
       </div>
 
-      {/* Hero Content */}
-      <div className="relative z-[10] max-w-6xl">
+      {/* Three-mark Yazhi logo floating */}
+      <motion.div
+        className="absolute top-20 right-20 z-20"
+        animate={{
+          y: [-10, 10, -10],
+          rotate: [0, 5, 0, -5, 0],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <defs>
+            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#F5D99F" />
+              <stop offset="50%" stopColor="#FFB5A7" />
+              <stop offset="100%" stopColor="#C5E1A5" />
+            </linearGradient>
+          </defs>
+          {/* Three marks representing trinity */}
+          <circle cx="40" cy="20" r="8" fill="url(#logoGrad)" opacity="0.8" />
+          <circle cx="25" cy="50" r="8" fill="url(#logoGrad)" opacity="0.8" />
+          <circle cx="55" cy="50" r="8" fill="url(#logoGrad)" opacity="0.8" />
+          {/* Connecting lines */}
+          <line x1="40" y1="20" x2="25" y2="50" stroke="url(#logoGrad)" strokeWidth="2" opacity="0.4" />
+          <line x1="40" y1="20" x2="55" y2="50" stroke="url(#logoGrad)" strokeWidth="2" opacity="0.4" />
+          <line x1="25" y1="50" x2="55" y2="50" stroke="url(#logoGrad)" strokeWidth="2" opacity="0.4" />
+        </svg>
+      </motion.div>
+
+      {/* Floating grid pattern */}
+      <motion.div
+        className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage: `
+            linear-gradient(rgba(74, 74, 74, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(74, 74, 74, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: "100px 100px",
+          y,
+        }}
+      />
+
+      {/* Main content */}
+      <motion.div
+        style={{ opacity }}
+        className="relative z-10 max-w-7xl mx-auto px-6 text-center py-8"
+      >
+        {/* Yazh creature icon - simplified, modern */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-10 inline-flex items-center gap-4"
+          initial={{ scale: 0, rotate: -180 }}
+          animate={{ scale: 1, rotate: 0 }}
+          transition={{ duration: 1, type: "spring", bounce: 0.4 }}
+          className="mb-8 inline-block"
         >
-          <div className="w-12 h-[1px] bg-turmeric/30"></div>
-          <span className="text-turmeric text-[10px] font-bold uppercase tracking-[0.6em] whitespace-nowrap">
-            Sovereign Intelligence
-          </span>
-          <div className="w-12 h-[1px] bg-turmeric/30"></div>
+          <svg width="120" height="120" viewBox="0 0 120 120" className="drop-shadow-lg">
+            <defs>
+              <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#F5D99F" />
+                <stop offset="50%" stopColor="#FFB5A7" />
+                <stop offset="100%" stopColor="#C5E1A5" />
+              </linearGradient>
+            </defs>
+            <motion.circle
+              cx="60"
+              cy="60"
+              r="50"
+              fill="url(#iconGrad)"
+              animate={{
+                scale: [1, 1.05, 1],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <text
+              x="60"
+              y="75"
+              fontSize="48"
+              fontWeight="bold"
+              textAnchor="middle"
+              fill="#4A4A4A"
+              fontFamily="serif"
+            >
+              ழ
+            </text>
+          </svg>
         </motion.div>
- 
+
+        {/* Tagline */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mb-6"
+        >
+          <span className="inline-block px-6 py-2 rounded-full border-2 text-sm font-bold uppercase tracking-[0.3em]"
+            style={{
+              background: 'rgba(245, 217, 159, 0.2)',
+              borderColor: 'rgba(245, 217, 159, 0.4)',
+              color: '#4A4A4A',
+            }}
+          >
+            குமரிக்கண்டம் • Sovereign Tamil AI
+          </span>
+        </motion.div>
+
+        {/* Main heading */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-palm-parchment text-6xl md:text-9xl mb-8 leading-[0.85] tracking-tighter font-dm-serif"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-7xl md:text-[10rem] font-black mb-4 leading-[0.85] tracking-tight"
         >
-          Indian Developer <br />
-          <span className="italic text-turmeric">Collective.</span>
+          <span style={{
+            background: 'linear-gradient(135deg, #F5D99F 0%, #FFB5A7 50%, #C5E1A5 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            filter: 'drop-shadow(0 2px 8px rgba(245, 217, 159, 0.3))',
+          }}>
+            YAZHI
+          </span>
         </motion.h1>
- 
+
+        {/* Subtitle with typing effect feel */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-palm-parchment text-lg md:text-2xl font-light mb-12 max-w-3xl mx-auto opacity-80 leading-relaxed"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="text-xl md:text-3xl font-medium mb-8 max-w-4xl mx-auto leading-relaxed"
+          style={{ color: '#2A2A2A' }}
         >
-          A guild of engineers reclaiming the agentic power of Thenmadurai.
-          We build sovereign language models and decentralized infrastructure for the next linguistic era.
+          Building the future of Tamil intelligence with{" "}
+          <span style={{ color: '#F5D99F', fontWeight: 700 }}>Adhan AI</span>,{" "}
+          <span style={{ color: '#C5E1A5', fontWeight: 700 }}>Project Sangam</span>, and{" "}
+          <span style={{ color: '#FFB5A7', fontWeight: 700 }}>Yazh Guardian</span>
         </motion.p>
 
+        {/* CTA buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col sm:flex-row gap-6 justify-center"
+          transition={{ duration: 0.8, delay: 1 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <a
+          <motion.a
+            href="#adhan"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group relative px-10 py-4 font-bold text-lg rounded-full shadow-lg overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, #F5D99F, #FFB5A7)',
+              color: '#4A4A4A',
+            }}
+          >
+            <span className="relative z-10">Explore Ecosystem</span>
+            <span className="relative z-10 ml-2 inline-block group-hover:translate-x-1 transition-transform">→</span>
+          </motion.a>
+
+          <motion.a
             href="https://discord.gg/yazhi"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-turmeric text-night-soil px-8 py-3 text-sm font-bold rounded-sm hover:bg-palm-parchment transition-all flex justify-center items-center gap-2 shadow-lg"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-10 py-4 border-2 font-bold text-lg rounded-full transition-all"
+            style={{
+              borderColor: 'rgba(74, 74, 74, 0.2)',
+              color: '#4A4A4A',
+              background: 'rgba(255, 255, 255, 0.5)',
+            }}
           >
-            Join the Guild
-          </a>
-          <Link
-            href="#feed"
-            className="border border-palm-parchment/30 text-palm-parchment px-8 py-3 text-sm font-bold rounded-sm hover:bg-white/5 backdrop-blur-sm transition-colors flex justify-center items-center"
-          >
-            Activity Feed
-          </Link>
+            Join Community
+          </motion.a>
         </motion.div>
-      </div>
+
+        {/* Floating stats */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.2 }}
+          className="mt-12 grid grid-cols-3 gap-6 max-w-3xl mx-auto"
+        >
+          {[
+            { value: "7B", label: "Parameters", color: "#F5D99F" },
+            { value: "3", label: "Core Projects", color: "#FFB5A7" },
+            { value: "∞", label: "Tamil Heritage", color: "#C5E1A5" },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.4 + i * 0.1 }}
+              className="p-6 rounded-2xl backdrop-blur-sm"
+              style={{
+                background: `linear-gradient(135deg, ${stat.color}20, transparent)`,
+                border: `1px solid ${stat.color}40`,
+              }}
+            >
+              <div className="text-4xl md:text-5xl font-bold mb-2" style={{ color: stat.color }}>{stat.value}</div>
+              <div className="text-sm uppercase tracking-wider" style={{ color: '#4A4A4A80' }}>{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
+      >
+        <span className="text-xs uppercase tracking-widest" style={{ color: '#4A4A4A60' }}>Scroll</span>
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="w-6 h-10 border-2 rounded-full flex justify-center pt-2"
+          style={{ borderColor: '#F5D99F60' }}
+        >
+          <motion.div
+            animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="w-1.5 h-3 rounded-full"
+            style={{ background: '#F5D99F' }}
+          />
+        </motion.div>
+      </motion.div>
+
+      {/* Ambient particles */}
+      {Array.from({ length: 30 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 rounded-full"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            background: i % 3 === 0 ? '#F5D99F80' : i % 3 === 1 ? '#FFB5A780' : '#C5E1A580',
+          }}
+          animate={{
+            y: [0, -100, 0],
+            opacity: [0, 0.6, 0],
+          }}
+          transition={{
+            duration: 3 + Math.random() * 5,
+            repeat: Infinity,
+            delay: Math.random() * 5,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
     </section>
   );
 }
