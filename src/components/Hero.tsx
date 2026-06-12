@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 export default function Hero() {
   const [theme, setTheme] = useState<"agam" | "puram">("puram");
+  const [language, setLanguage] = useState<"ta" | "en">("ta");
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -36,6 +37,12 @@ export default function Hero() {
     void document.documentElement.offsetHeight;
 
     console.log("Theme attribute set to:", document.documentElement.getAttribute("data-theme"));
+  };
+
+  const toggleLanguage = () => {
+    const newLang = language === "ta" ? "en" : "ta";
+    console.log("Toggling language from", language, "to", newLang);
+    setLanguage(newLang);
   };
 
   return (
@@ -87,22 +94,53 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Theme Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-        className="absolute top-6 right-6 z-50 px-6 py-3 rounded-full backdrop-blur-sm"
-        style={{
-          background: 'var(--surface)',
-          border: '2px solid var(--accent)',
-          color: 'var(--text)',
-        }}
-      >
-        <span className="tamil-title text-2xl">
-          {theme === "agam" ? "அகம்" : "புறம்"}
-        </span>
-      </motion.div>
+      {/* Top Right Controls */}
+      <div className="absolute top-6 right-6 z-50 flex gap-3">
+        {/* Language Toggle */}
+        <motion.button
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1 }}
+          onClick={toggleLanguage}
+          className="px-6 py-3 rounded-full backdrop-blur-sm cursor-pointer group transition-all hover:scale-105"
+          style={{
+            background: 'var(--surface)',
+            border: '2px solid var(--accent)',
+            color: 'var(--text)',
+          }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-lg">
+              {language === "ta" ? "த" : "EN"}
+            </span>
+            <motion.div
+              animate={{ rotate: language === "ta" ? 0 : 180 }}
+              transition={{ duration: 0.3 }}
+            >
+              ⇄
+            </motion.div>
+          </div>
+        </motion.button>
+
+        {/* Theme Indicator */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 1.1 }}
+          className="px-6 py-3 rounded-full backdrop-blur-sm"
+          style={{
+            background: 'var(--surface)',
+            border: '2px solid var(--accent)',
+            color: 'var(--text)',
+          }}
+        >
+          <span className="tamil-title text-2xl">
+            {theme === "agam" ? "அகம்" : "புறம்"}
+          </span>
+        </motion.div>
+      </div>
 
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto text-center">
@@ -121,39 +159,50 @@ export default function Hero() {
           யாழி
         </motion.h1>
 
-        {/* Subtitle in Tamil */}
+        {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="tamil-body text-3xl md:text-5xl mb-4"
-          style={{ color: 'var(--accent)' }}
+          className="text-3xl md:text-5xl mb-4 font-bold"
+          style={{
+            color: 'var(--accent)',
+            fontFamily: language === "ta" ? 'var(--font-tamil)' : 'inherit'
+          }}
         >
-          தமிழ் செயற்கை நுண்ணறிவு
+          {language === "ta" ? "தமிழ் செயற்கை நுண்ணறிவு" : "Tamil Artificial Intelligence"}
         </motion.p>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="tamil-body text-xl md:text-2xl mb-12"
-          style={{ color: 'var(--text-soft)' }}
+          className="text-xl md:text-2xl mb-12 font-semibold"
+          style={{
+            color: 'var(--text-soft)',
+            fontFamily: language === "ta" ? 'var(--font-tamil)' : 'inherit'
+          }}
         >
-          Tamizh AI • அகமும் புறமும்
+          {language === "ta" ? "அகமும் புறமும்" : "Sovereign AI Model"}
         </motion.p>
 
-        {/* தர்சர்பு - Philosophy */}
+        {/* Philosophy */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
           className="mb-12 max-w-3xl mx-auto"
         >
-          <p className="tamil-body text-lg md:text-xl leading-relaxed" style={{ color: 'var(--text)' }}>
-            இந்திய மொழிகளுக்கான இறையாண்மை கொண்ட செயற்கை நுண்ணறிவு மாதிரி
-          </p>
-          <p className="mt-2 text-base md:text-lg font-semibold" style={{ color: 'var(--text-soft)' }}>
-            Sovereign AI Model for Indian Languages
+          <p
+            className="text-lg md:text-xl leading-relaxed font-semibold"
+            style={{
+              color: 'var(--text)',
+              fontFamily: language === "ta" ? 'var(--font-tamil)' : 'inherit'
+            }}
+          >
+            {language === "ta"
+              ? "இந்திய மொழிகளுக்கான இறையாண்மை கொண்ட செயற்கை நுண்ணறிவு மாதிரி"
+              : "Sovereign AI Model for Indian Languages"}
           </p>
         </motion.div>
 
@@ -170,10 +219,10 @@ export default function Hero() {
             style={{
               background: 'var(--accent)',
               color: 'var(--bg)',
-              fontFamily: 'var(--font-tamil)',
+              fontFamily: language === "ta" ? 'var(--font-tamil)' : 'inherit',
             }}
           >
-            ஆராய்க
+            {language === "ta" ? "ஆராய்க" : "Explore"}
           </a>
           <a
             href="https://discord.gg/yazhi"
@@ -183,14 +232,14 @@ export default function Hero() {
             style={{
               borderColor: 'var(--accent)',
               color: 'var(--text)',
-              fontFamily: 'var(--font-tamil)',
+              fontFamily: language === "ta" ? 'var(--font-tamil)' : 'inherit',
             }}
           >
-            இணையுங்கள்
+            {language === "ta" ? "இணையுங்கள்" : "Join Us"}
           </a>
         </motion.div>
 
-        {/* Stats in Tamil */}
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -198,9 +247,9 @@ export default function Hero() {
           className="grid grid-cols-3 gap-6 max-w-3xl mx-auto"
         >
           {[
-            { value: "7B", label: "அளவுருக்கள்", sub: "Parameters" },
-            { value: "22+", label: "இந்திய மொழிகள்", sub: "Indian Languages" },
-            { value: "3", label: "திட்டங்கள்", sub: "Projects" },
+            { value: "7B", labelTa: "அளவுருக்கள்", labelEn: "Parameters" },
+            { value: "22+", labelTa: "இந்திய மொழிகள்", labelEn: "Indian Languages" },
+            { value: "3", labelTa: "திட்டங்கள்", labelEn: "Projects" },
           ].map((stat, i) => (
             <motion.div
               key={i}
@@ -213,11 +262,14 @@ export default function Hero() {
               <div className="text-4xl font-black mb-1" style={{ color: 'var(--accent)' }}>
                 {stat.value}
               </div>
-              <div className="tamil-body text-sm mb-1" style={{ color: 'var(--text)' }}>
-                {stat.label}
-              </div>
-              <div className="text-xs" style={{ color: 'var(--text-soft)' }}>
-                {stat.sub}
+              <div
+                className="text-sm mb-1 font-semibold"
+                style={{
+                  color: 'var(--text)',
+                  fontFamily: language === "ta" ? 'var(--font-tamil)' : 'inherit'
+                }}
+              >
+                {language === "ta" ? stat.labelTa : stat.labelEn}
               </div>
             </motion.div>
           ))}
