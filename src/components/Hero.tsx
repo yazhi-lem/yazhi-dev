@@ -8,10 +8,11 @@ export default function Hero() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Get initial theme from DOM or set default
-    const currentTheme = document.documentElement.getAttribute("data-theme") as "agam" | "puram" || "puram";
-    setTheme(currentTheme);
-    document.documentElement.setAttribute("data-theme", currentTheme);
+    // Set initial theme
+    const initialTheme = "puram";
+    setTheme(initialTheme);
+    document.documentElement.setAttribute("data-theme", initialTheme);
+    console.log("Initial theme set:", initialTheme);
 
     // Track mouse position for interactive effects
     const handleMouseMove = (e: MouseEvent) => {
@@ -23,8 +24,18 @@ export default function Hero() {
 
   const toggleTheme = () => {
     const newTheme = theme === "agam" ? "puram" : "agam";
+    console.log("Toggling theme from", theme, "to", newTheme);
+
+    // Update state
     setTheme(newTheme);
+
+    // Update DOM attribute
     document.documentElement.setAttribute("data-theme", newTheme);
+
+    // Force repaint
+    void document.documentElement.offsetHeight;
+
+    console.log("Theme attribute set to:", document.documentElement.getAttribute("data-theme"));
   };
 
   return (

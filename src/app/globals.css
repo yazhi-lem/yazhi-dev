@@ -5,6 +5,16 @@
 
 /* அகமும் புறமும் - Interior and Exterior Themes */
 
+/* Default - புறம் (Exterior/Bold/Public) */
+:root {
+  --bg: #FFFEF9;
+  --surface: #FFF8E7;
+  --text: #1A0F0A;
+  --text-soft: #4A3420;
+  --accent: #B8651B;
+  --accent-light: #D4A574;
+}
+
 /* அகம் - Interior (Soft, Personal) */
 :root[data-theme="agam"] {
   --bg: #FFF8F0;
@@ -16,7 +26,7 @@
 }
 
 /* புறம் - Exterior (Bold, Public) */
-:root[data-theme="puram"], :root {
+:root[data-theme="puram"] {
   --bg: #FFFEF9;
   --surface: #FFF8E7;
   --text: #1A0F0A;
@@ -25,9 +35,9 @@
   --accent-light: #D4A574;
 }
 
-/* இருள் - Darkness Mode */
+/* இருள் - Darkness Mode (Optional - only when no theme set) */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --bg: #0F0A08;
     --surface: #1A1210;
     --text: #F5E6D3;
