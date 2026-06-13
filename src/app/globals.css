@@ -6,7 +6,7 @@
 
 /* அகமும் புறமும் - Interior and Exterior Themes */
 
-/* Default - புறம் (Exterior/Bold/Public) */
+/* Default - புறம் (Exterior/Light/Public) */
 :root {
   --bg: #FFFEF9;
   --surface: #FFF8E7;
@@ -16,17 +16,17 @@
   --accent-light: #D4A574;
 }
 
-/* அகம் - Interior (Soft, Personal) */
+/* அகம் - Interior (Dark/Personal/Night) */
 :root[data-theme="agam"] {
-  --bg: #FFF8F0;
-  --surface: #FFF0E0;
-  --text: #2C1810;
-  --text-soft: #6B4423;
-  --accent: #C17B3D;
+  --bg: #1A1210;
+  --surface: #2C2220;
+  --text: #F5E6D3;
+  --text-soft: #C4A77D;
+  --accent: #E5B181;
   --accent-light: #D4A574;
 }
 
-/* புறம் - Exterior (Bold, Public) */
+/* புறம் - Exterior (Light/Public/Day) */
 :root[data-theme="puram"] {
   --bg: #FFFEF9;
   --surface: #FFF8E7;

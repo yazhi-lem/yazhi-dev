@@ -70,49 +70,71 @@ export default function Hero() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-6"
       style={{ background: 'var(--bg)' }}
     >
-      {/* Interactive Gradient Sphere - Click to toggle theme */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="absolute top-6 left-6 z-50 cursor-pointer group"
-        onClick={toggleTheme}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <motion.svg
-          width="100"
-          height="100"
-          viewBox="0 0 100 100"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        >
-          <defs>
-            <radialGradient id="indianSphere" cx="40%" cy="40%">
-              <stop offset="0%" stopColor="#FF9933" stopOpacity="1" />
-              <stop offset="40%" stopColor="#FFFFFF" stopOpacity="1" />
-              <stop offset="70%" stopColor="#138808" stopOpacity="1" />
-              <stop offset="100%" stopColor="#000080" stopOpacity="0.8" />
-            </radialGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-              <feMerge>
-                <feMergeNode in="coloredBlur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <circle cx="50" cy="50" r="45" fill="url(#indianSphere)" opacity="0.9" filter="url(#glow)" />
-          <circle cx="50" cy="50" r="45" fill="none" stroke="var(--accent)" strokeWidth="2" opacity="0.3"
-            className="group-hover:opacity-100 transition-opacity" />
-        </motion.svg>
+      {/* Three Interactive Spheres - Left Corner */}
+      <div className="absolute top-6 left-6 z-50 flex gap-3">
+        {/* Sphere 1 - Theme Toggle */}
         <motion.div
-          className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity"
-          style={{ color: 'var(--accent)' }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="cursor-pointer group"
+          onClick={toggleTheme}
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
         >
-          {theme === "agam" ? "புறம்" : "அகம்"}
+          <motion.svg
+            width="60"
+            height="60"
+            viewBox="0 0 60 60"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          >
+            <defs>
+              <radialGradient id="sphere1" cx="40%" cy="40%">
+                <stop offset="0%" stopColor="#FF9933" stopOpacity="1" />
+                <stop offset="40%" stopColor="#FFFFFF" stopOpacity="1" />
+                <stop offset="70%" stopColor="#138808" stopOpacity="1" />
+                <stop offset="100%" stopColor="#000080" stopOpacity="0.8" />
+              </radialGradient>
+            </defs>
+            <circle cx="30" cy="30" r="25" fill="url(#sphere1)" opacity="0.9" />
+            <circle cx="30" cy="30" r="25" fill="none" stroke="var(--accent)" strokeWidth="1.5" opacity="0.3"
+              className="group-hover:opacity-100 transition-opacity" />
+          </motion.svg>
         </motion.div>
-      </motion.div>
+
+        {/* Sphere 2 - Smaller accent */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="cursor-pointer"
+          whileHover={{ scale: 1.2 }}
+        >
+          <svg width="40" height="40" viewBox="0 0 40 40">
+            <defs>
+              <radialGradient id="sphere2" cx="40%" cy="40%">
+                <stop offset="0%" stopColor="var(--accent-light)" />
+                <stop offset="100%" stopColor="var(--accent)" />
+              </radialGradient>
+            </defs>
+            <circle cx="20" cy="20" r="15" fill="url(#sphere2)" opacity="0.8" />
+          </svg>
+        </motion.div>
+
+        {/* Sphere 3 - Smallest accent */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="cursor-pointer"
+          whileHover={{ scale: 1.3 }}
+        >
+          <svg width="30" height="30" viewBox="0 0 30 30">
+            <circle cx="15" cy="15" r="10" fill="var(--accent)" opacity="0.6" />
+          </svg>
+        </motion.div>
+      </div>
 
       {/* Top Right Controls */}
       <div className="absolute top-6 right-6 z-50 flex gap-3">
