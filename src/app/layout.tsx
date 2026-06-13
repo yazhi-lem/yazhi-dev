@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ta" className={`${dmSerifDisplay.variable} ${jost.variable} scroll-smooth`} data-theme="puram">
+    <html lang="ta" className={`${dmSerifDisplay.variable} ${jost.variable}`} data-theme="puram">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

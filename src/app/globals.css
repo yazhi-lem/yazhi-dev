@@ -122,7 +122,6 @@
     font-family: var(--font-tamil);
     background: var(--bg);
     color: var(--text);
-    scroll-behavior: smooth;
     overflow-x: hidden;
     transition: background 0.8s ease, color 0.8s ease;
   }

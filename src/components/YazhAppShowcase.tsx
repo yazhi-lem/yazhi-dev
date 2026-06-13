@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import YazhiIllustration from "@/components/YazhiIllustration";
 
 export default function YazhAppShowcase() {
   const ref = useRef(null);
@@ -14,6 +15,16 @@ export default function YazhAppShowcase() {
       style={{ background: 'var(--surface)' }}
     >
       <div className="relative z-10 max-w-4xl mx-auto text-center">
+        {/* Baby Yazh Illustration */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+          animate={isInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+          transition={{ duration: 0.8, type: "spring" }}
+          className="mb-6 flex justify-center"
+        >
+          <YazhiIllustration size={250} variant="baby" animate={isInView} />
+        </motion.div>
+
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}

@@ -21,7 +21,7 @@ An immersive 100vh website celebrating Tamil heritage through Yazhi (mythical gu
 - Interactive mouse tracking with cyber-trail effects
 - Tech-forward digital particles
 - Stats: 7B Parameters, 3 Core Projects, ∞ Tamil Heritage
-- Smooth scroll parallax
+- Direct, rigid scrolling (reduced flow)
 
 ### 2. Adhan Model Section
 **Digital Data Stream**

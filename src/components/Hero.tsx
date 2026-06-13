@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { content } from "@/content/translations";
+import YazhiIllustration from "@/components/YazhiIllustration";
 
 export default function Hero() {
   const [theme, setTheme] = useState<"kurinji" | "mullai" | "marutham" | "neytal" | "palai">("kurinji");
@@ -171,6 +172,16 @@ export default function Hero() {
 
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto text-center">
+
+        {/* Yazhi Guardian Illustration */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5, y: -50 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.1, type: "spring" }}
+          className="mb-8 flex justify-center"
+        >
+          <YazhiIllustration size={200} variant="adult" animate={true} />
+        </motion.div>
 
         {/* Title */}
         <motion.h1
