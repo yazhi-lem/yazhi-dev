@@ -2,10 +2,11 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Hero() {
   const [theme, setTheme] = useState<"agam" | "puram" | "ocean">("puram");
-  const [language, setLanguage] = useState<"ta" | "en" | "both">("ta");
+  const { language, setLanguage, t } = useLanguage();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -196,7 +197,7 @@ export default function Hero() {
             fontWeight: 900,
           }}
         >
-          {language === "ta" ? "யாழி" : language === "en" ? "YAZHI" : "யாழி • YAZHI"}
+          {t("யாழி", "YAZHI")}
         </motion.h1>
 
         {/* Subtitle */}

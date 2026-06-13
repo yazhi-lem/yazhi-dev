@@ -4,10 +4,12 @@ import SangamShowcase from "@/components/SangamShowcase";
 import YazhAppShowcase from "@/components/YazhAppShowcase";
 import ServicesGrid from "@/components/ServicesGrid";
 import Footer from "@/components/Footer";
+import ThinaiBar from "@/components/ThinaiBar";
 
 export default function Home() {
   return (
     <main className="relative overflow-hidden">
+      <ThinaiBar />
       <Hero />
       <AdhanShowcase />
       <SangamShowcase />
