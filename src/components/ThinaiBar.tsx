@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
-type Theme = "kurinji" | "mullai" | "marutham";
+type Theme = "kurinji" | "mullai" | "marutham" | "neytal" | "palai";
 
 const thinaiThemes = [
   {
@@ -11,24 +11,40 @@ const thinaiThemes = [
     tamil: "குறிஞ்சி",
     english: "Mountains",
     icon: "🏔️",
-    theme: "agam", // Dark mountains
-    color: "#C17B3D",
+    theme: "kurinji",
+    color: "#9D7BC7",
   },
   {
     id: "mullai" as const,
     tamil: "முல்லை",
     english: "Forest",
     icon: "🌳",
-    theme: "puram", // Light forest
-    color: "#B8651B",
+    theme: "mullai",
+    color: "#6B9F2F",
   },
   {
     id: "marutham" as const,
     tamil: "மருதம்",
     english: "Agriculture",
     icon: "🌾",
-    theme: "ocean", // Water/farmland
+    theme: "marutham",
+    color: "#C17B3D",
+  },
+  {
+    id: "neytal" as const,
+    tamil: "நெய்தல்",
+    english: "Coastal",
+    icon: "🌊",
+    theme: "neytal",
     color: "#4A9ECC",
+  },
+  {
+    id: "palai" as const,
+    tamil: "பாலை",
+    english: "Desert",
+    icon: "🏜️",
+    theme: "palai",
+    color: "#CC6B4A",
   },
 ];
 

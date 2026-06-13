@@ -6,28 +6,44 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { content } from "@/content/translations";
 
 export default function Hero() {
-  const [theme, setTheme] = useState<"agam" | "puram" | "ocean">("puram");
+  const [theme, setTheme] = useState<"kurinji" | "mullai" | "marutham" | "neytal" | "palai">("kurinji");
   const { language, setLanguage, t } = useLanguage();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Set initial theme
-    const initialTheme = "puram";
-    setTheme(initialTheme);
-    document.documentElement.setAttribute("data-theme", initialTheme);
-    console.log("Initial theme set:", initialTheme);
+    // Get initial theme from DOM or set default
+    const currentTheme = document.documentElement.getAttribute("data-theme") as typeof theme || "kurinji";
+    setTheme(currentTheme);
+
+    // Listen for theme changes from scroll observer
+    const observer = new MutationObserver(() => {
+      const newTheme = document.documentElement.getAttribute("data-theme") as typeof theme;
+      if (newTheme && newTheme !== theme) {
+        setTheme(newTheme);
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     // Track mouse position for interactive effects
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   const toggleTheme = () => {
-    // Cycle through three themes: puram → agam → ocean → puram
-    const themeOrder: Array<"puram" | "agam" | "ocean"> = ["puram", "agam", "ocean"];
+    // Cycle through five Thinai themes
+    const themeOrder: Array<"kurinji" | "mullai" | "marutham" | "neytal" | "palai"> =
+      ["kurinji", "mullai", "marutham", "neytal", "palai"];
     const currentIndex = themeOrder.indexOf(theme);
     const newTheme = themeOrder[(currentIndex + 1) % themeOrder.length];
 

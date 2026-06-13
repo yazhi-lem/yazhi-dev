@@ -1,83 +1,78 @@
 # Yazhi - Immersive Web Experience Design
 
 ## Design Philosophy
-An immersive 100vh website celebrating Tamil heritage through Yazhi (mythical guardian), featuring three core projects: Yazh App, Adhan Model, and Project Sangam. The experience embodies the spirit of Kumari Kandam - the submerged mythical Tamil continent.
+An immersive 100vh website celebrating Tamil heritage through Yazhi (mythical guardian), featuring three core projects: **Yazh - Guardian App**, **Adhan - Tamil LLM**, and **Project Sangam - Tamil Corpus**. The experience embodies the spirit of **Sangam Age Tamil Heritage**, reimagined through a clean, professional, and tech-forward aesthetic.
 
-## Color Palette - Light Pastel Mode
-- **Soft Cream**: `#FEF9F3` - Base background
-- **Pastel Gold**: `#F5D99F` - Turmeric inspired
-- **Pastel Coral**: `#FFB5A7` - Red clay inspired
-- **Pastel Sage**: `#C5E1A5` - Neem leaf inspired
-- **Soft Charcoal**: `#4A4A4A` - Text
-- **Light Accents**: Soft pastels throughout for depth
+## Color Palette - High-Contrast Dark Mode
+- **Cyber Void**: `#050505` - Base background
+- **Neon Accent**: `#00FF9D` - Tech/Futuristic accent
+- **Holographic Purple**: `#B026FF` - Deep futuristic vibe
+- **Bright White**: `#FAFAFA` - Primary Text
+- **Dark Surface**: `#111111` - Card backgrounds
+- **Neon Accents**: High-contrast glowing elements and borders
 
 ## Core Elements
 
 ### 1. Hero Section (100vh)
-- Massive "YAZHI" gradient heading
-- Organic animated blobs with pastel gradients
-- Three-mark Yazhi logo floating with gentle animation
-- Tamil character (ழ) in golden circle
-- Interactive mouse tracking
-- Floating particles
+- Massive "YAZHI" minimalist vector heading
+- Dynamic, theme-specific geometric vector animations in the background
+- Three-mark Yazhi logo floating with subtle neon glow
+- Tamil character (ழ) in holographic glowing circle
+- Interactive mouse tracking with cyber-trail effects
+- Tech-forward digital particles
 - Stats: 7B Parameters, 3 Core Projects, ∞ Tamil Heritage
 - Smooth scroll parallax
 
 ### 2. Adhan Model Section
-**Dense Tamil Letter Particles**
-- All Tamil letters (அ-ஔ, க-ன) as dense floating particles
-- Letters should fill the background densely
-- Gentle wave animations
-- Varying sizes and opacities
-- Code demonstration of Tamil processing
+**Digital Data Stream**
+- Tamil letters (அ-ஔ, க-ன) flowing as modern digital data streams
+- Dynamic pulsing animations on active particles
+- High contrast neon accents on key nodes
+- Code demonstration of Tamil processing with cyber syntax highlighting
 - Links to: https://github.com/yazhi-lem/adhan
 
 ### 3. Project Sangam Section
-**Madurai Kanji (Pond) Landscape**
-- Best layout showcasing Sangam-era Madurai
-- Traditional Tamil architecture elements
-- Temple pond (Kanji) at center
-- Palm trees silhouettes
-- Ancient Tamil aesthetic
-- Sangam poetry integration
+**Digital Madurai Construct**
+- Minimalist SVG iconography for the Tinai system (replacing vertical sidebar text)
+- Traditional Tamil architecture interpreted as clean vector graphics
+- Temple pond (Kanji) as a central digital locus
+- High-contrast geometric layouts
 - Features: Poem analysis, linguistic analysis, Thinai mapping
 
 ### 4. Yazh App Section
-**Communal Forest with Playground**
-- Community forest setting
-- Playground elements (swings, slides)
-- Children playing references
-- Yazh creature as protective guardian
-- Nature-integrated design
-- References from previous conversations about community and play
+**Connected Node Network**
+- Community connections visualized as a glowing node network
+- Playful yet professional tech-forward interactions
+- Yazh creature presented as a digital guardian/avatar
+- Neon-accented UI elements and crisp transitions
 
 ### 5. Services Grid
 - Agents: AI agents for Tamil tasks
 - Applications: Production Tamil apps
 - Annotations: Tamil datasets and pipelines
-- Modern card layouts with pastel gradients
+- Brutalist high-tech dark card layouts with subtle glowing borders
 
 ## Animation Principles
-- Smooth, organic movements
-- Gentle floating effects
-- Subtle parallax scrolling
-- Pulsing glows (soft, not harsh)
-- Gradient transitions
-- Interactive hover states
+- Dynamic geometric vector animations
+- Clean, crisp easing movements
+- Subtle neon pulsing glows (professional, not harsh)
+- High-contrast theme-specific transitions
+- Interactive hover states revealing connections
 
 ## Typography
-- **Display**: DM Serif Display - for headings
-- **Body**: Jost - clean, modern sans-serif
-- Tamil script integrated throughout
+- **Display**: Space Grotesk or modern tech-forward sans for headings
+- **Body**: Inter or Roboto - clean, modern sans-serif
+- Tamil script integrated throughout with modern, clean weights
 
 ## Technical Stack
 - Next.js 16 with App Router
-- Framer Motion for animations
+- Framer Motion for dynamic animations
 - Tailwind CSS 4
 - TypeScript
-- SVG illustrations
+- SVG minimalist iconography and geometric vectors
 
 ## Accessibility
+- High contrast ratios
 - Smooth focus states
 - Reduced motion support
 - Semantic HTML
@@ -88,7 +83,7 @@ Floating throughout the experience, representing:
 - The trinity of projects
 - Tamil heritage markers
 - Brand identity
-- Gentle rotation and floating animation
+- Clean vector rendering with neon edge-lit accents
 
 ---
 
