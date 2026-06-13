@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { content } from "@/content/translations";
 
 export default function Hero() {
   const [theme, setTheme] = useState<"agam" | "puram" | "ocean">("puram");
@@ -211,11 +212,7 @@ export default function Hero() {
             fontFamily: language !== "en" ? 'var(--font-tamil)' : 'inherit'
           }}
         >
-          {language === "ta"
-            ? "தமிழ் செயற்கை நுண்ணறிவு"
-            : language === "en"
-            ? "Tamil Artificial Intelligence"
-            : "தமிழ் செயற்கை நுண்ணறிவு • Tamil AI"}
+          {t(content.hero.subtitle.ta, content.hero.subtitle.en)}
         </motion.p>
 
         <motion.p
@@ -228,11 +225,7 @@ export default function Hero() {
             fontFamily: language !== "en" ? 'var(--font-tamil)' : 'inherit'
           }}
         >
-          {language === "ta"
-            ? "அகமும் புறமும்"
-            : language === "en"
-            ? "Sovereign AI Model"
-            : "அகமும் புறமும் • Sovereign AI"}
+          {t(content.hero.tagline.ta, content.hero.tagline.en)}
         </motion.p>
 
         {/* Philosophy */}
