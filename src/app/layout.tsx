@@ -22,6 +22,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider";
+import WebGLBackground from "@/components/WebGLBackground";
 
 export default function RootLayout({
   children,
@@ -29,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ta" className={`${dmSerifDisplay.variable} ${jost.variable}`} data-theme="puram">
+    <html lang="ta" className={`${dmSerifDisplay.variable} ${jost.variable}`} data-theme="neytal">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className="overflow-x-hidden antialiased">
         <LanguageProvider>
           <ThemeProvider>
+            <WebGLBackground />
             {children}
           </ThemeProvider>
         </LanguageProvider>

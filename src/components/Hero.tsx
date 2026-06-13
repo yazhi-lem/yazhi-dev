@@ -76,8 +76,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden px-6"
-      style={{ background: 'var(--bg)' }}
+      className="relative min-h-screen py-32 flex items-center justify-center overflow-hidden px-6"
     >
       {/* Three Interactive Spheres - Left Corner */}
       <div className="absolute top-6 left-6 z-50 flex gap-3">

@@ -129,16 +129,18 @@
   /* Smooth theme transitions */
   :root {
     transition:
-      --bg 0.8s ease,
-      --surface 0.8s ease,
-      --text 0.8s ease,
-      --text-soft 0.8s ease,
-      --accent 0.8s ease,
-      --accent-light 0.8s ease;
+      --bg 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --surface 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --text 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --text-soft 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --accent 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --accent-light 2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   * {
-    transition: background-color 0.8s ease, color 0.8s ease, border-color 0.8s ease;
+    transition: background-color 2s cubic-bezier(0.4, 0, 0.2, 1),
+                color 2s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   h1, h2, h3 {

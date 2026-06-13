@@ -10,8 +10,7 @@ export default function YazhAppShowcase() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center px-6 py-16 overflow-hidden"
-      style={{ background: 'var(--surface)' }}
+      className="relative min-h-screen py-24 flex items-center justify-center px-6 overflow-hidden"
     >
       <div className="relative z-10 max-w-4xl mx-auto text-center">
         <motion.h2

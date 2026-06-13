@@ -2,14 +2,15 @@
 
 import { useEffect } from "react";
 
-// Map sections to their Thinai themes
+// Map sections to their Thinai themes - Dark to Light progression
 const sectionThemes: Record<string, string> = {
-  hero: "kurinji",        // Mountains - Purple dark
-  adhan: "mullai",        // Forest - Green light
-  sangam: "marutham",     // Agriculture - Earth brown
-  yazh: "neytal",         // Coastal - Ocean blue
-  services: "palai",      // Desert - Red/orange
-  footer: "kurinji",      // Back to mountains
+  intro: "neytal",        // Transmission - Ocean blue (DARK)
+  hero: "kurinji",        // Hero - Mountains purple (DARK)
+  services: "palai",      // Services/Climate - Desert red (DARK)
+  adhan: "neytal",        // Adhan - Coastal blue (DARK)
+  yazh: "mullai",         // Yazh - Forest green (LIGHT)
+  sangam: "marutham",     // Sangam - Agriculture earth (LIGHT)
+  thinai: "marutham",     // Thinai footer - End light
 };
 
 export default function ScrollThemeObserver() {

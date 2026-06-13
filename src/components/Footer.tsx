@@ -96,9 +96,17 @@ export default function Footer() {
       {/* Links & Info */}
       <div className="relative z-10 max-w-7xl mx-auto border-t pt-12 mb-12" style={{ borderColor: 'var(--accent)', opacity: 0.2 }}>
         <div className="grid md:grid-cols-4 gap-8 mb-12">
-          {/* Yazhi Branding */}
+          {/* Yazhi Logo */}
           <div>
-            <h3 className="tamil-title text-4xl mb-2" style={{ color: 'var(--text)' }}>
+            <svg width="80" height="80" viewBox="0 0 120 120" className="mb-4">
+              <circle cx="60" cy="35" r="15" fill="var(--accent)" />
+              <circle cx="35" cy="75" r="15" fill="var(--accent)" />
+              <circle cx="85" cy="75" r="15" fill="var(--accent)" />
+              <line x1="60" y1="35" x2="35" y2="75" stroke="var(--accent)" strokeWidth="4" />
+              <line x1="60" y1="35" x2="85" y2="75" stroke="var(--accent)" strokeWidth="4" />
+              <line x1="35" y1="75" x2="85" y2="75" stroke="var(--accent)" strokeWidth="4" />
+            </svg>
+            <h3 className="tamil-title text-3xl mb-2" style={{ color: 'var(--text)' }}>
               யாழி
             </h3>
             <p className="text-sm" style={{ color: 'var(--text-soft)' }}>
@@ -142,25 +150,27 @@ export default function Footer() {
             © 2025 யாழி • Yazhi. இறையாண்மை செயற்கை நுண்ணறிவு • Sovereign AI
           </p>
 
-          {/* Indian Gradient Sphere */}
-          <motion.svg
-            width="70"
-            height="70"
-            viewBox="0 0 70 70"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <defs>
-              <radialGradient id="footerIndianSphere" cx="40%" cy="40%">
-                <stop offset="0%" stopColor="#FF9933" stopOpacity="1" />
-                <stop offset="40%" stopColor="#FFFFFF" stopOpacity="1" />
-                <stop offset="70%" stopColor="#138808" stopOpacity="1" />
-                <stop offset="100%" stopColor="#000080" stopOpacity="0.8" />
-              </radialGradient>
-            </defs>
-            <circle cx="35" cy="35" r="32" fill="url(#footerIndianSphere)" opacity="0.9" />
-            <circle cx="35" cy="35" r="32" fill="none" stroke="var(--accent)" strokeWidth="1.5" opacity="0.3" />
-          </motion.svg>
+          {/* Indian Flag */}
+          <svg width="60" height="40" viewBox="0 0 60 40">
+            <rect width="60" height="13.33" fill="#FF9933" />
+            <rect y="13.33" width="60" height="13.33" fill="#FFFFFF" />
+            <rect y="26.66" width="60" height="13.33" fill="#138808" />
+            <circle cx="30" cy="20" r="6" fill="none" stroke="#000080" strokeWidth="0.6" />
+            <g transform="translate(30, 20)">
+              {Array.from({ length: 24 }).map((_, i) => (
+                <line
+                  key={i}
+                  x1="0"
+                  y1="0"
+                  x2="0"
+                  y2="-5"
+                  stroke="#000080"
+                  strokeWidth="0.4"
+                  transform={`rotate(${i * 15})`}
+                />
+              ))}
+            </g>
+          </svg>
         </div>
       </div>
     </footer>

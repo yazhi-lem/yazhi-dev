@@ -35,8 +35,7 @@ export default function AdhanShowcase() {
     <section
       id="adhan"
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center px-6 py-16 overflow-hidden"
-      style={{ background: 'var(--surface)' }}
+      className="relative min-h-screen py-24 flex items-center justify-center px-6 overflow-hidden"
     >
       {/* Floating Indian Scripts */}
       <div className="absolute inset-0 overflow-hidden opacity-30">
