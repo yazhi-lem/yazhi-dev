@@ -36,10 +36,24 @@ export default function ThinaiBar() {
   const [activeTheme, setActiveTheme] = useState<Theme>("mullai");
 
   useEffect(() => {
-    // Get theme from DOM
+    // Get initial theme from DOM
     const currentTheme = document.documentElement.getAttribute("data-theme");
     const thinai = thinaiThemes.find((t) => t.theme === currentTheme);
     if (thinai) setActiveTheme(thinai.id);
+
+    // Listen for theme changes
+    const observer = new MutationObserver(() => {
+      const newTheme = document.documentElement.getAttribute("data-theme");
+      const newThinai = thinaiThemes.find((t) => t.theme === newTheme);
+      if (newThinai) setActiveTheme(newThinai.id);
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   const handleThemeClick = (thinai: typeof thinaiThemes[0]) => {

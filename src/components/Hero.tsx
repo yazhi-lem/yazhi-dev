@@ -57,15 +57,6 @@ export default function Hero() {
     });
   };
 
-  const toggleLanguage = () => {
-    // Cycle through: ta → en → both → ta
-    const langOrder: Array<"ta" | "en" | "both"> = ["ta", "en", "both"];
-    const currentIndex = langOrder.indexOf(language);
-    const newLang = langOrder[(currentIndex + 1) % langOrder.length];
-
-    console.log("🌐 Toggling language from", language, "to", newLang);
-    setLanguage(newLang);
-  };
 
   return (
     <section
@@ -138,49 +129,29 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Top Right Controls */}
-      <div className="absolute top-6 right-6 z-50 flex gap-3">
-        {/* Language Toggle */}
-        <motion.button
-          key={language}
-          initial={{ opacity: 0, x: 20, scale: 0.8 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ delay: 1, type: "spring" }}
-          onClick={toggleLanguage}
-          className="px-6 py-3 rounded-full backdrop-blur-sm cursor-pointer group transition-all hover:scale-105"
+      {/* Language Dropdown - Top Right */}
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 1 }}
+        className="absolute top-6 right-6 z-50"
+      >
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value as "ta" | "en" | "both")}
+          className="px-6 py-3 rounded-full backdrop-blur-sm cursor-pointer font-bold text-base transition-all"
           style={{
             background: 'var(--surface)',
             border: '2px solid var(--accent)',
             color: 'var(--text)',
-          }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-lg">
-              {language === "ta" ? "த" : language === "en" ? "EN" : "த+EN"}
-            </span>
-          </div>
-        </motion.button>
-
-        {/* Theme Indicator */}
-        <motion.div
-          key={theme}
-          initial={{ opacity: 0, x: 20, scale: 0.8 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ delay: 1.1, type: "spring" }}
-          className="px-6 py-3 rounded-full backdrop-blur-sm"
-          style={{
-            background: 'var(--surface)',
-            border: '2px solid var(--accent)',
-            color: 'var(--text)',
+            outline: 'none',
           }}
         >
-          <span className="tamil-title text-xl">
-            {theme === "agam" ? "அகம்" : theme === "puram" ? "புறம்" : "கடல்"}
-          </span>
-        </motion.div>
-      </div>
+          <option value="ta">TAM - தமிழ்</option>
+          <option value="en">ENG - English</option>
+          <option value="both">BOTH - இரண்டும்</option>
+        </select>
+      </motion.div>
 
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto text-center">
