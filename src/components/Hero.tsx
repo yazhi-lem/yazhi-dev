@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { content } from "@/content/translations";
@@ -9,6 +9,7 @@ export default function Hero() {
   const [theme, setTheme] = useState<"kurinji" | "mullai" | "marutham" | "neytal" | "palai">("kurinji");
   const { language, setLanguage, t } = useLanguage();
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     // Get initial theme from DOM or set default
@@ -28,17 +29,19 @@ export default function Hero() {
       attributeFilter: ["data-theme"],
     });
 
-    // Track mouse position for interactive effects
+    // Track mouse position for interactive effects (skip when user prefers reduced motion)
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
     };
-    window.addEventListener("mousemove", handleMouseMove);
+    if (!prefersReducedMotion) {
+      window.addEventListener("mousemove", handleMouseMove);
+    }
 
     return () => {
       observer.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   const toggleTheme = () => {
     // Cycle through five Thinai themes
@@ -94,7 +97,7 @@ export default function Hero() {
             width="60"
             height="60"
             viewBox="0 0 60 60"
-            animate={{ rotate: 360 }}
+            animate={prefersReducedMotion ? {} : { rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
             <defs>
@@ -350,7 +353,7 @@ export default function Hero() {
               r="3"
               fill="var(--accent)"
               filter="url(#starGlow)"
-              animate={{
+              animate={prefersReducedMotion ? {} : {
                 opacity: [0.4, 1, 0.4],
                 r: [3, 4, 3],
               }}
@@ -365,6 +368,7 @@ export default function Hero() {
       </svg>
 
       {/* Interactive Mouse Followers */}
+      {!prefersReducedMotion && (
       <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 2 }}>
         {[0, 1, 2, 3, 4].map((i) => (
           <motion.div
@@ -386,6 +390,7 @@ export default function Hero() {
           />
         ))}
       </div>
+      )}
 
       {/* Decorative Tamil Letters */}
       <div className="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
@@ -398,7 +403,7 @@ export default function Hero() {
               top: `${20 + (i % 3) * 25}%`,
               color: 'var(--accent)',
             }}
-            animate={{
+            animate={prefersReducedMotion ? {} : {
               y: [-20, 20, -20],
               opacity: [0.05, 0.15, 0.05],
             }}
@@ -417,8 +422,8 @@ export default function Hero() {
       {language === "ta" && (
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.6, 0] }}
-          transition={{ duration: 10, repeat: Infinity, repeatDelay: 5 }}
+          animate={prefersReducedMotion ? { opacity: 0.6 } : { opacity: [0, 0.6, 0] }}
+          transition={{ duration: 10, repeat: prefersReducedMotion ? 0 : Infinity, repeatDelay: 5 }}
           className="absolute top-1/4 right-12 max-w-xs text-right pointer-events-none"
           style={{ zIndex: 3 }}
         >
@@ -434,14 +439,16 @@ export default function Hero() {
 
       {/* Scroll */}
       <motion.div
-        animate={{ y: [0, 12, 0] }}
+        animate={prefersReducedMotion ? {} : { y: [0, 12, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
         <svg width="24" height="40" viewBox="0 0 24 40" style={{ stroke: 'var(--accent)' }}>
           <rect x="1" y="1" width="22" height="38" rx="11" fill="none" strokeWidth="2" />
           <circle cx="12" cy="12" r="3" fill="var(--accent)">
-            <animate attributeName="cy" from="12" to="28" dur="2s" repeatCount="indefinite" />
+            {!prefersReducedMotion && (
+              <animate attributeName="cy" from="12" to="28" dur="2s" repeatCount="indefinite" />
+            )}
           </circle>
         </svg>
       </motion.div>
