@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Footer() {
   // ஐந்திணை - Five Landscapes of Sangam Literature
@@ -35,6 +36,7 @@ export default function Footer() {
       section: "சமூகம்",
       sectionEng: "Community",
       items: [
+        { tamil: "வலையில் இணை", eng: "Join the Network", href: "/onboarding" },
         { tamil: "Discord", eng: "Discord", href: "https://discord.gg/yazhi" },
         { tamil: "GitHub", eng: "GitHub", href: "https://github.com/yazhi-lem" },
       ],
@@ -128,15 +130,25 @@ export default function Footer() {
               <ul className="space-y-2">
                 {section.items.map((item, j) => (
                   <li key={j}>
-                    <a
-                      href={item.href}
-                      target={item.href.startsWith('http') ? '_blank' : undefined}
-                      rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="text-sm hover:opacity-70 transition-opacity"
-                      style={{ color: 'var(--text-soft)' }}
-                    >
-                      {item.tamil} • {item.eng}
-                    </a>
+                    {item.href.startsWith('http') ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm hover:opacity-70 transition-opacity"
+                        style={{ color: 'var(--text-soft)' }}
+                      >
+                        {item.tamil} • {item.eng}
+                      </a>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="text-sm hover:opacity-70 transition-opacity"
+                        style={{ color: 'var(--text-soft)' }}
+                      >
+                        {item.tamil} • {item.eng}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
