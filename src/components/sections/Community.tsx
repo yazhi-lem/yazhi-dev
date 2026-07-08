@@ -13,7 +13,7 @@ export function Community() {
   return (
     <section id="community" className="mx-auto max-w-[var(--max-w)] px-5 py-[var(--space-section)]">
       <SectionHeading
-        thinaiTa="நெய்தல்" thinaiEn="Neytal" landscapeTa="கடற்கரை" landscape="Coastal · separation, closed"
+        thinaiTa="நெய்தல்" thinaiEn="Neytal" landscapeTa="கடற்கரை" landscape="Coastal · separation, pining"
         titleTa={COMMUNITY.titleTa} titleEn={COMMUNITY.titleEn}
         subTa={COMMUNITY.subTa} subEn={COMMUNITY.subEn}
       />

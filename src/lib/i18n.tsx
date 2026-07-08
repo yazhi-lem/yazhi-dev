@@ -5,12 +5,14 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 export type Lang = "ta" | "en" | "both";
 
 const LangContext = createContext<{ lang: Lang; setLang: (l: Lang) => void }>({
-  lang: "both",
+  lang: "ta",
   setLang: () => {},
 });
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("both");
+  // Tamil-first: the site always starts in Tamil; ENG / both are opt-in and
+  // a returning visitor's saved choice is restored below.
+  const [lang, setLang] = useState<Lang>("ta");
 
   // persist preference
   useEffect(() => {

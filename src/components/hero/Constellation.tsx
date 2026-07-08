@@ -3,64 +3,80 @@ import { useMemo } from "react";
 import { SCRIPTS, STATS } from "@/lib/content";
 import { Bi } from "@/components/ui/Bi";
 
+/** Small deterministic PRNG (mulberry32). A fixed seed means the scatter is
+    identical on the server and the client, so there is no hydration
+    mismatch even though the layout looks random. */
+function mulberry32(seed: number) {
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 /** The script constellation, built as typographic DOM — deliberately not
-    WebGL (see README §Design decisions): real glyphs on counter-rotating
-    orbital rings, unifying around the model's stat core, per
-    BRAND_AND_CONTENT §4 ("not just generic background noise").
-    Reduced motion: rings freeze into a static constellation. */
+    WebGL (see README §Design decisions): real glyphs from many Indic
+    scripts scattered freely around the model's stat core, per
+    BRAND_AND_CONTENT §4 ("not just generic background noise"). The scatter
+    (not rings) says "many scripts converging on one model".
+    Reduced motion: the drift freezes into a still constellation. */
 export function Constellation() {
-  // Deterministic distribution: interleave scripts across three rings so no
-  // ring is single-script — the visual argument is "many scripts, one model".
-  const rings = useMemo(() => {
+  const glyphs = useMemo(() => {
     const all = SCRIPTS.flatMap((s) => s.glyphs.map((g) => ({ g, script: s.name })));
-    const r: { g: string; script: string }[][] = [[], [], []];
-    all.forEach((item, i) => r[i % 3].push(item));
-    // cap each ring so it breathes on mobile
-    return r.map((ring, i) => ring.filter((_, j) => j % (i === 0 ? 3 : i === 1 ? 2 : 2) === 0));
+    const rand = mulberry32(20260708);
+    return all.map((item) => {
+      // Scatter across the square but keep a clear elliptical hole in the
+      // middle where the stat block sits — reject samples inside the core.
+      let x = 50;
+      let y = 50;
+      for (let tries = 0; tries < 40; tries++) {
+        x = rand() * 100;
+        y = rand() * 100;
+        const dx = (x - 50) / 33;
+        const dy = (y - 50) / 28;
+        if (dx * dx + dy * dy > 1) break;
+      }
+      return {
+        g: item.g,
+        x,
+        y,
+        size: 0.85 + rand() * 1.35, // rem
+        opacity: 0.32 + rand() * 0.5,
+        delay: -(rand() * 9), // negative so they start mid-cycle, not in sync
+        dur: 7 + rand() * 9,
+      };
+    });
   }, []);
 
-  const ringConf = [
-    { size: "min(88vw, 620px)", duration: "90s", opacity: 0.9 },
-    { size: "min(66vw, 460px)", duration: "70s", opacity: 0.65 },
-    { size: "min(46vw, 320px)", duration: "55s", opacity: 0.45 },
-  ];
-
   return (
-    <div className="relative mx-auto grid aspect-square w-full max-w-[620px] place-items-center" aria-hidden={false}>
-      {/* orbital rings */}
-      {rings.map((ring, ri) => (
-        <div
-          key={ri}
-          aria-hidden
-          className="ring absolute rounded-full border border-ivory/5"
-          style={{
-            width: ringConf[ri].size,
-            height: ringConf[ri].size,
-            animationDuration: ringConf[ri].duration,
-            opacity: ringConf[ri].opacity,
-          }}
-        >
-          {ring.map((item, gi) => {
-            const angle = (360 / ring.length) * gi;
-            return (
-              <span
-                key={`${item.g}-${gi}`}
-                className="absolute left-1/2 top-1/2"
-                style={{ transform: `rotate(${angle}deg) translateY(calc(${ringConf[ri].size} / -2))` }}
-              >
-                <span
-                  className="ring-glyph block font-display text-lg text-ivory/80 sm:text-xl"
-                  style={{ animationDuration: ringConf[ri].duration, textShadow: "0 0 18px color-mix(in oklab, var(--accent) 55%, transparent)" }}
-                >
-                  {item.g}
-                </span>
-              </span>
-            );
-          })}
-        </div>
-      ))}
+    <div className="relative mx-auto grid aspect-square w-full max-w-[620px] place-items-center">
+      {/* scattered multi-script glyphs */}
+      <div aria-hidden className="absolute inset-0">
+        {glyphs.map((p, i) => (
+          <span
+            key={i}
+            className="absolute"
+            style={{ left: `${p.x}%`, top: `${p.y}%`, transform: "translate(-50%, -50%)" }}
+          >
+            <span
+              className="scatter-glyph block font-display text-ivory/80"
+              style={{
+                fontSize: `${p.size}rem`,
+                opacity: p.opacity,
+                animationDelay: `${p.delay}s`,
+                animationDuration: `${p.dur}s`,
+                textShadow: "0 0 18px color-mix(in oklab, var(--accent) 55%, transparent)",
+              }}
+            >
+              {p.g}
+            </span>
+          </span>
+        ))}
+      </div>
 
-      {/* the core the constellation unifies around: the model stat block */}
+      {/* the core the scatter unifies around: the model stat block */}
       <div className="relative z-10 rounded-2xl border border-[color:var(--accent)]/40 bg-night-2/85 px-6 py-5 text-center shadow-[0_0_60px_-15px_var(--accent)] backdrop-blur">
         <Bi
           as="p"
