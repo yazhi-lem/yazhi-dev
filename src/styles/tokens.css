@@ -1,0 +1,52 @@
+/* ============================================================
+   YAZHI DESIGN TOKENS
+   Palette: indigo-night base + bronze/gold (guardian-sculpture,
+   Sangam-manuscript register) + five thinai accent hues.
+   NOTE: this is the proposed refresh flagged in BRAND_AND_CONTENT.md
+   section 10(b) — a deliberate change from the live site, pending
+   a screenshot audit of yazhi-dev.vercel.app.
+   ============================================================ */
+:root {
+  /* base */
+  --night: #0b0e1a;        /* indigo night — page ground */
+  --night-2: #141729;      /* raised surfaces / cards */
+  --ivory: #f2ebdd;        /* manuscript ivory — primary text on dark */
+  --ivory-dim: #c9c2b2;    /* secondary text */
+  --bronze: #c08a3e;       /* temple bronze */
+  --gold: #e3b458;         /* lamp gold — highlights, hover */
+
+  /* five thinai accents (each section shifts --accent to its hue) */
+  --kurinji: #8b7ae0;      /* kurinji bloom violet — the flower is violet */
+  --mullai: #4f9d6b;       /* mullai forest green */
+  --marutham: #b7a03c;     /* marutham paddy gold-green */
+  --neytal: #4a8ab5;       /* neytal sea blue */
+  --palai: #c25b3c;        /* palai ochre red */
+
+  /* live ambient accent — animated by ThinaiTheme as you scroll */
+  --accent: var(--kurinji);
+
+  /* type scale — 1.25 ratio */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.563rem;
+  --text-2xl: 1.953rem;
+  --text-3xl: 2.441rem;
+  --text-4xl: 3.052rem;
+  --text-5xl: 3.815rem;
+
+  /* Tamil glyphs (kombu, loops, subscript vowel signs) need more
+     vertical breathing room than Latin */
+  --leading-tamil: 1.75;
+  --leading-tamil-display: 1.35;
+  --leading-latin: 1.55;
+  --leading-latin-display: 1.1;
+
+  /* spacing & radii */
+  --space-section: clamp(5rem, 12vh, 9rem);
+  --radius-card: 1rem;
+  --radius-pill: 999px;
+
+  --max-w: 72rem;
+}
