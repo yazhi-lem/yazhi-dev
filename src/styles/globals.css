@@ -1,8 +1,28 @@
+@import "tailwindcss";
 @import "./tokens.css";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Tailwind v4: register design tokens so utilities like text-ivory,
+   bg-night-2/80 and font-display are generated. `inline` keeps these
+   as references to the runtime vars in tokens.css (and next/font's
+   --font-* variables), so ThinaiTheme's scroll-driven --accent
+   animation keeps working through Tailwind utilities too. */
+@theme inline {
+  --color-night: var(--night);
+  --color-night-2: var(--night-2);
+  --color-ivory: var(--ivory);
+  --color-ivory-dim: var(--ivory-dim);
+  --color-bronze: var(--bronze);
+  --color-gold: var(--gold);
+  --color-kurinji: var(--kurinji);
+  --color-mullai: var(--mullai);
+  --color-marutham: var(--marutham);
+  --color-neytal: var(--neytal);
+  --color-palai: var(--palai);
+  --color-accent: var(--accent);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
 
 html {
   background: var(--night);
