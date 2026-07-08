@@ -1,48 +1,60 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Jost } from "next/font/google";
-import "./globals.css";
-import { LanguageProvider } from "@/contexts/LanguageContext";
+import localFont from "next/font/local";
+import "@/styles/globals.css";
+import { LangProvider } from "@/lib/i18n";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { ThinaiTheme } from "@/components/providers/ThinaiTheme";
+import { Motion } from "@/components/providers/Motion";
 
-const dmSerifDisplay = DM_Serif_Display({
-  weight: ["400"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  variable: "--font-dm-serif",
+/* Type system — self-hosted woff2 via next/font/local (see README):
+   — Anek Tamil (display, variable wght+wdth): part of the Anek superfamily
+     spanning nine Indic scripts — one type family across scripts mirrors
+     "one model, 22+ languages". A single variable file covers the whole
+     display range.
+   — Hind Madurai (body): designed for Tamil, literally named for Madurai —
+     the same Madurai as "Thenmadurai" in the site's own meta description.
+   — IBM Plex Mono: code block; wide coverage renders the multilingual
+     Adhan sample cleanly. */
+const display = localFont({
+  src: "../../public/fonts/AnekTamil-Variable.woff2",
+  variable: "--font-display",
+  weight: "100 800",
+  display: "swap",
 });
-
-const jost = Jost({
-  weight: ["300", "400", "600"],
-  subsets: ["latin"],
-  variable: "--font-jost",
+const body = localFont({
+  src: [
+    { path: "../../public/fonts/HindMadurai-Light.woff2", weight: "300" },
+    { path: "../../public/fonts/HindMadurai-Regular.woff2", weight: "400" },
+    { path: "../../public/fonts/HindMadurai-Medium.woff2", weight: "500" },
+    { path: "../../public/fonts/HindMadurai-SemiBold.woff2", weight: "600" },
+  ],
+  variable: "--font-body",
+  display: "swap",
+});
+const mono = localFont({
+  src: [
+    { path: "../../public/fonts/IBMPlexMono-Regular.woff2", weight: "400" },
+    { path: "../../public/fonts/IBMPlexMono-Medium.woff2", weight: "500" },
+  ],
+  variable: "--font-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Yazhi — Sovereign AI & Language Initiative",
+  title: "யாழி • Yazhi — Sovereign AI & Language Initiative",
   description: "Reclaiming the agentic power of Thenmadurai. Sovereign Intelligence.",
 };
 
-import { ThemeProvider } from "@/components/ThemeProvider";
-import WebGLBackground from "@/components/WebGLBackground";
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ta" className={`${dmSerifDisplay.variable} ${jost.variable}`} data-theme="neytal">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700;900&family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet" />
-      </head>
-      <body className="overflow-x-hidden antialiased">
-        <LanguageProvider>
-          <ThemeProvider>
-            <WebGLBackground />
-            {children}
-          </ThemeProvider>
-        </LanguageProvider>
+    <html lang="ta" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <body>
+        <LangProvider>
+          <ThinaiTheme />
+          <Motion>
+            <SmoothScroll>{children}</SmoothScroll>
+          </Motion>
+        </LangProvider>
       </body>
     </html>
   );

@@ -1,0 +1,60 @@
+@import "./tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  background: var(--night);
+  color: var(--ivory);
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: var(--text-base);
+  -webkit-font-smoothing: antialiased;
+  /* ambient thinai glow that follows --accent as you scroll */
+  background:
+    radial-gradient(1200px 700px at 80% -10%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 70%),
+    radial-gradient(900px 600px at -10% 40%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 70%),
+    var(--night);
+  transition: background 1.2s ease;
+}
+
+/* Tamil-aware line-height: any element carrying lang="ta" */
+[lang="ta"] { line-height: var(--leading-tamil); }
+[lang="en"] { line-height: var(--leading-latin); }
+.display[lang="ta"] { line-height: var(--leading-tamil-display); }
+.display[lang="en"] { line-height: var(--leading-latin-display); }
+
+::selection { background: var(--gold); color: var(--night); }
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* orbital rings for the script constellation */
+@keyframes orbit { to { transform: rotate(360deg); } }
+@keyframes orbit-rev { to { transform: rotate(-360deg); } }
+.ring { animation: orbit linear infinite; }
+.ring-glyph { animation: orbit-rev linear infinite; } /* counter-rotate keeps glyphs upright */
+
+@media (prefers-reduced-motion: reduce) {
+  .ring, .ring-glyph { animation: none !important; }
+}
+
+/* mobile: keep page bottom clear of the fixed thinai dot bar */
+@media (max-width: 1023px) {
+  body { padding-bottom: 4.5rem; }
+}
+
+/* smoother scroll cue than a bounce */
+@keyframes cue { 0%,100% { transform: translateY(0); opacity: .55 } 50% { transform: translateY(5px); opacity: 1 } }
+.scroll-cue-arrow { display:inline-block; animation: cue 2.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .scroll-cue-arrow { animation: none; } }

@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* தமிழ் அழகு - Tamil Beauty */
+
+/* Tamil fonts loaded via layout.tsx */
+
+/* அகமும் புறமும் - Interior and Exterior Themes */
+
+/* Default - புறம் (Exterior/Light/Public) */
+:root {
+  --bg: #FFFEF9;
+  --surface: #FFF8E7;
+  --text: #1A0F0A;
+  --text-soft: #4A3420;
+  --accent: #B8651B;
+  --accent-light: #D4A574;
+}
+
+/* அகம் - Interior (Dark/Personal/Night) */
+:root[data-theme="agam"] {
+  --bg: #1A1210;
+  --surface: #2C2220;
+  --text: #F5E6D3;
+  --text-soft: #C4A77D;
+  --accent: #E5B181;
+  --accent-light: #D4A574;
+}
+
+/* புறம் - Exterior (Light/Public/Day) */
+:root[data-theme="puram"] {
+  --bg: #FFFEF9;
+  --surface: #FFF8E7;
+  --text: #1A0F0A;
+  --text-soft: #4A3420;
+  --accent: #B8651B;
+  --accent-light: #D4A574;
+}
+
+/* கடல் - Deep Ocean (Dark/Blue) */
+:root[data-theme="ocean"] {
+  --bg: #0A1628;
+  --surface: #132337;
+  --text: #E8F1F5;
+  --text-soft: #94B8C8;
+  --accent: #4A9ECC;
+  --accent-light: #6BB5D9;
+}
+
+/* குறிஞ்சி - Kurinji (Mountains/Purple) */
+:root[data-theme="kurinji"] {
+  --bg: #1A1228;
+  --surface: #2A2038;
+  --text: #E8E0F5;
+  --text-soft: #B8A8C8;
+  --accent: #9D7BC7;
+  --accent-light: #B89DD9;
+}
+
+/* முல்லை - Mullai (Forest/Green) */
+:root[data-theme="mullai"] {
+  --bg: #FFFEF9;
+  --surface: #F0F8E7;
+  --text: #1A0F0A;
+  --text-soft: #4A5420;
+  --accent: #6B9F2F;
+  --accent-light: #8BC34A;
+}
+
+/* மருதம் - Marutham (Agriculture/Earth) */
+:root[data-theme="marutham"] {
+  --bg: #FFF8F0;
+  --surface: #FFF0E0;
+  --text: #2C1810;
+  --text-soft: #6B4423;
+  --accent: #C17B3D;
+  --accent-light: #D4A574;
+}
+
+/* நெய்தல் - Neytal (Coastal/Blue) */
+:root[data-theme="neytal"] {
+  --bg: #0A1628;
+  --surface: #132337;
+  --text: #E8F1F5;
+  --text-soft: #94B8C8;
+  --accent: #4A9ECC;
+  --accent-light: #6BB5D9;
+}
+
+/* பாலை - Palai (Desert/Red) */
+:root[data-theme="palai"] {
+  --bg: #2B1A1A;
+  --surface: #3D2626;
+  --text: #F5E8E8;
+  --text-soft: #C8A494;
+  --accent: #CC6B4A;
+  --accent-light: #D98B6B;
+}
+
+/* இருள் - Darkness Mode (Optional - only when no theme set) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #0F0A08;
+    --surface: #1A1210;
+    --text: #F5E6D3;
+    --text-soft: #C4A77D;
+    --accent: #E5B181;
+    --accent-light: #C9A961;
+  }
+}
+
+@theme {
+  --font-tamil: "Noto Sans Tamil", "Mukta Malar", sans-serif;
+  --font-tamil-display: "Mukta Malar", "Noto Sans Tamil", sans-serif;
+}
+
+@layer base {
+  * {
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+
+  body {
+    font-family: var(--font-tamil);
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    transition: background 0.8s ease, color 0.8s ease;
+  }
+
+  /* Smooth theme transitions */
+  :root {
+    transition:
+      --bg 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --surface 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --text 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --text-soft 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --accent 2s cubic-bezier(0.4, 0, 0.2, 1),
+      --accent-light 2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * {
+    transition: background-color 2s cubic-bezier(0.4, 0, 0.2, 1),
+                color 2s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-tamil-display);
+    font-weight: 900;
+  }
+}
+
+/* தமிழ் எழுத்துக்கள் - Tamil Typography */
+.tamil-title {
+  font-family: var(--font-tamil-display);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 0.9;
+}
+
+.tamil-body {
+  font-family: var(--font-tamil);
+  font-weight: 600;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+}
+
+/* எளிய அசைவுகள் - Simple Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
