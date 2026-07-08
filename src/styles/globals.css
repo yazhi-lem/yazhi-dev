@@ -59,14 +59,15 @@ body {
   border-radius: 4px;
 }
 
-/* orbital rings for the script constellation */
-@keyframes orbit { to { transform: rotate(360deg); } }
-@keyframes orbit-rev { to { transform: rotate(-360deg); } }
-.ring { animation: orbit linear infinite; }
-.ring-glyph { animation: orbit-rev linear infinite; } /* counter-rotate keeps glyphs upright */
+/* scattered script constellation — each glyph drifts gently, out of phase */
+@keyframes drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.scatter-glyph { animation: drift ease-in-out infinite; will-change: transform; }
 
 @media (prefers-reduced-motion: reduce) {
-  .ring, .ring-glyph { animation: none !important; }
+  .scatter-glyph { animation: none !important; }
 }
 
 /* mobile: keep page bottom clear of the fixed thinai dot bar */

@@ -63,7 +63,7 @@ export const STATS = [
 export const ADHAN = {
   nameTa: "அதன்",
   nameEn: "Adhan",
-  subTa: "இந்திய மொழிகளுக்கான இறையாண்மை செயற்கை நுண்ணறிவு",
+  subTa: "இந்திய மொழிகளுக்கான இறையாண்மை கொண்ட செயற்கை நுண்ணறிவு",
   subEn: "Sovereign AI for Indian languages",
   bodyEn:
     "7B parameter sovereign AI model for 22+ Indian languages. One unified model from Tamil to Hindi, Bengali to Telugu.",
@@ -87,7 +87,7 @@ response = model.generate(
 export const GUARDIAN = {
   nameTa: "யாழ்",
   nameEn: "Yazh Guardian",
-  subTa: "யாழி • புராண காவலன்",
+  subTa: "யாழி • புராணக் காவலன்",
   subEn: "Yazhi • mythic guardian",
   bodyEn:
     "Guardian application inspired by the mythical Yazhi creature. Protecting Tamil digital heritage and community wisdom.",
@@ -159,7 +159,7 @@ export const UI = {
   oneModel: { ta: "ஒரே மாதிரி", en: "One model" },
   comingSoon: { ta: "விரைவில்", en: "Coming soon" },
   servicesLabel: { ta: "சேவைகள்", en: "Services" },
-  scrollCue: { ta: "உருட்டி ஆராயுங்கள்", en: "scroll to explore" },
+  scrollCue: { ta: "கீழே உருட்டி ஆராயுங்கள்", en: "scroll to explore" },
   adhanCtaEn: "View on GitHub →",
   thinaiCol: { ta: "திணை", en: "Thinai" },
   landscapeCol: { ta: "நிலம்", en: "Landscape" },

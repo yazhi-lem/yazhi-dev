@@ -8,6 +8,7 @@ import { Guardian } from "@/components/sections/Guardian";
 import { Community } from "@/components/sections/Community";
 import { Footer } from "@/components/footer/Footer";
 import { World } from "@/components/providers/World";
+import { LaunchTimer } from "@/components/ui/LaunchTimer";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <ThinaiIntro />
       <Navbar />
       <ThinaiRail />
+      <LaunchTimer />
       <main>
         <Hero />
         <Adhan />

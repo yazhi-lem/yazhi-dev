@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { THINAI } from "@/lib/content";
 import { useLang } from "@/lib/i18n";
-import { ThinaiIcon } from "./ThinaiIcon";
 
 /** The five thinai as literal site navigation. Desktop: fixed left rail.
     Mobile: bottom bar. Active landscape tracks scroll position. */
@@ -45,15 +44,15 @@ export function ThinaiRail() {
             <li key={t.key}>
               <button
                 onClick={() => go(t.section)}
-                aria-label={lang === "en" ? `${t.en} — ${t.landscape}` : t.ta}
+                aria-label={lang === "en" ? `${t.en} — ${t.landscape}` : `${t.ta} · ${t.en}`}
                 aria-current={isActive ? "true" : undefined}
                 className={`group relative flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${
                   isActive
-                    ? "bg-[color:var(--accent)]/20 text-[color:var(--accent)] ring-1 ring-[color:var(--accent)]/70"
-                    : "text-ivory-dim/60 hover:text-ivory"
+                    ? "bg-[color:var(--accent)]/20 ring-1 ring-[color:var(--accent)]/70 scale-110"
+                    : "opacity-60 hover:opacity-100"
                 }`}
               >
-                <ThinaiIcon k={t.key} />
+                <span aria-hidden className="text-lg leading-none">{t.icon}</span>
                 <span className="pointer-events-none absolute left-full ml-3 hidden whitespace-nowrap rounded-md bg-night-2 px-2 py-1 text-xs text-ivory opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 lg:block">
                   {lang === "en" ? t.en : t.ta}
                 </span>
