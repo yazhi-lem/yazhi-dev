@@ -14,11 +14,11 @@ export type Zone = {
 };
 
 export const ZONES: Zone[] = [
-  { key: "kurinji",  ground: "#1a1533", glow: "#8b7ae0", amp: 22, freq: 0.045, props: "peaks"  },
-  { key: "mullai",   ground: "#0f2417", glow: "#5fb37e", amp: 6,  freq: 0.06,  props: "trees"  },
-  { key: "marutham", ground: "#22200e", glow: "#b7a03c", amp: 2,  freq: 0.05,  props: "fields" },
-  { key: "palai",    ground: "#2a170f", glow: "#d97a58", amp: 9,  freq: 0.03,  props: "dunes"  },
-  { key: "neytal",   ground: "#0d1a26", glow: "#5f9fc9", amp: 3,  freq: 0.05,  props: "sea"    },
+  { key: "kurinji",  ground: "#302a5c", glow: "#8b7ae0", amp: 22, freq: 0.045, props: "peaks"  },
+  { key: "mullai",   ground: "#1c4029", glow: "#5fb37e", amp: 6,  freq: 0.06,  props: "trees"  },
+  { key: "marutham", ground: "#3d371b", glow: "#b7a03c", amp: 2,  freq: 0.05,  props: "fields" },
+  { key: "palai",    ground: "#48281a", glow: "#d97a58", amp: 9,  freq: 0.03,  props: "dunes"  },
+  { key: "neytal",   ground: "#163044", glow: "#5f9fc9", amp: 3,  freq: 0.05,  props: "sea"    },
 ];
 
 /* deterministic PRNG so the world is identical on every visit */

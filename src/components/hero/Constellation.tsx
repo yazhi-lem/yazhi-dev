@@ -24,7 +24,8 @@ function mulberry32(seed: number) {
     Reduced motion: the drift freezes into a still constellation. */
 export function Constellation() {
   const glyphs = useMemo(() => {
-    const all = SCRIPTS.flatMap((s) => s.glyphs.map((g) => ({ g, script: s.name })));
+    // thinned: keep only half so the scatter stays a quiet backdrop
+    const all = SCRIPTS.flatMap((s) => s.glyphs.map((g) => ({ g, script: s.name }))).filter((_, i) => i % 2 === 0);
     const rand = mulberry32(20260708);
     return all.map((item) => {
       // Scatter across the square but keep a clear elliptical hole in the
@@ -42,8 +43,8 @@ export function Constellation() {
         g: item.g,
         x,
         y,
-        size: 0.85 + rand() * 1.35, // rem
-        opacity: 0.32 + rand() * 0.5,
+        size: 0.8 + rand() * 1.15, // rem
+        opacity: 0.16 + rand() * 0.24,
         delay: -(rand() * 9), // negative so they start mid-cycle, not in sync
         dur: 7 + rand() * 9,
       };
@@ -67,7 +68,7 @@ export function Constellation() {
                 opacity: p.opacity,
                 animationDelay: `${p.delay}s`,
                 animationDuration: `${p.dur}s`,
-                textShadow: "0 0 18px color-mix(in oklab, var(--accent) 55%, transparent)",
+                textShadow: "0 0 16px color-mix(in oklab, var(--accent) 30%, transparent)",
               }}
             >
               {p.g}

@@ -18,7 +18,33 @@ import { ZONE_LEN, WORLD_LEN, mulberry32 } from "@/three/materials/zones";
 
 const zOf = (i: number) => -(i * ZONE_LEN) - ZONE_LEN / 2;
 
-/* ---- gateway pillars at each zone threshold ---- */
+/* ---- temple stone pillars at each zone threshold ----
+   Free-standing South-Indian temple pillars (kal thoon): a stepped plinth,
+   a square granite shaft with carved bands, and a flared corbel capital.
+   No lintel — each threshold is a pair of standing stones, not a gateway. */
+function Pillar({ hue }: { hue: string }) {
+  const stone = "#8b8279"; // weathered granite
+  // fresh material each call; faint zone-hue emissive keeps the thinai tint
+  const mat = (ei = 0.06) => (
+    <meshStandardMaterial color={stone} flatShading roughness={1} emissive={hue} emissiveIntensity={ei} />
+  );
+  return (
+    <group>
+      {/* two-step plinth (adhisthana) */}
+      <mesh position={[0, 0.5, 0]}><boxGeometry args={[3.6, 1, 3.6]} />{mat()}</mesh>
+      <mesh position={[0, 1.4, 0]}><boxGeometry args={[2.9, 0.9, 2.9]} />{mat()}</mesh>
+      {/* square shaft */}
+      <mesh position={[0, 6.4, 0]}><boxGeometry args={[1.9, 9, 1.9]} />{mat(0.08)}</mesh>
+      {/* carved bands */}
+      <mesh position={[0, 3.7, 0]}><boxGeometry args={[2.2, 0.5, 2.2]} />{mat()}</mesh>
+      <mesh position={[0, 9.1, 0]}><boxGeometry args={[2.2, 0.5, 2.2]} />{mat()}</mesh>
+      {/* flared corbel capital (potikai) */}
+      <mesh position={[0, 11.1, 0]}><boxGeometry args={[3, 1.2, 3]} />{mat(0.12)}</mesh>
+      <mesh position={[0, 12, 0]}><boxGeometry args={[2.2, 0.6, 2.2]} />{mat(0.08)}</mesh>
+    </group>
+  );
+}
+
 function Gates() {
   const hues = ["#5fb37e", "#b7a03c", "#d97a58", "#5f9fc9"]; // hue of the zone being entered
   return (
@@ -28,15 +54,10 @@ function Gates() {
         return (
           <group key={i} position={[0, 0, z]}>
             {[-11, 11].map((x) => (
-              <mesh key={x} position={[x, 5.5, 0]}>
-                <boxGeometry args={[1.7, 11, 1.7]} />
-                <meshStandardMaterial color="#1d2136" emissive={hue} emissiveIntensity={0.22} roughness={0.85} />
-              </mesh>
+              <group key={x} position={[x, 0, 0]}>
+                <Pillar hue={hue} />
+              </group>
             ))}
-            <mesh position={[0, 11.4, 0]}>
-              <boxGeometry args={[25.5, 1.5, 2.1]} />
-              <meshStandardMaterial color="#1d2136" emissive={hue} emissiveIntensity={0.3} roughness={0.85} />
-            </mesh>
             <pointLight position={[0, 9, 0]} color={hue} intensity={70} distance={34} decay={1.9} />
           </group>
         );
