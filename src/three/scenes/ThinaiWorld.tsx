@@ -45,9 +45,9 @@ export default function ThinaiWorld() {
       >
         <PerformanceMonitor onDecline={() => setLow(true)}>
           <color attach="background" args={["#0b0e1a"]} />
-          <fog attach="fog" args={["#0b0e1a", 32, low ? 130 : 185]} />
-          <ambientLight intensity={0.28} />
-          <directionalLight position={[30, 60, 20]} intensity={0.55} color="#e3b458" />
+          <fog attach="fog" args={["#0b0e1a", 40, low ? 150 : 210]} />
+          <ambientLight intensity={0.8} />
+          <directionalLight position={[30, 60, 20]} intensity={1.1} color="#e3b458" />
           <Stars radius={140} depth={60} count={low ? 600 : 1400} factor={3} saturation={0} fade speed={0.35} />
           <CameraRig />
           <Terrain detail={low ? 56 : 96} />
@@ -57,9 +57,10 @@ export default function ThinaiWorld() {
           <Preload all />
         </PerformanceMonitor>
       </Canvas>
-      {/* legibility scrim: keeps DOM content readable over the world */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(11,14,26,0.55)_78%)]" />
-      <div className="absolute inset-0 bg-night/35" />
+      {/* legibility scrim: gentle vignette so the landscape stays visible
+          (and its scroll motion legible) while DOM text stays readable */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(11,14,26,0.32)_88%)]" />
+      <div className="absolute inset-0 bg-night/15" />
     </div>
   );
 }

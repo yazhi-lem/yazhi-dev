@@ -125,7 +125,9 @@ export function Terrain({ detail = 96 }: { detail?: number }) {
         return (
           <group key={zone.key}>
             <mesh geometry={zoneGeometry(zone, detail)} position={[0, 0, zOffset]} receiveShadow>
-              <meshStandardMaterial color={zone.ground} flatShading roughness={1} />
+              {/* subtle self-glow in the thinai hue so the land always reads,
+                  even before the zone's point light reaches it */}
+              <meshStandardMaterial color={zone.ground} emissive={zone.glow} emissiveIntensity={0.16} flatShading roughness={1} />
             </mesh>
             {/* the thinai's light — each zone is lit in its own hue */}
             <pointLight position={[0, 18, zOffset]} color={zone.glow} intensity={260} distance={95} decay={1.8} />

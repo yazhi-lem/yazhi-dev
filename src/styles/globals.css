@@ -25,6 +25,8 @@
 }
 
 html {
+  /* opaque base: the fallback ground behind the WebGL world, and the whole
+     backdrop when the world isn't mounted (reduced motion / no WebGL) */
   background: var(--night);
   color: var(--ivory);
   scroll-behavior: smooth;
@@ -37,11 +39,13 @@ body {
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: var(--text-base);
   -webkit-font-smoothing: antialiased;
-  /* ambient thinai glow that follows --accent as you scroll */
+  /* Only the ambient thinai glow — NO opaque base here. The WebGL world
+     sits behind the page at z-index:-10, so an opaque body background would
+     paint over it (body's box is taller than the viewport) and bury the
+     landscape. The transparent glows tint the world; html carries the base. */
   background:
     radial-gradient(1200px 700px at 80% -10%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 70%),
-    radial-gradient(900px 600px at -10% 40%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 70%),
-    var(--night);
+    radial-gradient(900px 600px at -10% 40%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 70%);
   transition: background 1.2s ease;
 }
 
@@ -68,6 +72,17 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .scatter-glyph { animation: none !important; }
+}
+
+/* site-wide floating letters — drift diagonally in space, out of phase */
+@keyframes floaty {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(var(--fx, 12px), var(--fy, -14px)); }
+}
+.floaty { animation-name: floaty; animation-timing-function: ease-in-out; animation-iteration-count: infinite; will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  .floaty { animation: none !important; }
 }
 
 /* mobile: keep page bottom clear of the fixed thinai dot bar */

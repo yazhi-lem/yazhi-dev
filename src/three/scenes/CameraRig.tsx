@@ -24,11 +24,12 @@ export function CameraRig() {
     const py = sway.current.y + Math.cos(t * 0.08) * 0.18;
 
     const targetZ = 6 - progress.current * (WORLD_LEN - ZONE_LEN * 0.4);
-    // smooth travel
+    // smooth travel — camera sits lower and looks down into the land so the
+    // terrain fills the frame and its motion reads clearly as you scroll
     camera.position.z = THREE.MathUtils.damp(camera.position.z, targetZ, 1.9, delta);
-    camera.position.y = THREE.MathUtils.damp(camera.position.y, 9 + py * 1.2, 2.2, delta);
+    camera.position.y = THREE.MathUtils.damp(camera.position.y, 6.5 + py * 1.2, 2.2, delta);
     camera.position.x = THREE.MathUtils.damp(camera.position.x, px * 3, 2.2, delta);
-    look.current.set(px * 7, 6.2, camera.position.z - 36);
+    look.current.set(px * 7, 3.4, camera.position.z - 34);
     camera.lookAt(look.current);
   });
 
