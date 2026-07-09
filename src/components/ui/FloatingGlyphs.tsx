@@ -19,7 +19,7 @@ function mulberry32(seed: number) {
     stays behind every section as you scroll — floating letters "across the
     site", not just the hero. Sits above the WebGL world (-z-10) but behind
     the page content, and is kept low-opacity so text stays legible. */
-export function FloatingGlyphs({ count = 42 }: { count?: number }) {
+export function FloatingGlyphs({ count = 16 }: { count?: number }) {
   const glyphs = useMemo(() => {
     const all = SCRIPTS.flatMap((s) => s.glyphs);
     const rand = mulberry32(73);
@@ -27,12 +27,12 @@ export function FloatingGlyphs({ count = 42 }: { count?: number }) {
       g: all[Math.floor(rand() * all.length)],
       x: rand() * 100,
       y: rand() * 100,
-      size: 0.9 + rand() * 2.4, // rem
-      opacity: 0.05 + rand() * 0.11,
-      dur: 16 + rand() * 22,
+      size: 0.8 + rand() * 1.8, // rem
+      opacity: 0.025 + rand() * 0.045, // very subtle
+      dur: 18 + rand() * 24,
       delay: -(rand() * 32),
-      fx: Math.round((rand() * 2 - 1) * 44), // px drift
-      fy: Math.round((rand() * 2 - 1) * 44),
+      fx: Math.round((rand() * 2 - 1) * 40), // px drift
+      fy: Math.round((rand() * 2 - 1) * 40),
     }));
   }, [count]);
 
@@ -51,7 +51,7 @@ export function FloatingGlyphs({ count = 42 }: { count?: number }) {
             animationDelay: `${p.delay}s`,
             ["--fx" as string]: `${p.fx}px`,
             ["--fy" as string]: `${p.fy}px`,
-            textShadow: "0 0 20px color-mix(in oklab, var(--accent) 45%, transparent)",
+            textShadow: "0 0 20px color-mix(in oklab, var(--accent) 30%, transparent)",
           } as React.CSSProperties}
         >
           {p.g}

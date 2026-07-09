@@ -83,7 +83,7 @@ export function GlyphField({ density = 1 }: { density?: number }) {
     <group ref={group}>
       {sprites.map((s, i) => (
         <sprite key={i} position={s.pos} scale={[s.scale, s.scale, 1]}>
-          <spriteMaterial map={s.tex} transparent opacity={0.4} depthWrite={false} />
+          <spriteMaterial map={s.tex} transparent opacity={0.18} depthWrite={false} />
         </sprite>
       ))}
     </group>
