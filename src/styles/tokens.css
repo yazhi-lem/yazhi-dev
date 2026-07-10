@@ -25,6 +25,21 @@
   /* live ambient accent — animated by ThinaiTheme as you scroll */
   --accent: var(--kurinji);
 
+  /* deep-ocean footer (neytal shore descending into the trench) +
+     Thinai rock-sediment strata read as geological bands */
+  --ocean-deep: #061626;   /* the trench — footer ground */
+  --ocean-mid: #0a2740;    /* mid water */
+  --ocean-shallow: #123a52; /* neytal shallows near the surface */
+  --sediment-1: #1c2233;   /* topsoil / silt band */
+  --sediment-2: #2a2a38;   /* clay band */
+  --sediment-3: #3a3324;   /* bronze-earth band */
+  --sediment-4: #241f2e;   /* deep bedrock band */
+
+  /* Yazhi brand wordmark — carried in a serif register, set apart from
+     the Anek/Hind sans display + body faces. Tamil serif fallbacks keep
+     யாழி legible where a Latin serif has no Tamil coverage. */
+  --font-serif: Georgia, Cambria, "Noto Serif Tamil", "Latha", "Times New Roman", serif;
+
   /* type scale — 1.25 ratio */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
