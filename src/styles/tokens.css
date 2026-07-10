@@ -26,13 +26,15 @@
   --accent: var(--kurinji);
 
   /* deep-ocean footer — the Indian Ocean deepening into darkness: neytal
-     shallows at the surface diving into a near-black-blue trench, with steep
-     rocks and the broken ruins of a sunken city on the floor */
+     shallows at the surface diving through layered water into a near-black-blue
+     trench, with smooth rolling rock ranges and the broken ruins of a sunken
+     mythical city on the floor */
   --ocean-deep: #020a17;   /* the trench — deep dark-blue footer ground */
   --ocean-mid: #061c34;    /* mid water */
   --ocean-shallow: #0d3350; /* neytal shallows near the surface */
-  --rock: #04101f;         /* further rock range */
-  --rock-deep: #01060f;    /* nearer rock, almost black */
+  --rock-far: #082138;     /* furthest rock range — lit dark blue */
+  --rock: #04101f;         /* middle rock range */
+  --rock-deep: #01060f;    /* nearest rock, almost black */
   --ruin: #0a2338;         /* drowned stone — pillars & buildings on the floor */
 
   /* Yazhi brand wordmark — carried in a serif register, set apart from

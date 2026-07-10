@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Bi } from "@/components/ui/Bi";
 import { LogoMark } from "@/components/ui/LogoMark";
 import { SunkenRuins } from "@/components/ui/SunkenRuins";
+import { Bubbles } from "@/components/ui/Bubbles";
 import { IDENTITY, NAV_GROUPS } from "@/lib/content";
 
 export function Footer() {
@@ -10,15 +11,18 @@ export function Footer() {
     <footer
       className="relative isolate overflow-hidden"
       style={{
-        // a smooth deep dive: a transparent gap at the surface eases the
-        // neytal section above into the ocean, then the water darkens all the
-        // way down into the trench — no hard seam
+        // a smooth deep dive: a transparent gap at the surface eases the neytal
+        // section above into the ocean, then the water steps down through
+        // layered blues into a near-black trench — many stops, no hard seam
         background:
           "linear-gradient(to bottom," +
           " transparent 0%," +
-          " color-mix(in oklab, var(--neytal) 30%, var(--ocean-shallow)) 14%," +
-          " var(--ocean-shallow) 30%," +
-          " var(--ocean-mid) 58%," +
+          " color-mix(in oklab, var(--neytal) 32%, var(--ocean-shallow)) 12%," +
+          " var(--ocean-shallow) 26%," +
+          " color-mix(in oklab, var(--ocean-shallow), var(--ocean-mid)) 40%," +
+          " var(--ocean-mid) 56%," +
+          " color-mix(in oklab, var(--ocean-mid), var(--ocean-deep)) 72%," +
+          " var(--ocean-deep) 88%," +
           " var(--ocean-deep) 100%)",
       }}
     >
@@ -32,8 +36,11 @@ export function Footer() {
         }}
       />
 
-      {/* steep dark rocks + the drowned city on the trench floor */}
-      <SunkenRuins className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-52 w-full" />
+      {/* smooth layered rocks + the drowned city on the trench floor */}
+      <SunkenRuins className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-56 w-full" />
+
+      {/* sparkling bubbles rising through the water, in front of the scene */}
+      <Bubbles className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" />
 
       <div className="mx-auto grid max-w-[var(--max-w)] gap-10 px-6 pb-24 pt-24 sm:px-8 lg:pl-28 lg:pr-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div>
