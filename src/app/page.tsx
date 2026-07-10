@@ -2,6 +2,7 @@ import { Navbar } from "@/components/nav/Navbar";
 import { ThinaiRail } from "@/components/nav/ThinaiRail";
 import { ThinaiIntro } from "@/components/hero/ThinaiIntro";
 import { Hero } from "@/components/hero/Hero";
+import { HeroSignature } from "@/components/hero/HeroSignature";
 import { Adhan } from "@/components/sections/Adhan";
 import { Sangam } from "@/components/sections/Sangam";
 import { Guardian } from "@/components/sections/Guardian";
@@ -22,6 +23,7 @@ export default function Home() {
       <LaunchTimer />
       <main>
         <Hero />
+        <HeroSignature />
         <Adhan />
         <Sangam />
         <Guardian />
