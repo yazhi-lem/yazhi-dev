@@ -22,6 +22,7 @@
   --font-display: var(--font-display);
   --font-body: var(--font-body);
   --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
 }
 
 html {
@@ -94,3 +95,27 @@ body {
 @keyframes cue { 0%,100% { transform: translateY(0); opacity: .55 } 50% { transform: translateY(5px); opacity: 1 } }
 .scroll-cue-arrow { display:inline-block; animation: cue 2.4s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .scroll-cue-arrow { animation: none; } }
+
+/* ── deep-ocean footer life ─────────────────────────────────────────────
+   sparkling bubbles drifting up from the trench */
+@keyframes bubbleRise {
+  0%   { transform: translate(0, 0) scale(0.55); opacity: 0; }
+  12%  { opacity: var(--b-op, 0.5); }
+  85%  { opacity: var(--b-op, 0.5); }
+  100% { transform: translate(var(--b-drift, 8px), calc(-1 * var(--b-h, 220px))) scale(1); opacity: 0; }
+}
+@keyframes bubbleTwinkle { 0%, 100% { filter: brightness(0.9); } 50% { filter: brightness(1.8); } }
+.bubble {
+  position: absolute;
+  bottom: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 34% 30%, rgba(255,255,255,0.95), rgba(168,236,242,0.4) 45%, rgba(120,190,215,0) 72%);
+  box-shadow: 0 0 6px rgba(168,236,242,0.45);
+  animation-name: bubbleRise, bubbleTwinkle;
+  animation-timing-function: ease-in, ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bubble { animation: none !important; opacity: var(--b-op, 0.4) !important; }
+}

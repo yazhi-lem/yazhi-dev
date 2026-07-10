@@ -25,7 +25,7 @@ export function Navbar() {
           <Bi
             ta={IDENTITY.nameTa}
             en={IDENTITY.nameEn}
-            className="flex items-baseline gap-2 font-display text-lg font-semibold tracking-wide"
+            className="flex items-baseline gap-2 font-serif text-lg font-semibold tracking-wide"
             separator={<span aria-hidden className="text-ivory-dim">•</span>}
           />
         </Link>
