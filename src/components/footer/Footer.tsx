@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Bi } from "@/components/ui/Bi";
 import { LogoMark } from "@/components/ui/LogoMark";
-import { SteepRocks } from "@/components/ui/SteepRocks";
+import { SunkenRuins } from "@/components/ui/SunkenRuins";
 import { IDENTITY, NAV_GROUPS } from "@/lib/content";
 
 export function Footer() {
@@ -32,8 +32,8 @@ export function Footer() {
         }}
       />
 
-      {/* steep dark rocks on the trench floor */}
-      <SteepRocks className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 w-full" />
+      {/* steep dark rocks + the drowned city on the trench floor */}
+      <SunkenRuins className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-52 w-full" />
 
       <div className="mx-auto grid max-w-[var(--max-w)] gap-10 px-6 pb-24 pt-24 sm:px-8 lg:pl-28 lg:pr-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div>

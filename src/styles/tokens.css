@@ -25,13 +25,15 @@
   /* live ambient accent — animated by ThinaiTheme as you scroll */
   --accent: var(--kurinji);
 
-  /* deep-ocean footer — neytal shallows diving into the trench, with steep
-     dark rock silhouettes on the floor */
-  --ocean-deep: #061626;   /* the trench — footer ground */
-  --ocean-mid: #0a2740;    /* mid water */
-  --ocean-shallow: #123a52; /* neytal shallows near the surface */
-  --rock: #05101d;         /* further rock range */
-  --rock-deep: #020a12;    /* nearer rock, almost black */
+  /* deep-ocean footer — the Indian Ocean deepening into darkness: neytal
+     shallows at the surface diving into a near-black-blue trench, with steep
+     rocks and the broken ruins of a sunken city on the floor */
+  --ocean-deep: #020a17;   /* the trench — deep dark-blue footer ground */
+  --ocean-mid: #061c34;    /* mid water */
+  --ocean-shallow: #0d3350; /* neytal shallows near the surface */
+  --rock: #04101f;         /* further rock range */
+  --rock-deep: #01060f;    /* nearer rock, almost black */
+  --ruin: #0a2338;         /* drowned stone — pillars & buildings on the floor */
 
   /* Yazhi brand wordmark — carried in a serif register, set apart from
      the Anek/Hind sans display + body faces. Tamil serif fallbacks keep
