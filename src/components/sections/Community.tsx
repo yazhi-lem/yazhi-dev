@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -11,7 +12,7 @@ import { stagger, fadeUp } from "@/lib/motionPresets";
     the seas, and the network that closes the separation. */
 export function Community() {
   return (
-    <section id="community" className="mx-auto max-w-[var(--max-w)] px-5 py-[var(--space-section)]">
+    <Section id="community">
       <SectionHeading
         thinaiTa="நெய்தல்" thinaiEn="Neytal" landscapeTa="கடற்கரை" landscape="Coastal · separation, pining"
         titleTa={COMMUNITY.titleTa} titleEn={COMMUNITY.titleEn}
@@ -48,6 +49,6 @@ export function Community() {
           <Bi ta={UI.comingSoon.ta} en={UI.comingSoon.en} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
         </span>
       </motion.aside>
-    </section>
+    </Section>
   );
 }
