@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { GUARDIAN } from "@/lib/content";
@@ -23,7 +24,7 @@ export function Guardian() {
     img.src = "/yazhi.png";
   }, []);
   return (
-    <section id="guardian" className="mx-auto max-w-[var(--max-w)] px-5 py-[var(--space-section)]">
+    <Section id="guardian">
       <SectionHeading
         thinaiTa="பாலை" thinaiEn="Palai" landscapeTa="பாலைவனம் · பிரிதல்" landscape="Desert · hardship endured"
         titleTa={GUARDIAN.nameTa} titleEn={GUARDIAN.nameEn}
@@ -81,6 +82,6 @@ export function Guardian() {
           </figcaption>
         </motion.figure>
       </div>
-    </section>
+    </Section>
   );
 }

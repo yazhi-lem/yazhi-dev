@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { Button } from "@/components/ui/Button";
@@ -12,7 +13,7 @@ import { stagger, fadeUp } from "@/lib/motionPresets";
     like a forest — training as cultivation, not conquest. */
 export function Adhan() {
   return (
-    <section id="adhan" className="mx-auto max-w-[var(--max-w)] px-5 py-[var(--space-section)]">
+    <Section id="adhan">
       <SectionHeading
         thinaiTa="முல்லை" thinaiEn="Mullai" landscapeTa="காடு · இருத்தல்" landscape="Forest · waiting"
         titleTa={ADHAN.nameTa} titleEn={ADHAN.nameEn}
@@ -42,6 +43,6 @@ export function Adhan() {
           <CodeBlock code={ADHAN.code} label="adhan_quickstart.py" />
         </motion.div>
       </div>
-    </section>
+    </Section>
   );
 }

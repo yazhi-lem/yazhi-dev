@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Bi } from "@/components/ui/Bi";
@@ -14,7 +15,7 @@ import { stagger, fadeUp } from "@/lib/motionPresets";
 export function Sangam() {
   const { lang } = useLang();
   return (
-    <section id="sangam" className="mx-auto max-w-[var(--max-w)] px-5 py-[var(--space-section)]">
+    <Section id="sangam">
       <SectionHeading
         thinaiTa="மருதம்" thinaiEn="Marutham" landscapeTa="வயல் · விளை நிலம்" landscape="Agriculture · fertile land"
         titleTa={SANGAM.nameTa} titleEn={SANGAM.nameEn}
@@ -81,6 +82,6 @@ export function Sangam() {
           <Bi ta={SANGAM.ctaTa} en={`${SANGAM.ctaEn} →`} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
         </Button>
       </div>
-    </section>
+    </Section>
   );
 }
