@@ -15,13 +15,22 @@ export function CameraRig() {
   const sway = usePointerSway();
   const { camera } = useThree();
   const look = useRef(new THREE.Vector3());
+  // Smoothed copy of the raw sway target. The raw value can jump instantly
+  // (a finger landing at a new spot, a fast swipe), and lookAt used to read
+  // it directly every frame — any such jump snapped the view immediately.
+  // Damping it here, once, fixes that for both position and lookAt.
+  const smooth = useRef({ x: 0, y: 0 });
 
   useFrame((state, delta) => {
     // Idle drift keeps the world alive with no input at all — essential on
     // touch devices, where there is no hovering pointer to sway the camera.
     const t = state.clock.elapsedTime;
-    const px = sway.current.x + Math.sin(t * 0.11) * 0.35;
-    const py = sway.current.y + Math.cos(t * 0.08) * 0.18;
+    const rawX = sway.current.x + Math.sin(t * 0.11) * 0.35;
+    const rawY = sway.current.y + Math.cos(t * 0.08) * 0.18;
+    smooth.current.x = THREE.MathUtils.damp(smooth.current.x, rawX, 2.5, delta);
+    smooth.current.y = THREE.MathUtils.damp(smooth.current.y, rawY, 2.5, delta);
+    const px = smooth.current.x;
+    const py = smooth.current.y;
 
     const targetZ = 6 - progress.current * (WORLD_LEN - ZONE_LEN * 0.4);
     // smooth travel — camera sits lower and looks down into the land so the

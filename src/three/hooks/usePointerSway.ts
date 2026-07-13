@@ -13,21 +13,19 @@ export function usePointerSway() {
   const sway = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const set = (clientX: number, clientY: number) => {
-      sway.current.x = (clientX / window.innerWidth) * 2 - 1;
-      sway.current.y = -((clientY / window.innerHeight) * 2 - 1);
-    };
-    const onPointer = (e: PointerEvent) => set(e.clientX, e.clientY);
-    const onTouch = (e: TouchEvent) => {
-      const t = e.touches[0];
-      if (t) set(t.clientX, t.clientY);
+    // Coarse pointers (touch) drag the same gesture that scrolls the page —
+    // the finger's on-screen position mid-swipe isn't an intentional "look"
+    // input like a hovering mouse is, and following it fought the scroll,
+    // reading as the camera snapping around. Touch devices get the idle
+    // drift only (see CameraRig); mouse keeps the free-look sway.
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
+    const onPointer = (e: PointerEvent) => {
+      sway.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      sway.current.y = -((e.clientY / window.innerHeight) * 2 - 1);
     };
     window.addEventListener("pointermove", onPointer, { passive: true });
-    window.addEventListener("touchmove", onTouch, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", onPointer);
-      window.removeEventListener("touchmove", onTouch);
-    };
+    return () => window.removeEventListener("pointermove", onPointer);
   }, []);
 
   return sway;

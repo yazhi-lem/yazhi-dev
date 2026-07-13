@@ -110,6 +110,7 @@ export const SANGAM = {
   ],
   ctaTa: "மேலும் அறிக →",
   ctaEn: "Learn more",
+  ctaHref: "https://sangam.yazhi.dev",
 };
 
 export const SERVICES = [
@@ -122,6 +123,7 @@ export const LINKS = {
   discord: "https://discord.gg/yazhi",
   github: "https://github.com/yazhi-lem",
   adhanRepo: "https://github.com/yazhi-lem/adhan",
+  whatsapp: "https://chat.whatsapp.com/G0sWRof4Z4cFXXY6Gmavmu",
   onboarding: "/onboarding",
 };
 
