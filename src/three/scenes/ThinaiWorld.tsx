@@ -50,7 +50,7 @@ export default function ThinaiWorld() {
           <directionalLight position={[30, 60, 20]} intensity={1.1} color="#e3b458" />
           <Stars radius={140} depth={60} count={low ? 600 : 1400} factor={3} saturation={0} fade speed={0.35} />
           <CameraRig />
-          <Terrain detail={low ? 56 : 96} />
+          <Terrain detail={low ? 56 : 96} low={low} />
           <SangamObjects low={low} />
           <GlyphField density={low ? 0.5 : 1} />
           <AdaptiveDpr />
