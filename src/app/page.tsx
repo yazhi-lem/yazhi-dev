@@ -10,6 +10,7 @@ import { Community } from "@/components/sections/Community";
 import { Footer } from "@/components/footer/Footer";
 import { World } from "@/components/providers/World";
 import { LaunchTimer } from "@/components/ui/LaunchTimer";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { FloatingGlyphs } from "@/components/ui/FloatingGlyphs";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
       <Navbar />
       <ThinaiRail />
       <LaunchTimer />
+      <WhatsAppButton />
       <main>
         <Hero />
         <HeroSignature />

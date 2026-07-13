@@ -78,7 +78,7 @@ export function Sangam() {
       </motion.div>
 
       <div className="mt-8">
-        <Button href="#community" variant="ghost">
+        <Button href={SANGAM.ctaHref} variant="ghost" external>
           <Bi ta={SANGAM.ctaTa} en={`${SANGAM.ctaEn} →`} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
         </Button>
       </div>
