@@ -234,7 +234,10 @@ function zoneHeight(zone: Zone, x: number, z: number) {
   let h = noise(x * zone.freq, z * zone.freq) * zone.amp * valley;
   if (zone.props === "peaks") h += Math.max(0, noise(x * 0.02, z * 0.02)) * 26 * valley; // kurinji ridges
   if (zone.props === "dunes") h = Math.abs(h) * 1.4; // palai dune ripple
-  if (zone.props === "sea") h -= Math.max(0, (z / (ZONE_LEN / 2)) * 6); // neytal slopes into water
+  // neytal slopes into water on the FAR side (local -z, the direction of
+  // travel) so the journey ends looking out over open ocean, not back at it;
+  // this also keeps the sink clear of the palai seam blend on the +z edge
+  if (zone.props === "sea") h -= Math.max(0, (-z / (ZONE_LEN / 2)) * 7);
   return h - 1.5;
 }
 
@@ -609,42 +612,48 @@ function ZoneProps({ zone, zOffset, density = 1 }: { zone: Zone; zOffset: number
         return [stones, cacti, deadTrees];
       }
 
-      case "sea": { // neytal — buoys on the water, catamarans, huts on the shore
-        const buoys: PropLayer = {
-          geometry: new THREE.SphereGeometry(0.6, 8, 8),
-          color: zone.glow,
-          matrices: place(n(24), () => ({
-            x: (rand() - 0.5) * 120,
-            z: rand() * (FULL_LEN / 2),
-            scale: 0.6 + rand() * 0.8,
-            h: -0.5 + rand() * 0.6,
+      case "sea": { // neytal — the peaceful ocean the journey ends on
+        const lanterns: PropLayer = {
+          // fishermen's lanterns drifting far out on the swell — warm, dim,
+          // sparse; they replace the old bright buoys so the sea reads as
+          // rest, not activity
+          geometry: new THREE.SphereGeometry(0.45, 8, 8),
+          color: "#e8c87a",
+          emissive: "#d9a84e",
+          emissiveIntensity: 0.55,
+          matrices: place(n(14), () => ({
+            x: (rand() - 0.5) * 140,
+            z: -4 - rand() * (FULL_LEN / 2 + 14), // trailing out toward the horizon
+            scale: 0.5 + rand() * 0.5,
+            h: -1.85,
           })),
         };
         const catamarans: PropLayer = {
           geometry: buildCatamaran(),
           color: "#ffffff",
           vertexColors: true,
-          // floating on the water plane (y = -2.2 world, z > 0 half)
-          matrices: place(3, () => {
-            const side = rand() > 0.5 ? 1 : -1;
-            const x = side * (10 + rand() * 38);
-            const z = 10 + rand() * 26;
-            return { x, z, scale: 1 + rand() * 0.4, h: -2.05, yaw: rand() * Math.PI * 2 };
+          // just two, at rest near the shore, both pointed out to sea —
+          // the day's work is done
+          matrices: place(2, (i) => {
+            const side = i === 0 ? 1 : -1;
+            const x = side * (14 + rand() * 20);
+            const z = -8 - rand() * 10;
+            return { x, z, scale: 1 + rand() * 0.3, h: -2.05, yaw: (rand() - 0.5) * 0.5 };
           }),
         };
         const huts: PropLayer = {
           geometry: buildHut(),
           color: "#ffffff",
           vertexColors: true,
-          // up on the dry sand, before the land slopes into the sea
-          matrices: place(4, () => {
+          // up on the arrival shore (+z, the palai side), watching the water
+          matrices: place(3, () => {
             const side = rand() > 0.5 ? 1 : -1;
             const x = side * (20 + rand() * 26);
-            const z = -8 - rand() * (FULL_LEN / 2 - 10);
+            const z = 8 + rand() * 14; // clear of the palai seam-blend band
             return { x, z, scale: 0.9 + rand() * 0.4, h: ground(x, z) + 0.15, yaw: rand() * Math.PI * 2 };
           }),
         };
-        return [buoys, catamarans, huts];
+        return [lanterns, catamarans, huts];
       }
 
       default:
@@ -723,6 +732,40 @@ function CirclingBirds({
   );
 }
 
+/** The neytal sea — the peaceful open water the whole journey ends on.
+    The plane runs well past the last zone so the camera never finds an
+    edge, only water dissolving into fog. A moonlight glint path lies along
+    the corridor's line of travel, pointing the way out; the entire surface
+    breathes with one slow swell (a single-mesh y-bob — no vertex work). */
+function NeytalOcean({ zOffset }: { zOffset: number }) {
+  const water = useRef<THREE.Group>(null);
+  useFrame(({ clock }) => {
+    if (water.current) water.current.position.y = Math.sin(clock.elapsedTime * 0.28) * 0.09;
+  });
+  return (
+    <group ref={water}>
+      <mesh rotation-x={-Math.PI / 2} position={[0, -2.2, zOffset - 20]}>
+        <planeGeometry args={[260, ZONE_LEN + 140]} />
+        <meshStandardMaterial color="#123047" transparent opacity={0.85} roughness={0.25} metalness={0.4} />
+      </mesh>
+      {/* the moon's glint path, fading out toward the horizon with the fog */}
+      <mesh rotation-x={-Math.PI / 2} position={[0, -2.14, zOffset - 30]}>
+        <planeGeometry args={[3.4, 90]} />
+        <meshStandardMaterial
+          color="#9fc4e0"
+          emissive="#bcd8ee"
+          emissiveIntensity={0.5}
+          transparent
+          opacity={0.28}
+          roughness={0.4}
+        />
+      </mesh>
+      {/* a cool low moon-glow over the far water */}
+      <pointLight position={[0, 8, zOffset - 45]} color="#a8c8e8" intensity={90} distance={80} decay={1.9} />
+    </group>
+  );
+}
+
 export function Terrain({ detail = 96, low = false }: { detail?: number; low?: boolean }) {
   const density = low ? 0.6 : 1;
   return (
@@ -752,11 +795,9 @@ export function Terrain({ detail = 96, low = false }: { detail?: number; low?: b
             )}
             {zone.props === "sea" && (
               <>
-                <CirclingBirds zOffset={zOffset + 10} y={8} radius={30} count={low ? 3 : 5} color="#e8e4da" speed={0.24} size={1.4} />
-                <mesh rotation-x={-Math.PI / 2} position={[0, -2.2, zOffset + 8]}>
-                  <planeGeometry args={[220, ZONE_LEN + 40]} />
-                  <meshStandardMaterial color="#123047" transparent opacity={0.85} roughness={0.25} metalness={0.4} />
-                </mesh>
+                {/* fewer, slower, higher gulls — drifting rather than wheeling */}
+                <CirclingBirds zOffset={zOffset - 15} y={10} radius={32} count={low ? 2 : 3} color="#e8e4da" speed={0.1} size={1.3} />
+                <NeytalOcean zOffset={zOffset} />
               </>
             )}
           </group>
