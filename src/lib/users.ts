@@ -11,6 +11,7 @@ export type YazhiUser = {
   avatar: string;
   reputation: number;
   github: string;
+  phone?: string;
   techStack?: string;
   availability?: "open" | "employed" | "closed";
 };
@@ -48,12 +49,18 @@ function invalidateUserSnapshot(id: string) {
   userSnapshotCache.delete(id);
 }
 
+/** Minimal onboarding: just a handle and a phone number. Everything else
+    (role, bio, tech stack) is left for the profile-edit flow to fill in
+    later — see yazhi-dev issue: "extend onboarding while launching". City
+    is expected to already be an anonymized cluster label (see
+    /api/geo), never a raw IP or precise coordinate. */
 export function createUser(input: {
   yazhName: string;
-  role: string;
-  cities: string[];
-  avatar: string;
-  github: string;
+  phone: string;
+  city: string;
+  role?: string;
+  avatar?: string;
+  github?: string;
 }): YazhiUser {
   const users = readStoredUsers();
   const id = slugify(input.yazhName);
@@ -61,12 +68,13 @@ export function createUser(input: {
     id,
     name: input.yazhName,
     handle: `@${id}`,
-    role: input.role,
-    city: input.cities.join(", "),
+    role: input.role ?? "Member",
+    city: input.city,
     bio: "",
-    avatar: input.avatar,
+    avatar: input.avatar ?? `https://api.dicebear.com/7.x/avataaars/svg?seed=${id}`,
     reputation: 0,
-    github: input.github,
+    github: input.github ?? "",
+    phone: input.phone,
   };
   users[id] = user;
   writeStoredUsers(users);
