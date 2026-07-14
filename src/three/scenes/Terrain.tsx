@@ -209,6 +209,25 @@ function buildDeadTree() {
   )!;
 }
 
+/** The neytal lighthouse: red-and-white banded tower, gallery, lamp room,
+    conical cap. The lamp glow and rotating beam are added live in the
+    Lighthouse component — geometry here is the static tower only. */
+function buildLighthouse() {
+  const white = "#e9e4d8";
+  const red = "#c14b3a";
+  return mergeGeometries(
+    [
+      coloredPart(new THREE.CylinderGeometry(0.62, 0.85, 1.6, 8), red, 0, 0.8, 0),
+      coloredPart(new THREE.CylinderGeometry(0.52, 0.62, 1.6, 8), white, 0, 2.4, 0),
+      coloredPart(new THREE.CylinderGeometry(0.44, 0.52, 1.6, 8), red, 0, 4.0, 0),
+      coloredPart(new THREE.CylinderGeometry(0.8, 0.8, 0.16, 8), "#3a3630", 0, 4.9, 0), // gallery deck
+      coloredPart(new THREE.CylinderGeometry(0.34, 0.34, 0.7, 8), "#ffe9a8", 0, 5.35, 0), // lamp room
+      coloredPart(new THREE.ConeGeometry(0.5, 0.7, 8), red, 0, 6.05, 0),
+    ],
+    false,
+  )!;
+}
+
 /** A gliding bird silhouette — a shallow V of wings and a sliver of body.
     Scaled up and darkened it's a palai eagle; small and pale, a neytal gull. */
 function buildBird(color: string) {
@@ -234,10 +253,17 @@ function zoneHeight(zone: Zone, x: number, z: number) {
   let h = noise(x * zone.freq, z * zone.freq) * zone.amp * valley;
   if (zone.props === "peaks") h += Math.max(0, noise(x * 0.02, z * 0.02)) * 26 * valley; // kurinji ridges
   if (zone.props === "dunes") h = Math.abs(h) * 1.4; // palai dune ripple
-  // neytal slopes into water on the FAR side (local -z, the direction of
-  // travel) so the journey ends looking out over open ocean, not back at it;
-  // this also keeps the sink clear of the palai seam blend on the +z edge
-  if (zone.props === "sea") h -= Math.max(0, (-z / (ZONE_LEN / 2)) * 7);
+  // neytal, on the FAR side (local -z, the direction of travel): the noise
+  // first damps into a flat sand beach approaching the shoreline, then the
+  // land dives smoothly below the water plane and STAYS there — an open
+  // ocean with no half-submerged noise lumps reading as ice floes. The +z
+  // edge is untouched, keeping the palai seam blend clean.
+  if (zone.props === "sea") {
+    const flat = 0.3 + 0.7 * THREE.MathUtils.smoothstep(z, 4, 16); // beach strip
+    h = (h + 1.5) * flat - 1.5;
+    const dive = THREE.MathUtils.smoothstep(-z, 2, 22);
+    h = THREE.MathUtils.lerp(h, -7.5, dive);
+  }
   return h - 1.5;
 }
 
@@ -252,6 +278,7 @@ const BLOOM = new THREE.Color("#7b6bd0"); // neelakurinji violet
 const MOSS = new THREE.Color("#2e5d38");
 const PADDY = new THREE.Color("#4a5c1e");
 const SCORCH = new THREE.Color("#8a4a26"); // noon heat on palai sand
+const SAND = new THREE.Color("#cfae7e"); // dry neytal beach sand
 const WETSAND = new THREE.Color("#1b3a50");
 const PATH = new THREE.Color("#6b5a3a");
 
@@ -286,8 +313,12 @@ function zoneVertexColor(zone: Zone, x: number, z: number, h: number, out: THREE
       break;
     }
     case "sea": {
-      const wet = THREE.MathUtils.smoothstep(-h, 1.2, 3.2);
-      out.lerp(WETSAND, wet * 0.6);
+      // pale dry sand across the beach strip, darker wet sand dipping to
+      // the waterline, deep blue-green below the swell
+      const beach = 1 - THREE.MathUtils.smoothstep(Math.abs(z - 8), 6, 22);
+      if (h > -2.0 && beach > 0) out.lerp(SAND, beach * 0.65);
+      const wet = THREE.MathUtils.smoothstep(-h, 1.4, 2.6);
+      out.lerp(WETSAND, wet * 0.7);
       break;
     }
   }
@@ -628,19 +659,8 @@ function ZoneProps({ zone, zOffset, density = 1 }: { zone: Zone; zOffset: number
             h: -1.85,
           })),
         };
-        const catamarans: PropLayer = {
-          geometry: buildCatamaran(),
-          color: "#ffffff",
-          vertexColors: true,
-          // just two, at rest near the shore, both pointed out to sea —
-          // the day's work is done
-          matrices: place(2, (i) => {
-            const side = i === 0 ? 1 : -1;
-            const x = side * (14 + rand() * 20);
-            const z = -8 - rand() * 10;
-            return { x, z, scale: 1 + rand() * 0.3, h: -2.05, yaw: (rand() - 0.5) * 0.5 };
-          }),
-        };
+        // (boats are no longer a static layer — they sail live in
+        // DriftingBoats, rendered alongside NeytalOcean below)
         const huts: PropLayer = {
           geometry: buildHut(),
           color: "#ffffff",
@@ -653,7 +673,7 @@ function ZoneProps({ zone, zOffset, density = 1 }: { zone: Zone; zOffset: number
             return { x, z, scale: 0.9 + rand() * 0.4, h: ground(x, z) + 0.15, yaw: rand() * Math.PI * 2 };
           }),
         };
-        return [lanterns, catamarans, huts];
+        return [lanterns, huts];
       }
 
       default:
@@ -732,6 +752,87 @@ function CirclingBirds({
   );
 }
 
+/** The lighthouse on the neytal headland: static banded tower, a warm
+    always-on lamp, and a slow rotating double beam sweeping the water. */
+function Lighthouse({ position }: { position: [number, number, number] }) {
+  const beam = useRef<THREE.Group>(null);
+  const geom = useMemo(() => buildLighthouse(), []);
+  useFrame((_, delta) => {
+    if (beam.current) beam.current.rotation.y += delta * 0.45;
+  });
+  return (
+    <group position={position} scale={2.1}>
+      <mesh geometry={geom}>
+        <meshStandardMaterial vertexColors flatShading roughness={0.85} />
+      </mesh>
+      <mesh position={[0, 5.35, 0]}>
+        <sphereGeometry args={[0.28, 8, 8]} />
+        <meshStandardMaterial color="#ffe9a8" emissive="#ffd76a" emissiveIntensity={1.4} />
+      </mesh>
+      <pointLight position={[0, 5.35, 0]} color="#ffd98c" intensity={60} distance={70} decay={1.7} />
+      {/* two opposed translucent cones, apexes at the lamp, sweeping slowly */}
+      <group ref={beam} position={[0, 5.35, 0]}>
+        {[1, -1].map((dir) => (
+          <mesh key={dir} position={[dir * 5, 0, 0]} rotation={[0, 0, (dir * Math.PI) / 2]}>
+            <coneGeometry args={[0.55, 10, 8, 1, true]} />
+            <meshBasicMaterial color="#ffe9a8" transparent opacity={0.14} side={THREE.DoubleSide} depthWrite={false} />
+          </mesh>
+        ))}
+      </group>
+    </group>
+  );
+}
+
+/** Catamarans under sail on the open water — each drifts a slow loop,
+    bow following the path, with a gentle bob and roll from the swell. */
+function DriftingBoats({ count = 3 }: { count?: number }) {
+  const geom = useMemo(() => buildCatamaran(), []);
+  const refs = useRef<(THREE.Group | null)[]>([]);
+  const boats = useMemo(
+    () =>
+      Array.from({ length: count }, (_, i) => ({
+        x: -30 + i * 28,
+        z: -16 - (i % 2) * 14,
+        r: 5 + i * 2,
+        phase: i * 2.1,
+        speed: 0.05 + i * 0.012,
+      })),
+    [count],
+  );
+  useFrame(({ clock }) => {
+    const t = clock.elapsedTime;
+    boats.forEach((b, i) => {
+      const g = refs.current[i];
+      if (!g) return;
+      const a = t * b.speed + b.phase;
+      g.position.set(
+        b.x + Math.cos(a) * b.r,
+        -2.05 + Math.sin(t * 0.6 + b.phase) * 0.07,
+        b.z + Math.sin(a) * b.r * 0.7,
+      );
+      g.rotation.y = -a + Math.PI / 2; // bow follows the drift loop
+      g.rotation.z = Math.sin(t * 0.5 + b.phase) * 0.04; // gentle roll
+    });
+  });
+  return (
+    <>
+      {boats.map((b, i) => (
+        <group
+          key={i}
+          ref={(el) => {
+            refs.current[i] = el;
+          }}
+          position={[b.x, -2.05, b.z]}
+        >
+          <mesh geometry={geom}>
+            <meshStandardMaterial vertexColors flatShading roughness={0.9} />
+          </mesh>
+        </group>
+      ))}
+    </>
+  );
+}
+
 /** The neytal sea — the peaceful open water the whole journey ends on.
     The plane runs well past the last zone so the camera never finds an
     edge, only water dissolving into fog. A moonlight glint path lies along
@@ -795,9 +896,14 @@ export function Terrain({ detail = 96, low = false }: { detail?: number; low?: b
             )}
             {zone.props === "sea" && (
               <>
-                {/* fewer, slower, higher gulls — drifting rather than wheeling */}
-                <CirclingBirds zOffset={zOffset - 15} y={10} radius={32} count={low ? 2 : 3} color="#e8e4da" speed={0.1} size={1.3} />
+                {/* gulls wheeling slowly over the open water */}
+                <CirclingBirds zOffset={zOffset - 15} y={10} radius={32} count={low ? 2 : 4} color="#e8e4da" speed={0.12} size={1.3} />
                 <NeytalOcean zOffset={zOffset} />
+                {/* headland lighthouse right on the shoreline, beam sweeping the sea */}
+                <Lighthouse position={[-28, zoneHeight(zone, -28, -2), zOffset - 2]} />
+                <group position={[0, 0, zOffset]}>
+                  <DriftingBoats count={low ? 2 : 3} />
+                </group>
               </>
             )}
           </group>
