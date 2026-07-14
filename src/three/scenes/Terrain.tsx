@@ -253,16 +253,16 @@ function zoneHeight(zone: Zone, x: number, z: number) {
   let h = noise(x * zone.freq, z * zone.freq) * zone.amp * valley;
   if (zone.props === "peaks") h += Math.max(0, noise(x * 0.02, z * 0.02)) * 26 * valley; // kurinji ridges
   if (zone.props === "dunes") h = Math.abs(h) * 1.4; // palai dune ripple
+  if (zone.props === "fields") h *= 0.5; // paddy country is engineered flat
   // neytal, on the FAR side (local -z, the direction of travel): the noise
-  // first damps into a flat sand beach approaching the shoreline, then the
-  // land dives smoothly below the water plane and STAYS there — an open
-  // ocean with no half-submerged noise lumps reading as ice floes. The +z
-  // edge is untouched, keeping the palai seam blend clean.
+  // first damps into a flat sand beach at the shoreline, then the land
+  // dives quickly below the water plane and STAYS there — an open ocean
+  // with no offshore sand bars poking up like ice floes. The +z edge is
+  // untouched, keeping the palai seam blend clean. (h here is pure noise;
+  // the -1.5 base offset is applied once, at the return.)
   if (zone.props === "sea") {
-    const flat = 0.3 + 0.7 * THREE.MathUtils.smoothstep(z, 4, 16); // beach strip
-    h = (h + 1.5) * flat - 1.5;
-    const dive = THREE.MathUtils.smoothstep(-z, 2, 22);
-    h = THREE.MathUtils.lerp(h, -7.5, dive);
+    h *= 0.3 + 0.7 * THREE.MathUtils.smoothstep(z, 4, 16); // beach strip
+    h = THREE.MathUtils.lerp(h, -6, THREE.MathUtils.smoothstep(-z, 0, 13));
   }
   return h - 1.5;
 }
@@ -276,24 +276,28 @@ const BLACK = new THREE.Color("#000000");
 const SNOW = new THREE.Color("#d9dcef");
 const BLOOM = new THREE.Color("#7b6bd0"); // neelakurinji violet
 const MOSS = new THREE.Color("#2e5d38");
-const PADDY = new THREE.Color("#4a5c1e");
+const PADDY_YOUNG = new THREE.Color("#3f6b25"); // fresh transplanted paddy
+const PADDY_RIPE = new THREE.Color("#8a7a28"); // golden, ready for harvest
+const PADDY_FLOOD = new THREE.Color("#2e4a52"); // flooded plot, sky in the water
 const SCORCH = new THREE.Color("#8a4a26"); // noon heat on palai sand
-const SAND = new THREE.Color("#cfae7e"); // dry neytal beach sand
+const SAND = new THREE.Color("#b8965f"); // dry neytal beach sand
 const WETSAND = new THREE.Color("#1b3a50");
 const PATH = new THREE.Color("#6b5a3a");
 
 function zoneVertexColor(zone: Zone, x: number, z: number, h: number, out: THREE.Color) {
   out.set(zone.ground);
   // height shading — high ground catches light, hollows fall into shadow
-  const l = THREE.MathUtils.clamp(h * 0.022, -0.12, 0.3);
+  // (clamp kept modest so high terrain never bleaches into glacier-white)
+  const l = THREE.MathUtils.clamp(h * 0.022, -0.12, 0.16);
   if (l > 0) out.lerp(WHITE, l);
   else out.lerp(BLACK, -l);
   switch (zone.props) {
     case "peaks": {
-      const snow = THREE.MathUtils.smoothstep(h, 13, 22);
-      if (snow > 0) out.lerp(SNOW, snow * 0.85);
+      // a thin cap on only the very highest ridges — violet rock below it
+      const snow = THREE.MathUtils.smoothstep(h, 17, 26);
+      if (snow > 0) out.lerp(SNOW, snow * 0.5);
       const bloom = noise(x * 0.11 + 40, z * 0.11);
-      if (h > 1 && h < 13 && bloom > 0.35) out.lerp(BLOOM, (bloom - 0.35) * 0.55);
+      if (h > 1 && h < 15 && bloom > 0.3) out.lerp(BLOOM, (bloom - 0.3) * 0.7);
       break;
     }
     case "trees": {
@@ -302,8 +306,17 @@ function zoneVertexColor(zone: Zone, x: number, z: number, h: number, out: THREE
       break;
     }
     case "fields": {
-      const band = Math.sin(z * 0.55) * 0.5 + 0.5; // alternating wet/dry paddy strips
-      out.lerp(PADDY, band * 0.3);
+      // the paddy patchwork: quantize the flats into plots and give each
+      // one a strong tint — young green, harvest gold, or a flooded plot
+      // holding the sky. The corridor strip keeps the bare-earth path.
+      if (Math.abs(x) > 12) {
+        const px = Math.floor((Math.abs(x) - 12) / 11);
+        const pz = Math.floor((z + FULL_LEN / 2) / 8);
+        const plot = noise(px * 7.31 + 13, pz * 5.17 + (x > 0 ? 51 : 0));
+        if (plot < -0.25) out.lerp(PADDY_FLOOD, 0.5);
+        else if (plot < 0.4) out.lerp(PADDY_YOUNG, 0.6);
+        else out.lerp(PADDY_RIPE, 0.55);
+      }
       break;
     }
     case "dunes": {
@@ -313,17 +326,22 @@ function zoneVertexColor(zone: Zone, x: number, z: number, h: number, out: THREE
       break;
     }
     case "sea": {
-      // pale dry sand across the beach strip, darker wet sand dipping to
+      // warm dry sand on the LOW beach only (tall shore dunes keep the
+      // zone's ground color — pale peaks read as glaciers), wet sand at
       // the waterline, deep blue-green below the swell
       const beach = 1 - THREE.MathUtils.smoothstep(Math.abs(z - 8), 6, 22);
-      if (h > -2.0 && beach > 0) out.lerp(SAND, beach * 0.65);
+      if (h > -2.0 && h < 1.2 && beach > 0) out.lerp(SAND, beach * 0.85);
       const wet = THREE.MathUtils.smoothstep(-h, 1.4, 2.6);
       out.lerp(WETSAND, wet * 0.7);
       break;
     }
   }
-  const path = 1 - THREE.MathUtils.smoothstep(Math.abs(x), 1.2, 4);
-  if (path > 0) out.lerp(PATH, path * 0.18);
+  // the worn walking path along the corridor — it ends at the neytal
+  // shore (a pale stripe running into open water read as a road)
+  if (zone.props !== "sea") {
+    const path = 1 - THREE.MathUtils.smoothstep(Math.abs(x), 1.2, 4);
+    if (path > 0) out.lerp(PATH, path * 0.18);
+  }
 }
 
 /** Heightfield for one zone. A soft valley is carved along x≈0 so the
@@ -349,13 +367,18 @@ function zoneGeometry(zone: Zone, detail: number, prev?: Zone, next?: Zone) {
     let t = 0;
     let other: Zone | undefined;
     let otherZ = 0;
-    if (next && z > half - feather) {
-      t = THREE.MathUtils.smoothstep(z, half - feather, half + feather);
+    // Orientation: zones advance along -Z, so this mesh's local -z band
+    // overlaps the NEXT zone (its local coord there is z + ZONE_LEN) and
+    // the local +z band overlaps the PREV zone (z - ZONE_LEN). Getting
+    // this backwards blends in phantom terrain from the wrong neighbor —
+    // e.g. palai dunes rising out of the neytal open ocean.
+    if (next && z < -half + feather) {
+      t = 1 - THREE.MathUtils.smoothstep(z, -half - feather, -half + feather);
       other = next;
       otherZ = z + ZONE_LEN;
       h = THREE.MathUtils.lerp(h, zoneHeight(next, x, otherZ), t);
-    } else if (prev && z < -half + feather) {
-      t = 1 - THREE.MathUtils.smoothstep(z, -half - feather, -half + feather);
+    } else if (prev && z > half - feather) {
+      t = THREE.MathUtils.smoothstep(z, half - feather, half + feather);
       other = prev;
       otherZ = z - ZONE_LEN;
       h = THREE.MathUtils.lerp(h, zoneHeight(prev, x, otherZ), t);
@@ -521,14 +544,35 @@ function ZoneProps({ zone, zOffset, density = 1 }: { zone: Zone; zOffset: number
         return [forest, jasmine, deer, cattle];
       }
 
-      case "fields": { // marutham — paddies, palms, pond life, deer, elephants, kundru
-        const paddy: PropLayer = {
-          geometry: new THREE.BoxGeometry(10, 0.25, 4),
-          color: "#6e6420",
-          matrices: place(n(70), (i) => {
-            const x = (i % 2 === 0 ? 1 : -1) * (16 + (i % 5) * 11);
-            const z = -FULL_LEN / 2 + (i / n(70)) * FULL_LEN;
-            return { x, z, scale: 0.9 + rand() * 0.4, h: ground(x, z) + 0.35 };
+      case "fields": { // marutham — paddy patchwork, palms, pond life, deer, elephants, kundru
+        // The paddy fields themselves are painted into the terrain's vertex
+        // colors (see zoneVertexColor) — what stands up from them are the
+        // mud bunds: the low earthen ridges dividing plot from plot, laid
+        // as segments that each sit on their own patch of sampled ground.
+        const segs = Math.round(FULL_LEN / 8);
+        const cols = 7;
+        const bundsAlong: PropLayer = {
+          geometry: new THREE.BoxGeometry(0.5, 0.5, 8.4),
+          color: "#5f4d2e",
+          matrices: place(cols * segs * 2, (i) => {
+            const side = i % 2 === 0 ? 1 : -1;
+            const k = Math.floor(i / 2) % cols;
+            const s = Math.floor(i / (2 * cols));
+            const x = side * (12 + k * 11);
+            const z = -FULL_LEN / 2 + (s + 0.5) * 8;
+            return { x, z, scale: 1, h: ground(x, z) + 0.12 };
+          }),
+        };
+        const bundsAcross: PropLayer = {
+          geometry: new THREE.BoxGeometry(11.4, 0.5, 0.5),
+          color: "#5f4d2e",
+          matrices: place(6 * segs * 2, (i) => {
+            const side = i % 2 === 0 ? 1 : -1;
+            const k = Math.floor(i / 2) % 6;
+            const s = Math.floor(i / 12);
+            const x = side * (17.5 + k * 11);
+            const z = -FULL_LEN / 2 + s * 8;
+            return { x, z, scale: 1, h: ground(x, z) + 0.12 };
           }),
         };
         const palms: PropLayer = {
@@ -587,6 +631,7 @@ function ZoneProps({ zone, zOffset, density = 1 }: { zone: Zone; zOffset: number
             return { x, z, scale: 1 + rand() * 0.3, h: ground(x, z), yaw: rand() * Math.PI * 2 };
           }),
         };
+        const pondY = ground(34, 6) + 0.25; // lotus floats just above the pond disc
         const lotus: PropLayer = {
           geometry: new THREE.OctahedronGeometry(0.16),
           color: "#d98aa8",
@@ -595,7 +640,7 @@ function ZoneProps({ zone, zOffset, density = 1 }: { zone: Zone; zOffset: number
           matrices: place(14, () => {
             const a = rand() * Math.PI * 2;
             const r = rand() * 7;
-            return { x: 34 + Math.cos(a) * r, z: 6 + Math.sin(a) * r, scale: 0.8 + rand() * 0.6, h: -0.35 };
+            return { x: 34 + Math.cos(a) * r, z: 6 + Math.sin(a) * r, scale: 0.8 + rand() * 0.6, h: pondY };
           }),
         };
         const kundru: PropLayer = {
@@ -605,7 +650,7 @@ function ZoneProps({ zone, zOffset, density = 1 }: { zone: Zone; zOffset: number
           // one fixed landmark, off to one side so it never blocks the camera path
           matrices: place(1, () => ({ x: -62, z: 4, scale: 1, h: ground(-62, 4) + 0.3, yaw: 0.4 })),
         };
-        return [paddy, palms, deer, elephants, buffalo, cranes, lotus, kundru];
+        return [bundsAlong, bundsAcross, palms, deer, elephants, buffalo, cranes, lotus, kundru];
       }
 
       case "dunes": { // palai — stones, kalli cactus, leafless trees
@@ -752,13 +797,18 @@ function CirclingBirds({
   );
 }
 
-/** The lighthouse on the neytal headland: static banded tower, a warm
-    always-on lamp, and a slow rotating double beam sweeping the water. */
+/** The lighthouse on the neytal headland: static banded tower and a warm
+    lamp that slowly breathes brighter and dimmer — the classic sweep, felt
+    as a pulse. (Translucent beam cones were tried and read as a floating
+    pipe from up close; the pulse keeps the signal without the geometry.) */
 function Lighthouse({ position }: { position: [number, number, number] }) {
-  const beam = useRef<THREE.Group>(null);
+  const lampMat = useRef<THREE.MeshStandardMaterial>(null);
+  const lampLight = useRef<THREE.PointLight>(null);
   const geom = useMemo(() => buildLighthouse(), []);
-  useFrame((_, delta) => {
-    if (beam.current) beam.current.rotation.y += delta * 0.45;
+  useFrame(({ clock }) => {
+    const sweep = 0.5 + 0.5 * Math.sin(clock.elapsedTime * 0.9); // slow beat
+    if (lampMat.current) lampMat.current.emissiveIntensity = 0.6 + sweep * 1.3;
+    if (lampLight.current) lampLight.current.intensity = 25 + sweep * 70;
   });
   return (
     <group position={position} scale={2.1}>
@@ -767,18 +817,9 @@ function Lighthouse({ position }: { position: [number, number, number] }) {
       </mesh>
       <mesh position={[0, 5.35, 0]}>
         <sphereGeometry args={[0.28, 8, 8]} />
-        <meshStandardMaterial color="#ffe9a8" emissive="#ffd76a" emissiveIntensity={1.4} />
+        <meshStandardMaterial ref={lampMat} color="#ffe9a8" emissive="#ffd76a" emissiveIntensity={1.4} />
       </mesh>
-      <pointLight position={[0, 5.35, 0]} color="#ffd98c" intensity={60} distance={70} decay={1.7} />
-      {/* two opposed translucent cones, apexes at the lamp, sweeping slowly */}
-      <group ref={beam} position={[0, 5.35, 0]}>
-        {[1, -1].map((dir) => (
-          <mesh key={dir} position={[dir * 5, 0, 0]} rotation={[0, 0, (dir * Math.PI) / 2]}>
-            <coneGeometry args={[0.55, 10, 8, 1, true]} />
-            <meshBasicMaterial color="#ffe9a8" transparent opacity={0.14} side={THREE.DoubleSide} depthWrite={false} />
-          </mesh>
-        ))}
-      </group>
+      <pointLight ref={lampLight} position={[0, 5.35, 0]} color="#ffd98c" intensity={60} distance={70} decay={1.7} />
     </group>
   );
 }
@@ -849,18 +890,6 @@ function NeytalOcean({ zOffset }: { zOffset: number }) {
         <planeGeometry args={[260, ZONE_LEN + 140]} />
         <meshStandardMaterial color="#123047" transparent opacity={0.85} roughness={0.25} metalness={0.4} />
       </mesh>
-      {/* the moon's glint path, fading out toward the horizon with the fog */}
-      <mesh rotation-x={-Math.PI / 2} position={[0, -2.14, zOffset - 30]}>
-        <planeGeometry args={[3.4, 90]} />
-        <meshStandardMaterial
-          color="#9fc4e0"
-          emissive="#bcd8ee"
-          emissiveIntensity={0.5}
-          transparent
-          opacity={0.28}
-          roughness={0.4}
-        />
-      </mesh>
       {/* a cool low moon-glow over the far water */}
       <pointLight position={[0, 8, zOffset - 45]} color="#a8c8e8" intensity={90} distance={80} decay={1.9} />
     </group>
@@ -886,7 +915,7 @@ export function Terrain({ detail = 96, low = false }: { detail?: number; low?: b
             <ZoneProps zone={zone} zOffset={zOffset} density={density} />
             {zone.props === "fields" && (
               /* the lotus pond — buffalo wallow at its edge, cranes wade its rim */
-              <mesh rotation-x={-Math.PI / 2} position={[34, -0.55, zOffset + 6]}>
+              <mesh rotation-x={-Math.PI / 2} position={[34, zoneHeight(zone, 34, 6) + 0.15, zOffset + 6]}>
                 <circleGeometry args={[9.5, 24]} />
                 <meshStandardMaterial color="#1d4a5e" transparent opacity={0.9} roughness={0.3} metalness={0.2} />
               </mesh>
@@ -899,8 +928,8 @@ export function Terrain({ detail = 96, low = false }: { detail?: number; low?: b
                 {/* gulls wheeling slowly over the open water */}
                 <CirclingBirds zOffset={zOffset - 15} y={10} radius={32} count={low ? 2 : 4} color="#e8e4da" speed={0.12} size={1.3} />
                 <NeytalOcean zOffset={zOffset} />
-                {/* headland lighthouse right on the shoreline, beam sweeping the sea */}
-                <Lighthouse position={[-28, zoneHeight(zone, -28, -2), zOffset - 2]} />
+                {/* headland lighthouse just up the beach, beam sweeping the sea */}
+                <Lighthouse position={[-30, zoneHeight(zone, -30, 2), zOffset + 2]} />
                 <group position={[0, 0, zOffset]}>
                   <DriftingBoats count={low ? 2 : 3} />
                 </group>

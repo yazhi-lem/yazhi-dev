@@ -42,6 +42,10 @@ export default function ThinaiWorld() {
         dpr={low ? 1 : [1, 1.5]}
         gl={{ antialias: !low, powerPreference: "high-performance" }}
         camera={{ position: [0, 9, 6], fov: 58, near: 0.1, far: 240 }}
+        onCreated={(state) => {
+          // debug handle for tooling (Playwright scene inspection)
+          (window as unknown as Record<string, unknown>).__r3fState = state;
+        }}
       >
         <PerformanceMonitor onDecline={() => setLow(true)}>
           <color attach="background" args={["#0b0e1a"]} />
