@@ -29,6 +29,7 @@ export function Guardian() {
         thinaiTa="பாலை" thinaiEn="Palai" landscapeTa="பாலைவனம் · பிரிதல்" landscape="Desert · hardship endured"
         titleTa={GUARDIAN.nameTa} titleEn={GUARDIAN.nameEn}
         subTa={GUARDIAN.subTa} subEn={GUARDIAN.subEn}
+        plainTa={GUARDIAN.plainTa} plainEn={GUARDIAN.plainEn}
       />
       <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(260px,380px)]">
         <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}>

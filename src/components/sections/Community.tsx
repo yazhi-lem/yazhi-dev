@@ -17,6 +17,7 @@ export function Community() {
         thinaiTa="நெய்தல்" thinaiEn="Neytal" landscapeTa="கடற்கரை" landscape="Coastal · separation, pining"
         titleTa={COMMUNITY.titleTa} titleEn={COMMUNITY.titleEn}
         subTa={COMMUNITY.subTa} subEn={COMMUNITY.subEn}
+        plainTa={COMMUNITY.plainTa} plainEn={COMMUNITY.plainEn}
       />
 
       <motion.div
@@ -33,6 +34,14 @@ export function Community() {
           </Card>
         ))}
       </motion.div>
+
+      {/* honest note for families: the chat platforms have their own age rules */}
+      <Bi
+        as="p"
+        ta={COMMUNITY.chatAgeTa}
+        en={COMMUNITY.chatAgeEn}
+        className="mt-4 flex flex-col gap-0.5 text-xs text-ivory-dim/80"
+      />
 
       {/* Services — nav items exist, sections don't yet: honest coming-soon strip */}
       <motion.aside

@@ -18,6 +18,7 @@ export function Adhan() {
         thinaiTa="முல்லை" thinaiEn="Mullai" landscapeTa="காடு · இருத்தல்" landscape="Forest · waiting"
         titleTa={ADHAN.nameTa} titleEn={ADHAN.nameEn}
         subTa={ADHAN.subTa} subEn={ADHAN.subEn}
+        plainTa={ADHAN.plainTa} plainEn={ADHAN.plainEn}
       />
       <div className="grid items-start gap-8 lg:grid-cols-2">
         <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}>

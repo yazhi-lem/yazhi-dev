@@ -216,7 +216,9 @@ function Shore() {
     const rand = mulberry32(85);
     return Array.from({ length: 5 }, () => ({
       x: (rand() - 0.5) * 70,
-      z: zOf(4) + 4 + rand() * (ZONE_LEN / 2 - 6),
+      // the open water is on the FAR side of the zone (local -z) since the
+      // neytal shoreline flip in Terrain — boats float there, not on the beach
+      z: zOf(4) - 4 - rand() * (ZONE_LEN / 2 - 6),
       r: rand() * Math.PI * 2,
       phase: rand() * Math.PI * 2,
     }));
@@ -255,8 +257,8 @@ function Shore() {
           </group>
         ))}
       </group>
-      {/* kalangarai vilakkam — the shore beacon */}
-      <group position={[26, 0, zOf(4) - 10]}>
+      {/* kalangarai vilakkam — the shore beacon, footed below the swell */}
+      <group position={[26, -2.5, zOf(4) - 10]}>
         <mesh position={[0, 4, 0]}>
           <cylinderGeometry args={[0.9, 1.4, 8, 8]} />
           <meshStandardMaterial color="#243244" flatShading roughness={0.9} />

@@ -44,6 +44,11 @@ export function Hero() {
         <motion.div variants={fadeUp} className="mt-6">
           <Bi as="p" ta={IDENTITY.fullTa} en={IDENTITY.fullEn} className="flex flex-col gap-1 text-ivory-dim" />
         </motion.div>
+
+        {/* the plain-language layer — one sentence a ten-year-old can read */}
+        <motion.div variants={fadeUp} className="mt-4">
+          <Bi as="p" ta={IDENTITY.plainTa} en={IDENTITY.plainEn} className="mx-auto flex max-w-xl flex-col gap-1 text-sm text-ivory-dim/90" />
+        </motion.div>
       </motion.div>
 
       <motion.a
