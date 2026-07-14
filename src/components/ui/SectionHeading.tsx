@@ -12,6 +12,8 @@ export function SectionHeading({
   titleEn,
   subTa,
   subEn,
+  plainTa,
+  plainEn,
 }: {
   thinaiTa: string;
   thinaiEn: string;
@@ -21,6 +23,10 @@ export function SectionHeading({
   titleEn: string;
   subTa?: string;
   subEn?: string;
+  /** the plain-language layer: one sentence a ten-year-old can read,
+      under the poetic/technical register — never replacing it */
+  plainTa?: string;
+  plainEn?: string;
 }) {
   return (
     <header className="mb-12 max-w-3xl">
@@ -47,6 +53,14 @@ export function SectionHeading({
           ta={subTa}
           en={subEn}
           className="mt-4 flex flex-col gap-1 text-[length:var(--text-lg)] text-ivory-dim"
+        />
+      )}
+      {plainTa && plainEn && (
+        <Bi
+          as="p"
+          ta={plainTa}
+          en={plainEn}
+          className="mt-3 flex flex-col gap-1 border-l-2 border-[color:var(--accent)]/40 pl-3 text-sm text-ivory-dim"
         />
       )}
     </header>
