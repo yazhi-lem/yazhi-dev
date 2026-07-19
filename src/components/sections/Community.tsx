@@ -13,20 +13,16 @@ import { stagger, fadeUp } from "@/lib/motionPresets";
 export function Community() {
   return (
     <Section id="community">
-      <SectionHeading
-        thinaiTa="நெய்தல்" thinaiEn="Neytal" landscapeTa="கடற்கரை" landscape="Coastal · separation, pining"
-        titleTa={COMMUNITY.titleTa} titleEn={COMMUNITY.titleEn}
-        subTa={COMMUNITY.subTa} subEn={COMMUNITY.subEn}
-      />
+      <SectionHeading eyebrow={COMMUNITY.eyebrow} title={COMMUNITY.title} sub={COMMUNITY.sub} />
 
       <motion.div
         variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}
         className="grid gap-5 sm:grid-cols-3"
       >
         {COMMUNITY.cards.map((c) => (
-          <Card key={c.en}>
-            <Bi as="h3" ta={c.ta} en={c.en} className="flex flex-col font-display text-lg font-semibold" />
-            <Bi as="p" ta={c.bodyTa} en={c.bodyEn} className="mt-1 flex flex-col gap-1 text-sm text-ivory-dim" />
+          <Card key={c.title.en}>
+            <Bi as="h3" text={c.title} className="flex flex-col font-display text-lg font-semibold" />
+            <Bi as="p" text={c.body} className="mt-1 flex flex-col gap-1 text-sm text-ivory-dim" />
             <div className="mt-5">
               <Button href={c.href} variant="ghost" external={c.external}>{c.label}</Button>
             </div>
@@ -41,12 +37,12 @@ export function Community() {
         className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 rounded-[var(--radius-card)] border border-dashed border-ivory/20 px-6 py-5"
         aria-label="Services — coming soon"
       >
-        <Bi as="p" ta={UI.servicesLabel.ta} en={UI.servicesLabel.en} className="flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
+        <Bi as="p" text={UI.servicesLabel} className="flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
         {SERVICES.map((s) => (
-          <Bi key={s.en} ta={s.ta} en={s.en} className="flex gap-1.5 text-sm text-ivory-dim" separator={<span aria-hidden className="text-ivory/30">·</span>} />
+          <Bi key={s.label.en} text={s.label} className="flex gap-1.5 text-sm text-ivory-dim" separator={<span aria-hidden className="text-ivory/30">·</span>} />
         ))}
         <span className="ml-auto rounded-full border border-ivory/15 px-3 py-1 text-xs text-ivory-dim">
-          <Bi ta={UI.comingSoon.ta} en={UI.comingSoon.en} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
+          <Bi text={UI.comingSoon} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
         </span>
       </motion.aside>
     </Section>

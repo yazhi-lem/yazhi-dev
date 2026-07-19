@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { THINAI } from "@/lib/content";
-import { useLang } from "@/lib/i18n";
+import { useLang, resolveIndic } from "@/lib/i18n";
 
 const ORDERED = ["kurinji", "mullai", "marutham", "neytal", "palai"] as const;
 
@@ -10,7 +10,7 @@ const ORDERED = ["kurinji", "mullai", "marutham", "neytal", "palai"] as const;
     setting the site's emotional register (BRAND_AND_CONTENT §2 dual-use).
     Skips under reduced motion; plays once per session. */
 export function ThinaiIntro() {
-  const { lang } = useLang();
+  const { mode, indic } = useLang();
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(true); // SSR-safe default: hidden
 
@@ -54,14 +54,14 @@ export function ThinaiIntro() {
               className="text-center"
             >
               <p aria-hidden className="mb-3 text-4xl">{t.icon}</p>
-              {lang !== "en" && (
-                <p lang="ta" className="font-display text-4xl font-semibold" style={{ color: `var(--${t.key})` }}>
-                  {t.ta}
+              {mode !== "en" && (
+                <p lang={resolveIndic(t.name, indic).lang} className="font-display text-4xl font-semibold" style={{ color: `var(--${t.key})` }}>
+                  {resolveIndic(t.name, indic).value}
                 </p>
               )}
-              {lang !== "ta" && (
-                <p lang="en" className={lang === "en" ? "font-display text-3xl font-semibold" : "mt-1 text-sm uppercase tracking-[0.3em] text-ivory-dim"} style={lang === "en" ? { color: `var(--${t.key})` } : undefined}>
-                  {lang === "en" ? t.en : `${t.en} · ${t.landscape}`}
+              {mode !== "indic" && (
+                <p lang="en" className={mode === "en" ? "font-display text-3xl font-semibold" : "mt-1 text-sm uppercase tracking-[0.3em] text-ivory-dim"} style={mode === "en" ? { color: `var(--${t.key})` } : undefined}>
+                  {mode === "en" ? t.en : `${t.en} · ${t.landscape.en}`}
                 </p>
               )}
             </motion.div>

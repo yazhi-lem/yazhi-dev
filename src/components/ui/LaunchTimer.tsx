@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useLang } from "@/lib/i18n";
+import { useText } from "@/lib/i18n";
+import { UI } from "@/lib/content";
 
 /** The Yazhi Awakening — the date the initiative wakes. The timer counts
     DOWN to this moment, reaching 0d 00:00:00 at the stroke of the new year. */
@@ -13,7 +14,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
     set in an effect, so the server and first client render agree — no
     hydration mismatch — then it ticks live every second. */
 export function LaunchTimer() {
-  const { lang } = useLang();
+  const t = useText();
   const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
@@ -29,12 +30,7 @@ export function LaunchTimer() {
   const mins = Math.floor((total % 3600) / 60);
   const secs = total % 60;
 
-  const label =
-    lang === "en"
-      ? "Yazhi Awakening"
-      : lang === "ta"
-        ? "யாழி எழுச்சி"
-        : "யாழி எழுச்சி · Awakening";
+  const label = t(UI.awakening);
 
   return (
     <div

@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { SCRIPTS, STATS } from "@/lib/content";
+import { SCRIPTS, STATS, UI } from "@/lib/content";
 import { Bi } from "@/components/ui/Bi";
 
 /** Small deterministic PRNG (mulberry32). A fixed seed means the scatter is
@@ -81,17 +81,16 @@ export function Constellation() {
       <div className="relative z-10 rounded-2xl border border-[color:var(--accent)]/40 bg-night-2/85 px-6 py-5 text-center shadow-[0_0_60px_-15px_var(--accent)] backdrop-blur">
         <Bi
           as="p"
-          ta="ஒரே மாதிரி"
-          en="one model"
+          text={UI.oneModel}
           className="mb-3 flex flex-col gap-0.5 text-[10px] uppercase tracking-[0.35em] text-[color:var(--accent)]"
         />
         <dl className="flex items-start justify-center gap-6">
           {STATS.map((s) => (
-            <div key={s.en}>
-              <dt className="sr-only">{s.en}</dt>
+            <div key={s.label.en}>
+              <dt className="sr-only">{s.label.en}</dt>
               <dd className="font-display text-2xl font-semibold text-gold sm:text-3xl">{s.value}</dd>
               <dd className="mt-1 max-w-[6rem]">
-                <Bi ta={s.ta} en={s.en} className="flex flex-col text-[11px] leading-tight text-ivory-dim" />
+                <Bi text={s.label} className="flex flex-col text-[11px] leading-tight text-ivory-dim" />
               </dd>
             </div>
           ))}
