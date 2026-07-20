@@ -25,19 +25,18 @@ export function Guardian() {
   }, []);
   return (
     <Section id="guardian">
-      <SectionHeading
-        thinaiTa="பாலை" thinaiEn="Palai" landscapeTa="பாலைவனம் · பிரிதல்" landscape="Desert · hardship endured"
-        titleTa={GUARDIAN.nameTa} titleEn={GUARDIAN.nameEn}
-        subTa={GUARDIAN.subTa} subEn={GUARDIAN.subEn}
-      />
+      <SectionHeading eyebrow={GUARDIAN.eyebrow} title={GUARDIAN.name} sub={GUARDIAN.sub} />
       <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(260px,380px)]">
         <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}>
-          <motion.p variants={fadeUp} lang="en" className="max-w-prose text-ivory-dim">
-            {GUARDIAN.bodyEn}
-          </motion.p>
+          <motion.div variants={fadeUp}>
+            <Bi as="p" text={GUARDIAN.body} className="flex max-w-prose flex-col gap-3 text-ivory-dim" />
+          </motion.div>
           <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
             <Button href={GUARDIAN.ctaHref}>
-              <Bi ta={GUARDIAN.ctaTa} en={GUARDIAN.ctaEn} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
+              <Bi text={GUARDIAN.cta} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
+            </Button>
+            <Button href={GUARDIAN.whatsappHref} variant="ghost" external>
+              <Bi text={GUARDIAN.whatsappCta} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
             </Button>
           </motion.div>
         </motion.div>
@@ -78,7 +77,7 @@ export function Guardian() {
             </svg>
           )}
           <figcaption className="mt-3 text-center text-xs uppercase tracking-[0.3em] text-ivory-dim">
-            யாழி · temple guardian
+            யாழ் · bilingual companion
           </figcaption>
         </motion.figure>
       </div>

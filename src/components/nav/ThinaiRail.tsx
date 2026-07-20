@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
 import { THINAI } from "@/lib/content";
-import { useLang } from "@/lib/i18n";
+import { useLang, resolveIndic } from "@/lib/i18n";
 
 /** The five thinai as literal site navigation. Desktop: fixed left rail.
     Mobile: bottom bar. Active landscape tracks scroll position. */
 export function ThinaiRail() {
-  const { lang } = useLang();
+  const { mode, indic } = useLang();
   const [active, setActive] = useState("kurinji");
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export function ThinaiRail() {
             <li key={t.key}>
               <button
                 onClick={() => go(t.section)}
-                aria-label={lang === "en" ? `${t.en} — ${t.landscape}` : `${t.ta} · ${t.en}`}
+                aria-label={mode === "en" ? `${t.en} — ${t.landscape.en}` : `${resolveIndic(t.name, indic).value} · ${t.en}`}
                 aria-current={isActive ? "true" : undefined}
                 className={`group relative flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${
                   isActive
@@ -54,7 +54,7 @@ export function ThinaiRail() {
               >
                 <span aria-hidden className="text-lg leading-none">{t.icon}</span>
                 <span className="pointer-events-none absolute left-full ml-3 hidden whitespace-nowrap rounded-md bg-night-2 px-2 py-1 text-xs text-ivory opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 lg:block">
-                  {lang === "en" ? t.en : t.ta}
+                  {mode === "en" ? t.en : resolveIndic(t.name, indic).value}
                 </span>
               </button>
             </li>

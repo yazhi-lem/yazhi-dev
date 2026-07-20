@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { Bi } from "@/components/ui/Bi";
-import { IDENTITY, UI } from "@/lib/content";
+import { IDENTITY, HERO } from "@/lib/content";
 import { fadeUp, stagger } from "@/lib/motionPresets";
 import { useLang } from "@/lib/i18n";
 
@@ -11,7 +11,7 @@ import { useLang } from "@/lib/i18n";
     HeroSignature, rendered directly after this section. See yazhi-dev
     issue: "Hero section is visually cluttered". */
 export function Hero() {
-  const { lang } = useLang();
+  const { mode } = useLang();
 
   return (
     <section id="hero" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 pt-24">
@@ -19,8 +19,7 @@ export function Hero() {
         <motion.div variants={fadeUp}>
           <Bi
             as="p"
-            ta={UI.heroEyebrow.ta}
-            en={UI.heroEyebrow.en}
+            text={HERO.eyebrow}
             className="mb-5 flex flex-col gap-0.5 text-xs uppercase tracking-[0.3em] text-[color:var(--accent)]"
           />
         </motion.div>
@@ -29,12 +28,12 @@ export function Hero() {
           <Bi
             as="h1"
             display
-            ta={IDENTITY.taglineTa}
-            en={IDENTITY.taglineEn}
+            text={IDENTITY.tagline}
             className="flex flex-col items-center gap-3"
             taClass="font-display text-[length:var(--text-4xl)] font-bold sm:text-[length:var(--text-5xl)]"
+            mixedClass="font-display text-[length:var(--text-4xl)] font-bold sm:text-[length:var(--text-5xl)]"
             enClass={
-              lang === "en"
+              mode === "en"
                 ? "font-display text-[length:var(--text-3xl)] font-bold sm:text-[length:var(--text-4xl)]"
                 : "text-[length:var(--text-lg)] uppercase tracking-[0.25em] text-ivory-dim"
             }
@@ -42,7 +41,7 @@ export function Hero() {
         </motion.div>
 
         <motion.div variants={fadeUp} className="mt-6">
-          <Bi as="p" ta={IDENTITY.fullTa} en={IDENTITY.fullEn} className="flex flex-col gap-1 text-ivory-dim" />
+          <Bi as="p" text={IDENTITY.full} className="flex flex-col gap-1 text-ivory-dim" />
         </motion.div>
       </motion.div>
 
@@ -53,7 +52,7 @@ export function Hero() {
         animate="show"
         className="scroll-cue relative z-10 mt-16 flex flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-ivory-dim transition-colors hover:text-ivory"
       >
-        <Bi ta={UI.scrollCue.ta} en={UI.scrollCue.en} className="flex flex-col items-center gap-0.5" />
+        <Bi text={HERO.scrollCue} className="flex flex-col items-center gap-0.5" />
         <span aria-hidden className="scroll-cue-arrow">↓</span>
       </motion.a>
     </section>
