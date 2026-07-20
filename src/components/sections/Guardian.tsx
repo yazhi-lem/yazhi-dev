@@ -35,6 +35,9 @@ export function Guardian() {
             <Button href={GUARDIAN.ctaHref}>
               <Bi text={GUARDIAN.cta} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
             </Button>
+            <Button href={GUARDIAN.whatsappHref} variant="ghost" external>
+              <Bi text={GUARDIAN.whatsappCta} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
+            </Button>
           </motion.div>
         </motion.div>
 
@@ -74,7 +77,7 @@ export function Guardian() {
             </svg>
           )}
           <figcaption className="mt-3 text-center text-xs uppercase tracking-[0.3em] text-ivory-dim">
-            யாழி · temple guardian
+            யாழ் · bilingual companion
           </figcaption>
         </motion.figure>
       </div>
