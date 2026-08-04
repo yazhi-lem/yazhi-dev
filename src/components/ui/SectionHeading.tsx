@@ -36,6 +36,14 @@ export function SectionHeading({
           className="mt-4 flex flex-col gap-1 text-[length:var(--text-lg)] text-ivory-dim"
         />
       )}
+      {plainTa && plainEn && (
+        <Bi
+          as="p"
+          ta={plainTa}
+          en={plainEn}
+          className="mt-3 flex flex-col gap-1 border-l-2 border-[color:var(--accent)]/40 pl-3 text-sm text-ivory-dim"
+        />
+      )}
     </header>
   );
 }

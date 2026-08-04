@@ -275,6 +275,8 @@ chat.send("ఇప్పుడు తెలుగులో చెప్పు")`,
     { ta: "GitHub-ல போய் பாருங்க →", hi: "GitHub पर जाकर देखिए →", ml: "GitHub-ൽ പോയ് നോക്കുക →", te: "GitHub-కి వెళ్లి చూడండి →" }
   ),
   ctaHref: "https://github.com/yazhi-lem/adhan",
+  plainTa: "ஒரே கணினி மூளை இந்தியாவின் எல்லா மொழிகளையும் படிக்கவும் எழுதவும் கற்கிறது.",
+  plainEn: "One computer brain learning to read and write all of India's languages.",
 };
 
 /* ---------------- Sangam — the literature companion ---------------- */
@@ -356,6 +358,8 @@ export const SANGAM = {
     { ta: "உள்ள வாங்க →", hi: "अंदर आ जाइए →", ml: "അകത്ത് കടക്കാം →", te: "లోపలికి వెళ్లిద్దాం →" }
   ),
   ctaHref: "https://sangam.yazhi.dev",
+  plainTa: "2,000 ஆண்டு பழைய தமிழ்ப் பாடல்களைப் படித்து, ஒவ்வொன்றும் எந்த நிலத்தைச் சேர்ந்தது என்று சொல்லும் கருவி.",
+  plainEn: "A tool that reads 2,000-year-old Tamil poems and tells you which of the five landscapes each belongs to.",
 };
 
 /* ---------------- Yazh — the guardian ---------------- */

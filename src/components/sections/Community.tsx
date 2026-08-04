@@ -30,6 +30,14 @@ export function Community() {
         ))}
       </motion.div>
 
+      {/* honest note for families: the chat platforms have their own age rules */}
+      <Bi
+        as="p"
+        ta={COMMUNITY.chatAgeTa}
+        en={COMMUNITY.chatAgeEn}
+        className="mt-4 flex flex-col gap-0.5 text-xs text-ivory-dim/80"
+      />
+
       {/* Services — nav items exist, sections don't yet: honest coming-soon strip */}
       <motion.aside
         id="services"
