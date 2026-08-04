@@ -8,6 +8,7 @@ import { LogoMark } from "@/components/ui/LogoMark";
 import { IDENTITY, NAV_GROUPS, ADHAN, SANGAM, GUARDIAN, COMMUNITY } from "@/lib/content";
 
 const LINKS_TOP = [
+  { ta: "யாழி அரங்கம்", en: "Yazhi Space", href: "/yazhi" },
   { ta: ADHAN.nameTa, en: ADHAN.nameEn, href: "#adhan" },
   { ta: SANGAM.nameTa, en: SANGAM.nameEn, href: "#sangam" },
   { ta: GUARDIAN.nameTa, en: "Yazh", href: "#guardian" },

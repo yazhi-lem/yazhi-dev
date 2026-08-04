@@ -131,6 +131,7 @@ export const NAV_GROUPS = [
   {
     ta: "திட்டங்கள்", en: "Projects",
     items: [
+      { ta: "யாழி அரங்கம் (புதியது)", en: "Yazhi Agent Space (New)", href: "/yazhi" },
       { ta: "அதன்", en: "Adhan", href: "#adhan" },
       { ta: "சங்கம்", en: "Sangam", href: "#sangam" },
       { ta: "யாழ்", en: "Yazh", href: "#guardian" },
