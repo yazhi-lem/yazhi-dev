@@ -20,6 +20,7 @@ export function Sangam() {
         thinaiTa="மருதம்" thinaiEn="Marutham" landscapeTa="வயல் · விளை நிலம்" landscape="Agriculture · fertile land"
         titleTa={SANGAM.nameTa} titleEn={SANGAM.nameEn}
         subTa={SANGAM.subTa} subEn={SANGAM.subEn}
+        plainTa={SANGAM.plainTa} plainEn={SANGAM.plainEn}
       />
       <p lang="en" className="max-w-prose text-ivory-dim">{SANGAM.bodyEn}</p>
 
@@ -46,7 +47,7 @@ export function Sangam() {
         className="mt-10 overflow-x-auto rounded-[var(--radius-card)] border border-ivory/10 bg-night-2/60"
       >
         <table className="w-full min-w-[560px] text-left text-sm">
-          <caption className="sr-only">The five thinai — Sangam's landscape classification taxonomy</caption>
+          <caption className="sr-only">The five thinai — Sangam&apos;s landscape classification taxonomy</caption>
           <thead>
             <tr className="border-b border-ivory/10 text-xs uppercase tracking-widest text-ivory-dim">
               <th className="px-4 py-3 font-medium"><Bi ta={UI.thinaiCol.ta} en={UI.thinaiCol.en} className="flex gap-1.5" separator={<span aria-hidden>·</span>} /></th>

@@ -33,6 +33,10 @@ export const IDENTITY = {
   fullEn: "A sovereign AI model for Indian languages",
   footerTa: "இறையாண்மை செயற்கை நுண்ணறிவு",
   footerEn: "Sovereign Artificial Intelligence",
+  // the plain-language layer: one sentence a ten-year-old can read,
+  // sitting under the poetic/technical register — never replacing it
+  plainTa: "கணினிகளுக்குத் தமிழும் எல்லா இந்திய மொழிகளும் கற்றுத் தருகிறோம்.",
+  plainEn: "We teach computers to understand and speak Tamil — and every Indian language.",
   copyright: "© 2026 யாழி • Yazhi",
 };
 
@@ -82,6 +86,8 @@ response = model.generate(
 )`,
   ctaTa: "GitHub இல் காண்க →",
   ctaHref: "https://github.com/yazhi-lem/adhan",
+  plainTa: "ஒரே கணினி மூளை இந்தியாவின் எல்லா மொழிகளையும் படிக்கவும் எழுதவும் கற்கிறது.",
+  plainEn: "One computer brain learning to read and write all of India's languages.",
 };
 
 export const GUARDIAN = {
@@ -94,6 +100,8 @@ export const GUARDIAN = {
   ctaTa: "தொடங்குக",
   ctaEn: "Get started",
   ctaHref: "/onboarding",
+  plainTa: "இணையத்தில் தமிழ்க் கதைகளையும் பாடல்களையும் காக்கும் செயலி — கோவில் யாழியைப் போல.",
+  plainEn: "An app that watches over Tamil stories and songs on the internet — like the temple guardian it's named after.",
 };
 
 export const SANGAM = {
@@ -111,6 +119,8 @@ export const SANGAM = {
   ctaTa: "மேலும் அறிக →",
   ctaEn: "Learn more",
   ctaHref: "https://sangam.yazhi.dev",
+  plainTa: "2,000 ஆண்டு பழைய தமிழ்ப் பாடல்களைப் படித்து, ஒவ்வொன்றும் எந்த நிலத்தைச் சேர்ந்தது என்று சொல்லும் கருவி.",
+  plainEn: "A tool that reads 2,000-year-old Tamil poems and tells you which of the five landscapes each belongs to.",
 };
 
 export const SERVICES = [
@@ -150,6 +160,8 @@ export const NAV_GROUPS = [
       { ta: "வலையில் இணை", en: "Join the Network", href: "/onboarding" },
       { ta: "Discord", en: "Discord", href: LINKS.discord },
       { ta: "GitHub", en: "GitHub", href: LINKS.github },
+      { ta: "எங்களைப் பற்றி", en: "About", href: "/about" },
+      { ta: "தனியுரிமை", en: "Privacy", href: "/privacy" },
     ],
   },
 ];
@@ -179,6 +191,10 @@ export const THINAI_TA_POETIC: Record<string, string> = {
 export const COMMUNITY = {
   titleTa: "சமூகம்", titleEn: "Community",
   subTa: "கடல் கடந்த தமிழ் — வலையில் இணை", subEn: "Tamil across the seas — join the network",
+  plainTa: "தமிழையும் கணினியையும் நேசிக்கும் மக்கள் இதை இணைந்து உருவாக்குகிறோம் — நீங்களும் வரலாம்.",
+  plainEn: "Real people who love Tamil and computers, building this together — you're welcome to join.",
+  chatAgeTa: "அரட்டை தளங்கள் (WhatsApp, Discord) 13+ வயதினருக்கு — குழந்தைகள் பெற்றோருடன் இணையுங்கள்.",
+  chatAgeEn: "Chat platforms (WhatsApp, Discord) require age 13+ — kids, join with a parent.",
   cards: [
     { ta: "வலையில் இணை", en: "Join the Network", bodyTa: "பங்களிப்பாளர்கள், விளக்கமிடுபவர்கள், உருவாக்குநர்களுக்கான நுழைவு.", bodyEn: "Onboarding for contributors, annotators, and builders.", href: "/onboarding", label: "/onboarding →", external: false },
     { ta: "Discord", en: "Discord", bodyTa: "அன்றாட உரையாடல் — தமிழ் AI உருவாக்குநர்கள், ஆய்வாளர்கள், எழுத்தாளர்கள்.", bodyEn: "The daily conversation — Tamil AI builders, researchers, and writers.", href: "https://discord.gg/yazhi", label: "discord.gg/yazhi →", external: true },
