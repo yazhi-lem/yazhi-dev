@@ -55,27 +55,26 @@ export function Footer() {
           </div>
           <Bi
             as="p"
-            ta={IDENTITY.footerTa}
-            en={IDENTITY.footerEn}
+            text={IDENTITY.footer}
             className="mt-2 flex flex-col gap-0.5 text-sm text-ivory-dim"
           />
           <p className="mt-6 font-serif text-xs text-ivory-dim">{IDENTITY.copyright}</p>
         </div>
 
         {NAV_GROUPS.map((g) => (
-          <nav key={g.en} aria-label={g.en}>
-            <Bi as="p" ta={g.ta} en={g.en} className="mb-3 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
+          <nav key={g.label.en} aria-label={g.label.en}>
+            <Bi as="p" text={g.label} className="mb-3 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
             <ul className="flex flex-col gap-2">
               {g.items.map((it) => {
                 const ext = it.href.startsWith("http");
                 return (
-                  <li key={`${g.en}-${it.en}`}>
+                  <li key={`${g.label.en}-${it.label.en}`}>
                     <Link
                       href={it.href}
                       {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       className="text-sm text-ivory-dim transition-colors hover:text-ivory"
                     >
-                      <Bi ta={it.ta} en={it.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
+                      <Bi text={it.label} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
                     </Link>
                   </li>
                 );

@@ -6,12 +6,13 @@ import { Bi } from "@/components/ui/Bi";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { LogoMark } from "@/components/ui/LogoMark";
 import { IDENTITY, NAV_GROUPS, ADHAN, SANGAM, GUARDIAN, COMMUNITY } from "@/lib/content";
+import { L } from "@/lib/i18n";
 
 const LINKS_TOP = [
-  { ta: ADHAN.nameTa, en: ADHAN.nameEn, href: "#adhan" },
-  { ta: SANGAM.nameTa, en: SANGAM.nameEn, href: "#sangam" },
-  { ta: GUARDIAN.nameTa, en: "Yazh", href: "#guardian" },
-  { ta: COMMUNITY.titleTa, en: COMMUNITY.titleEn, href: "#community" },
+  { label: ADHAN.name, href: "#adhan" },
+  { label: SANGAM.name, href: "#sangam" },
+  { label: L("Yazh", { ta: GUARDIAN.nameTa, hi: "यज़" }), href: "#guardian" },
+  { label: COMMUNITY.title, href: "#community" },
 ];
 
 export function Navbar() {
@@ -35,7 +36,7 @@ export function Navbar() {
             {LINKS_TOP.map((l) => (
               <li key={l.href}>
                 <a href={l.href} className="text-sm text-ivory-dim transition-colors hover:text-ivory">
-                  <Bi ta={l.ta} en={l.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
+                  <Bi text={l.label} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
                 </a>
               </li>
             ))}
@@ -62,13 +63,13 @@ export function Navbar() {
             className="mx-5 rounded-2xl border border-ivory/10 bg-night-2/95 p-5 backdrop-blur md:hidden"
           >
             {NAV_GROUPS.map((g) => (
-              <div key={g.en} className="mb-4 last:mb-0">
-                <Bi as="p" ta={g.ta} en={g.en} className="mb-2 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
+              <div key={g.label.en} className="mb-4 last:mb-0">
+                <Bi as="p" text={g.label} className="mb-2 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
                 <ul className="flex flex-col gap-2">
                   {g.items.map((it) => (
-                    <li key={`${g.en}-${it.en}`}>
+                    <li key={`${g.label.en}-${it.label.en}`}>
                       <a href={it.href} onClick={() => setOpen(false)} className="text-ivory-dim hover:text-ivory">
-                        <Bi ta={it.ta} en={it.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
+                        <Bi text={it.label} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
                       </a>
                     </li>
                   ))}
