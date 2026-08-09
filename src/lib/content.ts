@@ -24,7 +24,7 @@ export const THINAI: {
 export const IDENTITY = {
   nameTa: "யாழி",
   nameEn: "Yazhi",
-  positioning: "Sovereign AI & Language Initiative",
+  positioning: "Sovereign AI for Indian languages",
   taglineTa: "தமிழ் செயற்கை நுண்ணறிவு",
   taglineEn: "Tamil Artificial Intelligence",
   secondaryTa: "அகமும் புறமும்",
@@ -37,8 +37,33 @@ export const IDENTITY = {
   // sitting under the poetic/technical register — never replacing it
   plainTa: "கணினிகளுக்குத் தமிழும் எல்லா இந்திய மொழிகளும் கற்றுத் தருகிறோம்.",
   plainEn: "We teach computers to understand and speak Tamil — and every Indian language.",
+  // from the founding deck: the one-line pitch under the wordmark
+  heroLineTa: "படிக்கவோ தட்டச்சு செய்யவோ இன்னும் தெரியாத குழந்தைகளுக்கான குரல் நண்பனுடன் தொடங்குகிறோம்.",
+  heroLineEn: "Starting with a voice friend for children who cannot yet read or type.",
   copyright: "© 2026 யாழி • Yazhi",
 };
+
+/** From the founding deck (Q3 2026, Hyderabad) — the current, honest state
+    of the build. Kept separate from the poetic/marketing copy above so this
+    can be updated quickly as milestones land without touching brand voice. */
+export const ROADMAP = {
+  titleTa: "வரைபடம்", titleEn: "Roadmap & runway",
+  subEn: "Yazh launch — Q1 2027",
+  milestones: [
+    { period: "Q3 2026", titleEn: "Private beta", status: "Planned launch", bodyEn: "Initial Yazh conversations on WhatsApp with 30+ founding families around Hyderabad." },
+    { period: "Q4 2026", titleEn: "Adhan & Indic corpus", status: "In progress", bodyEn: "Cultural and local data collection, embedding the corpus to train Adhan." },
+    { period: "Q1 2027", titleEn: "Public launch", status: "Committed", bodyEn: "Yazh opens to families in Tamil and Telugu, with paid subscriptions live." },
+    { period: "Q2–Q4 2027", titleEn: "API & Indian scale", status: "Bullseye", bodyEn: "Yazhi API opens to builders; Kannada and Malayalam enter the pipeline + Developer Community." },
+  ],
+};
+
+/** Market context from the deck — used sparingly, as supporting stats
+    rather than a full pitch-deck reproduction. */
+export const MARKET_STATS = [
+  { value: "600M+", en: "speakers of major Indian languages with no first-class AI of their own" },
+  { value: "~96M", en: "Telugu speakers — the second-largest Dravidian language, and next on the roadmap" },
+  { value: "500M+", en: "WhatsApp users in India — the delivery channel already in nearly every home" },
+];
 
 export const HERO_QUOTE = {
   ta: "யாமறிந்த மொழிகளிலே தமிழ்மொழி போல் இனிதாவது எங்கும் காணோம்",
@@ -70,7 +95,17 @@ export const ADHAN = {
   subTa: "இந்திய மொழிகளுக்கான இறையாண்மை கொண்ட செயற்கை நுண்ணறிவு",
   subEn: "Sovereign AI for Indian languages",
   bodyEn:
-    "7B parameter sovereign AI model for 22+ Indian languages. One unified model from Tamil to Hindi, Bengali to Telugu.",
+    "7B parameter sovereign AI model for 22+ Indian languages. One unified model from Tamil to Hindi, Bengali to Telugu — with a tokenizer designed for agglutinative grammar rather than retrofitted from English. Open weights on GitHub, served from our own inference node in Sivakasi.",
+  tokenTax: {
+    labelEn: "The token tax on Indian languages — tokens spent per word, same sentence",
+    rows: [
+      { lang: "English", multiplier: "1.0×" },
+      { lang: "Hindi", multiplier: "2.5×" },
+      { lang: "Telugu", multiplier: "4.0×" },
+      { lang: "Tamil", multiplier: "4.5×" },
+    ],
+    sourceEn: "Petrov et al., NeurIPS 2023",
+  },
   stats: [
     { value: "7B", ta: "அளவுருக்கள்", en: "parameters" },
     { value: "22+", ta: "மொழிகள்", en: "languages" },
@@ -92,14 +127,18 @@ response = model.generate(
 
 export const GUARDIAN = {
   nameTa: "யாழ்",
-  nameEn: "Yazh Guardian",
+  nameEn: "Yazh",
   subTa: "யாழி • புராணக் காவலன்",
-  subEn: "Yazhi • mythic guardian",
+  subEn: "A voice AI friend for children, on WhatsApp",
   bodyEn:
-    "Guardian application inspired by the mythical Yazhi creature. Protecting Tamil digital heritage and community wisdom.",
+    "Yazh is a guardian creature carved onto temple pillars across the Dravidian south — it stands at the doorway and keeps what is inside safe. Yazh is that guardian, drawn small enough for a four-year-old to talk to. He listens, answers in the child's mother tongue, and never asks them to read or type. Voice in, voice out — no app, no typing, on the phone families already own.",
   ctaTa: "தொடங்குக",
   ctaEn: "Get started",
   ctaHref: "/onboarding",
+  whatsappCtaTa: "WhatsApp இல் அரட்டையடிக்க",
+  whatsappCtaEn: "Chat on WhatsApp",
+  whatsappNoteTa: "தற்போது ஹைதராபாத்தைச் சுற்றியுள்ள 30+ முன்னோடிக் குடும்பங்களுடன் தனியார் பீட்டாவில் — இணைந்து புதுப்பிப்புகளைப் பெறுங்கள்.",
+  whatsappNoteEn: "Currently in private beta with 30+ founding families around Hyderabad — join the WhatsApp community for updates as we open up.",
   plainTa: "இணையத்தில் தமிழ்க் கதைகளையும் பாடல்களையும் காக்கும் செயலி — கோவில் யாழியைப் போல.",
   plainEn: "An app that watches over Tamil stories and songs on the internet — like the temple guardian it's named after.",
 };
@@ -200,4 +239,20 @@ export const COMMUNITY = {
     { ta: "Discord", en: "Discord", bodyTa: "அன்றாட உரையாடல் — தமிழ் AI உருவாக்குநர்கள், ஆய்வாளர்கள், எழுத்தாளர்கள்.", bodyEn: "The daily conversation — Tamil AI builders, researchers, and writers.", href: "https://discord.gg/yazhi", label: "discord.gg/yazhi →", external: true },
     { ta: "GitHub", en: "GitHub", bodyTa: "திறந்த பணி — மாதிரிகள், கருவிகள், மதிப்பீட்டுத் தொகுப்புகள்.", bodyEn: "The open work — models, tooling, and evaluation suites.", href: "https://github.com/yazhi-lem", label: "github.com/yazhi-lem →", external: true },
   ],
+};
+
+/** New: a dedicated track for developers — distinct from the family/parent
+    "Join the Network" card above. Same onboarding form, but routes toward
+    Discord + a future Yazhi API (Circle) account rather than a child
+    profile. See docs/PRD-DEVELOPER-COMMUNITY.md for the full flow. */
+export const DEVELOPERS = {
+  eyebrowTa: "உருவாக்குநர்கள்", eyebrowEn: "For developers",
+  titleTa: "உங்கள் தாய்மொழிக்காக உருவாக்குங்கள்", titleEn: "Build for your mother tongue",
+  bodyEn:
+    "A community of developers across India, building AI for the languages we grew up speaking. Start on Adhan's open weights or the Yazhi API, ship agents and tools in your own language, and land support from engineers who've done the same.",
+  plainTa: "இந்தியா முழுவதும் உள்ள உருவாக்குநர்கள் தங்கள் தாய்மொழிக்காக AI கருவிகளை உருவாக்குகிறார்கள் — நீங்களும் இணையலாம்.",
+  plainEn: "Developers across India building AI tools for their own mother tongues — you're welcome to join in.",
+  ctaTa: "உருவாக்குநராக இணையுங்கள்", ctaEn: "Join as a developer",
+  ctaHref: "/onboarding?track=developer",
+  discordCtaTa: "Discord இல் இணையுங்கள்", discordCtaEn: "Join the Discord",
 };

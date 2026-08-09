@@ -30,10 +30,24 @@ const BUBBLES: {
   { left: "94%", size: 4, delay: 0.5, dur: 8, rise: 185, drift: 8, op: 0.55 },
 ];
 
-export function Bubbles({ className = "" }: { className?: string }) {
+export function Bubbles({
+  className = "",
+  density = "normal",
+}: {
+  className?: string;
+  /** "rare" thins the set to a handful and slows/spaces them out — a few
+      bubbles drifting up now and then, rather than a constant stream.
+      Used by the intro loader's deep-dive moment; the footer keeps the
+      full, livelier "normal" density. */
+  density?: "normal" | "rare";
+}) {
+  const bubbles =
+    density === "rare"
+      ? BUBBLES.filter((_, i) => i % 3 === 0).map((b) => ({ ...b, delay: b.delay * 2.6, dur: b.dur * 1.8 }))
+      : BUBBLES;
   return (
     <div aria-hidden className={className}>
-      {BUBBLES.map((b, i) => (
+      {bubbles.map((b, i) => (
         <span
           key={i}
           className="bubble"
