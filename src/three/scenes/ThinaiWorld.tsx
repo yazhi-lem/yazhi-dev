@@ -6,6 +6,7 @@ import { Terrain } from "./Terrain";
 import { GlyphField } from "./GlyphField";
 import { CameraRig } from "./CameraRig";
 import { SangamObjects } from "./SangamObjects";
+import { Squirrels } from "./Squirrels";
 
 /** The full-viewport WebGL world behind the page.
     Adaptive on three levels:
@@ -61,6 +62,7 @@ export default function ThinaiWorld() {
             <CameraRig />
             <Terrain detail={low ? 56 : 96} low={low} />
             <SangamObjects low={low} />
+            <Squirrels low={low} />
             <GlyphField density={low ? 0.5 : 1} />
             <AdaptiveDpr />
             <Preload all />

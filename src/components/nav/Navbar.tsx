@@ -19,6 +19,15 @@ export function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
+      {/* the bar itself carries no flat fill — a gradient scrim fading from
+          the night at the very top down to nothing keeps the logo/links
+          legible over whatever the world is doing beneath them, without
+          ever reading as a hard, static bar */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28"
+        style={{ background: "linear-gradient(to bottom, rgba(5,7,13,0.75), rgba(5,7,13,0.32) 55%, transparent)" }}
+      />
       <div className="mx-auto flex max-w-[var(--max-w)] items-center justify-between px-5 py-4">
         <Link href="/" className="flex items-center gap-2.5" aria-label="Yazhi home">
           <LogoMark size={34} />
@@ -59,7 +68,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-5 rounded-2xl border border-ivory/10 bg-night-2/95 p-5 backdrop-blur md:hidden"
+            className="mx-5 rounded-2xl border border-ivory/10 bg-gradient-to-b from-night-2/95 via-night-2/90 to-night-2/75 p-5 backdrop-blur md:hidden"
           >
             {NAV_GROUPS.map((g) => (
               <div key={g.en} className="mb-4 last:mb-0">

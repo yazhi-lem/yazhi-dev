@@ -95,7 +95,7 @@ export const ADHAN = {
   subTa: "இந்திய மொழிகளுக்கான இறையாண்மை கொண்ட செயற்கை நுண்ணறிவு",
   subEn: "Sovereign AI for Indian languages",
   bodyEn:
-    "7B parameter sovereign AI model for 22+ Indian languages. One unified model from Tamil to Hindi, Bengali to Telugu — with a tokenizer designed for agglutinative grammar rather than retrofitted from English. Open weights on GitHub, served from our own inference node in Sivakasi.",
+    "Languages with two thousand years of literature shouldn't be a rounding error in somebody else's tokenizer. Adhan is a 7B parameter foundation model built for 22+ Indian languages, with a tokenizer designed from the ground up for agglutinative grammar rather than bolted onto English. It's open — weights on GitHub, served from our own inference node in Sivakasi — because sovereignty only means something if anyone can check the work. Tamil first, since it's our home language and the hardest test case; Telugu next, because the two share a Dravidian grammar backbone and much of the same tokenizer gains; then Kannada and Malayalam, until one model speaks for the whole family.",
   tokenTax: {
     labelEn: "The token tax on Indian languages — tokens spent per word, same sentence",
     rows: [
@@ -121,8 +121,8 @@ response = model.generate(
 )`,
   ctaTa: "GitHub இல் காண்க →",
   ctaHref: "https://github.com/yazhi-lem/adhan",
-  plainTa: "ஒரே கணினி மூளை இந்தியாவின் எல்லா மொழிகளையும் படிக்கவும் எழுதவும் கற்கிறது.",
-  plainEn: "One computer brain learning to read and write all of India's languages.",
+  plainTa: "ஒரே கணினி மூளை இந்தியாவின் எல்லா மொழிகளையும் படிக்கவும் எழுதவும் கற்கிறது — தமிழிலிருந்து தொடங்கி, ஒவ்வொரு மொழியாக.",
+  plainEn: "One computer brain, learning to read and write all of India's languages — starting with Tamil, one language at a time.",
 };
 
 export const GUARDIAN = {

@@ -119,3 +119,15 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .bubble { animation: none !important; opacity: var(--b-op, 0.4) !important; }
 }
+
+/* ── agent-hub orbit ────────────────────────────────────────────────────
+   a ring of script glyphs circling the Adhan agent node — the outer wrapper
+   spins, each glyph counter-spins at the same rate so it stays upright
+   while it travels, the classic "orbit" trick */
+@keyframes orbitSpin { to { transform: rotate(360deg); } }
+@keyframes orbitSpinReverse { to { transform: rotate(-360deg); } }
+.orbit-ring { animation: orbitSpin 46s linear infinite; }
+.orbit-glyph { display: inline-block; animation: orbitSpinReverse 46s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring, .orbit-glyph { animation: none; }
+}
