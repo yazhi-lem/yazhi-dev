@@ -41,8 +41,10 @@ export function Hero() {
           />
         </motion.div>
 
+        {/* the founding deck's own line under the wordmark — what Yazhi
+            actually is right now, not the eventual scale of it */}
         <motion.div variants={fadeUp} className="mt-6">
-          <Bi as="p" ta={IDENTITY.fullTa} en={IDENTITY.fullEn} className="flex flex-col gap-1 text-ivory-dim" />
+          <Bi as="p" ta={IDENTITY.heroLineTa} en={IDENTITY.heroLineEn} className="flex flex-col gap-1 text-ivory-dim" />
         </motion.div>
 
         {/* the plain-language layer — one sentence a ten-year-old can read */}

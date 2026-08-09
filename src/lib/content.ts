@@ -29,8 +29,6 @@ export const IDENTITY = {
   taglineEn: "Tamil Artificial Intelligence",
   secondaryTa: "அகமும் புறமும்",
   secondaryEn: "Akam and Puram",
-  fullTa: "இந்திய மொழிகளுக்கான இறையாண்மை கொண்ட செயற்கை நுண்ணறிவு மாதிரி",
-  fullEn: "A sovereign AI model for Indian languages",
   footerTa: "இறையாண்மை செயற்கை நுண்ணறிவு",
   footerEn: "Sovereign Artificial Intelligence",
   // the plain-language layer: one sentence a ten-year-old can read,
@@ -111,19 +109,30 @@ export const ADHAN = {
     { value: "22+", ta: "மொழிகள்", en: "languages" },
     { value: "100%", ta: "இந்திய", en: "Indian" },
   ],
-  code: `from adhan import Model
-
-model = Model.load("adhan-7b")
-response = model.generate(
-    "தமிழின் வரலாறு என்ன?"
-    "भारत का इतिहास क्या है?"
-    "ಭಾರತದ ಇತಿಹಾಸವೇನು?"
-)`,
   ctaTa: "GitHub இல் காண்க →",
   ctaHref: "https://github.com/yazhi-lem/adhan",
   plainTa: "ஒரே கணினி மூளை இந்தியாவின் எல்லா மொழிகளையும் படிக்கவும் எழுதவும் கற்கிறது — தமிழிலிருந்து தொடங்கி, ஒவ்வொரு மொழியாக.",
   plainEn: "One computer brain, learning to read and write all of India's languages — starting with Tamil, one language at a time.",
 };
+
+/** One conversation, three languages, no restart in between — the point
+    isn't the trick, it's that switching costs nothing. `tool` renders as a
+    small chip under an agent reply, standing in for the WhatsApp/corpus
+    connections an agent built on Adhan actually has. */
+export const ADHAN_CHAT: {
+  from: "user" | "agent";
+  lang: string;
+  text: string;
+  translationEn: string;
+  tool?: string;
+}[] = [
+  { from: "user", lang: "TA", text: "என் பாட்டி சொன்ன கதையைத் தேடு", translationEn: "Find the story my grandmother told" },
+  { from: "agent", lang: "TA", text: "தொகுப்பில் தேடுகிறேன்… 3 கதைகள் கிடைத்தன 📖", translationEn: "Searching the corpus… found 3 stories", tool: "corpus_search" },
+  { from: "user", lang: "TE", text: "మా అమ్మమ్మ కథ వాట్సాప్‌లో పంపు", translationEn: "Send grandma's story on WhatsApp" },
+  { from: "agent", lang: "TE", text: "పంపాను ✅", translationEn: "Sent", tool: "whatsapp" },
+  { from: "user", lang: "HI", text: "अब हिंदी में भी सुनाओ", translationEn: "Now tell it in Hindi too" },
+  { from: "agent", lang: "HI", text: "बिलकुल — वही कहानी हिंदी में…", translationEn: "Of course — the same story in Hindi…" },
+];
 
 export const GUARDIAN = {
   nameTa: "யாழ்",
