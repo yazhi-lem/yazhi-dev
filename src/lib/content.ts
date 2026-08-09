@@ -63,14 +63,6 @@ export const MARKET_STATS = [
   { value: "500M+", en: "WhatsApp users in India — the delivery channel already in nearly every home" },
 ];
 
-export const HERO_QUOTE = {
-  ta: "யாமறிந்த மொழிகளிலே தமிழ்மொழி போல் இனிதாவது எங்கும் காணோம்",
-  en: "Of all the languages we know, none is as sweet as Tamil",
-  attributionTa: "பாரதியார்",
-  attributionEn: "Bharathiyar",
-  scrollCue: "scroll to explore",
-};
-
 export const SCRIPTS: { name: string; glyphs: string[] }[] = [
   { name: "Tamil", glyphs: "அ ஆ இ க ங ச ஞ ட ண த ந ப ம ய ர ல வ ழ ள ற ன".split(" ") },
   { name: "Devanagari", glyphs: "अ आ इ क ख ग च ज ट ड त द न प ब म य र ल व".split(" ") },
@@ -169,6 +161,35 @@ export const SANGAM = {
   ctaHref: "https://sangam.yazhi.dev",
   plainTa: "2,000 ஆண்டு பழைய தமிழ்ப் பாடல்களைப் படித்து, ஒவ்வொன்றும் எந்த நிலத்தைச் சேர்ந்தது என்று சொல்லும் கருவி.",
   plainEn: "A tool that reads 2,000-year-old Tamil poems and tells you which of the five landscapes each belongs to.",
+};
+
+/** The opening passage of Maduraikkanci ("Madurai, a guide/warning"), one
+    of the Pattuppattu — an idealised natural order, before the poem turns
+    to praise the Pandya king and his city. Tamil text is verbatim from the
+    open-sangam corpus (data/texts/maduraikanchi/maduraikanchi.json, block
+    01). translationEn renders that block's own `urai` (a plain-Tamil
+    paraphrase already in the corpus) into English, rather than translating
+    the dense classical verse directly — the urai exists precisely so this
+    kind of rendering has solid ground under it. */
+export const MADURAI_KANCHI = {
+  poemTa: "மதுரைக் காஞ்சி", poemEn: "Maduraikkanci",
+  authorTa: "மாங்குடி மருதனார்", authorEn: "Mankudi Maruthanaar",
+  verseTa: `ஓங்கு திரை வியன் பரப்பின்
+ஒலி முந்நீர் வரம் பாகத்
+தேன் தூங்கும் உயர் சிமைய
+மலை நாறிய வியன் ஞாலத்து
+வல மாதிரத்தான் வளி கொட்ப
+விய னாண்மீ னெறி யொழுகப்
+பகற் செய்யும் செஞ் ஞாயிறும்
+இரவுச் செய்யும் வெண் திங்களும்
+மை தீர்ந்து கிளர்ந்து விளங்க
+மழைதொழில் உதவ மாதிரங் கொழுக்கத்
+தொடுப்பின் ஆயிரம் வித்தியது விளைய
+நிலனு மரனும் பயன்எதிர்பு நந்த
+நோ யிகந்து நோக்கு விளங்க`,
+  translationEn:
+    "The sea holds a surging, wave-tossed expanse. Within the world it bounds, mountains rise with high peaks hung with honeycombs. Across the vast sky the wind circles with force, and the stars — vaster than anything else — travel each in its own path. Both the sun that lights the day and the moon that lights the night appear without fail and shine. The rain has fallen and the land has grown rich: sow one seed and it yields a thousand, and both the sown earth and the unsown trees bear good fruit. Because nature helps in this way, no suffering is to be seen even in people's minds — no one does harm.",
+  sourceEn: "Opening passage · open-sangam corpus",
 };
 
 export const SERVICES = [

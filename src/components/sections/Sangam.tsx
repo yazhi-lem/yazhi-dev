@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Bi } from "@/components/ui/Bi";
 import { Button } from "@/components/ui/Button";
-import { SANGAM, THINAI, UI, THINAI_TA_LANDSCAPE, THINAI_TA_POETIC } from "@/lib/content";
+import { SANGAM, MADURAI_KANCHI, THINAI, UI, THINAI_TA_LANDSCAPE, THINAI_TA_POETIC } from "@/lib/content";
 import { useLang } from "@/lib/i18n";
 import { stagger, fadeUp } from "@/lib/motionPresets";
 
@@ -23,6 +23,29 @@ export function Sangam() {
         plainTa={SANGAM.plainTa} plainEn={SANGAM.plainEn}
       />
       <p lang="en" className="max-w-prose text-ivory-dim">{SANGAM.bodyEn}</p>
+
+      {/* the corpus isn't a description, it's a poem — lead with a real
+          block of Maduraikkanci and its translation, not just the pitch */}
+      <motion.figure
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="mt-10 rounded-[var(--radius-card)] border border-ivory/10 bg-night-2/60 p-6 sm:p-8"
+      >
+        <figcaption className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs uppercase tracking-widest text-ivory-dim">
+          <Bi ta={MADURAI_KANCHI.poemTa} en={MADURAI_KANCHI.poemEn} className="flex gap-1.5 text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
+          <span aria-hidden className="text-ivory/30">—</span>
+          <Bi ta={MADURAI_KANCHI.authorTa} en={MADURAI_KANCHI.authorEn} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
+        </figcaption>
+        <blockquote lang="ta" className="whitespace-pre-line font-display text-lg leading-relaxed text-ivory/90 sm:text-xl">
+          {MADURAI_KANCHI.verseTa}
+        </blockquote>
+        <p lang="en" className="mt-5 max-w-prose text-sm italic leading-relaxed text-ivory-dim">
+          {MADURAI_KANCHI.translationEn}
+        </p>
+        <p className="mt-4 text-xs text-ivory-dim/70">{MADURAI_KANCHI.sourceEn}</p>
+      </motion.figure>
 
       <motion.div
         variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}
