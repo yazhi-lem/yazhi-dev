@@ -6,10 +6,9 @@ import { fadeUp, stagger } from "@/lib/motionPresets";
 import { useLang } from "@/lib/i18n";
 
 /** The hero: one focused idea per viewport — eyebrow, headline, subtitle,
-    scroll cue. The constellation set-piece and the Bharathiyar quote used
-    to live here too; they now have their own room to breathe in
-    HeroSignature, rendered directly after this section. See yazhi-dev
-    issue: "Hero section is visually cluttered". */
+    scroll cue. Everything else that used to crowd it (the constellation
+    set-piece, the Bharathiyar quote) has been removed; the Yazhi section
+    directly below now carries the first real proof-point. */
 export function Hero() {
   const { lang } = useLang();
 
@@ -41,8 +40,10 @@ export function Hero() {
           />
         </motion.div>
 
+        {/* the founding deck's own line under the wordmark — what Yazhi
+            actually is right now, not the eventual scale of it */}
         <motion.div variants={fadeUp} className="mt-6">
-          <Bi as="p" ta={IDENTITY.fullTa} en={IDENTITY.fullEn} className="flex flex-col gap-1 text-ivory-dim" />
+          <Bi as="p" ta={IDENTITY.heroLineTa} en={IDENTITY.heroLineEn} className="flex flex-col gap-1 text-ivory-dim" />
         </motion.div>
 
         {/* the plain-language layer — one sentence a ten-year-old can read */}
@@ -52,7 +53,7 @@ export function Hero() {
       </motion.div>
 
       <motion.a
-        href="#adhan"
+        href="#yazhi"
         variants={fadeUp}
         initial="hidden"
         animate="show"

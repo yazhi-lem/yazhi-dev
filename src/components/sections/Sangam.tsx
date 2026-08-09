@@ -5,15 +5,13 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Bi } from "@/components/ui/Bi";
 import { Button } from "@/components/ui/Button";
-import { SANGAM, THINAI, UI, THINAI_TA_LANDSCAPE, THINAI_TA_POETIC } from "@/lib/content";
-import { useLang } from "@/lib/i18n";
-import { stagger, fadeUp } from "@/lib/motionPresets";
+import { SANGAM, MADURAI_KANCHI } from "@/lib/content";
+import { stagger } from "@/lib/motionPresets";
 
-/** Marutham governs Sangam by the brand file's own sub-line. The five
-    thinai reappear here as the literal product feature (landscape
-    classifier) — the dual appearance BRAND_AND_CONTENT §2 asks for. */
+/** Open Sangam — the memory we protect (deck p7 · 03). Marutham governs
+    it by the brand file's own sub-line. The five thinai it classifies
+    against get their own section (Thinai) directly after this one. */
 export function Sangam() {
-  const { lang } = useLang();
   return (
     <Section id="sangam">
       <SectionHeading
@@ -22,7 +20,37 @@ export function Sangam() {
         subTa={SANGAM.subTa} subEn={SANGAM.subEn}
         plainTa={SANGAM.plainTa} plainEn={SANGAM.plainEn}
       />
+      <Bi
+        as="p"
+        ta={SANGAM.eyebrowTa}
+        en={SANGAM.eyebrowEn}
+        className="mb-3 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]"
+        separator={<span aria-hidden>·</span>}
+      />
       <p lang="en" className="max-w-prose text-ivory-dim">{SANGAM.bodyEn}</p>
+
+      {/* the corpus isn't a description, it's a poem — lead with a real
+          block of Maduraikkanci and its translation, not just the pitch */}
+      <motion.figure
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="mt-10 rounded-[var(--radius-card)] border border-ivory/10 bg-night-2/60 p-6 sm:p-8"
+      >
+        <figcaption className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs uppercase tracking-widest text-ivory-dim">
+          <Bi ta={MADURAI_KANCHI.poemTa} en={MADURAI_KANCHI.poemEn} className="flex gap-1.5 text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
+          <span aria-hidden className="text-ivory/30">—</span>
+          <Bi ta={MADURAI_KANCHI.authorTa} en={MADURAI_KANCHI.authorEn} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
+        </figcaption>
+        <blockquote lang="ta" className="whitespace-pre-line font-display text-lg leading-relaxed text-ivory/90 sm:text-xl">
+          {MADURAI_KANCHI.verseTa}
+        </blockquote>
+        <p lang="en" className="mt-5 max-w-prose text-sm italic leading-relaxed text-ivory-dim">
+          {MADURAI_KANCHI.translationEn}
+        </p>
+        <p className="mt-4 text-xs text-ivory-dim/70">{MADURAI_KANCHI.sourceEn}</p>
+      </motion.figure>
 
       <motion.div
         variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}
@@ -39,43 +67,6 @@ export function Sangam() {
             />
           </Card>
         ))}
-      </motion.div>
-
-      {/* thinai as product feature: the classifier's own taxonomy */}
-      <motion.div
-        variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-        className="mt-10 overflow-x-auto rounded-[var(--radius-card)] border border-ivory/10 bg-night-2/60"
-      >
-        <table className="w-full min-w-[560px] text-left text-sm">
-          <caption className="sr-only">The five thinai — Sangam&apos;s landscape classification taxonomy</caption>
-          <thead>
-            <tr className="border-b border-ivory/10 text-xs uppercase tracking-widest text-ivory-dim">
-              <th className="px-4 py-3 font-medium"><Bi ta={UI.thinaiCol.ta} en={UI.thinaiCol.en} className="flex gap-1.5" separator={<span aria-hidden>·</span>} /></th>
-              <th className="px-4 py-3 font-medium"><Bi ta={UI.landscapeCol.ta} en={UI.landscapeCol.en} className="flex gap-1.5" separator={<span aria-hidden>·</span>} /></th>
-              <th className="px-4 py-3 font-medium"><Bi ta={UI.poeticCol.ta} en={UI.poeticCol.en} className="flex gap-1.5" separator={<span aria-hidden>·</span>} /></th>
-            </tr>
-          </thead>
-          <tbody>
-            {THINAI.map((t) => (
-              <tr key={t.key} className="border-b border-ivory/5 last:border-0">
-                <td className="px-4 py-3">
-                  <span aria-hidden className="mr-2">{t.icon}</span>
-                  {lang !== "en" && (
-                    <span lang="ta" className="font-display" style={{ color: `var(--${t.key})` }}>{t.ta}</span>
-                  )}
-                  {lang === "both" && <span className="text-ivory/30"> · </span>}
-                  {lang !== "ta" && <span lang="en" className={lang === "en" ? "font-display" : "text-ivory-dim"} style={lang === "en" ? { color: `var(--${t.key})` } : undefined}>{t.en}</span>}
-                </td>
-                <td className="px-4 py-3 text-ivory-dim">
-                  <Bi ta={THINAI_TA_LANDSCAPE[t.key]} en={t.landscape} className="flex flex-col gap-0.5" />
-                </td>
-                <td className="px-4 py-3 text-ivory-dim">
-                  <Bi ta={THINAI_TA_POETIC[t.key]} en={t.poetic} className="flex flex-col gap-0.5" />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </motion.div>
 
       <div className="mt-8">

@@ -5,7 +5,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Bi } from "@/components/ui/Bi";
-import { COMMUNITY, SERVICES, UI } from "@/lib/content";
+import { COMMUNITY, DEVELOPERS, SERVICES, UI } from "@/lib/content";
 import { stagger, fadeUp } from "@/lib/motionPresets";
 
 /** Neytal (coastal · separation) governs Community: the diaspora across
@@ -42,6 +42,41 @@ export function Community() {
         en={COMMUNITY.chatAgeEn}
         className="mt-4 flex flex-col gap-0.5 text-xs text-ivory-dim/80"
       />
+
+      {/* Developer track — a community for developers across India building
+          for their own mother tongues, distinct from the family-facing
+          "Join the Network" card above. Routes to the same onboarding form
+          with a developer track flag, then to Discord — see
+          docs/PRD-DEVELOPER-COMMUNITY.md for the account-provisioning plan. */}
+      <motion.div
+        variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
+        className="mt-12"
+      >
+        <Card interactive={false} className="!p-0 overflow-hidden">
+          <div className="grid items-center gap-6 p-6 sm:grid-cols-[auto_1fr_auto] sm:p-8">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/yazh/yazh-waving.png"
+              alt=""
+              aria-hidden
+              className="mx-auto h-20 w-20 object-contain sm:h-24 sm:w-24"
+            />
+            <div>
+              <Bi as="p" ta={DEVELOPERS.eyebrowTa} en={DEVELOPERS.eyebrowEn} className="flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
+              <Bi as="h3" ta={DEVELOPERS.titleTa} en={DEVELOPERS.titleEn} className="mt-1 flex flex-col font-display text-xl font-semibold sm:flex-row sm:gap-2" separator={<span aria-hidden className="hidden sm:inline">·</span>} />
+              <p lang="en" className="mt-2 max-w-prose text-sm text-ivory-dim">{DEVELOPERS.bodyEn}</p>
+            </div>
+            <div className="flex flex-col gap-3 sm:items-end">
+              <Button href={DEVELOPERS.ctaHref}>
+                <Bi ta={DEVELOPERS.ctaTa} en={DEVELOPERS.ctaEn} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
+              </Button>
+              <Button href="https://discord.gg/yazhi" variant="ghost" external>
+                <Bi ta={DEVELOPERS.discordCtaTa} en={DEVELOPERS.discordCtaEn} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </motion.div>
 
       {/* Services — nav items exist, sections don't yet: honest coming-soon strip */}
       <motion.aside
