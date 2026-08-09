@@ -14,10 +14,10 @@ export const THINAI: {
   poetic: string;
   section: string; // DOM id of the section this thinai governs
 }[] = [
-  { key: "kurinji", icon: "🏔️", ta: "குறிஞ்சி", en: "Kurinji", landscape: "Mountains", poetic: "Union", section: "hero" },
+  { key: "kurinji", icon: "🏔️", ta: "குறிஞ்சி", en: "Kurinji", landscape: "Mountains", poetic: "Union", section: "yazhi" },
   { key: "mullai", icon: "🌳", ta: "முல்லை", en: "Mullai", landscape: "Forest", poetic: "Waiting", section: "adhan" },
-  { key: "marutham", icon: "🌾", ta: "மருதம்", en: "Marutham", landscape: "Agriculture", poetic: "Union, quarrel, domestic happiness", section: "sangam" },
   { key: "palai", icon: "🏜️", ta: "பாலை", en: "Palai", landscape: "Desert", poetic: "Elopement / hardship", section: "guardian" },
+  { key: "marutham", icon: "🌾", ta: "மருதம்", en: "Marutham", landscape: "Agriculture", poetic: "Union, quarrel, domestic happiness", section: "sangam" },
   { key: "neytal", icon: "🌊", ta: "நெய்தல்", en: "Neytal", landscape: "Coastal", poetic: "Separation", section: "community" },
 ];
 
@@ -25,8 +25,10 @@ export const IDENTITY = {
   nameTa: "யாழி",
   nameEn: "Yazhi",
   positioning: "Sovereign AI for Indian languages",
-  taglineTa: "தமிழ் செயற்கை நுண்ணறிவு",
-  taglineEn: "Tamil Artificial Intelligence",
+  // the deck's own headline, verbatim — Yazhi is sovereign AI for Indian
+  // languages first, and Tamil-first within that, not "Tamil AI" alone
+  taglineTa: "இந்திய மொழிகளுக்கான இறையாண்மை செயற்கை நுண்ணறிவு",
+  taglineEn: "Sovereign AI for Indian languages",
   secondaryTa: "அகமும் புறமும்",
   secondaryEn: "Akam and Puram",
   footerTa: "இறையாண்மை செயற்கை நுண்ணறிவு",
@@ -73,19 +75,29 @@ export const SCRIPTS: { name: string; glyphs: string[] }[] = [
   { name: "Gujarati", glyphs: "અ આ ઇ".split(" ") },
 ];
 
-export const STATS = [
-  { value: "7B", ta: "அளவுருக்கள்", en: "Parameters" },
-  { value: "22+", ta: "இந்திய மொழிகள்", en: "Indian languages" },
-  { value: "3", ta: "திட்டங்கள்", en: "Projects" },
-];
+/** The Yazhi section: the umbrella the three products sit under, shown as
+    a live conversation. Deck p1 — "Sovereign AI for Indian languages". */
+export const YAZHI_SECTION = {
+  subTa: "ஒரே உரையாடல் — எல்லா மொழிகளும்",
+  subEn: "One conversation, every language",
+  bodyEn:
+    "Yazhi is sovereign AI for Indian languages — built here, owned here, and open. One conversation moves between Tamil, Telugu and Hindi with nothing lost in the switch, and reaches the tools a family already uses. Three products sit under it: Yazh, the voice friend families pay for; Adhan, the engine underneath; and Open Sangam, the memory we protect.",
+  plainTa: "நீங்கள் எந்த இந்திய மொழியிலும் பேசலாம் — யாழி அதே மொழியில் பதில் சொல்லும், இடையில் மொழி மாறினாலும் தொடர்ந்து புரிந்துகொள்ளும்.",
+  plainEn: "Talk in any Indian language — Yazhi answers in the same one, and keeps up even when you switch mid-sentence.",
+};
 
+/** Adhan — deck p7, column 02 · "THE ENGINE UNDERNEATH". The open Indic
+    foundation model, still actively being developed; the language roadmap
+    below is deck p8 ("Tamil first, not Tamil only"). */
 export const ADHAN = {
   nameTa: "அதன்",
   nameEn: "Adhan",
-  subTa: "இந்திய மொழிகளுக்கான இறையாண்மை கொண்ட செயற்கை நுண்ணறிவு",
-  subEn: "Sovereign AI for Indian languages",
+  eyebrowTa: "உள்ளே இயங்கும் பொறி",
+  eyebrowEn: "The engine underneath",
+  subTa: "திறந்த இந்திய அடிப்படை மாதிரி",
+  subEn: "Our open Indic foundation model",
   bodyEn:
-    "Languages with two thousand years of literature shouldn't be a rounding error in somebody else's tokenizer. Adhan is a 7B parameter foundation model built for 22+ Indian languages, with a tokenizer designed from the ground up for agglutinative grammar rather than bolted onto English. It's open — weights on GitHub, served from our own inference node in Sivakasi — because sovereignty only means something if anyone can check the work. Tamil first, since it's our home language and the hardest test case; Telugu next, because the two share a Dravidian grammar backbone and much of the same tokenizer gains; then Kannada and Malayalam, until one model speaks for the whole family.",
+    "Adhan is our open Indic foundation model, reaching 22+ Indian languages, with a tokenizer designed for agglutinative grammar rather than retrofitted from English. Open weights on GitHub, served from our own inference node in Sivakasi. It is not finished and is not meant to be — the model develops continuously, growing as the corpus grows and as each new language enters the pipeline.",
   tokenTax: {
     labelEn: "The token tax on Indian languages — tokens spent per word, same sentence",
     rows: [
@@ -96,15 +108,38 @@ export const ADHAN = {
     ],
     sourceEn: "Petrov et al., NeurIPS 2023",
   },
-  stats: [
-    { value: "7B", ta: "அளவுருக்கள்", en: "parameters" },
-    { value: "22+", ta: "மொழிகள்", en: "languages" },
-    { value: "100%", ta: "இந்திய", en: "Indian" },
-  ],
-  ctaTa: "GitHub இல் காண்க →",
+  ctaTa: "அதனை GitHub இல் காண்க →",
   ctaHref: "https://github.com/yazhi-lem/adhan",
-  plainTa: "ஒரே கணினி மூளை இந்தியாவின் எல்லா மொழிகளையும் படிக்கவும் எழுதவும் கற்கிறது — தமிழிலிருந்து தொடங்கி, ஒவ்வொரு மொழியாக.",
-  plainEn: "One computer brain, learning to read and write all of India's languages — starting with Tamil, one language at a time.",
+  plainTa: "இந்திய மொழிகளைப் படிக்கவும் பேசவும் கற்றுக்கொண்டே இருக்கும் கணினி மூளை — வேலை இன்னும் முடியவில்லை, தொடர்ந்து வளர்கிறது.",
+  plainEn: "A computer brain still learning to read and speak India's languages — the work isn't finished, it keeps growing.",
+};
+
+/** Deck p8 — "Tamil first, not Tamil only". */
+export const LANGUAGE_ROADMAP = {
+  titleTa: "தமிழ் முதலில், தமிழ் மட்டுமல்ல", titleEn: "Tamil first, not Tamil only",
+  steps: [
+    { stageEn: "Now", langEn: "Tamil", bodyEn: "Our home language and hardest test case. Corpus, tokenizer, voice and the first families all live here." },
+    { stageEn: "Next", langEn: "Telugu", bodyEn: "~96M speakers, agglutinative like Tamil, the same tokenizer problem — the natural second language." },
+    { stageEn: "Then", langEn: "Kannada, Malayalam", bodyEn: "The rest of the Dravidian family — shared morphology means shared tokenizer gains." },
+    { stageEn: "Goal", langEn: "22+ languages", bodyEn: "One open model, one API, every scheduled language. Adhan is designed for this from day one." },
+  ],
+  footEn:
+    "Tamil and Telugu share a Dravidian grammar backbone and the same tokenizer problem. Solving Tamil properly is not a detour on the way to Telugu — it is most of the work.",
+};
+
+/** Deck p5 — "Yazh's world · திணை — Five landscapes, five moods". */
+export const THINAI_WORLD = {
+  eyebrowTa: "யாழின் உலகம் · திணை", eyebrowEn: "Yazh's world · Thinai",
+  titleTa: "ஐந்து நிலங்கள், ஐந்து உணர்வுகள்", titleEn: "Five landscapes, five moods",
+  landscapes: [
+    { key: "kurinji", ta: "குறிஞ்சி", en: "Kurinji", moodEn: "Mountains · first meetings", bodyEn: "Curiosity and discovery — where a story starts." },
+    { key: "mullai", ta: "முல்லை", en: "Mullai", moodEn: "Forest · waiting", bodyEn: "Animals, patience and the folk tales children know." },
+    { key: "marutham", ta: "மருதம்", en: "Marutham", moodEn: "Farmland · everyday life", bodyEn: "Counting, work and family — where lessons live." },
+    { key: "neytal", ta: "நெய்தல்", en: "Neytal", moodEn: "Coast · longing", bodyEn: "Voyages and distance — the diaspora's landscape." },
+    { key: "palai", ta: "பாலை", en: "Palai", moodEn: "Drylands · endurance", bodyEn: "Courage and separation — the harder stories." },
+  ],
+  footEn:
+    "Sangam poetry sorts the world into these five tinai. Yazh's story library is organised the same way — the structure is Tamil at its root, not ornament laid on top.",
 };
 
 /** One conversation, three languages, no restart in between — the point
@@ -126,13 +161,17 @@ export const ADHAN_CHAT: {
   { from: "agent", lang: "HI", text: "बिलकुल — वही कहानी हिंदी में…", translationEn: "Of course — the same story in Hindi…" },
 ];
 
+/** Yazh — deck p7, column 01 · "WHAT FAMILIES PAY FOR", with the
+    character description from deck p4. */
 export const GUARDIAN = {
   nameTa: "யாழ்",
   nameEn: "Yazh",
-  subTa: "யாழி • புராணக் காவலன்",
-  subEn: "A voice AI friend for children, on WhatsApp",
+  eyebrowTa: "குடும்பங்கள் பயன்படுத்துவது",
+  eyebrowEn: "What families pay for",
+  subTa: "குழந்தைகளுக்கான குரல் நண்பன் — WhatsApp இல்",
+  subEn: "A voice AI friend for children aged 4–8, on WhatsApp",
   bodyEn:
-    "Yazh is a guardian creature carved onto temple pillars across the Dravidian south — it stands at the doorway and keeps what is inside safe. Yazh is that guardian, drawn small enough for a four-year-old to talk to. He listens, answers in the child's mother tongue, and never asks them to read or type. Voice in, voice out — no app, no typing, on the phone families already own.",
+    "Yazh is a guardian creature carved onto temple pillars across the Dravidian south — it stands at the doorway and keeps what is inside safe. Yazh is that guardian, drawn small enough for a four-year-old to talk to. He listens, answers in the child's mother tongue, and never asks them to read or type. Voice in, voice out — no app, no typing, on the phone families already own. Folk stories plus Maths, Science and English through conversation.",
   ctaTa: "தொடங்குக",
   ctaEn: "Get started",
   ctaHref: "/onboarding",
@@ -144,23 +183,26 @@ export const GUARDIAN = {
   plainEn: "An app that watches over Tamil stories and songs on the internet — like the temple guardian it's named after.",
 };
 
+/** Open Sangam — deck p7, column 03 · "THE MEMORY WE PROTECT". */
 export const SANGAM = {
   nameTa: "சங்கம்",
-  nameEn: "Sangam",
-  subTa: "மருதம் - விளை நிலம்",
-  subEn: "Marutham — fertile agricultural land",
+  nameEn: "Open Sangam",
+  eyebrowTa: "நாம் காக்கும் நினைவு",
+  eyebrowEn: "The memory we protect",
+  subTa: "செம்மொழி இலக்கியத்திற்கான திறந்த தளம்",
+  subEn: "An open platform for classical literature",
   bodyEn:
-    "Classical Tamil literature analysis through the five landscapes. Marutham represents agricultural fertile lands, union, and domestic happiness.",
+    "An open platform for classical literature — Sangam poetry and beyond, with poem analysis, landscape classification and linguistic study. Free for students, teachers and scholars. It is also the corpus that teaches Adhan what real language sounds like.",
   pillars: [
-    { icon: "📜", ta: "செய்யுள் ஆய்வு", en: "Poem Analysis" },
-    { icon: "🏞️", ta: "திணை வகைப்பாடு", en: "Thinai Classification" },
-    { icon: "📖", ta: "மொழி ஆய்வு", en: "Linguistic Study" },
+    { icon: "📜", ta: "செய்யுள் ஆய்வு", en: "Poem analysis" },
+    { icon: "🏞️", ta: "திணை வகைப்பாடு", en: "Landscape classification" },
+    { icon: "📖", ta: "மொழி ஆய்வு", en: "Linguistic study" },
   ],
   ctaTa: "மேலும் அறிக →",
   ctaEn: "Learn more",
   ctaHref: "https://sangam.yazhi.dev",
-  plainTa: "2,000 ஆண்டு பழைய தமிழ்ப் பாடல்களைப் படித்து, ஒவ்வொன்றும் எந்த நிலத்தைச் சேர்ந்தது என்று சொல்லும் கருவி.",
-  plainEn: "A tool that reads 2,000-year-old Tamil poems and tells you which of the five landscapes each belongs to.",
+  plainTa: "2,000 ஆண்டு பழைய தமிழ்ப் பாடல்களைப் படித்து, ஒவ்வொன்றும் எந்த நிலத்தைச் சேர்ந்தது என்று சொல்லும் கருவி — மாணவர்களுக்கும் ஆசிரியர்களுக்கும் இலவசம்.",
+  plainEn: "A tool that reads 2,000-year-old Tamil poems and tells you which of the five landscapes each belongs to — free for students and teachers.",
 };
 
 /** The opening passage of Maduraikkanci ("Madurai, a guide/warning"), one
@@ -210,9 +252,10 @@ export const NAV_GROUPS = [
   {
     ta: "திட்டங்கள்", en: "Projects",
     items: [
-      { ta: "அதன்", en: "Adhan", href: "#adhan" },
-      { ta: "சங்கம்", en: "Sangam", href: "#sangam" },
       { ta: "யாழ்", en: "Yazh", href: "#guardian" },
+      { ta: "அதன்", en: "Adhan", href: "#adhan" },
+      { ta: "சங்கம்", en: "Open Sangam", href: "#sangam" },
+      { ta: "திணை", en: "Thinai", href: "#thinai" },
     ],
   },
   {
@@ -243,18 +286,7 @@ export const UI = {
   comingSoon: { ta: "விரைவில்", en: "Coming soon" },
   servicesLabel: { ta: "சேவைகள்", en: "Services" },
   scrollCue: { ta: "கீழே உருட்டி ஆராயுங்கள்", en: "scroll to explore" },
-  adhanCtaEn: "View on GitHub →",
-  thinaiCol: { ta: "திணை", en: "Thinai" },
-  landscapeCol: { ta: "நிலம்", en: "Landscape" },
-  poeticCol: { ta: "உரிப்பொருள்", en: "Poetic association" },
-};
-
-export const THINAI_TA_LANDSCAPE: Record<string, string> = {
-  kurinji: "மலை", mullai: "காடு", marutham: "வயல்", neytal: "கடற்கரை", palai: "பாலைவனம்",
-};
-
-export const THINAI_TA_POETIC: Record<string, string> = {
-  kurinji: "புணர்தல்", mullai: "இருத்தல்", marutham: "ஊடல்", neytal: "இரங்கல்", palai: "பிரிதல்",
+  adhanCtaEn: "View Adhan on GitHub →",
 };
 
 export const COMMUNITY = {

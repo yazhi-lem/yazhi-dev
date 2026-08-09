@@ -31,6 +31,13 @@ export function Guardian() {
         subTa={GUARDIAN.subTa} subEn={GUARDIAN.subEn}
         plainTa={GUARDIAN.plainTa} plainEn={GUARDIAN.plainEn}
       />
+      <Bi
+        as="p"
+        ta={GUARDIAN.eyebrowTa}
+        en={GUARDIAN.eyebrowEn}
+        className="mb-4 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]"
+        separator={<span aria-hidden>·</span>}
+      />
       <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(260px,380px)]">
         <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}>
           <motion.p variants={fadeUp} lang="en" className="max-w-prose text-ivory-dim">
