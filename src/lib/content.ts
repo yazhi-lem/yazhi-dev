@@ -282,7 +282,6 @@ export const NAV_GROUPS = [
         pending Valav's editorial review gate — see README) ---- */
 export const UI = {
   heroEyebrow: { ta: "குறிஞ்சி · மலை — 22+ எழுத்துமுறைகள், ஒரே மாதிரி", en: "Kurinji · Mountains — 22+ scripts, one model" },
-  oneModel: { ta: "ஒரே மாதிரி", en: "One model" },
   comingSoon: { ta: "விரைவில்", en: "Coming soon" },
   servicesLabel: { ta: "சேவைகள்", en: "Services" },
   scrollCue: { ta: "கீழே உருட்டி ஆராயுங்கள்", en: "scroll to explore" },
