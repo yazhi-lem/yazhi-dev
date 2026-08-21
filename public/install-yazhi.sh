@@ -6,17 +6,23 @@
 #
 # Read it before you run it; that is the point of publishing it in the clear.
 #
-# PUBLISHED COPY. The canonical source is bin/install-yazhi.sh in the
-# private yazhi-api repository, at commit f1fa5c3 (2026-08-20).
-# Full sha: f1fa5c37c1c6518693aaff98f37cef91e7f8cb6c
-# Edit it there and re-publish; do not edit this copy in place, or the two
-# will drift with nothing to detect it.
+# PUBLISHED COPY. Canonical source: bin/install-yazhi.sh in the private
+# yazhi-api repository. To check this copy is current, compare the canonical
+# file's blob hash:
 #
-# What this does: installs the Agent Space console TUI into a virtualenv in
-# a checkout of yazhi-api. yazhi-api is a PRIVATE repository, so the clone
-# step needs an authorised SSH key — this script being public does not make
-# the source public. If you do not have access, the clone will fail and tell
-# you to check `ssh -T git@github.com`.
+#     git -C yazhi-api rev-parse main:bin/install-yazhi.sh
+#     # expect: b594bc5e9ae9b0330db8d502bd4caa81004f77d4
+#
+# A blob hash is used rather than a commit sha because it is content
+# addressed: it survives the squash merges this repo uses, where a branch
+# commit stops existing on main and a commit-based reference goes dead.
+#
+# What this does: installs the Yazhi console TUI and CLI into a virtualenv
+# in a checkout of yazhi-api. yazhi-api is a PRIVATE repository, so the
+# clone step needs an authorised SSH key — this script being public does not
+# make the source public. If you do not have access the clone fails and
+# tells you to check `ssh -T git@github.com`.
+#
 #
 # Install yazhi locally and put the Agent Space TUI on your PATH.
 #
@@ -73,8 +79,13 @@ done
 
 if [ "$UNINSTALL" -eq 1 ]; then
   echo "Uninstalling yazhi"
-  [ -L "$PREFIX/yazhi-tui" ] && { rm -f "$PREFIX/yazhi-tui"; ok "removed $PREFIX/yazhi-tui"; } \
-                             || log "no shim at $PREFIX/yazhi-tui"
+  for cmd in yazhi-tui yz yazhi; do
+    if [ -L "$PREFIX/$cmd" ]; then
+      rm -f "$PREFIX/$cmd"; ok "removed $PREFIX/$cmd"
+    else
+      log "no shim at $PREFIX/$cmd"
+    fi
+  done
   if [ -d "$VENV" ]; then
     rm -rf "$VENV"; ok "removed $VENV"
   else
@@ -152,13 +163,17 @@ agents = AgentRegistry.default().list_agents()
 print(f"  \033[32m✓\033[0m agent registry: {len(agents)} agents — {', '.join(agents)}")
 PY
 
-[ -x "$VENV/bin/yazhi-tui" ] || die "yazhi-tui was not installed into $VENV/bin"
-ok "yazhi-tui entry point present"
+for cmd in yazhi-tui yz yazhi; do
+  [ -x "$VENV/bin/$cmd" ] || die "$cmd was not installed into $VENV/bin"
+done
+ok "entry points present: yazhi-tui, yz, yazhi"
 
 # --- PATH shim ------------------------------------------------------------
 if mkdir -p "$PREFIX" 2>/dev/null; then
-  ln -sf "$VENV/bin/yazhi-tui" "$PREFIX/yazhi-tui"
-  ok "linked $PREFIX/yazhi-tui"
+  for cmd in yazhi-tui yz yazhi; do
+    ln -sf "$VENV/bin/$cmd" "$PREFIX/$cmd"
+  done
+  ok "linked yazhi-tui, yz and yazhi into $PREFIX"
   case ":$PATH:" in
     *":$PREFIX:"*) ;;
     *) warn "$PREFIX is not on your PATH — add it, or run $VENV/bin/yazhi-tui" ;;
@@ -169,15 +184,17 @@ fi
 
 cat <<EOF
 
-Done. Start Agent Space with:
+Done. Start Agent Space (the console TUI) with:
 
     yazhi-tui
-
-Useful flags:
     yazhi-tui --echo     offline fixture only, no local backend probing
     yazhi-tui --live     real in-house workers / OpenRouter instead of local-first
 
-Other entry points in this virtualenv: yazhi-legal, yazhi-education, yazhi-insight.
-For the gRPC server and web console, use ./run.sh instead.
+Or run the daemon and operator console together:
+
+    yz serve             gRPC daemon + console  (`yazhi` is the same command)
+    yz --help            every subcommand
+
+Also in this virtualenv: yazhi-legal, yazhi-education, yazhi-insight.
 Remove everything with: ./bin/install-yazhi.sh --uninstall
 EOF
