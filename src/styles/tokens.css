@@ -1,19 +1,19 @@
 /* ============================================================
    YAZHI DESIGN TOKENS
-   Palette: indigo-night base + bronze/gold (guardian-sculpture,
-   Sangam-manuscript register) + five thinai accent hues.
-   NOTE: this is the proposed refresh flagged in BRAND_AND_CONTENT.md
-   section 10(b) — a deliberate change from the live site, pending
-   a screenshot audit of yazhi-dev.vercel.app.
+   Base/bronze/gold now carry the Sovereign Palette from the
+   Brand Identity System (Yazhi Brand Kit.pdf, v1.1, May 2026):
+   Ink, Cobalt, Gold, Cream. The five thinai accent hues below are
+   a separate, unaddressed design layer — the in-world zone system
+   for the five Sangam landscapes — and are deliberately left as-is.
    ============================================================ */
 :root {
-  /* base */
-  --night: #0b0e1a;        /* indigo night — page ground */
-  --night-2: #141729;      /* raised surfaces / cards */
-  --ivory: #f2ebdd;        /* manuscript ivory — primary text on dark */
-  --ivory-dim: #c9c2b2;    /* secondary text */
-  --bronze: #c08a3e;       /* temple bronze */
-  --gold: #e3b458;         /* lamp gold — highlights, hover */
+  /* base — Sovereign Palette: Ink ground, Cream text */
+  --night: #0a0a0a;        /* ink — page ground */
+  --night-2: #161616;      /* raised surfaces / cards — lighter ink tier */
+  --ivory: #f8f5ef;        /* cream — primary text on dark */
+  --ivory-dim: #cbc9c4;    /* secondary text — dimmed cream */
+  --bronze: #c49a38;       /* gold — base accent (Sovereign Palette Gold) */
+  --gold: #d3b36a;         /* gold, lightened — highlights, hover */
 
   /* five thinai accents (each section shifts --accent to its hue) */
   --kurinji: #8b7ae0;      /* kurinji bloom violet — the flower is violet */
@@ -37,10 +37,8 @@
   --rock-deep: #01060f;    /* nearest rock, almost black */
   --ruin: #0a2338;         /* drowned stone — pillars & buildings on the floor */
 
-  /* Yazhi brand wordmark — carried in a serif register, set apart from
-     the Anek/Hind sans display + body faces. Tamil serif fallbacks keep
-     யாழி legible where a Latin serif has no Tamil coverage. */
-  --font-serif: Georgia, Cambria, "Noto Serif Tamil", "Latha", "Times New Roman", serif;
+  /* --font-serif, --font-display, --font-body, --font-mono are supplied
+     at runtime by src/app/layout.tsx (next/font) — not declared here. */
 
   /* type scale — 1.25 ratio */
   --text-xs: 0.75rem;

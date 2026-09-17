@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Yazhi Brand Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=EB+Garamond:wght@400&family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --night: #0a0a0a; --night-2: #161616; --ivory: #f8f5ef; --ivory-dim: #cbc9c4;
+    --bronze: #c49a38; --gold: #d3b36a; --cobalt: #1840d8;
+    --kurinji: #8b7ae0; --mullai: #4f9d6b; --marutham: #b7a03c; --neytal: #4a8ab5; --palai: #c25b3c;
+    --ocean-deep: #020a17; --ocean-mid: #061c34; --ocean-shallow: #0d3350;
+    --font-serif: "Playfair Display", "Noto Serif Tamil", Georgia, serif;
+    --font-body: "EB Garamond", "Noto Serif Tamil", Georgia, serif;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--night); color: var(--ivory);
+    font-family: var(--font-body);
+    padding: 3rem 1.5rem 6rem;
+  }
+  main { max-width: 68rem; margin: 0 auto; }
+  h1, h2 { font-family: var(--font-serif); font-weight: 700; }
+  h1 { font-size: 2.4rem; margin: 0 0 0.25rem; }
+  .sub { color: var(--ivory-dim); margin: 0 0 3rem; }
+  h2 { font-size: 1.3rem; margin: 3.5rem 0 1rem; border-bottom: 1px solid rgba(248,245,239,0.15); padding-bottom: 0.5rem; }
+  .hero-lockup { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+  .hero-lockup svg { height: 56px; width: auto; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+  .card {
+    background: var(--night-2); border-radius: 0.75rem; padding: 1.25rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+  }
+  .grid.lockup {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 460px));
+    justify-content: center; gap: 2rem;
+  }
+  .grid.lockup .card { padding: 2.5rem 3rem; }
+  .grid.lockup .card svg { width: 100%; max-width: 360px; }
+  .card.light { background: var(--ivory); }
+  .card img, .card svg { max-width: 100%; height: auto; }
+  .card .label { font-size: 0.8rem; color: var(--ivory-dim); text-align: center; }
+  .card.light .label { color: #555; }
+  .card .dl { font-size: 0.75rem; color: var(--gold); text-decoration: none; border-bottom: 1px solid transparent; }
+  .card .dl:hover { border-bottom-color: var(--gold); }
+  .card.light .dl { color: var(--cobalt); }
+  .card.light .dl:hover { border-bottom-color: var(--cobalt); }
+
+  .pdf-cta {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--bronze); color: var(--night); font-weight: 600;
+    text-decoration: none; padding: 0.7rem 1.1rem; border-radius: var(--radius-pill, 999px);
+    margin: 0 0 2rem;
+  }
+  .pdf-cta:hover { background: var(--gold); }
+  .pdf-cta svg { flex-shrink: 0; }
+
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; }
+  .swatch { border-radius: 0.6rem; overflow: hidden; border: 1px solid rgba(248,245,239,0.1); }
+  .swatch .chip { height: 70px; }
+  .swatch .info { background: var(--night-2); padding: 0.6rem 0.75rem; font-size: 0.8rem; }
+  .swatch .info .name { display: block; font-weight: 600; }
+  .swatch .info .hex { color: var(--ivory-dim); font-family: monospace; }
+
+  .type-row { margin-bottom: 1.5rem; }
+  .type-row .tag { font-size: 0.75rem; color: var(--ivory-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.25rem; }
+  .serif-sample { font-family: var(--font-serif); font-size: 2.4rem; font-weight: 900; letter-spacing: -1px; }
+  .display-sample { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; }
+  .body-sample { font-family: var(--font-body); font-size: 1.15rem; }
+
+  footer { margin-top: 4rem; color: var(--ivory-dim); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<main>
+  <div class="hero-lockup" id="hero"></div>
+  <p class="sub">யாழி — sovereign, open-source Tamil AI &amp; cultural computing ecosystem. Brand kit generated from the live design tokens in <code>src/styles/tokens.css</code>, matching the Brand Identity System v1.1 (floating-bubble mark, Sovereign Palette, Playfair Display / EB Garamond).</p>
+
+  <a class="pdf-cta" href="yazhi-brand-kit.pdf" download="Yazhi Brand Identity System v1.1.pdf">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Download the Brand Identity System (PDF)
+  </a>
+
+  <h2>Primary lockup</h2>
+  <div class="grid lockup">
+    <div class="card" id="lockup-dark-card"></div>
+    <div class="card light" id="lockup-light-card"></div>
+  </div>
+
+  <h2>Mark</h2>
+  <p class="sub" style="margin-bottom:1rem">Three floating bubbles, radius ratio 1.00:0.74:0.56, every pairwise edge gap equal — never touching. Cobalt sits only on Cream/white; the mark reverses to Cream on dark grounds.</p>
+  <div class="grid">
+    <div class="card light" id="mark-card"></div>
+    <div class="card" id="mark-mono-ivory-card"></div>
+    <div class="card light" id="mark-mono-night-card"></div>
+    <div class="card" id="favicon-card"></div>
+  </div>
+
+  <h2>Wordmark</h2>
+  <div class="grid">
+    <div class="card" id="wordmark-dark-card"></div>
+    <div class="card light" id="wordmark-light-card"></div>
+    <div class="card" id="wordmark-tamil-dark-card"></div>
+    <div class="card light" id="wordmark-tamil-light-card"></div>
+  </div>
+
+  <h2>Color palette</h2>
+  <p class="sub" style="margin-bottom:1rem">Sovereign Palette (Ink ground, Cream text, Gold accent, Cobalt mark) plus the five <em>thiṇai</em> (landscape) accent hues that rotate as the site scrolls — a separate, unaddressed design layer left as-is.</p>
+  <div class="swatches">
+    <div class="swatch"><div class="chip" style="background:var(--night)"></div><div class="info"><span class="name">night (ink)</span><span class="hex">#0a0a0a</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--night-2)"></div><div class="info"><span class="name">night-2</span><span class="hex">#161616</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--ivory)"></div><div class="info"><span class="name">ivory (cream)</span><span class="hex">#f8f5ef</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--ivory-dim)"></div><div class="info"><span class="name">ivory-dim</span><span class="hex">#cbc9c4</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--bronze)"></div><div class="info"><span class="name">bronze (gold)</span><span class="hex">#c49a38</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--gold)"></div><div class="info"><span class="name">gold (highlight)</span><span class="hex">#d3b36a</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--cobalt)"></div><div class="info"><span class="name">cobalt</span><span class="hex">#1840d8</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--kurinji)"></div><div class="info"><span class="name">kurinji</span><span class="hex">#8b7ae0</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--mullai)"></div><div class="info"><span class="name">mullai</span><span class="hex">#4f9d6b</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--marutham)"></div><div class="info"><span class="name">marutham</span><span class="hex">#b7a03c</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--neytal)"></div><div class="info"><span class="name">neytal</span><span class="hex">#4a8ab5</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--palai)"></div><div class="info"><span class="name">palai</span><span class="hex">#c25b3c</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--ocean-deep)"></div><div class="info"><span class="name">ocean-deep</span><span class="hex">#020a17</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--ocean-mid)"></div><div class="info"><span class="name">ocean-mid</span><span class="hex">#061c34</span></div></div>
+    <div class="swatch"><div class="chip" style="background:var(--ocean-shallow)"></div><div class="info"><span class="name">ocean-shallow</span><span class="hex">#0d3350</span></div></div>
+  </div>
+
+  <h2>Type system</h2>
+  <div class="type-row">
+    <div class="tag">Wordmark — Playfair Display Black 900 · −3px tracking · Noto Serif Tamil</div>
+    <div class="serif-sample">Yazhi &nbsp; யாழி</div>
+  </div>
+  <div class="type-row">
+    <div class="tag">Section heading — Playfair Display Bold 700</div>
+    <div class="display-sample">Sovereign Tamil AI &nbsp; இயற்கை மொழி</div>
+  </div>
+  <div class="type-row">
+    <div class="tag">Body — EB Garamond</div>
+    <div class="body-sample">Classical heritage meets frontier computing — Sangam literature, Tholkaappiyam grammar, and native JAX language models, built for the Tamil language from first principles.</div>
+  </div>
+
+  <footer>Generated from repos/yazhi-dev/src/styles/tokens.css and src/app/layout.tsx. Source SVGs in ./logos/ — see README.md for usage rules.</footer>
+</main>
+
+<script>
+  const files = {
+    'hero': 'logos/yazhi-lockup-horizontal-dark.svg',
+    'lockup-dark-card': 'logos/yazhi-lockup-horizontal-dark.svg',
+    'lockup-light-card': 'logos/yazhi-lockup-horizontal-light.svg',
+    'mark-card': 'logos/yazhi-mark.svg',
+    'mark-mono-ivory-card': 'logos/yazhi-mark-mono-ivory.svg',
+    'mark-mono-night-card': 'logos/yazhi-mark-mono-night.svg',
+    'favicon-card': 'logos/favicon.svg',
+    'wordmark-dark-card': 'logos/yazhi-wordmark-dark.svg',
+    'wordmark-light-card': 'logos/yazhi-wordmark-light.svg',
+    'wordmark-tamil-dark-card': 'logos/yazhi-wordmark-tamil-dark.svg',
+    'wordmark-tamil-light-card': 'logos/yazhi-wordmark-tamil-light.svg',
+  };
+  const labels = {
+    'lockup-dark-card': 'Lockup — dark surface',
+    'lockup-light-card': 'Lockup — light surface',
+    'mark-card': 'Mark — full color (Cobalt on Cream)',
+    'mark-mono-ivory-card': 'Mark — mono cream (dark bg)',
+    'mark-mono-night-card': 'Mark — mono ink (light bg)',
+    'favicon-card': 'Favicon / app icon',
+    'wordmark-dark-card': 'Wordmark — dark surface',
+    'wordmark-light-card': 'Wordmark — light surface',
+    'wordmark-tamil-dark-card': 'Tamil wordmark — dark surface',
+    'wordmark-tamil-light-card': 'Tamil wordmark — light surface',
+  };
+  Object.entries(files).forEach(([id, path]) => {
+    fetch(path).then(r => r.text()).then(svg => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const filename = path.split('/').pop();
+      const dl = id === 'hero' ? '' : `<a class="dl" href="${path}" download="${filename}">Download SVG</a>`;
+      el.innerHTML = svg + (labels[id] ? `<div class="label">${labels[id]}</div>` : '') + dl;
+    });
+  });
+</script>
+</body>
+</html>
