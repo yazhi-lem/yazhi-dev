@@ -2,11 +2,9 @@
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
-import { createNoise2D } from "simplex-noise";
 import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { ZONES, ZONE_LEN, mulberry32, type Zone } from "@/three/materials/zones";
-
-const noise = createNoise2D(mulberry32(1337));
+import { noise, zoneHeight, blendedHeight, OVERLAP, FULL_LEN } from "@/three/materials/heightfield";
 
 /* ---- low-poly compound props: several primitives merged into one
    vertex-colored geometry so each creature/plant is still a single
@@ -241,32 +239,6 @@ function buildBird(color: string) {
   )!;
 }
 
-const OVERLAP = 24;
-const FULL_LEN = ZONE_LEN + OVERLAP;
-
-/** Raw terrain height for one zone at its own local (x, z). Shared by
-    zoneGeometry both for the zone itself and for sampling a neighbor's
-    surface when blending across a seam — and by prop placement below, so
-    everything planted on the land actually sits on the land. */
-function zoneHeight(zone: Zone, x: number, z: number) {
-  const valley = Math.min(1, Math.pow(Math.abs(x) / 16, 1.4)); // clear corridor
-  let h = noise(x * zone.freq, z * zone.freq) * zone.amp * valley;
-  if (zone.props === "peaks") h += Math.max(0, noise(x * 0.02, z * 0.02)) * 26 * valley; // kurinji ridges
-  if (zone.props === "dunes") h = Math.abs(h) * 1.4; // palai dune ripple
-  if (zone.props === "fields") h *= 0.5; // paddy country is engineered flat
-  // neytal, on the FAR side (local -z, the direction of travel): the noise
-  // first damps into a flat sand beach at the shoreline, then the land
-  // dives quickly below the water plane and STAYS there — an open ocean
-  // with no offshore sand bars poking up like ice floes. The +z edge is
-  // untouched, keeping the palai seam blend clean. (h here is pure noise;
-  // the -1.5 base offset is applied once, at the return.)
-  if (zone.props === "sea") {
-    h *= 0.3 + 0.7 * THREE.MathUtils.smoothstep(z, 4, 16); // beach strip
-    h = THREE.MathUtils.lerp(h, -6, THREE.MathUtils.smoothstep(-z, 0, 13));
-  }
-  return h - 1.5;
-}
-
 /* per-vertex terrain tints, from the thinai design brief:
    snow + neelakurinji bloom on the mountain, moss in the forest, wet/dry
    paddy bands, sun-cracked earth, wet sand at the waterline — plus one
@@ -431,14 +403,31 @@ const UP = new THREE.Vector3(0, 1, 0);
     flora, fauna, and human traces. Everything samples zoneHeight so it
     stands on the actual ground, and `density` thins the scatter layers on
     low-power devices (creatures and landmarks always survive the cut). */
-function ZoneProps({ zone, zOffset, density = 1 }: { zone: Zone; zOffset: number; density?: number }) {
+function ZoneProps({
+  zone,
+  zOffset,
+  density = 1,
+  prev,
+  next,
+}: {
+  zone: Zone;
+  zOffset: number;
+  density?: number;
+  prev?: Zone;
+  next?: Zone;
+}) {
   const layers = useMemo<PropLayer[]>(() => {
     // seeded inside the memo so a runtime density change (live low-mode
     // demotion) replays the exact same placement sequence, only shorter —
     // the world never visibly re-scatters
     const rand = mulberry32(zOffset * 7 + 11);
     const n = (c: number) => Math.max(1, Math.round(c * density));
-    const ground = (x: number, z: number) => zoneHeight(zone, x, z);
+    // blended, not raw, height: props are scattered across the FULL_LEN
+    // overlap band too, and the rendered mesh blends toward the neighbor
+    // zone there — sampling raw zoneHeight instead used to plant trees
+    // (and everything else) at the wrong elevation right at a zone seam,
+    // reading as trees floating above (or sunk into) the actual ground.
+    const ground = (x: number, z: number) => blendedHeight(zone, x, z, prev, next);
 
     switch (zone.props) {
       case "peaks": { // kurinji — monoliths, neelakurinji bloom, bamboo, peacocks
@@ -724,7 +713,7 @@ function ZoneProps({ zone, zOffset, density = 1 }: { zone: Zone; zOffset: number
       default:
         return [];
     }
-  }, [zone, zOffset, density]);
+  }, [zone, zOffset, density, prev, next]);
 
   return (
     <group position={[0, 0, zOffset]}>
@@ -912,7 +901,7 @@ export function Terrain({ detail = 96, low = false }: { detail?: number; low?: b
             </mesh>
             {/* the thinai's light — each zone is lit in its own hue */}
             <pointLight position={[0, 18, zOffset]} color={zone.glow} intensity={260} distance={95} decay={1.8} />
-            <ZoneProps zone={zone} zOffset={zOffset} density={density} />
+            <ZoneProps zone={zone} zOffset={zOffset} density={density} prev={ZONES[i - 1]} next={ZONES[i + 1]} />
             {zone.props === "fields" && (
               /* the lotus pond — buffalo wallow at its edge, cranes wade its rim */
               <mesh rotation-x={-Math.PI / 2} position={[34, zoneHeight(zone, 34, 6) + 0.15, zOffset + 6]}>

@@ -11,19 +11,21 @@ export function Footer() {
     <footer
       className="relative isolate overflow-hidden"
       style={{
-        // a smooth deep dive: a transparent gap at the surface eases the neytal
-        // section above into the ocean, then the water steps down through
-        // layered blues into a near-black trench — many stops, no hard seam
+        // a steep dive: a brief transparent gap eases the neytal section
+        // above into the water, then it drops fast through the shallow and
+        // mid bands so most of the footer's height reads as genuinely deep
+        // ocean — dark, near-black — rather than lingering in the paler
+        // surface blue
         background:
           "linear-gradient(to bottom," +
           " transparent 0%," +
-          " color-mix(in oklab, var(--neytal) 32%, var(--ocean-shallow)) 12%," +
-          " var(--ocean-shallow) 26%," +
-          " color-mix(in oklab, var(--ocean-shallow), var(--ocean-mid)) 40%," +
-          " var(--ocean-mid) 56%," +
-          " color-mix(in oklab, var(--ocean-mid), var(--ocean-deep)) 72%," +
-          " var(--ocean-deep) 88%," +
-          " var(--ocean-deep) 100%)",
+          " color-mix(in oklab, var(--neytal) 32%, var(--ocean-shallow)) 8%," +
+          " var(--ocean-shallow) 16%," +
+          " color-mix(in oklab, var(--ocean-shallow), var(--ocean-mid)) 26%," +
+          " var(--ocean-mid) 38%," +
+          " color-mix(in oklab, var(--ocean-mid), var(--ocean-deep)) 52%," +
+          " var(--ocean-deep) 66%," +
+          " color-mix(in oklab, var(--ocean-deep), #000000 40%) 100%)",
       }}
     >
       {/* neytal glow rising off the sea floor */}
@@ -36,8 +38,9 @@ export function Footer() {
         }}
       />
 
-      {/* smooth layered rocks + the drowned city on the trench floor */}
-      <SunkenRuins className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-56 w-full" />
+      {/* smooth layered rocks + the drowned city on the trench floor —
+          taller than before so more of the footer's depth reads as seabed */}
+      <SunkenRuins className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-72 w-full" />
 
       {/* sparkling bubbles rising through the water, in front of the scene */}
       <Bubbles className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" />
