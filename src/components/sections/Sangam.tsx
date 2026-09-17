@@ -15,7 +15,7 @@ export function Sangam() {
   return (
     <Section id="sangam">
       <SectionHeading
-        thinaiTa="மருதம்" thinaiEn="Marutham" landscapeTa="வயல் · விளை நிலம்" landscape="Agriculture · fertile land"
+        thinaiTa="மருதம்" thinaiEn="Marutham" landscapeTa="வயல் · ஊடல்" landscape="Agriculture · fertile land"
         titleTa={SANGAM.nameTa} titleEn={SANGAM.nameEn}
         subTa={SANGAM.subTa} subEn={SANGAM.subEn}
         plainTa={SANGAM.plainTa} plainEn={SANGAM.plainEn}

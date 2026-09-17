@@ -14,7 +14,7 @@ export function Community() {
   return (
     <Section id="community">
       <SectionHeading
-        thinaiTa="நெய்தல்" thinaiEn="Neytal" landscapeTa="கடற்கரை" landscape="Coastal · separation, pining"
+        thinaiTa="நெய்தல்" thinaiEn="Neytal" landscapeTa="கடற்கரை · இரங்கல்" landscape="Coastal · separation, pining"
         titleTa={COMMUNITY.titleTa} titleEn={COMMUNITY.titleEn}
         subTa={COMMUNITY.subTa} subEn={COMMUNITY.subEn}
         plainTa={COMMUNITY.plainTa} plainEn={COMMUNITY.plainEn}
