@@ -35,7 +35,7 @@ export function Navbar() {
           <Bi
             ta={IDENTITY.nameTa}
             en={IDENTITY.nameEn}
-            className="flex items-baseline gap-2 font-serif text-lg font-semibold tracking-wide"
+            className="flex items-baseline gap-2 font-serif text-lg font-black tracking-[-3px]"
             separator={<span aria-hidden className="text-ivory-dim">•</span>}
           />
         </Link>
@@ -50,6 +50,12 @@ export function Navbar() {
               </li>
             ))}
           </ul>
+          <Link
+            href="/chat"
+            className="rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night"
+          >
+            <Bi ta="அரட்டை" en="Chat" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
+          </Link>
           <LangToggle />
           <button
             className="grid h-9 w-9 place-items-center rounded-lg border border-ivory/15 md:hidden"

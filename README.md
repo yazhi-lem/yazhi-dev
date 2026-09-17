@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is the official developer portal and community hub for the **Yazhi** sovereign Tamil AI ecosystem.
+
+See [NEXT_ACTION.md](./NEXT_ACTION.md) for the roadmap, **October 2026 Pilot**, and **December 2026 Launch** deliverables.
 
 ## Getting Started
 
@@ -15,6 +17,27 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## /chat — agents · Gemini · ChatGPT
+
+The chat workspace lives at `/chat`. Agents are bound to a fixed provider
+(Gemini or ChatGPT) and each carries its own persona/system prompt
+(see `src/lib/chat/agents.ts`). Sessions and messages persist in the
+browser via localStorage.
+
+Replies are **streamed through the yazhi-api backend**, never from the
+browser directly. Copy `.env.example` to `.env` and set:
+
+- `YAZHI_API_URL` — base URL of the yazhi-api service
+- `YAZHI_API_KEY` — optional bearer token
+- `YAZHI_CHAT_PATH` — defaults to `/v1/chat/completions`
+
+The backend contract is OpenAI-compatible Chat Completions with SSE
+streaming; `src/lib/chat/backend.ts` is the single integration point and
+shows the exact request/response shape. Until `YAZHI_API_URL` is set, the
+UI streams a friendly "not configured" notice instead of failing silently.
+
+## Learn More
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

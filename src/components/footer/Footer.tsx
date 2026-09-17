@@ -52,7 +52,7 @@ export function Footer() {
             <Bi
               ta={IDENTITY.nameTa}
               en={IDENTITY.nameEn}
-              className="flex items-baseline gap-2 font-serif text-xl font-semibold tracking-wide"
+              className="flex items-baseline gap-2 font-serif text-xl font-black tracking-[-3px]"
               separator={<span aria-hidden className="text-ivory-dim">•</span>}
             />
           </div>
