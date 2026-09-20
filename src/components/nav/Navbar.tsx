@@ -26,11 +26,11 @@ export function Navbar() {
           ever reading as a hard, static bar */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28"
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[calc(7rem+env(safe-area-inset-top,0px))]"
         style={{ background: "linear-gradient(to bottom, rgba(5,7,13,0.75), rgba(5,7,13,0.32) 55%, transparent)" }}
       />
-      <div className="mx-auto flex max-w-[var(--max-w)] items-center justify-between px-5 py-4">
-        <Link href="/" className="flex items-center gap-2.5" aria-label="Yazhi home">
+      <div className="mx-auto flex max-w-[var(--max-w)] items-center justify-between px-4 py-4 pt-[calc(1rem+env(safe-area-inset-top,0px))] pl-[calc(1rem+env(safe-area-inset-left,0px))] pr-[calc(1rem+env(safe-area-inset-right,0px))] sm:px-5 sm:pl-[calc(1.25rem+env(safe-area-inset-left,0px))] sm:pr-[calc(1.25rem+env(safe-area-inset-right,0px))]">
+        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="Yazhi home">
           <LogoMark size={34} />
           <Bi
             ta={IDENTITY.nameTa}
@@ -40,7 +40,7 @@ export function Navbar() {
           />
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <ul className="hidden items-center gap-6 md:flex">
             {LINKS_TOP.map((l) => (
               <li key={l.href}>
@@ -75,7 +75,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-5 rounded-2xl border border-ivory/10 bg-gradient-to-b from-night-2/95 via-night-2/90 to-night-2/75 p-5 backdrop-blur md:hidden"
+            className="mx-4 sm:mx-5 max-h-[calc(100dvh-5.5rem-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px))] overflow-y-auto rounded-2xl border border-ivory/10 bg-gradient-to-b from-night-2/95 via-night-2/90 to-night-2/75 p-5 backdrop-blur md:hidden"
           >
             {NAV_GROUPS.map((g) => (
               <div key={g.en} className="mb-4 last:mb-0">
