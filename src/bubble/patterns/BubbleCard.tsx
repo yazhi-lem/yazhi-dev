@@ -23,11 +23,11 @@ export function BubbleCard({ title, subtitle, body, tone = "neutral", href, mete
     <Bubble tone={tone} href={href} label={href ? plain(title) : undefined} className="flex h-full flex-col gap-4">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h3 className="font-display text-xl text-ivory [overflow-wrap:anywhere] sm:text-2xl">
+          <h3 className="font-display text-xl text-ivory [overflow-wrap:anywhere]">
             <T text={title} />
           </h3>
           {subtitle && (
-            <p className="mt-0.5 font-mono text-xs text-[color:var(--tone)]">
+            <p className="mt-0.5 font-mono text-xs ybi-tone-text">
               <T text={subtitle} />
             </p>
           )}
@@ -47,7 +47,7 @@ export function BubbleCard({ title, subtitle, body, tone = "neutral", href, mete
         </div>
       )}
       {meta && meta.length > 0 && (
-        <dl className="mt-auto grid grid-cols-[repeat(auto-fit,minmax(6.5rem,1fr))] gap-3 border-t border-ivory/10 pt-3">
+        <dl className="mt-auto grid grid-cols-[repeat(auto-fit,minmax(5.5rem,1fr))] gap-3 border-t border-ivory/10 pt-3">
           {meta.map((m) => (
             <div key={m.label} className="min-w-0">
               <dt className="truncate text-[11px] uppercase tracking-[0.12em] text-ivory-dim">{m.label}</dt>

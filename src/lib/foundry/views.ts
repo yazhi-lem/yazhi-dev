@@ -10,6 +10,12 @@ import type { DataSource, DomainQuality, PipelineHealth, QualityOverview } from 
 
 const fmt = (n: number) => n.toLocaleString("en-IN");
 
+/** Coverage to one decimal, as insight's coverage_pct rounds it:
+    4/153 → 2.6% (Math.round would claim 3%); 100 → "100%". */
+export function pct(v: number): string {
+  return `${Number(v.toFixed(1))}%`;
+}
+
 /** proto3 JSON drops zero values and encodes int64 as strings. */
 export function num(v: number | string | undefined): number {
   if (v === undefined) return 0;
@@ -62,7 +68,7 @@ export function overviewView(overview: QualityOverview, source: DataSource): Blo
         {
           label: { ta: "குறைகள்", en: "Findings" },
           value: fmt(num(overview.totalFindings)),
-          hint: `${fmt(num(overview.totalErrors))} errors · ${fmt(num(overview.totalWarnings))} warnings`,
+          hint: `flagging ${fmt(num(overview.totalErrors))} error · ${fmt(num(overview.totalWarnings))} warning records`,
           tone: num(overview.totalErrors) > 0 ? "error" : "ok",
         },
         { label: { ta: "தரவுத் தொகுப்பு", en: "With a corpus" }, value: `${withCorpus} / ${FOUNDRY_PROJECTS.length}`, tone: "kurinji" },
@@ -113,7 +119,7 @@ function projectCard(p: FoundryProject, q?: DomainQuality) {
     meta: [
       { label: "Records", value: corpus ? fmt(num(q?.stats?.recordCount)) : "0" },
       { label: "Pipelines", value: `${p.pipelines.length}` },
-      { label: "Coverage", value: corpus ? `${Math.round(num(q?.coveragePct))}%` : "—" },
+      { label: "Coverage", value: corpus ? pct(num(q?.coveragePct)) : "—" },
     ],
   };
 }
@@ -183,7 +189,7 @@ export function projectView(
     {
       label: { ta: "குறைகள்", en: "Findings" },
       value: fmt(findings.length),
-      hint: `${fmt(findings.filter((f) => f.severity === "error").length)} errors`,
+      hint: `${fmt(findings.filter((f) => f.severity === "error").length)} at error severity`,
       tone: findings.some((f) => f.severity === "error") ? "error" : "ok",
     },
   ];

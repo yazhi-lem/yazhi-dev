@@ -70,8 +70,10 @@ export const SAMPLE_OVERVIEW: QualityOverview = {
   score: 77,
   totalRecords: 5630,
   totalFindings: 3,
-  totalErrors: 2,
-  totalWarnings: 1,
+  // Σ finding.count by severity — records affected, not findings
+  // (insight/quality.py overview): 5,595 + 2 errors, 149 warnings
+  totalErrors: 5597,
+  totalWarnings: 149,
   domains: [
     legal,
     education,

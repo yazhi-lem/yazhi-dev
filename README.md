@@ -49,7 +49,8 @@ JSON blocks rendered by `<BubbleView>`.
 Set `YAZHI_RPC_URL` (a Connect/gRPC-JSON gateway in front of yazhi-api)
 and `YAZHI_API_KEY` to read live data; without them the pages show the
 audited sample, clearly labelled. Scope, structure and roadmap:
-[docs/BUBBLE-INTERFACE.md](./docs/BUBBLE-INTERFACE.md).
+[docs/BUBBLE-INTERFACE.md](./docs/BUBBLE-INTERFACE.md); API reference, every
+calculation and recipes: [docs/YBI-DEV-GUIDE.md](./docs/YBI-DEV-GUIDE.md).
 
 ## Learn More
 

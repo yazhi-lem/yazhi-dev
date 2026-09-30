@@ -2,6 +2,7 @@
 
 **Status:** Phase 0 shipped: component system, Foundry overview and project pages.
 **Code:** `src/bubble/` (components), `src/lib/yazhi-api/` (transport), `src/lib/foundry/` (first product), `src/app/foundry/` (routes).
+**Developer guide (API, calculations, recipes):** [YBI-DEV-GUIDE.md](./YBI-DEV-GUIDE.md).
 **Related:** `docs/DESIGN-SYSTEM.md` (thinai palette), `NEXT_ACTION.md` (Oct Pilot / Dec Launch), yazhi-api `services/yazhi/proto/insight.proto`, yazhi-api `docs/factory/architecture.md`.
 
 ---

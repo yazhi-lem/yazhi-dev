@@ -57,6 +57,12 @@
   outline-offset: 3px;
 }
 
+/* Small text in a tone colour. Raw thinai hues fall below WCAG AA on
+   the bubble glow (palai 3.76:1); 75% tone + 25% ivory keeps the hue and
+   clears 4.5:1 for every tone (worst: palai 5.48:1). Mixed in sRGB so
+   the numbers in docs/YBI-DEV-GUIDE.md §6 hold exactly. */
+.ybi-tone-text { color: color-mix(in srgb, var(--tone) 75%, var(--ivory)); }
+
 /* Letter-spacing breaks Tamil clusters apart (த ர ம்) — tracked
    uppercase eyebrows keep it for Latin only. */
 [class*="tracking-"] [lang="ta"] { letter-spacing: normal; }

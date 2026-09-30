@@ -47,7 +47,7 @@ export function PageHeader({ title, eyebrow, description, tone = "gold", crumbs,
         </nav>
       )}
       {eyebrow && (
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--tone)]">{eyebrow}</p>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] ybi-tone-text">{eyebrow}</p>
       )}
       <h1 className="font-display text-4xl font-bold text-ivory sm:text-5xl">
         <T text={title} display separator=" " />
