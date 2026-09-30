@@ -1,0 +1,91 @@
+/* ============================================================
+   YAZHI BUBBLE INTERFACE (YBI)
+   The surface language for Yazhi Dev's product pages (/foundry and
+   everything after it). One idea: every raised surface is a bubble —
+   the brand mark's three floating circles — a translucent ink body,
+   a soft specular highlight, and a rim tinted by its --tone.
+   Components set --tone via toneStyle() (src/bubble/tone.ts).
+   Zero JS: all states here are CSS, so bubbles render from Server
+   Components and cost nothing on the client.
+   ============================================================ */
+
+.ybi-bubble {
+  --tone: var(--ivory-dim);
+  position: relative;
+  isolation: isolate;
+  border-radius: var(--ybi-radius, 1.5rem);
+  border: 1px solid color-mix(in oklab, var(--tone) 24%, rgb(248 245 239 / 0.07));
+  background:
+    radial-gradient(120% 90% at 15% 0%, color-mix(in oklab, var(--tone) 13%, transparent), transparent 62%),
+    color-mix(in oklab, var(--night-2) 84%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.05),
+    0 18px 40px -28px color-mix(in oklab, var(--tone) 70%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* the specular glint — what makes a card read as a bubble */
+.ybi-bubble::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 10px;
+  left: 14px;
+  width: 38px;
+  height: 18px;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.12), transparent);
+  pointer-events: none;
+}
+
+.ybi-bubble[data-shape="pill"] { --ybi-radius: 999px; }
+.ybi-bubble[data-shape="pill"]::before { display: none; }
+.ybi-bubble[data-shape="orb"] { --ybi-radius: 999px; aspect-ratio: 1; display: grid; place-items: center; }
+
+.ybi-bubble[data-interactive] { cursor: pointer; }
+.ybi-bubble[data-interactive]:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--tone) 60%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    0 26px 50px -26px color-mix(in oklab, var(--tone) 85%, transparent);
+}
+.ybi-bubble[data-interactive]:focus-visible {
+  outline: 2px solid var(--tone);
+  outline-offset: 3px;
+}
+
+/* Letter-spacing breaks Tamil clusters apart (த ர ம்) — tracked
+   uppercase eyebrows keep it for Latin only. */
+[class*="tracking-"] [lang="ta"] { letter-spacing: normal; }
+
+/* status dot — optional soft pulse for "live" states */
+.ybi-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--tone);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--tone) 22%, transparent);
+}
+@keyframes ybiPulse {
+  0%, 100% { box-shadow: 0 0 0 3px color-mix(in oklab, var(--tone) 22%, transparent); }
+  50% { box-shadow: 0 0 0 6px color-mix(in oklab, var(--tone) 6%, transparent); }
+}
+.ybi-dot[data-pulse] { animation: ybiPulse 2.4s ease-in-out infinite; }
+
+/* stage track — pipeline stages as a chain of small bubbles */
+.ybi-stage-link {
+  flex: 1 1 1.25rem;
+  min-width: 0.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in oklab, var(--tone) 50%, transparent), rgb(248 245 239 / 0.12));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ybi-bubble { transition: none; }
+  .ybi-bubble[data-interactive]:hover { transform: none; }
+  .ybi-dot[data-pulse] { animation: none; }
+}

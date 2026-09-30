@@ -37,6 +37,20 @@ streaming; `src/lib/chat/backend.ts` is the single integration point and
 shows the exact request/response shape. Until `YAZHI_API_URL` is set, the
 UI streams a friendly "not configured" notice instead of failing silently.
 
+## /foundry — Yazhi Bubble Interface
+
+`/foundry` shows Yazhi's six domain data programmes (legal, education,
+governance, health, sovereign, core): their YazhiFactory pipelines, stage
+chains and corpus quality, read from yazhi-api's `YazhiInsight` service.
+It is the first surface built with the **Yazhi Bubble Interface** —
+`src/bubble/`, a server-first component system where a page is a list of
+JSON blocks rendered by `<BubbleView>`.
+
+Set `YAZHI_RPC_URL` (a Connect/gRPC-JSON gateway in front of yazhi-api)
+and `YAZHI_API_KEY` to read live data; without them the pages show the
+audited sample, clearly labelled. Scope, structure and roadmap:
+[docs/BUBBLE-INTERFACE.md](./docs/BUBBLE-INTERFACE.md).
+
 ## Learn More
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
