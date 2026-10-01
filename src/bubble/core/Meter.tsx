@@ -35,14 +35,21 @@ export function Meter({
       style={toneStyle(t, { width: size, height: size })}
     >
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90" aria-hidden>
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgb(248 245 239 / 0.1)" strokeWidth={stroke} />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          strokeWidth={stroke}
+          style={{ stroke: "color-mix(in srgb, var(--ivory) 12%, transparent)" }}
+        />
         {value !== null && (
           <circle
             cx={size / 2}
             cy={size / 2}
             r={r}
             fill="none"
-            stroke="var(--tone)"
+            style={{ stroke: "color-mix(in srgb, var(--tone) var(--ybi-tone-mix), var(--ivory))" }}
             strokeWidth={stroke}
             strokeLinecap="round"
             strokeDasharray={`${(v / 100) * c} ${c}`}

@@ -2,25 +2,40 @@
    YAZHI BUBBLE INTERFACE (YBI)
    The surface language for Yazhi Dev's product pages (/foundry and
    everything after it). One idea: every raised surface is a bubble —
-   the brand mark's three floating circles — a translucent ink body,
-   a soft specular highlight, and a rim tinted by its --tone.
+   the brand mark's three floating circles — a translucent body, a soft
+   specular highlight, and a rim tinted by its --tone.
    Components set --tone via toneStyle() (src/bubble/tone.ts).
    Zero JS: all states here are CSS, so bubbles render from Server
    Components and cost nothing on the client.
+
+   THEMES are token scopes. Every colour below resolves through
+   --night / --night-2 / --ivory / --ivory-dim / --gold / the five
+   thinai vars and the --ybi-* knobs, so a theme is one selector that
+   redefines them (see "Mugil" below). Contrast maths for both themes:
+   docs/YBI-DEV-GUIDE.md §6.
    ============================================================ */
+
+/* ── theme knobs (Ink defaults — the dark brand ground) ───────────── */
+:root {
+  --ybi-tone-mix: 75%;        /* tone share in .ybi-tone-text / solid fills */
+  --ybi-glow: 13%;            /* tone tint in a bubble's top-left glow */
+  --ybi-shadow: 70%;          /* tone share in a bubble's drop shadow */
+  --ybi-glint: rgb(255 255 255 / 0.12);
+  --ybi-inset: rgb(255 255 255 / 0.05);
+}
 
 .ybi-bubble {
   --tone: var(--ivory-dim);
   position: relative;
   isolation: isolate;
   border-radius: var(--ybi-radius, 1.5rem);
-  border: 1px solid color-mix(in oklab, var(--tone) 24%, rgb(248 245 239 / 0.07));
+  border: 1px solid color-mix(in oklab, var(--tone) 24%, color-mix(in srgb, var(--ivory) 7%, transparent));
   background:
-    radial-gradient(120% 90% at 15% 0%, color-mix(in oklab, var(--tone) 13%, transparent), transparent 62%),
+    radial-gradient(120% 90% at 15% 0%, color-mix(in oklab, var(--tone) var(--ybi-glow), transparent), transparent 62%),
     color-mix(in oklab, var(--night-2) 84%, transparent);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.05),
-    0 18px 40px -28px color-mix(in oklab, var(--tone) 70%, transparent);
+    inset 0 1px 0 var(--ybi-inset),
+    0 18px 40px -28px color-mix(in oklab, var(--tone) var(--ybi-shadow), transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
@@ -36,7 +51,7 @@
   width: 38px;
   height: 18px;
   border-radius: 999px;
-  background: radial-gradient(closest-side, rgb(255 255 255 / 0.12), transparent);
+  background: radial-gradient(closest-side, var(--ybi-glint), transparent);
   pointer-events: none;
 }
 
@@ -49,8 +64,8 @@
   transform: translateY(-3px);
   border-color: color-mix(in oklab, var(--tone) 60%, transparent);
   box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.07),
-    0 26px 50px -26px color-mix(in oklab, var(--tone) 85%, transparent);
+    inset 0 1px 0 var(--ybi-inset),
+    0 26px 50px -26px color-mix(in oklab, var(--tone) calc(var(--ybi-shadow) + 15%), transparent);
 }
 .ybi-bubble[data-interactive]:focus-visible {
   outline: 2px solid var(--tone);
@@ -58,10 +73,11 @@
 }
 
 /* Small text in a tone colour. Raw thinai hues fall below WCAG AA on
-   the bubble glow (palai 3.76:1); 75% tone + 25% ivory keeps the hue and
-   clears 4.5:1 for every tone (worst: palai 5.48:1). Mixed in sRGB so
-   the numbers in docs/YBI-DEV-GUIDE.md §6 hold exactly. */
-.ybi-tone-text { color: color-mix(in srgb, var(--tone) 75%, var(--ivory)); }
+   the bubble glow (Ink: palai 3.76:1). Mixing the tone toward --ivory
+   (the theme's text colour) keeps the hue and clears 4.5:1 for every
+   tone — Ink 75% (worst palai 5.48:1), Mugil 65% (worst marutham
+   5.15:1). Mixed in sRGB so docs/YBI-DEV-GUIDE.md §6 holds exactly. */
+.ybi-tone-text { color: color-mix(in srgb, var(--tone) var(--ybi-tone-mix), var(--ivory)); }
 
 /* Letter-spacing breaks Tamil clusters apart (த ர ம்) — tracked
    uppercase eyebrows keep it for Latin only. */
@@ -87,11 +103,103 @@
   flex: 1 1 1.25rem;
   min-width: 0.75rem;
   height: 1px;
-  background: linear-gradient(90deg, color-mix(in oklab, var(--tone) 50%, transparent), rgb(248 245 239 / 0.12));
+  background: linear-gradient(90deg, color-mix(in oklab, var(--tone) 50%, transparent), color-mix(in srgb, var(--ivory) 12%, transparent));
+}
+
+/* ── controls ─────────────────────────────────────────────────────── */
+/* solid fill = the same tone→text mix as .ybi-tone-text, with the page
+   ground (--night) as its label colour: symmetric across themes, so a
+   solid button inherits the text contrast numbers (Ink ≥ 6.67:1,
+   Mugil ≥ 5.49:1). */
+.ybi-solid {
+  background: color-mix(in srgb, var(--tone) var(--ybi-tone-mix), var(--ivory));
+  color: var(--night);
+}
+.ybi-soft {
+  background: color-mix(in oklab, var(--tone) 18%, transparent);
+  color: var(--ivory);
+}
+.ybi-track { background: color-mix(in srgb, var(--ivory) 12%, transparent); }
+.ybi-fill { background: color-mix(in srgb, var(--tone) var(--ybi-tone-mix), var(--ivory)); }
+.ybi-field {
+  background: color-mix(in oklab, var(--night-2) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ivory) 18%, transparent);
+  color: var(--ivory);
+}
+.ybi-field::placeholder { color: var(--ivory-dim); opacity: 0.8; }
+.ybi-field:focus-visible { outline: 2px solid var(--tone, var(--gold)); outline-offset: 2px; border-color: transparent; }
+
+/* ── Mugil (முகில், "cloud") — Yazh's own pastels ────────────────────
+   Every hue is sampled from the Yazhi mascot art (public/yazhi.png):
+   cream fur, sage mane, butter-gold curls, coral wing, blush cheeks,
+   sapphire eyes. Surfaces are pastel; tones are deepened just enough
+   for marks to clear 3:1 and mixed text to clear 4.5:1 on the glow. */
+[data-ybi-theme="mugil"] {
+  --night: #f6f1ea;          /* fur cream — page ground */
+  --night-2: #fffdfa;        /* cloud white — bubble body */
+  --ivory: #2f2a3b;          /* plum ink — primary text (13.4:1) */
+  --ivory-dim: #625b70;      /* dusk — secondary text (6.25:1) */
+  --bronze: #b38442;         /* medal gold, as sampled */
+  --gold: #82621a;           /* curl gold, deepened — eyebrows, active toggle */
+
+  --kurinji: #7e6fc6;        /* dusk lilac: blush × sapphire */
+  --mullai: #4a8a6e;         /* mane sage */
+  --marutham: #9c7a22;       /* curl gold */
+  --neytal: #4b76b9;         /* sapphire iris (sampled as-is) */
+  --palai: #cc5f38;          /* wing coral */
+  --accent: var(--kurinji);
+
+  /* pastel surfaces for clouds and soft fills — never text colours */
+  --mugil-mint: #d6ebe0;
+  --mugil-butter: #f8ebc6;
+  --mugil-peach: #fbdccb;
+  --mugil-blush: #f8d7d9;
+  --mugil-sky: #d8e5f5;
+  --mugil-lilac: #e3ddf5;
+
+  --ybi-tone-mix: 65%;
+  --ybi-glow: 13%;
+  --ybi-shadow: 38%;
+  --ybi-glint: rgb(255 255 255 / 0.95);
+  --ybi-inset: rgb(255 255 255 / 0.9);
+
+  color: var(--ivory);
+  background:
+    radial-gradient(60% 45% at 12% 8%, var(--mugil-lilac), transparent 70%),
+    radial-gradient(55% 40% at 92% 14%, var(--mugil-peach), transparent 70%),
+    radial-gradient(60% 45% at 80% 70%, var(--mugil-mint), transparent 70%),
+    radial-gradient(55% 40% at 10% 85%, var(--mugil-butter), transparent 70%),
+    linear-gradient(180deg, var(--mugil-sky) 0%, var(--night) 55%, #fbf3ee 100%);
+}
+[data-ybi-theme="mugil"] ::selection { background: var(--mugil-lilac); color: var(--ivory); }
+/* outside the themed root (overscroll, mobile bottom padding) */
+:root:has([data-ybi-theme="mugil"]) { background: #f6f1ea; }
+
+/* ── the sky: drifting clouds, each a cluster of bubbles (the brand
+   mark's three circles, softened). Decorative; Mugil only. ────────── */
+.ybi-sky { display: none; position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+[data-ybi-theme="mugil"] .ybi-sky { display: block; }
+.ybi-cloud {
+  position: absolute;
+  filter: blur(1.5px);
+  opacity: 0.85;
+  animation: ybiDrift var(--dur, 90s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+.ybi-cloud span {
+  position: absolute;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #fff, rgb(255 255 255 / 0.75) 60%, rgb(255 255 255 / 0.35));
+  box-shadow: 0 18px 40px -20px var(--cloud-tint, var(--mugil-lilac));
+}
+@keyframes ybiDrift {
+  from { transform: translateX(-30vw); }
+  to   { transform: translateX(130vw); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ybi-bubble { transition: none; }
   .ybi-bubble[data-interactive]:hover { transform: none; }
   .ybi-dot[data-pulse] { animation: none; }
+  .ybi-cloud { animation: none; transform: translateX(var(--rest, 20vw)); }
 }

@@ -162,7 +162,7 @@ Aligned to `NEXT_ACTION.md`: **October 2026 Pilot** and **December 2026 Launch**
 - [ ] Scaffolder: `npm run ybi:page <route> <Service/Method>`, which generates client, view and route
 - [ ] JSON Schema for `Block`, generated from the TS types (needed for Phase 3)
 - [ ] `/keys` developer dashboard on Circle accounts (PRD Phase 1); form blocks
-- [ ] `/ybi` gallery page: every block with sample props, which also serves as visual regression coverage
+- [x] `/ybi` gallery: every component in the Mugil (pastel) and Ink themes, with a theme switch (shipped early, 1 Oct 2026)
 
 ### Phase 3: Launch (December 2026)
 - [ ] Agent-generated views: Adhan returns `Block[]` in the playground, validated against the schema before render

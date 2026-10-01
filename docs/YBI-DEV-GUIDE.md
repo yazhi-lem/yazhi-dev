@@ -10,7 +10,7 @@ Scope, layer rules and roadmap are in [BUBBLE-INTERFACE.md](./BUBBLE-INTERFACE.m
 3. [Component reference](#3-component-reference)
 4. [Block spec reference](#4-block-spec-reference)
 5. [Foundry calculations](#5-foundry-calculations)
-6. [Colour and contrast calculations](#6-colour-and-contrast-calculations)
+6. [Colour and contrast calculations](#6-colour-and-contrast-calculations), including [the Mugil theme](#61-mugil-theme-முகில்-cloud)
 7. [Layout calculations](#7-layout-calculations)
 8. [Freshness and request budget](#8-freshness-and-request-budget)
 9. [Recipes](#9-recipes)
@@ -332,6 +332,51 @@ Method: WCAG 2.1 relative luminance, `L = 0.2126 R + 0.7152 G + 0.0722 B` over l
 Non-text marks (dots, ring arcs, stage links) need 3:1 under WCAG 1.4.11. Every raw tone exceeds 3.7:1 on the glow. Body text (ivory 16.9, ivory-dim 11.1) is AAA.
 
 ---
+
+### 6.1 Mugil theme (முகில், "cloud")
+
+Mugil is the pastel theme, opted into with `data-ybi-theme="mugil"` on the shell (`<BubbleShell theme="mugil">`). The gallery at **`/ybi`** shows every component in it, with a switch to Ink. A theme is only a token scope: it redefines `--night`, `--night-2`, `--ivory`, `--ivory-dim`, `--gold`, the five thinai variables and the `--ybi-*` knobs. No component knows which theme it is in.
+
+**Where the colours come from.** Each hue is a 6 × 6-pixel average from `public/yazhi.png` (900 × 832):
+
+| Yazh part | Sampled | Pastel (surfaces) | Tone (marks, text) | Token |
+|---|---|---|---|---|
+| fur | `#e7d2b8` | `#f6f1ea` (page) | — | `--night` |
+| mane | `#9eb1a0` | `#d6ebe0` | `#4a8a6e` | `--mullai` |
+| crown curls | `#e8c375` | `#f8ebc6` | `#9c7a22` | `--marutham` |
+| wing | `#d76c46` | `#fbdccb` | `#cc5f38` | `--palai` |
+| iris | `#4b76b9` | `#d8e5f5` | `#4b76b9` | `--neytal` |
+| cheek × iris | `#a39cb2` | `#e3ddf5` | `#7e6fc6` | `--kurinji` |
+| medallion | `#b38442` | — | `#82621a` | `--gold` |
+
+**Contrast.** Same method as above, on the Mugil bubble body (`#fcfbfa`) with a 13% tone glow:
+
+| Tone | Mark on glow (needs 3) | Text at 65% mix (needs 4.5) | Solid button label |
+|---|---:|---:|---:|
+| kurinji | 3.52 | 5.28 | 5.63 |
+| mullai | 3.40 | 5.21 | 5.56 |
+| marutham | 3.36 | **5.15** (worst) | 5.49 |
+| neytal | 3.79 | 5.60 | 6.02 |
+| palai | **3.31** (worst) | 5.17 | 5.54 |
+| gold | 4.10 | 5.88 | 6.39 |
+
+Text: plum ink `#2f2a3b` is 13.41:1 on the bubble body (AAA), and dusk `#625b70` is 6.25:1 (AA).
+
+**Why the mix differs per theme.** In Mugil, `.ybi-tone-text` mixes the tone toward *dark* ink, so a smaller tone share is needed:
+
+| Tone share | Worst text ratio in Mugil |
+|---:|---:|
+| 75% | 4.34 ✗ |
+| 65% (chosen) | 5.15 |
+| 55% | 5.85 |
+
+The share is the `--ybi-tone-mix` token (Ink 75%, Mugil 65%). Marutham started at `#b08a2e`, which measured 2.74:1 as a mark, so it was deepened to `#9c7a22`. The `/ybi` swatches recompute every ratio at render with `contrast()` and `mix()` from `@/bubble`. They print Mugil's numbers whichever theme is active, and are labelled that way.
+
+**Solid fills** (`.ybi-solid`: Button, the active Tab, Switch-on, Progress) use the same tone→text mix as their background and `--night` as their label. That makes them symmetric across themes: Ink ≥ 6.67:1, Mugil ≥ 5.49:1.
+
+**Clouds.** Each cloud is the brand mark's three circles plus a base puff, drifting across the viewport on 110–180s loops. Negative animation delays spread them across the sky on first paint. They freeze in place under reduced motion and are `aria-hidden`.
+
+**Art.** `public/yazh/cutout/*.webp` are transparent versions of the Yazh art. They were made by flood-filling the near-black backdrop from the image border, plus any enclosed pocket that is larger than 300px *and* has mean brightness under 10. That keeps the eye-liner (dark brown) and pupils intact. They total 189 KB (189,604 bytes) against the originals' 2.2 MB.
 
 ## 7. Layout calculations
 

@@ -51,6 +51,8 @@ and `YAZHI_API_KEY` to read live data; without them the pages show the
 audited sample, clearly labelled. Scope, structure and roadmap:
 [docs/BUBBLE-INTERFACE.md](./docs/BUBBLE-INTERFACE.md); API reference, every
 calculation and recipes: [docs/YBI-DEV-GUIDE.md](./docs/YBI-DEV-GUIDE.md).
+Component library: **`/ybi`**, in the *Mugil* theme (Yazh's pastel clouds),
+with a switch to the dark *Ink* theme.
 
 ## Learn More
 
