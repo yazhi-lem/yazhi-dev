@@ -1,110 +1,72 @@
-import type { Agent, Provider } from "./types";
+import type { Agent } from "./types";
 
-/** Agent registry — each agent is bound to a fixed provider
-    (Gemini or ChatGPT) and carries its own persona/system prompt. */
+/** Agents offered in /chat. Each is an agent_name_id served by yazhi-api
+    (data/agents_config.yaml) and runs through its Five-Posture kernel.
 
-export const PROVIDER_META: Record<
-  Provider,
-  { label: string; tagline: string; accent: string; dot: string }
-> = {
-  gemini: {
-    label: "Gemini",
-    tagline: "Google",
-    accent: "#8b7ae0",
-    dot: "bg-[#8b7ae0]",
-  },
-  openai: {
-    label: "ChatGPT",
-    tagline: "OpenAI",
-    accent: "#4a8ab5",
-    dot: "bg-[#4a8ab5]",
-  },
-};
+    Offered only when every tool the agent holds is read-only. Agents that
+    can change records — kural (ticket_create, ticket_update), vaathi
+    (record score) — are left out of a public chat: Aram rule 3 requires
+    an approved runbook and a human confirm before any system change.
+    Nyaya stays out until its 12 Dec closed-beta gates pass.
 
+    Tamil strings here are a DRAFT pending native-speaker review. */
 export const AGENTS: Agent[] = [
   {
-    id: "yazh-guide",
-    provider: "gemini",
-    name: "Yazh Guide",
-    taName: "யாழ் வழிகாட்டி",
-    description: "Tamil heritage & language guide — answers bilingual, Tamil first.",
-    model: "gemini-2.5-flash",
-    accent: "#8b7ae0",
-    systemPrompt:
-      "You are Yazh Guide (யாழ் வழிகாட்டி), a warm, knowledgeable guide to Tamil language, history, and culture, and to Yazhi's projects (Adhan, Sangam, Yazh). Answer in Tamil first, then repeat or expand in English when helpful. Be accurate, cite sources you know, and gently correct misconceptions about Tamil history. Keep answers clear and well-structured. When asked about code or unrelated topics, help cheerfully but steer back toward Tamil heritage when relevant.",
-    greeting:
-      "வணக்கம்! நான் யாழ் வழிகாட்டி. தமிழ், வரலாறு, இலக்கியம் — எதைப் பற்றி வேண்டுமானாலும் கேளுங்கள்.\n\nHello! I'm Yazh Guide. Ask me anything about Tamil language, history, or literature — or about Yazhi's projects like Adhan and Sangam.",
+    id: "avai",
+    name: { ta: "அவை", en: "Avai" },
+    tone: "neytal",
+    summary: {
+      ta: "எழுத்துத் தொல்பொருள்கள், கல்வெட்டுகள், அகழாய்வுத் தளங்கள் — பட்டியல் பதிவுகளோடு தேடித் தரும்.",
+      en: "Searches digitised artefacts, inscriptions and excavation sites of Indic scripts, with their catalogue records.",
+    },
+    rule: {
+      ta: "ஒவ்வொரு கூற்றுக்கும் ஆதாரப் பதிவு; ஆதாரம் இல்லையெனில் “தெரியவில்லை”.",
+      en: "Every claim names its source record. With no source, it says “I don't know”.",
+    },
+    status: { ta: "நவம்பர் 21 முதல் பொது முன்னோட்டம்", en: "Public beta from 21 Nov" },
+    prompts: [
+      {
+        label: { ta: "தமிழ்-பிராமி", en: "Tamil-Brahmi finds" },
+        prompt: "Find artifacts with Tamil-Brahmi inscriptions from the Sangam period.",
+      },
+      {
+        label: { ta: "கீழடி", en: "Keezhadi" },
+        prompt: "Tell me about the Keezhadi excavation site and what was found there.",
+      },
+    ],
   },
   {
-    id: "sangam-scholar",
-    provider: "gemini",
-    name: "Sangam Scholar",
-    taName: "சங்கப் புலவர்",
-    description: "Classical Tamil literature — thinai classification & poem analysis.",
-    model: "gemini-2.5-flash",
-    accent: "#b7a03c",
-    systemPrompt:
-      "You are Sangam Scholar (சங்கப் புலவர்), a specialist in Classical Tamil (Sangam) literature. You analyze poems, classify them by thinai (குறிஞ்சி, முல்லை, மருதம், நெய்தல், பாலை) and tinai-mutal, and explain poetic devices, akam/puram distinctions, and historical context. Quote original Tamil lines with transliteration and translation. Be scholarly but accessible; teach as you go. Respond Tamil-first when the question is in Tamil.",
-    greeting:
-      "வணக்கம்! நான் சங்கப் புலவர் — சங்க இலக்கியம், திணை, பாட்டு ஆய்வு. ஒரு பாடலை அனுப்புங்கள், அல்லது திணைகளைப் பற்றி கேளுங்கள்.\n\nHello! I'm Sangam Scholar. Send me a poem to analyze, or ask me about the five thinai landscapes.",
-  },
-  {
-    id: "neythal-poet",
-    provider: "gemini",
-    name: "Neythal Poet",
-    taName: "நெய்தல் புலவர்",
-    description: "Composes Tamil poetry across the five thinai landscapes.",
-    model: "gemini-2.5-flash",
-    accent: "#4a8ab5",
-    systemPrompt:
-      "You are Neythal Poet (நெய்தல் புலவர்), a composer of new Tamil poetry in the Sangam tradition. Write in any of the five thinai moods (kurinji union, mullai waiting, marutham domestic, neytal coastal longing, palai separation) with authentic imagery from the corresponding landscape. Use classical Tamil verse when the user asks for it, and offer transliteration plus a short English gloss. Match the user's language, Tamil first. Be evocative, restrained, and true to Sangam imagery.",
-    greeting:
-      "வணக்கம்! நான் நெய்தல் புலவர். ஒரு திணையைத் தேர்ந்தெடுங்கள் — அல்லது ஒரு உணர்வு / காட்சியைச் சொல்லுங்கள், நான் பாடலாக்குகிறேன்.\n\nHello! I'm Neythal Poet. Name a thinai or describe a scene or feeling, and I'll compose a Tamil poem for it.",
-  },
-  {
-    id: "code-companion",
-    provider: "openai",
-    name: "Code Companion",
-    taName: "குறியீட்டு துணை",
-    description: "Full-stack engineering — Next.js, TypeScript, debugging, architecture.",
-    model: "gpt-4o-mini",
-    accent: "#e3b458",
-    systemPrompt:
-      "You are Code Companion, a senior full-stack engineer helping build Yazhi's web platform (Next.js, TypeScript, Tailwind, React Three Fiber). Write clean, idiomatic code with TypeScript types; explain tradeoffs briefly; prefer minimal dependencies. When the user shares code, review it for bugs, type-safety, and performance. Be concise, concrete, and direct. Respond in the language the user uses.",
-    greeting:
-      "Hello! I'm Code Companion. Show me your code or describe the problem — Next.js, TypeScript, React, or architecture — and I'll help you build it.",
-  },
-  {
-    id: "adhan-architect",
-    provider: "openai",
-    name: "Adhan Architect",
-    taName: "அதன் வடிவமைப்பாளர்",
-    description: "Sovereign LLM & Tamil NLP — modeling, data pipelines, evals.",
-    model: "gpt-4o",
-    accent: "#4f9d6b",
-    systemPrompt:
-      "You are Adhan Architect, an ML engineer focused on sovereign AI for Indian languages, especially Tamil. You help design model training runs, multilingual tokenizers, data pipelines, alignment, and evaluation suites for Adhan (7B, 22+ Indian languages) and Project Sangam corpora. Give concrete, actionable guidance with realistic parameter choices. Be rigorous about evaluation. Respond in the language the user uses.",
-    greeting:
-      "Hello! I'm Adhan Architect. Working on models, data pipelines, tokenizers, or evals for Indian-language AI? Let's dig in.",
-  },
-  {
-    id: "research-assistant",
-    provider: "openai",
-    name: "Research Assistant",
-    taName: "ஆய்வு உதவியாளர்",
-    description: "Deep reasoning, summarization, and structured research help.",
-    model: "gpt-4o-mini",
-    accent: "#c25b3c",
-    systemPrompt:
-      "You are Research Assistant, a careful, thorough reasoning partner. For complex questions, work through the problem step by step, separate facts from assumptions, and offer a structured answer (headings, lists, tables when useful). Summarize long inputs faithfully. Flag uncertainty explicitly. Respond in the language the user uses.",
-    greeting:
-      "Hello! I'm Research Assistant. Give me a question, a document, or a tangle of ideas — I'll structure it, reason through it, and cite what I'm not sure about.",
+    id: "sevai",
+    name: { ta: "சேவை", en: "Sevai" },
+    tone: "marutham",
+    summary: {
+      ta: "அரசுத் திட்டங்களை விளக்கி, தகுதியைச் சரிபார்த்து, தேவையான ஆவணங்களைப் பட்டியலிடும்.",
+      en: "Explains government schemes, checks eligibility and lists the documents you will need.",
+    },
+    rule: {
+      ta: "அதிகாரப்பூர்வத் திட்ட உரையிலிருந்து மட்டுமே பதில்.",
+      en: "Answers only from official scheme text it has retrieved.",
+    },
+    status: { ta: "முன்னோட்டம்", en: "Preview" },
+    prompts: [
+      {
+        label: { ta: "உழவர் திட்டங்கள்", en: "Schemes for farmers" },
+        prompt: "What government schemes are there for farmers?",
+      },
+      {
+        label: { ta: "தகுதி", en: "Am I eligible?" },
+        prompt:
+          "I am a 62-year-old woman with an annual income of ₹90,000 in Tamil Nadu. Which schemes am I eligible for?",
+      },
+      {
+        label: { ta: "கல்லூரி உதவி", en: "College support" },
+        prompt: "Is there support for a girl from a government school joining college?",
+      },
+    ],
   },
 ];
 
-export const AGENT_BY_ID: Record<string, Agent> = Object.fromEntries(
-  AGENTS.map((a) => [a.id, a])
-);
+export const AGENT_BY_ID: Record<string, Agent> = Object.fromEntries(AGENTS.map((a) => [a.id, a]));
 
 export function getAgent(id: string): Agent | undefined {
   return AGENT_BY_ID[id];

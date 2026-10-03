@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./tokens.css";
+@import "./bubble.css";
 
 /* Tailwind v4: register design tokens so utilities like text-ivory,
    bg-night-2/80 and font-display are generated. `inline` keeps these
@@ -182,7 +183,8 @@ body {
   overflow-x: auto;
   border: 1px solid color-mix(in oklab, var(--ivory) 10%, transparent);
   border-radius: 10px;
-  background: color-mix(in oklab, var(--night) 70%, #000);
+  /* themed: Ink 14.41:1, Mugil 12.22:1 for code text */
+  background: color-mix(in srgb, var(--ivory) 6%, var(--night-2));
 }
 .chat-md pre code {
   background: none;
