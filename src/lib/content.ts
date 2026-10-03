@@ -272,6 +272,8 @@ export const NAV_GROUPS = [
       { ta: "வலையில் சேருக", en: "Join the Network", href: "/onboarding" },
       { ta: "Discord", en: "Discord", href: LINKS.discord },
       { ta: "GitHub", en: "GitHub", href: LINKS.github },
+      { ta: "குமிழ் ஆவணம்", en: "Bubble docs", href: "/bubble" },
+      { ta: "பட்டறை", en: "Foundry", href: "/foundry" },
       { ta: "எங்களைப் பற்றி", en: "About", href: "/about" },
       { ta: "தனியுரிமை", en: "Privacy", href: "/privacy" },
     ],
