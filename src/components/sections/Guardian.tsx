@@ -4,29 +4,31 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { GUARDIAN, LINKS } from "@/lib/content";
+import { GUARDIAN, LINKS, THINAI_HEADINGS } from "@/lib/content";
 import { Bi } from "@/components/ui/Bi";
 import { fadeUp, stagger } from "@/lib/motionPresets";
 
-/** Palai (desert · hardship) governs Yazh Guardian: the guardian is the
-    figure who endures the harsh terrain to protect what crosses it. The
-    guardian motif is rendered as an SVG mark derived from temple-pillar
+const H = THINAI_HEADINGS.neytal;
+
+/** Neytal (coast · separation, resilience) governs Yazh: in the Yazhi
+    tinai system neytal carries the diaspora, Yazh and language loss — a
+    child keeping a mother tongue across distance. The guardian motif is rendered as an SVG mark derived from temple-pillar
     yazhi silhouettes — mane, tusk, coiled body — kept abstract enough to
     stay a mark, not an illustration. */
 export function Guardian() {
   // Probe for the Yazhi character art: show it only once it successfully
   // loads, otherwise keep the abstract SVG mark. No broken-image flash
-  // before public/yazhi.png is added.
+  // before the cutout art (public/yazh/cutout/yazhi.webp) loads.
   const [hasArt, setHasArt] = useState(false);
   useEffect(() => {
     const img = new window.Image();
     img.onload = () => setHasArt(true);
-    img.src = "/yazhi.png";
+    img.src = "/yazh/cutout/yazhi.webp";
   }, []);
   return (
     <Section id="guardian">
       <SectionHeading
-        thinaiTa="பாலை" thinaiEn="Palai" landscapeTa="பாலைவனம் · பிரிதல்" landscape="Desert · hardship endured"
+        thinaiTa={H.ta} thinaiEn={H.en} landscapeTa={H.landscapeTa} landscape={H.landscapeEn}
         titleTa={GUARDIAN.nameTa} titleEn={GUARDIAN.nameEn}
         subTa={GUARDIAN.subTa} subEn={GUARDIAN.subEn}
         plainTa={GUARDIAN.plainTa} plainEn={GUARDIAN.plainEn}
@@ -40,9 +42,9 @@ export function Guardian() {
       />
       <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(260px,380px)]">
         <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}>
-          <motion.p variants={fadeUp} lang="en" className="max-w-prose text-ivory-dim">
-            {GUARDIAN.bodyEn}
-          </motion.p>
+          <motion.div variants={fadeUp}>
+            <Bi as="p" ta={GUARDIAN.bodyTa} en={GUARDIAN.bodyEn} className="flex max-w-prose flex-col gap-3 text-ivory-dim" />
+          </motion.div>
           <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
             <Button href={GUARDIAN.ctaHref}>
               <Bi ta={GUARDIAN.ctaTa} en={GUARDIAN.ctaEn} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
@@ -68,8 +70,8 @@ export function Guardian() {
           {hasArt ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src="/yazhi.png"
-              alt="Yazhi — mythical guardian"
+              src="/yazh/cutout/yazhi.webp"
+              alt="Yazh, the learning pet, drawn from the yāḷi temple guardian"
               className="mx-auto h-56 w-56 object-contain drop-shadow-[0_12px_34px_rgba(0,0,0,0.45)] sm:h-72 sm:w-72"
             />
           ) : (
@@ -96,7 +98,7 @@ export function Guardian() {
             </svg>
           )}
           <figcaption className="mt-3 text-center text-xs uppercase tracking-[0.3em] text-ivory-dim">
-            யாழி · temple guardian
+            <Bi ta={GUARDIAN.nameTa} en={GUARDIAN.nameEn} className="inline-flex gap-1.5" separator={<span aria-hidden>·</span>} />
           </figcaption>
         </motion.figure>
       </div>

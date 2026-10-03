@@ -5,17 +5,21 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Bi } from "@/components/ui/Bi";
 import { Button } from "@/components/ui/Button";
-import { SANGAM, MADURAI_KANCHI } from "@/lib/content";
+import { SANGAM, MADURAI_KANCHI, THINAI_HEADINGS } from "@/lib/content";
 import { stagger } from "@/lib/motionPresets";
+import { useLang } from "@/lib/i18n";
 
-/** Open Sangam — the memory we protect (deck p7 · 03). Marutham governs
-    it by the brand file's own sub-line. The five thinai it classifies
+const H = THINAI_HEADINGS.marutham;
+
+/** Open Sangam — the memory we protect. Marutham (farmland) governs it:
+    the corpus is the harvest that feeds Adhan. The five thinai it classifies
     against get their own section (Thinai) directly after this one. */
 export function Sangam() {
+  const { lang } = useLang();
   return (
     <Section id="sangam">
       <SectionHeading
-        thinaiTa="மருதம்" thinaiEn="Marutham" landscapeTa="வயல் · ஊடல்" landscape="Agriculture · fertile land"
+        thinaiTa={H.ta} thinaiEn={H.en} landscapeTa={H.landscapeTa} landscape={H.landscapeEn}
         titleTa={SANGAM.nameTa} titleEn={SANGAM.nameEn}
         subTa={SANGAM.subTa} subEn={SANGAM.subEn}
         plainTa={SANGAM.plainTa} plainEn={SANGAM.plainEn}
@@ -27,7 +31,7 @@ export function Sangam() {
         className="mb-3 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]"
         separator={<span aria-hidden>·</span>}
       />
-      <p lang="en" className="max-w-prose text-ivory-dim">{SANGAM.bodyEn}</p>
+      <Bi as="p" ta={SANGAM.bodyTa} en={SANGAM.bodyEn} className="flex max-w-prose flex-col gap-3 text-ivory-dim" />
 
       {/* the corpus isn't a description, it's a poem — lead with a real
           block of Maduraikkanci and its translation, not just the pitch */}
@@ -46,9 +50,13 @@ export function Sangam() {
         <blockquote lang="ta" className="whitespace-pre-line font-display text-lg leading-relaxed text-ivory/90 sm:text-xl">
           {MADURAI_KANCHI.verseTa}
         </blockquote>
-        <p lang="en" className="mt-5 max-w-prose text-sm italic leading-relaxed text-ivory-dim">
-          {MADURAI_KANCHI.translationEn}
-        </p>
+        {/* an English rendering of the corpus's own urai — for English
+            readers; Tamil readers read the verse itself */}
+        {lang !== "ta" && (
+          <p lang="en" className="mt-5 max-w-prose text-sm italic leading-relaxed text-ivory-dim">
+            {MADURAI_KANCHI.translationEn}
+          </p>
+        )}
         <p className="mt-4 text-xs text-ivory-dim/70">{MADURAI_KANCHI.sourceEn}</p>
       </motion.figure>
 

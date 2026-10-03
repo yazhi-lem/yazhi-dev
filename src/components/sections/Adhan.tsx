@@ -4,20 +4,20 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { Bi } from "@/components/ui/Bi";
-import { ADHAN, LANGUAGE_ROADMAP, UI } from "@/lib/content";
+import { ADHAN, LANGUAGE_ROADMAP, THINAI_HEADINGS, UI } from "@/lib/content";
 import { stagger, fadeUp } from "@/lib/motionPresets";
 
-/** Adhan — the engine underneath (deck p7 · 02). Mullai (forest ·
-    waiting) governs it: a model is grown patiently, like a forest —
-    training as cultivation, not conquest. The language roadmap below is
-    the deck's own "Tamil first, not Tamil only" (p8), and carries the
-    point that the model is still being developed rather than shipped and
-    frozen. */
+const H = THINAI_HEADINGS.palai;
+
+/** Adhan — the engine underneath. Palai (drylands · hardship,
+    transformation) governs it: in the Yazhi tinai system palai is the
+    hard engineering. The language roadmap below is "Tamil first, not
+    Tamil only", and states the model as work in progress. */
 export function Adhan() {
   return (
     <Section id="adhan">
       <SectionHeading
-        thinaiTa="முல்லை" thinaiEn="Mullai" landscapeTa="காடு · இருத்தல்" landscape="Forest · waiting"
+        thinaiTa={H.ta} thinaiEn={H.en} landscapeTa={H.landscapeTa} landscape={H.landscapeEn}
         titleTa={ADHAN.nameTa} titleEn={ADHAN.nameEn}
         subTa={ADHAN.subTa} subEn={ADHAN.subEn}
         plainTa={ADHAN.plainTa} plainEn={ADHAN.plainEn}
@@ -33,9 +33,9 @@ export function Adhan() {
             separator={<span aria-hidden>·</span>}
           />
         </motion.div>
-        <motion.p variants={fadeUp} lang="en" className="max-w-prose text-ivory-dim">
-          {ADHAN.bodyEn}
-        </motion.p>
+        <motion.div variants={fadeUp}>
+          <Bi as="p" ta={ADHAN.bodyTa} en={ADHAN.bodyEn} className="flex max-w-prose flex-col gap-3 text-ivory-dim" />
+        </motion.div>
 
         <motion.div variants={fadeUp} className="mt-8">
           <Button href={ADHAN.ctaHref} external>
@@ -55,31 +55,37 @@ export function Adhan() {
           <ol className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {LANGUAGE_ROADMAP.steps.map((s, i) => (
               <li key={s.langEn} className="border-t border-ivory/15 pt-4">
-                <p className={`text-xs uppercase tracking-widest ${i === 0 ? "text-[color:var(--accent)]" : "text-ivory-dim/70"}`}>
-                  {s.stageEn}
-                </p>
-                <p className="mt-1 font-display text-xl font-semibold text-ivory">{s.langEn}</p>
-                <p lang="en" className="mt-2 text-sm text-ivory-dim">{s.bodyEn}</p>
+                <Bi
+                  as="p" ta={s.stageTa} en={s.stageEn}
+                  className={`flex gap-1.5 text-xs uppercase tracking-widest ${i === 0 ? "text-[color:var(--accent)]" : "text-ivory-dim/70"}`}
+                  separator={<span aria-hidden>·</span>}
+                />
+                <Bi as="p" ta={s.langTa} en={s.langEn} className="mt-1 flex flex-col font-display text-xl font-semibold text-ivory" enClass="text-base font-normal text-ivory-dim" />
+                <Bi as="p" ta={s.bodyTa} en={s.bodyEn} className="mt-2 flex flex-col gap-1 text-sm text-ivory-dim" />
               </li>
             ))}
           </ol>
-          <p lang="en" className="mt-6 max-w-prose text-sm text-ivory-dim/85">{LANGUAGE_ROADMAP.footEn}</p>
+          <Bi as="p" ta={LANGUAGE_ROADMAP.footTa} en={LANGUAGE_ROADMAP.footEn} className="mt-6 flex max-w-prose flex-col gap-2 text-sm text-ivory-dim/85" />
         </motion.div>
 
         {/* Token tax — same sentence, wildly different token cost per
             language. The reason a from-scratch tokenizer matters. */}
         <motion.div variants={fadeUp} className="mt-14 max-w-sm">
-          <p className="text-xs uppercase tracking-widest text-ivory-dim">{ADHAN.tokenTax.labelEn}</p>
+          <Bi as="p" ta={ADHAN.tokenTax.labelTa} en={ADHAN.tokenTax.labelEn} className="flex flex-col gap-1 text-xs uppercase tracking-widest text-ivory-dim" />
           <dl className="mt-3 space-y-2">
             {ADHAN.tokenTax.rows.map((r) => {
               const pct = (parseFloat(r.multiplier) / 4.5) * 100;
               return (
                 <div key={r.lang} className="flex items-center gap-3 text-sm">
-                  <dt className="w-16 shrink-0 text-ivory-dim">{r.lang}</dt>
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-ivory/10">
-                    <div className="h-full rounded-full bg-[color:var(--accent)]" style={{ width: `${pct}%` }} />
-                  </div>
-                  <dd className="w-10 shrink-0 text-right text-ivory-dim">{r.multiplier}</dd>
+                  <dt className="w-20 shrink-0 text-ivory-dim">
+                    <Bi ta={r.langTa} en={r.lang} className="flex flex-col leading-tight" enClass="text-[11px]" />
+                  </dt>
+                  <dd className="flex flex-1 items-center gap-3">
+                    <span aria-hidden className="h-2 flex-1 overflow-hidden rounded-full bg-ivory/10">
+                      <span className="block h-full rounded-full bg-[color:var(--accent)]" style={{ width: `${pct}%` }} />
+                    </span>
+                    <span className="w-10 shrink-0 text-right text-ivory-dim">{r.multiplier}</span>
+                  </dd>
                 </div>
               );
             })}

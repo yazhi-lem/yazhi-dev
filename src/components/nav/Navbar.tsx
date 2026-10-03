@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Bi } from "@/components/ui/Bi";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { LogoMark } from "@/components/ui/LogoMark";
-import { IDENTITY, NAV_GROUPS, ADHAN, SANGAM, GUARDIAN, COMMUNITY } from "@/lib/content";
+import { IDENTITY, NAV_GROUPS, ADHAN, SANGAM, GUARDIAN, COMMUNITY, UI } from "@/lib/content";
 
 const LINKS_TOP = [
   { ta: IDENTITY.nameTa, en: IDENTITY.nameEn, href: "#yazhi" },
@@ -54,7 +54,7 @@ export function Navbar() {
             href="/chat"
             className="rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night"
           >
-            <Bi ta="அரட்டை" en="Chat" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
+            <Bi ta={UI.chat.ta} en={UI.chat.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
           </Link>
           <LangToggle />
           <button

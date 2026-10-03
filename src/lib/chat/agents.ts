@@ -23,7 +23,7 @@ export const AGENTS: Agent[] = [
       ta: "ஒவ்வொரு கூற்றுக்கும் ஆதாரப் பதிவு; ஆதாரம் இல்லையெனில் “தெரியவில்லை”.",
       en: "Every claim names its source record. With no source, it says “I don't know”.",
     },
-    status: { ta: "முன்னோட்டம் · பொது சோதனை நவம்பர் 21", en: "Preview · public beta 21 Nov" },
+    status: { ta: "நவம்பர் 21 முதல் பொது முன்னோட்டம்", en: "Public beta from 21 Nov" },
     prompts: [
       {
         label: { ta: "தமிழ்-பிராமி", en: "Tamil-Brahmi finds" },

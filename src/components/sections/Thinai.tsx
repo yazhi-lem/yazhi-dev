@@ -5,11 +5,9 @@ import { Bi } from "@/components/ui/Bi";
 import { THINAI_WORLD } from "@/lib/content";
 import { stagger, fadeUp } from "@/lib/motionPresets";
 
-/** Yazh's world — the five thinai, straight from the deck (p5). Sangam
-    poetry sorts the world into these five landscapes and Yazh's story
-    library is organised the same way, so this sits after Open Sangam:
-    the taxonomy is the bridge between the corpus and the stories a child
-    actually hears. */
+/** Yazhi's world — the five thinai as Yazhi's content system: each
+    landscape sets the mood of one kind of work. Sits after Open Sangam,
+    where the same five classify the poems. */
 export function Thinai() {
   return (
     <Section id="thinai">
@@ -44,19 +42,17 @@ export function Thinai() {
               taClass="font-display text-xl font-semibold"
               enClass="font-display text-lg text-ivory-dim"
             />
-            <p className="mt-2 text-sm" style={{ color: `var(--${l.key})` }}>{l.moodEn}</p>
-            <p lang="en" className="mt-2 text-sm text-ivory-dim">{l.bodyEn}</p>
+            <div style={{ color: `var(--${l.key})` }}>
+              <Bi as="p" ta={l.moodTa} en={l.moodEn} className="mt-2 flex flex-col gap-0.5 text-sm" />
+            </div>
+            <Bi as="p" ta={l.bodyTa} en={l.bodyEn} className="mt-2 flex flex-col gap-0.5 text-sm text-ivory-dim" />
           </motion.li>
         ))}
       </motion.ul>
 
-      <motion.p
-        variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-        lang="en"
-        className="mt-10 max-w-prose text-sm text-ivory-dim/85"
-      >
-        {THINAI_WORLD.footEn}
-      </motion.p>
+      <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="mt-10">
+        <Bi as="p" ta={THINAI_WORLD.footTa} en={THINAI_WORLD.footEn} className="flex max-w-prose flex-col gap-2 text-sm text-ivory-dim/85" />
+      </motion.div>
     </Section>
   );
 }
