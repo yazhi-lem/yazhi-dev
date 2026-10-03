@@ -18,24 +18,25 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## /chat — agents · Gemini · ChatGPT
+## /chat — Yazhi Chat
 
-The chat workspace lives at `/chat`. Agents are bound to a fixed provider
-(Gemini or ChatGPT) and each carries its own persona/system prompt
-(see `src/lib/chat/agents.ts`). Sessions and messages persist in the
-browser via localStorage.
+`/chat` is a Bubble UI conversation app over Yazhi's own agents, served by
+yazhi-api (`yazhi.v1.AgentQueryService/QueryAgent`):
 
-Replies are **streamed through the yazhi-api backend**, never from the
-browser directly. Copy `.env.example` to `.env` and set:
+- **Avai** (அவை): artefacts, inscriptions and excavation sites, with catalogue records
+- **Sevai** (சேவை): government schemes, eligibility and required documents
 
-- `YAZHI_API_URL` — base URL of the yazhi-api service
-- `YAZHI_API_KEY` — optional bearer token
-- `YAZHI_CHAT_PATH` — defaults to `/v1/chat/completions`
+Only agents whose tools are all read-only are offered. The Yazhi mark opens
+the floating menu (new conversation, conversations, agents, theme, language,
+about).
 
-The backend contract is OpenAI-compatible Chat Completions with SSE
-streaming; `src/lib/chat/backend.ts` is the single integration point and
-shows the exact request/response shape. Until `YAZHI_API_URL` is set, the
-UI streams a friendly "not configured" notice instead of failing silently.
+**Sovereignty gate.** Before a message is forwarded, the server asks
+`yazhi.v1.YazhiSystem/GetHealth` and sends the turn only when yazhi-api
+reports zero outbound calls, local inference and on-prem data. Otherwise
+the chat pauses and says why (`src/lib/chat/backend.ts`). Conversations
+are kept only in the browser (localStorage).
+
+Configure with `YAZHI_RPC_URL` and `YAZHI_API_KEY` (see `.env.example`).
 
 ## /foundry — Yazhi Bubble Interface
 

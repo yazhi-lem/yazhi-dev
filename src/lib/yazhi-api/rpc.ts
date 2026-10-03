@@ -40,7 +40,17 @@ export async function unary<Req extends object, Res>(
   service: string,
   method: string,
   request: Req,
-  { revalidate = 60, tags = [] }: { revalidate?: number; tags?: string[] } = {},
+  {
+    revalidate = 60,
+    tags = [],
+    timeoutMs = 8000,
+  }: {
+    /** seconds to cache; 0 = never cache (per-user calls such as chat
+        turns — a cached POST would serve one person's answer to another) */
+    revalidate?: number;
+    tags?: string[];
+    timeoutMs?: number;
+  } = {},
 ): Promise<Res> {
   if (!RPC_URL) throw new RpcError("YAZHI_RPC_URL is not set", "unconfigured");
 
@@ -54,8 +64,10 @@ export async function unary<Req extends object, Res>(
         ...(API_KEY ? { Authorization: `Bearer ${API_KEY}` } : {}),
       },
       body: JSON.stringify(request),
-      next: { revalidate, tags: [`yazhi-api:${service}`, ...tags] },
-      signal: AbortSignal.timeout(8000),
+      ...(revalidate > 0
+        ? { next: { revalidate, tags: [`yazhi-api:${service}`, ...tags] } }
+        : { cache: "no-store" as const }),
+      signal: AbortSignal.timeout(timeoutMs),
     });
   } catch (err) {
     throw new RpcError(`yazhi-api unreachable: ${(err as Error).message}`, "unavailable");

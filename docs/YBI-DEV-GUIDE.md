@@ -15,6 +15,7 @@ Scope, layer rules and roadmap are in [BUBBLE-INTERFACE.md](./BUBBLE-INTERFACE.m
 8. [Freshness and request budget](#8-freshness-and-request-budget)
 9. [Recipes](#9-recipes)
 10. [Troubleshooting](#10-troubleshooting)
+11. [/chat: sovereignty gate and accessibility](#11-chat-sovereignty-gate-and-accessibility)
 
 ---
 
@@ -347,7 +348,9 @@ Mugil is the pastel theme, opted into with `data-ybi-theme="mugil"` on the shell
 | wing | `#d76c46` | `#fbdccb` | `#cc5f38` | `--palai` |
 | iris | `#4b76b9` | `#d8e5f5` | `#4b76b9` | `--neytal` |
 | cheek × iris | `#a39cb2` | `#e3ddf5` | `#7e6fc6` | `--kurinji` |
-| medallion | `#b38442` | — | `#82621a` | `--gold` |
+| — (brand primary) | Cobalt `#1840d8` | `#dbe3fb` | `#1840d8` | `--gold` (accent role) |
+
+**Brand rule: Gold only on Ink.** Mugil first used a deepened medallion gold (`#82621a`) as its accent, which put gold on a light ground. The accent role (`--gold`: eyebrows, links, active toggles, the floating button) now goes to Cobalt `#1840d8`, the brand primary: 6.76:1 on the cream ground, 7.35:1 on bubbles. The Ink theme keeps gold.
 
 **Contrast.** Same method as above, on the Mugil bubble body (`#fcfbfa`) with a 13% tone glow:
 
@@ -358,7 +361,7 @@ Mugil is the pastel theme, opted into with `data-ybi-theme="mugil"` on the shell
 | marutham | 3.36 | **5.15** (worst) | 5.49 |
 | neytal | 3.79 | 5.60 | 6.02 |
 | palai | **3.31** (worst) | 5.17 | 5.54 |
-| gold | 4.10 | 5.88 | 6.39 |
+| cobalt (`--gold`) | 5.94 | 7.67 | 8.73 |
 
 Text: plum ink `#2f2a3b` is 13.41:1 on the bubble body (AAA), and dusk `#625b70` is 6.25:1 (AA).
 
@@ -401,7 +404,7 @@ tracks = floor( (inner + gap) / (M + gap) )
 
 Project cards carry 3 facts (Records, Pipelines, Coverage). At 6.5rem "Coverage" wrapped onto its own row, which was visible in the first screenshots. YBI uses **5.5rem**. The value text is ≤ 88px in 14px mono (e.g. "5,609" is about 42px). Long collector names such as `education.tntextbooks_catalog` sit in 2-column pipeline cards (496px inner → 5 tracks of which 2 are used) and break with `break-words`.
 
-**Card title budget.** The title shares its row with a 56px meter and a 16px gap: 312 − 56 − 16 = **240px** in the 3-column layout. The longest project name, இறையாண்மை, measures about 275px at 24px, so it would break mid-word. At 20px (`text-xl`) the estimate is 275 × 20⁄24 ≈ 229px. Measured in Chromium it is **218px**, on one line at 1440, 1024 and 390px widths. Card titles are therefore fixed at `text-xl`, with `overflow-wrap: anywhere` as a last resort for future longer names.
+**Card title budget.** The title shares its row with a 56px meter and a 16px gap: 312 − 56 − 16 = **240px** in the 3-column layout. The longest project name, இறையாண்மை, measures about 275px at 24px, so it would break mid-word. At 20px (`text-xl`) the estimate is 275 × 20⁄24 ≈ 229px. Measured in Chromium it is **218px**, on one line at 1440, 1024 and 390px widths. Card titles are therefore fixed at `text-xl`, with `overflow-wrap: anywhere` as a last resort for future longer names. (That project is now named தற்சார்பு, the brand term for "sovereign", which is shorter, so the budget has more room.)
 
 **Stage track.** Each stage is ~28px (circle) + 8px gap + label. Links are `flex: 1 1 1.25rem`, at least 12px, and the track wraps on narrow screens (see the 390px screenshot).
 
@@ -477,3 +480,55 @@ Project cards carry 3 facts (Records, Pipelines, Coverage). At 6.5rem "Coverage"
 | One project page is Sample while the others are live | that domain's `GetDomainQuality` failed (e.g. `not_found`) | expected per-page fallback; fix upstream |
 | Score shows 100 on an empty domain | reading `score` without checking the corpus | YBI shows "—" when `hasCorpus && recordCount > 0` is false (§5.5) |
 | Tamil label renders as spaced-out letters | `tracking-*` on Tamil text | handled by `[class*="tracking-"] [lang="ta"]`; use `<T>` so `lang` is set |
+| Pill buttons turn square on keyboard focus | `globals.css` sets `border-radius: 4px` on every `:focus-visible` (unlayered, so it beats Tailwind) | inside `[data-ybi-root]` the radius is handed back with `border-radius: revert-layer` |
+| An input shows two focus rings | same unlayered `:focus-visible` rule; `focus:outline-none` (layered) cannot switch it off | give the input `.ybi-bare` and let its wrapper draw the ring |
+
+---
+
+## 11. /chat: sovereignty gate and accessibility
+
+`/chat` is a Bubble UI app over Yazhi's own agents (`src/components/chat/`, `src/lib/chat/`).
+
+### Which agents, and why
+
+| Agent | `agent_name_id` | Tools | Offered |
+|---|---|---|---|
+| Avai (அவை) | `avai` | artifact_search, ocr_lookup, metadata_query, site_lookup (all read) | ✅ |
+| Sevai (சேவை) | `sevai` | search_schemes, check_eligibility (all read) | ✅ |
+| Kural | `kural` | …, **ticket_create, ticket_update** | ✗ Aram rule 3: no system change without a runbook and a human confirm |
+| Vaathi | `vaathi` | …, **record score** | ✗ same |
+| Nyaya | — | — | ✗ closed beta 12 Dec; gates not yet passed |
+
+Suggested prompts come from yazhi-api `data/agent_test_prompts.yaml`. Fixture-specific ones (`ART-304`, `CUST-1001`) are excluded.
+
+### The gate (Aram rule 2, enforced in code)
+
+Every turn and every status check calls `yazhi.v1.YazhiSystem/GetHealth`, uncached, and sends only when:
+
+```
+sovereignty.externalCalls === 0        // proto3 omits 0, so absent = 0
+sovereignty.inferenceLocal === true    // absent = false: it must be stated
+sovereignty.dataResidency === "on-prem"
+```
+
+Otherwise `/api/chat` returns `503 not_sovereign` with the reason, and the UI pauses: the send button is `aria-disabled` and described by the banner. The check was first cached for 30s. Testing showed stale-while-revalidate served a "ready" for 31s after the mock went non-sovereign, so it now runs fresh on every turn (one small unauthenticated call).
+
+**Today this gate will hold the chat paused.** yazhi-api `data/agents_config.yaml` sets `model_name: "gemini-flash"` for every agent, and `agents/adapters/model_presets.py` resolves that to `google/gemini-2.5-flash` via OpenRouter. The gate is only as good as yazhi-api's `external_calls` counter. If that counter does not count OpenRouter calls, the gate would pass while the rule is broken. The fix belongs in yazhi-api (Deepika, O1): point the agents at the in-house workers and make the counter cover every outbound call.
+
+### Accessibility contract
+
+| Concern | How |
+|---|---|
+| Landmarks | `header`, `nav` (conversations; the floating menu), `main`; skip link to the message box |
+| Floating menu | WAI-ARIA menu button: Enter/Space/↓ opens on the first item, ↑ on the last; ↑/↓ wrap; Home/End; Esc closes and returns focus; Tab closes; theme and language are `menuitemradio` and keep the menu open |
+| Sheets | native `<dialog>` with `showModal()`: focus trap, inert background, Esc. Focus returns to the opener, or to the floating button when the opener was a menu item that no longer exists |
+| Replies | one polite `role="status"` region announces each reply once (markdown and table dividers stripped, first 280 characters); the message list itself is not live, so long answers are never read twice |
+| Typing Tamil | Enter sends only when `!event.nativeEvent.isComposing`. IME keyboards (Illakiya, phonetic layouts) use Enter to commit a syllable |
+| Targets | sends, menu items and row actions are ≥ 44px; chips are ≥ 36px with spacing |
+| State | never colour alone: status pill text, "On/Off", "Preview" lines; errors carry "Try again" |
+| Deleting | two steps; focus moves to "Keep" |
+| Motion | menu rise, sheet slide, typing dots and clouds all stop under `prefers-reduced-motion` |
+| Verified | axe-core (WCAG 2.0/2.1 A and AA plus best-practice): 0 violations on welcome, conversation, open menu, Ink theme, About dialog, paused state and mobile; keyboard paths scripted in Playwright |
+
+Tamil UI strings live in `src/components/chat/strings.ts` and are a **draft pending native-speaker review**. The About sheet says so.
+

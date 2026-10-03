@@ -121,7 +121,7 @@ export const FOUNDRY_PROJECTS: FoundryProject[] = [
   },
   {
     id: "sovereign",
-    name: { ta: "இறையாண்மை", en: "Sovereign" },
+    name: { ta: "தற்சார்பு", en: "Sovereign" },
     tone: "kurinji",
     model: "yazh",
     summary: "Constitutional ground truth — the preamble and fundamental-rights articles, English text under Tamil titles.",

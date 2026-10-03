@@ -38,7 +38,7 @@ export { Tabs, type TabItem } from "./patterns/Tabs";
 
 export { BubbleShell } from "./shell/BubbleShell";
 export type { ShellNavItem } from "./shell/ShellNav";
-export { ThemeSwitch, type YbiTheme } from "./shell/ThemeSwitch";
+export { ThemeSwitch, useYbiTheme, THEME_OPTIONS, type YbiTheme } from "./shell/ThemeSwitch";
 export { CloudSky } from "./shell/CloudSky";
 
 export { BubbleView } from "./spec/BubbleView";

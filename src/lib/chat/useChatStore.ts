@@ -1,8 +1,12 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
+import { getAgent } from "./agents";
 import type { Agent, Message, Session } from "./types";
 
-const STORAGE_KEY = "yazhi-chat";
+/** Conversations live only in this browser (localStorage) — nothing is
+    stored server-side. v2: sessions from the retired provider-bound
+    agents (key "yazhi-chat") are left untouched in storage, not migrated. */
+const STORAGE_KEY = "yazhi-chat-v2";
 
 interface Persisted {
   sessions: Session[];
@@ -10,16 +14,14 @@ interface Persisted {
 }
 
 let counter = 0;
-function uid(prefix: string): string {
+export function uid(prefix: string): string {
   counter += 1;
-  return `${prefix}-${Date.now().toString(36)}-${counter.toString(36)}-${Math.random()
-    .toString(36)
-    .slice(2, 7)}`;
+  return `${prefix}-${Date.now().toString(36)}-${counter.toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
 function titleFor(text: string): string {
   const clean = text.replace(/\s+/g, " ").trim();
-  return clean.length > 42 ? `${clean.slice(0, 42)}…` : clean || "New chat";
+  return clean.length > 48 ? `${clean.slice(0, 48)}…` : clean || "New conversation";
 }
 
 export function useChatStore() {
@@ -27,8 +29,7 @@ export function useChatStore() {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
 
-  // hydrate from localStorage once — deferred a tick so React's hydration
-  // render never differs from the server HTML
+  // hydrate once, a tick after mount, so the first client render matches the server HTML
   useEffect(() => {
     queueMicrotask(() => {
       try {
@@ -38,27 +39,28 @@ export function useChatStore() {
           if (Array.isArray(parsed.sessions)) {
             setSessions(
               parsed.sessions
-                .filter((s) => s && s.id)
-                .sort((a, b) => (b.updatedAt ?? 0) - (a.updatedAt ?? 0))
+                .filter((s) => s && s.id && getAgent(s.agentId))
+                // a reload mid-request leaves a pending bubble with no request behind it
+                .map((s) => ({
+                  ...s,
+                  messages: s.messages.filter((m) => m.status !== "pending"),
+                }))
+                .sort((a, b) => (b.updatedAt ?? 0) - (a.updatedAt ?? 0)),
             );
           }
           if (parsed.activeId) setActiveId(parsed.activeId);
         }
       } catch {
-        // corrupt storage — start clean
+        // corrupt or blocked storage — start clean
       }
       setLoaded(true);
     });
   }, []);
 
-  // persist on every change
   useEffect(() => {
     if (!loaded) return;
     try {
-      window.localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ sessions, activeId } satisfies Persisted)
-      );
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ sessions, activeId } satisfies Persisted));
     } catch {
       // storage full / private mode — non-fatal
     }
@@ -66,92 +68,64 @@ export function useChatStore() {
 
   const activeSession = sessions.find((s) => s.id === activeId) ?? null;
 
-  const createSession = useCallback(
-    (agent: Agent): Session => {
-      const now = Date.now();
-      const session: Session = {
-        id: uid("s"),
-        title: "New chat",
-        agentId: agent.id,
-        messages: [
-          { id: uid("m"), role: "assistant", content: agent.greeting, createdAt: now },
-        ],
-        createdAt: now,
-        updatedAt: now,
-      };
-      setSessions((prev) => [session, ...prev]);
-      setActiveId(session.id);
-      return session;
-    },
-    []
-  );
+  const createSession = useCallback((agent: Agent): Session => {
+    const now = Date.now();
+    const session: Session = {
+      id: uid("s"),
+      title: "New conversation",
+      agentId: agent.id,
+      messages: [],
+      createdAt: now,
+      updatedAt: now,
+    };
+    setSessions((prev) => [session, ...prev]);
+    setActiveId(session.id);
+    return session;
+  }, []);
 
   const deleteSession = useCallback(
     (id: string) => {
       setSessions((prev) => {
         const next = prev.filter((s) => s.id !== id);
-        if (activeId === id) setActiveId(next[0]?.id ?? null);
+        if (activeId === id) setActiveId(null);
         return next;
       });
     },
-    [activeId]
+    [activeId],
   );
 
-  const renameSession = useCallback(
-    (id: string, title: string) => {
-      const t = title.trim();
-      setSessions((prev) =>
-        prev.map((s) => (s.id === id ? { ...s, title: t || s.title } : s))
-      );
-    },
-    []
-  );
+  const selectSession = useCallback((id: string | null) => setActiveId(id), []);
 
-  const selectSession = useCallback((id: string) => {
-    setActiveId(id);
+  const addMessage = useCallback((sessionId: string, message: Message) => {
+    setSessions((prev) =>
+      prev.map((s) => {
+        if (s.id !== sessionId) return s;
+        const firstUser = message.role === "user" && !s.messages.some((m) => m.role === "user");
+        return {
+          ...s,
+          messages: [...s.messages, message],
+          title: firstUser ? titleFor(message.content) : s.title,
+          updatedAt: Date.now(),
+        };
+      }),
+    );
   }, []);
 
-  const reset = useCallback(() => {
-    setActiveId(null);
+  const updateMessage = useCallback((sessionId: string, messageId: string, patch: Partial<Message>) => {
+    setSessions((prev) =>
+      prev.map((s) =>
+        s.id === sessionId
+          ? { ...s, messages: s.messages.map((m) => (m.id === messageId ? { ...m, ...patch } : m)), updatedAt: Date.now() }
+          : s,
+      ),
+    );
   }, []);
 
-  const addMessage = useCallback(
-    (sessionId: string, message: Message) => {
-      const now = Date.now();
-      setSessions((prev) =>
-        prev.map((s) => {
-          if (s.id !== sessionId) return s;
-          const isFirstUser = s.messages.filter((m) => m.role === "user").length === 0;
-          return {
-            ...s,
-            messages: [...s.messages, message],
-            title: isFirstUser && message.role === "user" ? titleFor(message.content) : s.title,
-            updatedAt: now,
-          };
-        })
-      );
-    },
-    []
-  );
-
-  const setMessageContent = useCallback(
-    (sessionId: string, messageId: string, content: string) => {
-      setSessions((prev) =>
-        prev.map((s) =>
-          s.id === sessionId
-            ? {
-                ...s,
-                messages: s.messages.map((m) =>
-                  m.id === messageId ? { ...m, content } : m
-                ),
-                updatedAt: Date.now(),
-              }
-            : s
-        )
-      );
-    },
-    []
-  );
+  const removeMessage = useCallback((sessionId: string, messageId: string) => {
+    setSessions((prev) =>
+      prev.map((s) => (s.id === sessionId ? { ...s, messages: s.messages.filter((m) => m.id !== messageId) } : s)),
+    );
+  }, []);
 
   return {
     sessions,
@@ -160,10 +134,9 @@ export function useChatStore() {
     loaded,
     createSession,
     deleteSession,
-    renameSession,
     selectSession,
     addMessage,
-    setMessageContent,
-    reset,
+    updateMessage,
+    removeMessage,
   };
 }

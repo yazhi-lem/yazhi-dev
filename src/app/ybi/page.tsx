@@ -93,7 +93,7 @@ function Swatch({ c }: { c: (typeof MUGIL_PALETTE)[number] }) {
       </div>
       <div>
         <p className="font-display text-xl text-ivory">{c.name.en}</p>
-        <p className="text-sm text-ivory-dim">from Yazh&apos;s {c.source} · <span className="font-mono">--{c.key}</span></p>
+        <p className="text-sm text-ivory-dim">{c.source} · <span className="font-mono">--{c.key}</span></p>
       </div>
       <dl className="grid grid-cols-3 gap-2 font-mono text-xs">
         {[
@@ -389,7 +389,7 @@ export default function YbiLibraryPage() {
             meta={[{ label: "Records", value: "5,609" }, { label: "Pipelines", value: "1" }, { label: "Coverage", value: "2.6%" }]}
           />
           <BubbleCard
-            title={{ ta: "இறையாண்மை", en: "Sovereign" }}
+            title={{ ta: "தற்சார்பு", en: "Sovereign" }}
             subtitle="sovereign · yazh"
             body="Constitutional ground truth."
             tone="kurinji"

@@ -27,11 +27,11 @@ export const IDENTITY = {
   positioning: "Sovereign AI for Indian languages",
   // the deck's own headline, verbatim — Yazhi is sovereign AI for Indian
   // languages first, and Tamil-first within that, not "Tamil AI" alone
-  taglineTa: "இந்திய மொழிகளுக்கான இறையாண்மைச் செயற்கை நுண்ணறிவு",
+  taglineTa: "இந்திய மொழிகளுக்கான தற்சார்புச் செயற்கை நுண்ணறிவு",
   taglineEn: "Sovereign AI for Indian languages",
   secondaryTa: "அகமும் புறமும்",
   secondaryEn: "Akam and Puram",
-  footerTa: "இறையாண்மைச் செயற்கை நுண்ணறிவு",
+  footerTa: "தற்சார்புச் செயற்கை நுண்ணறிவு",
   footerEn: "Sovereign Artificial Intelligence",
   // the plain-language layer: one sentence a ten-year-old can read,
   // sitting under the poetic/technical register — never replacing it

@@ -29,11 +29,9 @@ function subscribe(cb: () => void) {
 const snapshot = () => (root()?.dataset.ybiTheme as YbiTheme | undefined) ?? null;
 const serverSnapshot = () => null;
 
-/** Switches the nearest BubbleShell between themes by rewriting its
-    data-ybi-theme — themes are pure CSS token scopes, so nothing else
-    re-renders. The choice is a per-viewer convenience in localStorage
-    (guarded: private windows may throw). */
-export function ThemeSwitch() {
+/** The current theme of the nearest [data-ybi-root] and a setter that
+    persists the viewer's choice. Restores a saved choice on mount. */
+export function useYbiTheme(): [YbiTheme | null, (t: YbiTheme) => void] {
   const theme = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
 
   useEffect(() => {
@@ -50,6 +48,17 @@ export function ThemeSwitch() {
       localStorage.setItem(KEY, t);
     } catch {}
   }
+  return [theme, pick];
+}
+
+export const THEME_OPTIONS = OPTIONS;
+
+/** Switches the nearest BubbleShell between themes by rewriting its
+    data-ybi-theme — themes are pure CSS token scopes, so nothing else
+    re-renders. The choice is a per-viewer convenience in localStorage
+    (guarded: private windows may throw). */
+export function ThemeSwitch() {
+  const [theme, pick] = useYbiTheme();
 
   return (
     <div role="radiogroup" aria-label="Theme" className="ybi-track flex items-center gap-1 rounded-full p-1">

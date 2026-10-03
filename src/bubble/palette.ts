@@ -34,7 +34,7 @@ export const MUGIL_PALETTE: MugilColour[] = [
   {
     key: "mullai",
     name: { ta: "இளம்பச்சை", en: "Mane sage" },
-    source: "mane curls",
+    source: "Yazh's mane curls",
     sampled: "#9eb1a0",
     pastel: "#d6ebe0",
     tone: "#4a8a6e",
@@ -42,7 +42,7 @@ export const MUGIL_PALETTE: MugilColour[] = [
   {
     key: "marutham",
     name: { ta: "பொன்", en: "Curl gold" },
-    source: "crown curls",
+    source: "Yazh's crown curls",
     sampled: "#e8c375",
     pastel: "#f8ebc6",
     tone: "#9c7a22",
@@ -50,7 +50,7 @@ export const MUGIL_PALETTE: MugilColour[] = [
   {
     key: "palai",
     name: { ta: "பவழம்", en: "Wing coral" },
-    source: "the little wing",
+    source: "Yazh's little wing",
     sampled: "#d76c46",
     pastel: "#fbdccb",
     tone: "#cc5f38",
@@ -58,7 +58,7 @@ export const MUGIL_PALETTE: MugilColour[] = [
   {
     key: "neytal",
     name: { ta: "நீலம்", en: "Sapphire" },
-    source: "irises",
+    source: "Yazh's irises",
     sampled: "#4b76b9",
     pastel: "#d8e5f5",
     tone: "#4b76b9",
@@ -66,18 +66,20 @@ export const MUGIL_PALETTE: MugilColour[] = [
   {
     key: "kurinji",
     name: { ta: "அந்தி", en: "Dusk lilac" },
-    source: "blush × sapphire (cheek #fbc3ac with iris)",
+    source: "Yazh's blush × sapphire (cheek #fbc3ac with iris)",
     sampled: "#a39cb2",
     pastel: "#e3ddf5",
     tone: "#7e6fc6",
   },
   {
+    // Brand rule: Gold only on Ink. Mugil's accent is Cobalt, the brand
+    // primary, not a colour from the art.
     key: "gold",
-    name: { ta: "பதக்கம்", en: "Medal gold" },
-    source: "sun medallion",
-    sampled: "#b38442",
-    pastel: "#f8ebc6",
-    tone: "#82621a",
+    name: { ta: "நீலக்கல்", en: "Cobalt" },
+    source: "the brand primary, not the art (gold stays on Ink)",
+    sampled: "#1840d8",
+    pastel: "#dbe3fb",
+    tone: "#1840d8",
   },
 ];
 

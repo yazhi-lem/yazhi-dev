@@ -129,6 +129,91 @@
 .ybi-field::placeholder { color: var(--ivory-dim); opacity: 0.8; }
 .ybi-field:focus-visible { outline: 2px solid var(--tone, var(--gold)); outline-offset: 2px; border-color: transparent; }
 
+/* ── floating menu, sheets, typing (used by /chat) ─────────────────── */
+/* an input whose wrapper draws the focus ring (composer). Unlayered on
+   purpose: the site-wide :focus-visible rule in globals.css is unlayered
+   too, so a Tailwind utility (layered) cannot switch it off. */
+.ybi-bare:focus-visible { outline: none; }
+/* globals.css gives every :focus-visible element border-radius: 4px, which
+   squares off pills and orbs on keyboard focus. Inside a Bubble UI root,
+   hand the radius back to the component's own (layered) utilities. */
+[data-ybi-root] :focus-visible { border-radius: revert-layer; }
+
+/* the floating Yazhi button: an orb in the theme's accent */
+.ybi-fab {
+  --tone: var(--gold);
+  background: color-mix(in srgb, var(--tone) var(--ybi-tone-mix), var(--ivory));
+  color: var(--night);
+  box-shadow: 0 14px 30px -12px color-mix(in oklab, var(--tone) 70%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.ybi-fab:hover { transform: translateY(-2px) scale(1.03); }
+.ybi-fab:focus-visible { outline: 3px solid var(--tone); outline-offset: 3px; }
+/* the mark inside reads in the label colour (cream on Mugil, ink on Ink) */
+.ybi-fab circle { fill: var(--night); }
+
+.ybi-menu {
+  background: color-mix(in oklab, var(--night-2) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ivory) 12%, transparent);
+  box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--ivory) 45%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transform-origin: bottom right;
+  animation: ybiRise 0.18s ease-out;
+}
+.ybi-menu-item { transition: background-color 0.15s ease, opacity 0.2s ease, transform 0.2s ease; }
+.ybi-menu-item:hover, .ybi-menu-item:focus-visible {
+  background: color-mix(in srgb, var(--gold) 14%, transparent);
+  outline: none;
+}
+.ybi-menu-item:focus-visible { box-shadow: inset 0 0 0 2px var(--gold); }
+@keyframes ybiRise {
+  from { opacity: 0; transform: translateY(8px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* native <dialog> sheets */
+.ybi-sheet {
+  color: var(--ivory);
+  background: color-mix(in oklab, var(--night-2) 96%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ivory) 12%, transparent);
+  padding: 0;
+  max-height: 100dvh;
+}
+.ybi-sheet::backdrop { background: color-mix(in srgb, var(--ivory) 30%, transparent); backdrop-filter: blur(3px); }
+[data-ybi-theme="ink"] .ybi-sheet::backdrop, .ybi-sheet::backdrop { background: rgb(10 10 10 / 0.45); }
+.ybi-sheet-left {
+  margin: 0 auto 0 0;
+  height: 100dvh;
+  width: min(22rem, 88vw);
+  border-radius: 0 1.5rem 1.5rem 0;
+  animation: ybiSlide 0.22s ease-out;
+}
+.ybi-sheet-center {
+  margin: auto;
+  width: min(34rem, calc(100vw - 2rem));
+  border-radius: 1.5rem;
+  animation: ybiRise 0.2s ease-out;
+}
+@keyframes ybiSlide { from { transform: translateX(-100%); } to { transform: none; } }
+
+/* three bubbles rising in turn — "looking for an answer" */
+.ybi-typing { display: inline-flex; gap: 4px; }
+.ybi-typing span {
+  width: 7px; height: 7px; border-radius: 999px;
+  background: color-mix(in srgb, var(--tone) var(--ybi-tone-mix), var(--ivory));
+  animation: ybiBob 1.1s ease-in-out infinite;
+}
+.ybi-typing span:nth-child(2) { animation-delay: 0.15s; }
+.ybi-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes ybiBob { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ybi-fab, .ybi-menu, .ybi-menu-item, .ybi-sheet-left, .ybi-sheet-center { animation: none; transition: none; }
+  .ybi-fab:hover { transform: none; }
+  .ybi-typing span { animation: none; opacity: 0.8; }
+}
+
 /* ── Mugil (முகில், "cloud") — Yazh's own pastels ────────────────────
    Every hue is sampled from the Yazhi mascot art (public/yazhi.png):
    cream fur, sage mane, butter-gold curls, coral wing, blush cheeks,
@@ -140,7 +225,9 @@
   --ivory: #2f2a3b;          /* plum ink — primary text (13.4:1) */
   --ivory-dim: #625b70;      /* dusk — secondary text (6.25:1) */
   --bronze: #b38442;         /* medal gold, as sampled */
-  --gold: #82621a;           /* curl gold, deepened — eyebrows, active toggle */
+  /* brand rule: Gold only on Ink. On Mugil's light ground the accent
+     role goes to Cobalt, the brand primary (6.76:1 on cream). */
+  --gold: #1840d8;           /* Cobalt — eyebrows, links, active toggles */
 
   --kurinji: #7e6fc6;        /* dusk lilac: blush × sapphire */
   --mullai: #4a8a6e;         /* mane sage */

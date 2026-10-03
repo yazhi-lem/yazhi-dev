@@ -55,7 +55,7 @@ export function overviewView(overview: QualityOverview, source: DataSource): Blo
       title: FOUNDRY_TITLE,
       tone: "gold",
       description: {
-        ta: "யாழியின் இறையாண்மை மாதிரிகளுக்கு தரவு வார்க்கும் ஆறு களங்கள்.",
+        ta: "யாழியின் தற்சார்பு மாதிரிகளுக்கு தரவு வார்க்கும் ஆறு களங்கள்.",
         en: "Six domain data programmes feeding Yazhi's sovereign models — what each collects, how much of it is trustworthy, and what is blocking it.",
       },
     },
