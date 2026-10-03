@@ -1,6 +1,6 @@
 # PRD — Developer Community, Onboarding & Circle Accounts
 
-**Status:** Draft — Phase 0 (manual) shippable now; Phase 1 superseded by Circle *sign-in* (`/api/circle/*`, yazhi-api `YazhiCircleAuth`) — see `docs/PROPOSAL-YAZHI-DEV-V3.md`.
+**Status:** Draft — Phase 0 (manual) shippable now; Phase 1 superseded by Circle *sign-in* (`/api/circle/*`, yazhi-api `YazhiCircle`) — see `docs/PROPOSAL-YAZHI-DEV-V3.md`.
 **Owner:** Valavan
 **Related:** `src/components/sections/Community.tsx`, `src/app/onboarding/page.tsx`,
 `yazhi-api/CIRCLE.md`, `yazhi-api/CONTEXT.md`

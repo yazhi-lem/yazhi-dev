@@ -46,7 +46,7 @@ UI streams a friendly "not configured" notice instead of failing silently.
   on yazhi-api, export a Circle-signed `bubble.json`.
 
 Builders sign in with their **Circle** account on yazhi-api (gRPC
-`yazhi.circle.v1.YazhiCircleAuth`). `src/lib/circle/client.ts` is the single
+`yazhi.circle.v1.YazhiCircle`). `src/lib/circle/client.ts` is the single
 integration point; sessions are httpOnly cookies set by `/api/circle/*`.
 Set `YAZHI_GRPC_TARGET` (and the sign-up keys) from `.env.example`.
 Bubbles run either in the browser against a local OpenAI-compatible model

@@ -5,7 +5,7 @@ import "server-only";
 
     yazhi-api speaks gRPC (default :50051). Two of its services matter here:
 
-      yazhi.circle.v1.YazhiCircleAuth
+      yazhi.circle.v1.YazhiCircle
         SignIn(email, password)      → CircleSession   (no API key; per-email limited)
         RefreshSession(refresh)      → CircleSession   (single-use refresh token)
         GetSessionAccount()          → CircleAccount   (Bearer <session access token>)
@@ -34,7 +34,7 @@ const CIRCLE_PROTO = `
 syntax = "proto3";
 package yazhi.circle.v1;
 
-service YazhiCircleAuth {
+service YazhiCircle {
   rpc SignIn(SignInRequest) returns (CircleSession);
   rpc RefreshSession(RefreshSessionRequest) returns (CircleSession);
   rpc GetSessionAccount(GetSessionAccountRequest) returns (CircleAccount);
@@ -164,7 +164,7 @@ function getClients(): Clients {
   const v1 = pkg.yazhi.circle.v1;
   const creds = USE_TLS ? grpc.credentials.createSsl() : grpc.credentials.createInsecure();
   clients = {
-    auth: new v1.YazhiCircleAuth(TARGET, creds) as Clients["auth"],
+    auth: new v1.YazhiCircle(TARGET, creds) as Clients["auth"],
     provisioning: new v1.YazhiCircleProvisioning(TARGET, creds) as Clients["provisioning"],
   };
   return clients;

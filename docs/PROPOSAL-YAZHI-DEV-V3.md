@@ -39,7 +39,7 @@ Foundry — landed with this proposal (§12). Everything else is the plan.
 | `/chat` | Six agents bound to **Gemini and ChatGPT**, via an OpenAI-compatible endpoint | Breaks the sovereignty rule (Aram 2): foreign models in production. Sessions only in localStorage |
 | `/onboarding?track=developer` | Phase 0 from the developer PRD: local-only profile, Discord link | No account, no credential |
 | `/bubble`, `/foundry` | **New:** builder docs, live Bubble UI, agent builder, Circle sign-in | Drafts live in one browser; no registry, no reviews |
-| yazhi-api Circle | Account provisioning for apps; **new on a branch:** `YazhiCircleAuth` sign-in sessions | Keys are company-wide (§6.2); IAM store not ready for concurrency (§6.3) |
+| yazhi-api Circle | Account provisioning for apps; **new on a branch:** `YazhiCircle` sign-in sessions | Keys are company-wide (§6.2); IAM store not ready for concurrency (§6.3) |
 | Capitol | Local operator console: quests, XP, people, audit | No real auth; no link to builder work |
 
 ## 3. Principles
@@ -89,7 +89,7 @@ Every v3 feature has to pass these, in this order (Aram harness):
    │ gRPC + Bearer <session token>
    ▼
  yazhi-api
-   YazhiCircleAuth        (built, branch) sessions for people
+   YazhiCircle        (built, branch) sessions for people
    YazhiCircleProvisioning (exists)       accounts for apps
    YazhiBubbles           (B, new)        registry: publish, version, review, list
    YazhiQuery / AgentQueryService (exists, unary) → (B) streaming chat RPC
@@ -139,7 +139,7 @@ they land.
 
 ### 6.1 Merge Circle sign-in (Phase A)
 
-Branch `ccr-01246f62-1ehz0i` on yazhi-api: `YazhiCircleAuth`, session tokens
+Branch `ccr-01246f62-1ehz0i` on yazhi-api: `YazhiCircle`, session tokens
 accepted by the interceptor but not as company-admin credentials, per-email
 sign-in limits, and a fix for bcrypt rejecting over-72-byte bearer tokens.
 Needs Deepika's review.
@@ -259,7 +259,7 @@ Targets are proposals for the owner to set; there is no baseline yet.
 
 **yazhi-api** (branch `ccr-01246f62-1ehz0i`, not merged)
 
-- `yazhi.circle.v1.YazhiCircleAuth` — `SignIn`, `RefreshSession`, `GetSessionAccount`.
+- `yazhi.circle.v1.YazhiCircle` — `SignIn`, `RefreshSession`, `GetSessionAccount`.
 - Session tokens accepted by the interceptor; not company-admin credentials.
 - Fix: Circle key validation no longer crashes on bearer tokens over bcrypt's 72-byte limit.
 - `CIRCLE.md` §6a.

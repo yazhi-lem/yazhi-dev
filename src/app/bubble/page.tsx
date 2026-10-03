@@ -282,7 +282,7 @@ OLLAMA_ORIGINS=https://yazhi.dev ollama serve`}</Pre>
             browser never sees a token — only your name and email.
           </P>
           <Pre label="sign-in flow">{`browser ── POST /api/circle/signin {email, password} ──▶ yazhi.dev server
-yazhi.dev ── gRPC yazhi.circle.v1.YazhiCircleAuth/SignIn ──▶ yazhi-api
+yazhi.dev ── gRPC yazhi.circle.v1.YazhiCircle/SignIn ──▶ yazhi-api
 yazhi-api ◀── checks password + account and company are active
 yazhi.dev ◀── { account, access_token (15 min), refresh_token (7 days) }
 browser   ◀── Set-Cookie: yz_circle_at, yz_circle_rt (httpOnly, SameSite=Lax)
@@ -298,7 +298,7 @@ browser   ◀── Set-Cookie: yz_circle_at, yz_circle_rt (httpOnly, SameSite=L
             ]}
           />
           <P>
-            On yazhi-api, <Code>YazhiCircleAuth</Code> issues session tokens (RS256, <Code>typ=circle_session</Code>).
+            On yazhi-api, <Code>YazhiCircle</Code> issues session tokens (RS256, <Code>typ=circle_session</Code>).
             They authenticate ordinary calls, but they are not admin credentials: a signed-in builder cannot create,
             rotate or delete Circle accounts. Sign-in allows 5 failed attempts per email every 15 minutes.
           </P>
@@ -364,7 +364,7 @@ browser   ◀── Set-Cookie: yz_circle_at, yz_circle_rt (httpOnly, SameSite=L
               ["yazhi-api runtime via /api/bubble/run, Circle-gated, model allow-list", "Built — streams from YAZHI_API_URL (OpenAI-compatible)"],
               ["Streaming chat served by yazhi-api itself (gRPC)", "Proposed — Yazhi Dev v3"],
               ["Circle sign-in / join / sign-out on yazhi.dev", "Built — needs YAZHI_GRPC_TARGET"],
-              ["YazhiCircleAuth on yazhi-api (sessions, refresh, liveness)", "Built on a branch — awaiting review"],
+              ["YazhiCircle on yazhi-api (sessions, refresh, liveness)", "Built on a branch — awaiting review"],
               ["Foundry — build, preview, import, export manifests", "Built — drafts stay in your browser"],
               ["Shared bubble registry, publishing, reviews", "Proposed — Yazhi Dev v3"],
               ["Personal API keys for builders", "Blocked — needs per-person key scoping on yazhi-api"],
