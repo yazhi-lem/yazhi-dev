@@ -21,7 +21,7 @@ const MAX_TURN_CHARS = 8000;
 
 /** POST { manifest, messages } → NDJSON stream (same shape as /api/chat).
 
-    Runs a bubble — including an unpublished Foundry draft — on yazhi-api.
+    Runs a bubble — including an unpublished one — on yazhi-api.
     Requires a Circle session: running arbitrary prompts is a builder
     privilege, and every run is attributable to a Circle account. */
 export async function POST(req: NextRequest) {

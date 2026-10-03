@@ -37,13 +37,16 @@ streaming; `src/lib/chat/backend.ts` is the single integration point and
 shows the exact request/response shape. Until `YAZHI_API_URL` is set, the
 UI streams a friendly "not configured" notice instead of failing silently.
 
-## /bubble · /foundry — builders, Bubble UI and Circle sign-in
+## /bubble — Bubble UI, the Yazhi UI library, and Circle sign-in
 
 - `/bubble` — builder docs for the **Bubble UI** (the host Yazhi apps live
   in) with a live demo, the `yazhi.bubble/v0` manifest reference, runtimes,
   Circle sign-in and the code of conduct.
-- `/foundry` — the agent builder: write a bubble, test it live on-device or
-  on yazhi-api, export a Circle-signed `bubble.json`.
+- `/bubble/components`, `/bubble/modules`, `/bubble/pages` — **Yazhi UI**,
+  the component library in `src/ui` (import from `@/ui`): primitives,
+  app-level modules and full page templates for Avai, Nyaya, Kural, Guru,
+  Kadai, Open Sangam and the Yazh parent gate, each with live demos on
+  sample data.
 
 Builders sign in with their **Circle** account on yazhi-api (gRPC
 `yazhi.circle.v1.YazhiCircle`). `src/lib/circle/client.ts` is the single

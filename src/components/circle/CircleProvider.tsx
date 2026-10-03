@@ -6,8 +6,8 @@ type CircleContextValue = ReturnType<typeof useCircle>;
 
 const CircleContext = createContext<CircleContextValue | null>(null);
 
-/** One Circle session per page tree — every Circle button, Foundry panel
-    and bubble reads the same state instead of fetching it separately. */
+/** One Circle session per page tree — every Circle button and bubble
+    reads the same state instead of fetching it separately. */
 export function CircleProvider({ children }: { children: ReactNode }) {
   const value = useCircle();
   return <CircleContext.Provider value={value}>{children}</CircleContext.Provider>;

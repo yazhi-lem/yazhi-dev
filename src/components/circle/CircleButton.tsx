@@ -2,14 +2,14 @@
 import { useState } from "react";
 import { useCircleSession } from "./CircleProvider";
 import { CircleDialog } from "./CircleDialog";
+import { firstGrapheme } from "@/ui/text";
 
 function initials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  // Array.from keeps a Tamil grapheme's first code point intact enough for
-  // a monogram; full names fall back to the email's first letter upstream.
+  // grapheme-safe: a Tamil initial like கு stays whole
   return parts
     .slice(0, 2)
-    .map((p) => Array.from(p)[0] ?? "")
+    .map((p) => firstGrapheme(p, ""))
     .join("")
     .toUpperCase();
 }

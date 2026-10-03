@@ -98,11 +98,11 @@ export function CircleDialog({ onClose }: { onClose: () => void }) {
               <dd className="break-all font-mono text-xs">{state.account.accountId}</dd>
             </dl>
             <p className="text-ivory-dim">
-              Bubbles you build in{" "}
-              <Link href="/foundry" className="text-gold underline-offset-4 hover:underline">
-                Foundry
-              </Link>{" "}
-              are signed with this account.
+              Bubbles you publish are signed with this account. Build them from the{" "}
+              <Link href="/bubble/pages" className="text-gold underline-offset-4 hover:underline">
+                UI library
+              </Link>
+              .
             </p>
             <button
               type="button"
@@ -119,7 +119,7 @@ export function CircleDialog({ onClose }: { onClose: () => void }) {
           <p className="rounded-lg border border-ivory/10 bg-night/60 p-4 text-sm text-ivory-dim">
             Circle sign-in isn&apos;t connected on this deployment yet. Set <code className="font-mono text-xs text-ivory">YAZHI_GRPC_TARGET</code>{" "}
             to reach yazhi-api — see <Link href="/bubble#circle" className="text-gold">Bubble docs → Circle</Link>.
-            Everything else in Foundry still works locally.
+            The Bubble UI and the UI library still work locally.
           </p>
         )}
 

@@ -4,7 +4,7 @@
 **Date:** 3 October 2026
 **Proposed owner:** Supriya Padmashini K (O4 — human community of builders, Dev Spaces)
 **With:** Deepika (O1 — yazhi-api), Valavan K (engineering and editorial gate)
-**Related:** `docs/PRD-DEVELOPER-COMMUNITY.md`, `/bubble`, `/foundry`, yazhi-api `CIRCLE.md` §6a, `NEXT_ACTION.md`
+**Related:** `docs/PRD-DEVELOPER-COMMUNITY.md`, `/bubble`, `src/ui`, yazhi-api `CIRCLE.md` §6a, `NEXT_ACTION.md`
 
 > Owners are proposed from the Pulavar map; confirm them in Linear before
 > work is assigned. Tamil strings in this proposal and in the new pages are
@@ -23,13 +23,13 @@ the user's own device, never on a foreign model.
 v3 is five things:
 
 1. **Members** — Circle accounts on yazhi-api are the identity for everything.
-2. **Bubbles** — a shared registry of `yazhi.bubble` manifests built in Foundry.
+2. **Bubbles** — a shared registry of `yazhi.bubble` manifests whose screens are built from the Yazhi UI library.
 3. **Reviews** — nothing is public until a peer and a maintainer approve it.
 4. **Spaces** — small groups that build together around a language or a domain.
 5. **Recognition** — builder activity rolls up to Capitol, the collective's console.
 
 The first slice — Circle sign-in, the Bubble UI host, `/bubble` docs and
-Foundry — landed with this proposal (§12). Everything else is the plan.
+the Yazhi UI library — landed with this proposal (§12). Everything else is the plan.
 
 ## 2. Where we are (v2)
 
@@ -38,7 +38,7 @@ Foundry — landed with this proposal (§12). Everything else is the plan.
 | `/` | 3D Sangam-era landing, project stories, family and developer CTAs | Nothing a builder can *do* |
 | `/chat` | Six agents bound to **Gemini and ChatGPT**, via an OpenAI-compatible endpoint | Breaks the sovereignty rule (Aram 2): foreign models in production. Sessions only in localStorage |
 | `/onboarding?track=developer` | Phase 0 from the developer PRD: local-only profile, Discord link | No account, no credential |
-| `/bubble`, `/foundry` | **New:** builder docs, live Bubble UI, agent builder, Circle sign-in | Drafts live in one browser; no registry, no reviews |
+| `/bubble` + Yazhi UI | **New:** builder docs, live Bubble UI, UI library (components, modules, page templates), Circle sign-in | Sample data only; no registry, no reviews |
 | yazhi-api Circle | Account provisioning for apps; **new on a branch:** `YazhiCircle` sign-in sessions | Keys are company-wide (§6.2); IAM store not ready for concurrency (§6.3) |
 | Capitol | Local operator console: quests, XP, people, audit | No real auth; no link to builder work |
 
@@ -63,9 +63,9 @@ Every v3 feature has to pass these, in this order (Aram harness):
 | Route | Purpose | Phase |
 |---|---|---|
 | `/bubble` | Builder docs + live Bubble UI | **Built** |
-| `/foundry` | Build, test (device / yazhi-api), import, export, fork | **Built** (local drafts) → B: save to registry |
+| `/bubble/components`, `/bubble/modules`, `/bubble/pages` | Yazhi UI library: primitives, app modules, full app templates with live demos | **Built** (sample data) → B: published to the registry with each bubble |
 | `/hub` | Browse and install published bubbles; filter by language, domain, runtime | B |
-| `/hub/<bubble-id>` | Bubble page: description, author, versions, reviews, "open in Bubble UI", "fork in Foundry" | B |
+| `/hub/<bubble-id>` | Bubble page: description, author, versions, reviews, "open in Bubble UI", "fork" | B |
 | `/b/<handle>` | Builder profile: bubbles, reviews given, Spaces, recognition | B |
 | `/reviews` | Review queue for peers and maintainers | B |
 | `/spaces`, `/spaces/<slug>` | Groups with shared drafts and a discussion thread | C |
@@ -77,7 +77,7 @@ Every v3 feature has to pass these, in this order (Aram harness):
 
 ```
  browser ──────────────────────────────────────────────────────────────┐
-  Bubble UI host · Foundry · Hub                                        │
+  Bubble UI host · Yazhi UI library · Hub                              │
    │  page code sees the account, never a token                        │ on-device runtime
    │                                                                    ▼ (no internet)
    │ httpOnly cookies                                     local model server
@@ -166,7 +166,7 @@ tables.
 
 - **Ownership.** A bubble belongs to the Circle account that published it.
   Co-maintainers are added per bubble.
-- **Forks.** Anyone can fork a public bubble in Foundry; the fork records
+- **Forks.** Anyone can fork a public bubble; the fork records
   `forkedFrom` and starts unpublished.
 - **Reviews — two people.** A bubble goes public after one peer review and
   one maintainer review. The checklist: does it say what it does, does it cite
@@ -225,7 +225,7 @@ Dates follow the launch line (Dev Spaces 18 October; December public launch).
 
 | Measure | Pilot target (proposed) |
 |---|---|
-| Builders who sign in and open Foundry | 50 by end of Phase A |
+| Builders who sign in and use the UI library | 50 by end of Phase A |
 | Bubbles published after review | 20 by end of Phase B |
 | Share of published bubbles that decline unsupported questions in review | ≥ 90% |
 | Median time from submission to first review | ≤ 72 hours |
@@ -253,7 +253,7 @@ Targets are proposals for the owner to set; there is no baseline yet.
 **yazhi-dev** (this branch)
 
 - `/bubble` — builder docs and a live Bubble UI.
-- `/foundry` — agent builder: edit, live test, import, fork, export, sign with Circle.
+- Yazhi UI (`src/ui`, docs at `/bubble/components`, `/bubble/modules`, `/bubble/pages`) — 11 components, 10 modules and 7 page templates (Avai, Nyaya, Kural, Guru, Kadai, Open Sangam, Yazh parent gate) on sample data. An earlier agent builder (`/foundry`) was removed from yazhi.dev.
 - Bubble UI host — canvas, packed tray, composer with Circle button; on-device runtime (browser → localhost, no internet) and yazhi-api runtime via `/api/bubble/run`.
 - Circle auth — `/api/circle/{session,signin,signup,signout}`, httpOnly cookies, gRPC client in `src/lib/circle/client.ts`.
 
@@ -266,4 +266,4 @@ Targets are proposals for the owner to set; there is no baseline yet.
 
 Verified end-to-end against a local yazhi-api: sign-up, sign-in, refresh after
 access-token expiry, sign-out, cross-site refusal, Circle-gated bubble run,
-on-device run, and Foundry export signed with the Circle account.
+and on-device run.

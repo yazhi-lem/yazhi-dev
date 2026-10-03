@@ -1,7 +1,7 @@
 import { BUBBLE_SCHEMA, type BubbleManifest } from "./types";
 
 /** Starter bubbles that ship with the Bubble UI so the tray is never empty
-    and builders have working examples to fork in Foundry. Every one runs on
+    and builders have working examples to start from. Every one runs on
     Adhan — through yazhi-api, or on-device when there is no network.
     Tamil names and greetings are drafts pending native-speaker review. */
 

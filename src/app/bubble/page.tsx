@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { DevShell } from "@/components/bubble/DevShell";
 import { BubbleDemo } from "@/components/bubble/BubbleDemo";
 import { BubbleAnatomy } from "@/components/bubble/BubbleAnatomy";
 import { LINKS } from "@/lib/content";
+import { COMPONENTS, MODULES } from "@/ui/docs/catalog";
+import { PAGE_TEMPLATES } from "@/ui/pages/catalog";
 
 export const metadata: Metadata = {
   title: "Bubble UI — Yazhi builder docs",
   description:
-    "Build bubbles — agents and tools that live in the Yazhi Bubble UI, run on-device without internet, and sign in with your Circle account.",
+    "The Yazhi Bubble UI and its UI library: components, modules and page templates for Yazhi apps that run on-device without internet and sign in with Circle.",
 };
 
 const TOC = [
   ["what", "What a bubble is"],
+  ["library", "UI library"],
   ["anatomy", "Anatomy"],
   ["quickstart", "Quickstart"],
   ["manifest", "Manifest reference"],
@@ -110,7 +112,6 @@ const MANIFEST_EXAMPLE = `{
 
 export default function BubbleDocsPage() {
   return (
-    <DevShell>
       <div className="mx-auto grid max-w-[90rem] gap-10 px-4 pb-24 pt-10 lg:grid-cols-[14rem_1fr] lg:px-8">
         <aside className="hidden lg:block">
           <nav aria-label="On this page" className="sticky top-20 space-y-1 text-sm">
@@ -134,8 +135,8 @@ export default function BubbleDocsPage() {
             device when there is no internet, and on Adhan through yazhi-api when there is.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href="/foundry" className="rounded-full bg-gold px-5 py-2 text-sm font-semibold text-night hover:bg-bronze hover:text-ivory">
-              Build a bubble in Foundry
+            <Link href="/bubble/pages" className="rounded-full bg-gold px-5 py-2 text-sm font-semibold text-night hover:bg-bronze hover:text-ivory">
+              Browse the UI library
             </Link>
             <a href="#quickstart" className="rounded-full border border-ivory/20 px-5 py-2 text-sm text-ivory hover:border-gold/60">
               Quickstart
@@ -154,8 +155,9 @@ export default function BubbleDocsPage() {
           <P>
             A bubble is a small, self-describing app — today, an agent: a persona, a greeting, a runtime preference and
             the permissions it needs, all in one JSON manifest. The Bubble UI host reads the manifest, draws the bubble
-            in the tray, and runs it. Builders make bubbles in <Link href="/foundry" className="text-gold">Foundry</Link>,
-            signed with their Circle account, and share them as manifests.
+            in the tray, and runs it. Builders compose a bubble&apos;s screens from the{" "}
+            <a href="#library" className="text-gold">UI library</a>, sign it with their Circle account, and share it as a
+            manifest.
           </P>
           <P>The design comes from five commitments in the founding sketch:</P>
           <ul className="mt-4 grid max-w-3xl gap-3 sm:grid-cols-2">
@@ -174,6 +176,30 @@ export default function BubbleDocsPage() {
             ))}
           </ul>
 
+          <H2 id="library">UI library</H2>
+          <P>
+            Yazhi UI is the component library every Yazhi app is built from, in three layers. Each layer uses only the one
+            below, so a rule enforced by a component — a citation for every claim, a person in front of every system change
+            — holds in every app that uses it.
+          </P>
+          <ul className="mt-5 grid max-w-4xl gap-3 sm:grid-cols-3">
+            {[
+              ["/bubble/components", "Components", "கூறுகள்", `${COMPONENTS.length} primitives — bubble, pills, citations, guardrails, confirm gate, composer.`],
+              ["/bubble/modules", "Modules", "தொகுதிகள்", `${MODULES.length} app blocks — cited answers, runbooks, hint ladder, verse reader, orders, consent.`],
+              ["/bubble/pages", "Pages", "பக்கங்கள்", `${PAGE_TEMPLATES.length} full screens — ${PAGE_TEMPLATES.map((t) => t.app.name).join(", ")}.`],
+            ].map(([href, en, ta, d]) => (
+              <li key={href}>
+                <Link href={href} className="block h-full rounded-xl border border-ivory/10 bg-night-2/60 p-4 transition hover:border-gold/50">
+                  <p className="font-semibold text-ivory">
+                    {en} <span lang="ta" className="font-normal text-ivory-dim">· {ta}</span>
+                  </p>
+                  <p className="mt-1 text-sm text-ivory-dim">{d}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Pre label="import">{`import { CitedAnswer, ConfirmGate, HintLadder, AppFrame } from "@/ui";`}</Pre>
+
           <H2 id="anatomy">Anatomy</H2>
           <P>The host has four parts. Their positions are fixed so every bubble feels at home in the same frame.</P>
           <BubbleAnatomy />
@@ -181,7 +207,7 @@ export default function BubbleDocsPage() {
             head={["Part", "What it does"]}
             rows={[
               ["Canvas", "The active bubble's conversation. Markdown replies; each reply notes which runtime produced it."],
-              ["Tray", "Every installed bubble, packed as circles that never touch. Size (s, m, l) is set by the manifest. A dashed ring marks a Foundry draft."],
+              ["Tray", "Every installed bubble, packed as circles that never touch. Size (s, m, l) is set by the manifest. The tray is the library&apos;s BubbleTray module."],
               ["Composer", <>Message input and send <Code>▷</Code>. Enter sends; the square stops a stream.</>],
               ["Circle button", <>Bottom-left <Code>C</Code>. Open ring: signed out. Initials: signed in. Opens sign-in, join or your account.</>],
               ["Status", <>Header chips: <Code>online</Code>/<Code>offline</Code> and the runtime in use, with a settings panel for the on-device endpoint.</>],
@@ -195,33 +221,35 @@ export default function BubbleDocsPage() {
               join with an email and password (18+, code of conduct). Your account lives in yazhi-api, not on this site.
             </li>
             <li>
-              <span className="text-ivory">Open <Link href="/foundry" className="text-gold">Foundry</Link>.</span> Start
-              from a blank bubble or fork a starter.
+              <span className="text-ivory">Start from the closest <Link href="/bubble/pages" className="text-gold">page template</Link>.</span>{" "}
+              Copy it, keep its <Code>AppFrame</Code>, and swap the sample data for your app&apos;s.
             </li>
             <li>
-              <span className="text-ivory">Write the agent.</span> Name, Tamil name, persona prompt, greeting. Keep the
-              Five-Posture kernel on unless you have a reason not to.
+              <span className="text-ivory">Compose from <Link href="/bubble/modules" className="text-gold">modules</Link>.</span>{" "}
+              Reach for a <Link href="/bubble/components" className="text-gold">component</Link> only when no module fits —
+              and keep the guardrail components (<Code>IDontKnow</Code>, <Code>ConfirmGate</Code>, <Code>Disclaimer</Code>) where
+              the template has them.
             </li>
             <li>
-              <span className="text-ivory">Test it in the live preview.</span> On-device needs a local model server;
-              yazhi-api needs your Circle session.
+              <span className="text-ivory">Describe the bubble</span> in a <Code>bubble.json</Code> manifest (below): name,
+              persona, runtime, permissions.
             </li>
             <li>
-              <span className="text-ivory">Export the manifest</span> (<Code>bubble.json</Code>) and share it in Discord
-              or a pull request. A shared registry comes with Yazhi Dev v3.
+              <span className="text-ivory">Test it in the Bubble UI</span> — on-device with a local model server, or on
+              yazhi-api with your Circle session — then share it in Discord or a pull request.
             </li>
           </ol>
 
           <H2 id="manifest">Manifest reference</H2>
           <P>
             Schema <Code>yazhi.bubble/v0</Code>. v0 means the shape may still change; breaking changes will bump the
-            version and Foundry will migrate your drafts.
+            version and the host will keep reading v0.
           </P>
           <Pre label="bubble.json">{MANIFEST_EXAMPLE}</Pre>
           <Table
             head={["Field", "Type", "Rules"]}
             rows={[
-              [<Code key="a">id</Code>, "string", "Lowercase letters, digits, dots, dashes; ≤120. Foundry prefixes circle.<account>."],
+              [<Code key="a">id</Code>, "string", "Lowercase letters, digits, dots, dashes; ≤120. Convention: circle.<account>.<name>."],
               [<Code key="a">name</Code>, "string", "Required, ≤60."],
               [<Code key="a">taName</Code>, "string?", "Tamil name, ≤60. Draft until a native speaker reviews it."],
               [<Code key="a">description</Code>, "string", "≤280. Shown under the name and in the tray tooltip."],
@@ -234,7 +262,7 @@ export default function BubbleDocsPage() {
               [<Code key="a">runtime.model</Code>, "string", <>Model on yazhi-api; must be on the server allow-list (default <Code>adhan</Code>).</>],
               [<Code key="a">runtime.deviceModel</Code>, "string", "Model name your local server knows, e.g. a GGUF alias or an Ollama tag."],
               [<Code key="a">permissions</Code>, "string[]", <><Code>yazhi-api</Code>, <Code>clipboard</Code>. Nothing undeclared is granted.</>],
-              [<Code key="a">author</Code>, "object?", "Set by Foundry from your Circle account. Absent on signed-out drafts."],
+              [<Code key="a">author</Code>, "object?", "The publishing builder's Circle account. Absent on unsigned manifests."],
             ]}
           />
 
@@ -329,10 +357,10 @@ browser   ◀── Set-Cookie: yz_circle_at, yz_circle_rt (httpOnly, SameSite=L
 
           <H2 id="collaborate">Collaborating</H2>
           <P>
-            Today: build in Foundry, export <Code>bubble.json</Code>, and share it in{" "}
-            <a href={LINKS.discord} className="text-gold">Discord</a> or as a pull request. Anyone can import a manifest
-            into Foundry, fork it and re-sign it with their own account; the original author stays in the history you
-            share alongside it.
+            Today: build your screens from the UI library, write a <Code>bubble.json</Code>, and share both in{" "}
+            <a href={LINKS.discord} className="text-gold">Discord</a> or as a pull request. Anyone can fork a manifest and re-sign it with their own account; keep the
+            original author in the history you share alongside it. New components and modules come in through pull
+            requests to <Code>src/ui</Code>, reviewed like any other code.
           </P>
           <P>
             Next: a shared registry on yazhi-api, Circle-signed publishing, reviews before a bubble goes public, and
@@ -365,7 +393,8 @@ browser   ◀── Set-Cookie: yz_circle_at, yz_circle_rt (httpOnly, SameSite=L
               ["Streaming chat served by yazhi-api itself (gRPC)", "Proposed — Yazhi Dev v3"],
               ["Circle sign-in / join / sign-out on yazhi.dev", "Built — needs YAZHI_GRPC_TARGET"],
               ["YazhiCircle on yazhi-api (sessions, refresh, liveness)", "Built on a branch — awaiting review"],
-              ["Foundry — build, preview, import, export manifests", "Built — drafts stay in your browser"],
+              [`Yazhi UI — ${COMPONENTS.length} components, ${MODULES.length} modules, ${PAGE_TEMPLATES.length} page templates`, "Built — sample data only"],
+              ["Child-facing Yazh screens in the library", "Held — until counsel sign-off (Aram rule 4)"],
               ["Shared bubble registry, publishing, reviews", "Proposed — Yazhi Dev v3"],
               ["Personal API keys for builders", "Blocked — needs per-person key scoping on yazhi-api"],
               ["Capitol roll-up of builder activity", "Proposed — Yazhi Dev v3"],
@@ -373,6 +402,5 @@ browser   ◀── Set-Cookie: yz_circle_at, yz_circle_rt (httpOnly, SameSite=L
           />
         </main>
       </div>
-    </DevShell>
   );
 }

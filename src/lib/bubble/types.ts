@@ -1,5 +1,5 @@
-/** Bubble manifest — the contract between a bubble a developer builds in
-    Foundry and the Bubble UI host that runs it. Plain data; safe on server
+/** Bubble manifest — the contract between a bubble a developer builds and
+    the Bubble UI host that runs it. Plain data; safe on server
     and client. Documented for builders at /bubble#manifest. */
 
 export const BUBBLE_SCHEMA = "yazhi.bubble/v0" as const;
@@ -43,8 +43,8 @@ export interface BubbleManifest {
     deviceModel: string;
   };
   permissions: BubblePermission[];
-  /** set by Foundry from the signed-in Circle account; absent on drafts
-      made while signed out */
+  /** the publishing builder's Circle account; absent on unsigned
+      manifests */
   author?: { circleAccountId: string; name: string };
   createdAt: string;
   updatedAt: string;
