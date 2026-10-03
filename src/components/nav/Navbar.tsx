@@ -5,15 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Bi } from "@/components/ui/Bi";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { LogoMark } from "@/components/ui/LogoMark";
-import { IDENTITY, NAV_GROUPS, ADHAN, SANGAM, GUARDIAN, COMMUNITY, UI } from "@/lib/content";
+import { IDENTITY, NAV_GROUPS, NAV_TOP, UI } from "@/lib/content";
 
-const LINKS_TOP = [
-  { ta: IDENTITY.nameTa, en: IDENTITY.nameEn, href: "#yazhi" },
-  { ta: ADHAN.nameTa, en: ADHAN.nameEn, href: "#adhan" },
-  { ta: GUARDIAN.nameTa, en: GUARDIAN.nameEn, href: "#guardian" },
-  { ta: SANGAM.nameTa, en: SANGAM.nameEn, href: "#sangam" },
-  { ta: COMMUNITY.titleTa, en: COMMUNITY.titleEn, href: "#community" },
-];
+const LINKS_TOP = NAV_TOP;
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -35,7 +29,7 @@ export function Navbar() {
           <Bi
             ta={IDENTITY.nameTa}
             en={IDENTITY.nameEn}
-            className="flex items-baseline gap-2 font-serif text-lg font-black tracking-[-3px]"
+            className="hidden items-baseline gap-2 font-serif text-lg font-black sm:flex"
             separator={<span aria-hidden className="text-ivory-dim">•</span>}
           />
         </Link>
@@ -52,7 +46,7 @@ export function Navbar() {
           </ul>
           <Link
             href="/chat"
-            className="rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night"
+            className="hidden rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night sm:inline-flex"
           >
             <Bi ta={UI.chat.ta} en={UI.chat.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
           </Link>

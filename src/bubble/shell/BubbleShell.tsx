@@ -9,7 +9,7 @@ import { ThemeSwitch, type YbiTheme } from "./ThemeSwitch";
 /** App frame for every Yazhi Dev product surface (/foundry, /ybi, and
     keys, playground, skills registry next). A slim top bar — mark,
     product name, section nav, language toggle — over a centred content
-    column. Marketing chrome (Navbar, ThinaiRail, 3D world) stays off
+    column. Marketing chrome (Navbar, 3D world) stays off
     these routes so tools load fast.
 
     `theme` sets the token scope (Ink = dark brand ground, Mugil = Yazh's
