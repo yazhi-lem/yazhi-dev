@@ -1,14 +1,19 @@
 import { Navbar } from "@/components/nav/Navbar";
 import { Hero } from "@/components/hero/Hero";
-import { Vision } from "@/components/sections/Vision";
-import { Paths } from "@/components/sections/Paths";
-import { Community } from "@/components/sections/Community";
+import { Verse } from "@/components/sections/Verse";
+import { Problem } from "@/components/sections/Problem";
+import { Movement } from "@/components/sections/Movement";
+import { Build } from "@/components/sections/Build";
+import { Roadmap } from "@/components/sections/Roadmap";
+import { Join } from "@/components/sections/Join";
 import { Footer } from "@/components/footer/Footer";
 import { World } from "@/components/providers/World";
 
-/* Tamil first, nothing extra: who we are, where we're going (Yazhi
-   2030), the three paths our services take, and an invitation. Project
-   detail lives on each project's own page. */
+/* One story, one ask: the opening of Maduraikanchi as an experience,
+   the problem (our languages are at the back of the
+   line in AI), Yazhi as a people's movement, what it is building (kept
+   quiet), the 2026 roadmap, and an invitation to build with us. Each project's full
+   detail and enquiry form live on /projects/[slug]. */
 export default function Home() {
   return (
     <>
@@ -16,9 +21,12 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Vision />
-        <Paths />
-        <Community />
+        <Verse />
+        <Problem />
+        <Movement />
+        <Build />
+        <Roadmap />
+        <Join />
       </main>
       <Footer />
     </>

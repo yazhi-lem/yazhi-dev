@@ -6,8 +6,9 @@ import { HERO, UI } from "@/lib/content";
 import { fadeUp, stagger } from "@/lib/motionPresets";
 import { useLang } from "@/lib/i18n";
 
-/** One idea per viewport: Yazhi 2030, the platform line, "we begin
-    with Tamil", two actions. Tamil leads; English is the quiet gloss. */
+/** One idea per viewport: the problem in a sentence, the answer in
+    another, two actions — build with us, or see the roadmap. Tamil
+    leads; English is the quiet gloss. */
 export function Hero() {
   const { lang } = useLang();
   const glossOnly = lang === "both";
@@ -54,7 +55,7 @@ export function Hero() {
       </motion.div>
 
       <a
-        href="#vision"
+        href="#verse"
         className="relative z-10 mt-16 flex flex-col items-center gap-2 text-xs text-ivory-dim transition-colors hover:text-ivory"
       >
         <Bi ta={UI.scrollCue.ta} en={UI.scrollCue.en} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
