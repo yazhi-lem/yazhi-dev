@@ -140,11 +140,11 @@ export function ChatApp() {
               <path d="M4 6h16M4 12h16M4 18h10" />
             </svg>
           </button>
-          <Link href="/" className="flex min-w-0 items-center gap-2" aria-label="Yazhi home">
-            <LogoMark size={26} />
-            <span className="display font-display text-base font-semibold text-ivory">
+          <Link href="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3" aria-label="Yazhi home">
+            <LogoMark size={38} className="h-8 w-8 sm:h-9 sm:w-9 md:h-10 md:w-10" />
+            <span className="display font-display text-lg sm:text-xl font-semibold text-ivory">
               யாழி
-              <span className="ml-1 font-normal text-ivory-dim">Chat</span>
+              <span className="ml-1.5 font-normal text-ivory-dim">Chat</span>
             </span>
           </Link>
         </div>
@@ -162,7 +162,7 @@ export function ChatApp() {
           <button
             type="button"
             onClick={handleNew}
-            className="rounded-lg border border-gold/40 bg-gold/10 px-3 py-1.5 text-xs font-semibold text-gold transition hover:bg-gold hover:text-night"
+            className="rounded-lg border border-gold/40 bg-gold/10 px-3 py-1.5 text-xs font-semibold text-gold transition hover:bg-gold hover:text-night [text-shadow:none]"
           >
             New chat
           </button>

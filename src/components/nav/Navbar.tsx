@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Bi } from "@/components/ui/Bi";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { LogoMark } from "@/components/ui/LogoMark";
+import { BrandWordmark } from "@/components/ui/BrandWordmark";
 import { IDENTITY, NAV_GROUPS, ADHAN, SANGAM, GUARDIAN, COMMUNITY } from "@/lib/content";
 
 const LINKS_TOP = [
@@ -17,27 +18,55 @@ const LINKS_TOP = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const top = window.scrollY || document.documentElement.scrollTop || 0;
+      setScrolled(top > 10);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    document.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const isGlass = scrolled || open;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      {/* the bar itself carries no flat fill — a gradient scrim fading from
-          the night at the very top down to nothing keeps the logo/links
-          legible over whatever the world is doing beneath them, without
-          ever reading as a hard, static bar */}
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        isGlass ? "navbar-glass" : "bg-transparent backdrop-blur-none"
+      }`}
+    >
+      {/* Ambient scrim at the top; only active when at scrollY=0, fades out on scroll */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[calc(7rem+env(safe-area-inset-top,0px))]"
-        style={{ background: "linear-gradient(to bottom, rgba(5,7,13,0.75), rgba(5,7,13,0.32) 55%, transparent)" }}
+        className={`pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 transition-opacity duration-300 ${
+          isGlass ? "opacity-0" : "opacity-100"
+        }`}
+        style={{ background: "linear-gradient(to bottom, rgba(5,7,13,0.5), transparent)" }}
       />
-      <div className="mx-auto flex max-w-[var(--max-w)] items-center justify-between px-4 py-4 pt-[calc(1rem+env(safe-area-inset-top,0px))] pl-[calc(1rem+env(safe-area-inset-left,0px))] pr-[calc(1rem+env(safe-area-inset-right,0px))] sm:px-5 sm:pl-[calc(1.25rem+env(safe-area-inset-left,0px))] sm:pr-[calc(1.25rem+env(safe-area-inset-right,0px))]">
-        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="Yazhi home">
-          <LogoMark size={34} />
-          <Bi
-            ta={IDENTITY.nameTa}
-            en={IDENTITY.nameEn}
-            className="flex items-baseline gap-2 font-serif text-lg font-black tracking-[-3px]"
-            separator={<span aria-hidden className="text-ivory-dim">•</span>}
-          />
+
+      {/* Subtle liquid fluid light caustic */}
+      {isGlass && (
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden opacity-60">
+          <div className="liquid-glass-caustic" />
+        </div>
+      )}
+      <div
+        className="mx-auto flex max-w-[var(--max-w)] items-center justify-between px-4 py-3.5 pt-[calc(0.9rem+env(safe-area-inset-top,0px))] sm:px-6 md:px-8 lg:px-10 pl-[calc(1rem+env(safe-area-inset-left,0px))] pr-[calc(1rem+env(safe-area-inset-right,0px))]"
+      >
+        <Link
+          href="/"
+          className="flex shrink-0 items-center gap-3 sm:gap-3.5 md:gap-4 transition-opacity hover:opacity-90"
+          aria-label="Yazhi home"
+        >
+          <LogoMark size={56} className="h-10 w-10 sm:h-12 sm:w-12 md:h-[52px] md:w-[52px] lg:h-[58px] lg:w-[58px]" />
+          <BrandWordmark height={42} svgClassName="h-[30px] sm:h-[35px] md:h-[40px] lg:h-[44px] w-auto" />
         </Link>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
@@ -52,9 +81,9 @@ export function Navbar() {
           </ul>
           <Link
             href="/chat"
-            className="rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night"
+            className="rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night [text-shadow:none]"
           >
-            <Bi ta="அரட்டை" en="Chat" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
+            <Bi ta="அரட்டை" en="Chat" className="inline-flex gap-1.5 [text-shadow:none]" separator={<span aria-hidden className="text-gold/40">·</span>} />
           </Link>
           <LangToggle />
           <button

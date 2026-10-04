@@ -42,7 +42,7 @@ export function LaunchTimer() {
     <div
       role="timer"
       aria-label={`Yazhi Awakening — ${days} days ${hrs} hours ${mins} minutes ${secs} seconds remaining`}
-      className="fixed z-40 flex items-center gap-2 rounded-full border border-ivory/15 bg-night-2/80 px-3 py-1.5 text-xs shadow-lg backdrop-blur right-[calc(1rem+env(safe-area-inset-right,0px))] max-lg:bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] lg:bottom-[calc(1rem+env(safe-area-inset-bottom,0px))]"
+      className="fixed z-40 flex items-center gap-2 rounded-full border border-ivory/15 bg-night-2/80 px-3 py-1.5 text-xs shadow-lg backdrop-blur right-[calc(1rem+env(safe-area-inset-right,0px))] bottom-[calc(1rem+env(safe-area-inset-bottom,0px))]"
     >
       <span aria-hidden className="text-sm leading-none">🌅</span>
       <span className="hidden text-[color:var(--accent)] sm:inline">{label}</span>

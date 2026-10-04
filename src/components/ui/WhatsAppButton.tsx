@@ -12,7 +12,7 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Join the Yazhi WhatsApp group"
-      className="fixed z-40 grid h-12 w-12 place-items-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105 left-[calc(1rem+env(safe-area-inset-left,0px))] max-lg:bottom-[calc(4.75rem+env(safe-area-inset-bottom,0px))] lg:bottom-[calc(1rem+env(safe-area-inset-bottom,0px))]"
+      className="fixed z-40 grid h-12 w-12 place-items-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105 left-[calc(1rem+env(safe-area-inset-left,0px))] bottom-[calc(1rem+env(safe-area-inset-bottom,0px))]"
     >
       <svg
         viewBox="0 0 24 24"

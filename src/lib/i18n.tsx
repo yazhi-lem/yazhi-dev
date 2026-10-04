@@ -20,6 +20,14 @@ export function LangProvider({ children }: { children: ReactNode }) {
     if (saved === "ta" || saved === "en" || saved === "both") setLang(saved);
   }, []);
   const set = (l: Lang) => {
+    if (l === lang) return;
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.add("lang-transitioning");
+      document.documentElement.setAttribute("lang", l === "both" ? "ta" : l);
+      setTimeout(() => {
+        document.documentElement.classList.remove("lang-transitioning");
+      }, 350);
+    }
     setLang(l);
     window.localStorage.setItem("yazhi-lang", l);
   };

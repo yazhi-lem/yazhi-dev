@@ -13,14 +13,22 @@ export function Hero() {
   const { lang } = useLang();
 
   return (
-    <section id="hero" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 pt-24">
-      <motion.div variants={stagger} initial="hidden" animate="show" className="relative z-10 mx-auto max-w-3xl text-center">
+    <section
+      id="hero"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-4 sm:px-6 md:px-8 lg:px-10 pt-16 pb-8"
+    >
+      <motion.div
+        variants={stagger}
+        initial="hidden"
+        animate="show"
+        className="text-scrim relative z-10 mx-auto max-w-6xl w-full text-center"
+      >
         <motion.div variants={fadeUp}>
           <Bi
             as="p"
             ta={UI.heroEyebrow.ta}
             en={UI.heroEyebrow.en}
-            className="mb-5 flex flex-col gap-0.5 text-xs uppercase tracking-[0.3em] text-[color:var(--accent)]"
+            className="mb-3 flex flex-col gap-0.5 text-[11px] sm:text-xs font-mono uppercase tracking-[0.25em] text-[color:var(--accent)]"
           />
         </motion.div>
 
@@ -30,25 +38,34 @@ export function Hero() {
             display
             ta={IDENTITY.taglineTa}
             en={IDENTITY.taglineEn}
-            className="flex flex-col items-center gap-3"
-            taClass="font-display text-[length:var(--text-4xl)] font-bold sm:text-[length:var(--text-5xl)]"
+            className="flex flex-col items-center gap-2 sm:gap-2.5 max-w-5xl mx-auto"
+            taClass="font-display text-[length:var(--text-hero-ta)] font-bold tracking-tight text-ivory leading-[1.2]"
             enClass={
               lang === "en"
-                ? "font-display text-[length:var(--text-3xl)] font-bold sm:text-[length:var(--text-4xl)]"
-                : "text-[length:var(--text-lg)] uppercase tracking-[0.25em] text-ivory-dim"
+                ? "font-display text-[length:var(--text-hero)] font-bold tracking-tight text-ivory leading-[1.08]"
+                : "text-[length:var(--text-subhead)] uppercase tracking-[0.2em] text-ivory-dim"
             }
           />
         </motion.div>
 
-        {/* the founding deck's own line under the wordmark — what Yazhi
-            actually is right now, not the eventual scale of it */}
-        <motion.div variants={fadeUp} className="mt-6">
-          <Bi as="p" ta={IDENTITY.heroLineTa} en={IDENTITY.heroLineEn} className="flex flex-col gap-1 text-ivory-dim" />
+        {/* the founding deck's own line under the wordmark */}
+        <motion.div variants={fadeUp} className="mt-3.5">
+          <Bi
+            as="p"
+            ta={IDENTITY.heroLineTa}
+            en={IDENTITY.heroLineEn}
+            className="mx-auto max-w-3xl text-[length:var(--text-subhead)] leading-relaxed text-ivory-dim"
+          />
         </motion.div>
 
         {/* the plain-language layer — one sentence a ten-year-old can read */}
-        <motion.div variants={fadeUp} className="mt-4">
-          <Bi as="p" ta={IDENTITY.plainTa} en={IDENTITY.plainEn} className="mx-auto flex max-w-xl flex-col gap-1 text-sm text-ivory-dim/90" />
+        <motion.div variants={fadeUp} className="mt-2">
+          <Bi
+            as="p"
+            ta={IDENTITY.plainTa}
+            en={IDENTITY.plainEn}
+            className="mx-auto flex max-w-2xl flex-col gap-0.5 text-xs sm:text-sm text-ivory-dim/90 leading-relaxed"
+          />
         </motion.div>
       </motion.div>
 
@@ -57,11 +74,12 @@ export function Hero() {
         variants={fadeUp}
         initial="hidden"
         animate="show"
-        className="scroll-cue relative z-10 mt-16 flex flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-ivory-dim transition-colors hover:text-ivory"
+        className="scroll-cue relative z-10 mt-8 sm:mt-10 flex flex-col items-center gap-1.5 text-xs font-mono uppercase tracking-[0.25em] text-ivory-dim transition-colors hover:text-ivory"
       >
         <Bi ta={UI.scrollCue.ta} en={UI.scrollCue.en} className="flex flex-col items-center gap-0.5" />
-        <span aria-hidden className="scroll-cue-arrow">↓</span>
+        <span aria-hidden className="scroll-cue-arrow text-sm">↓</span>
       </motion.a>
     </section>
   );
 }
+

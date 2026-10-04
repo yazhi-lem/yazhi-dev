@@ -1,5 +1,4 @@
 import { Navbar } from "@/components/nav/Navbar";
-import { ThinaiRail } from "@/components/nav/ThinaiRail";
 import { ThinaiIntro } from "@/components/hero/ThinaiIntro";
 import { Hero } from "@/components/hero/Hero";
 import { Yazhi } from "@/components/sections/Yazhi";
@@ -11,7 +10,6 @@ import { Community } from "@/components/sections/Community";
 import { Footer } from "@/components/footer/Footer";
 import { World } from "@/components/providers/World";
 import { LaunchTimer } from "@/components/ui/LaunchTimer";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { FloatingGlyphs } from "@/components/ui/FloatingGlyphs";
 
 export default function Home() {
@@ -21,9 +19,7 @@ export default function Home() {
       <FloatingGlyphs />
       <ThinaiIntro />
       <Navbar />
-      <ThinaiRail />
       <LaunchTimer />
-      <WhatsAppButton />
       {/* deck order: Yazhi is the umbrella, then the three products it
           carries — Yazh (what families pay for), Adhan (the engine
           underneath), Open Sangam (the memory we protect) — then the
