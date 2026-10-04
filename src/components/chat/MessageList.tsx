@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Agent, Message } from "@/lib/chat/types";
 import { Markdown } from "./Markdown";
+import { YazhiMascot } from "@/components/mascot/YazhiMascot";
 
 function Avatar({ agent, role }: { agent: Agent; role: "user" | "assistant" }) {
   if (role === "user") {
@@ -12,6 +13,16 @@ function Avatar({ agent, role }: { agent: Agent; role: "user" | "assistant" }) {
       >
         You
       </span>
+    );
+  }
+  if (agent.id === "yazh-guide") {
+    return (
+      <YazhiMascot
+        mode="avatar"
+        size="custom"
+        className="mt-0.5 h-7 w-7 shrink-0"
+        alt={`${agent.taName} • ${agent.name}`}
+      />
     );
   }
   return (

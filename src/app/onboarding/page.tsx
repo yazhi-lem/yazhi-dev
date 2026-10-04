@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createUser } from "@/lib/users";
 import { LINKS } from "@/lib/content";
+import { YazhiMascot } from "@/components/mascot/YazhiMascot";
 
 type Geo = { cluster: string; country: string | null };
 
@@ -57,8 +58,9 @@ function OnboardingForm() {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center p-4 pb-20">
         <div className="w-full max-w-md bg-zinc-950 border border-zinc-800 p-8 md:p-12 shadow-2xl text-center">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/yazh/yazh-waving.png" alt="" aria-hidden className="mx-auto mb-6 h-24 w-24 object-contain" />
+          <div className="mb-6 flex justify-center">
+            <YazhiMascot mode="avatar" size="md" />
+          </div>
           <h1 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-3">Welcome, builder</h1>
           <p className="text-zinc-400 font-mono text-sm mb-8">
             You&apos;re on the list. Two things happen from here:

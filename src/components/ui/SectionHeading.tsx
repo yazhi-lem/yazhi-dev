@@ -14,6 +14,7 @@ export function SectionHeading({
   subEn,
   plainTa,
   plainEn,
+  className = "mb-5 max-w-5xl",
 }: {
   thinaiTa: string;
   thinaiEn: string;
@@ -27,11 +28,12 @@ export function SectionHeading({
       under the poetic/technical register — never replacing it */
   plainTa?: string;
   plainEn?: string;
+  className?: string;
 }) {
   return (
-    <header className="mb-12 max-w-3xl">
-      <p className="mb-3 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-[color:var(--accent)]">
-        <span aria-hidden className="h-px w-8 bg-[color:var(--accent)]" />
+    <header className={className}>
+      <p className="mb-2 flex items-center gap-2.5 text-[11px] sm:text-xs uppercase tracking-[0.2em] text-[color:var(--accent)]">
+        <span aria-hidden className="h-px w-6 sm:w-8 bg-[color:var(--accent)]" />
         <Bi
           ta={`${thinaiTa} · ${landscapeTa}`}
           en={`${thinaiEn} · ${landscape}`}
@@ -44,15 +46,15 @@ export function SectionHeading({
         ta={titleTa}
         en={titleEn}
         className="flex flex-col gap-1"
-        taClass="font-display text-[length:var(--text-4xl)] font-semibold"
-        enClass="font-display text-[length:var(--text-2xl)] font-medium text-ivory-dim"
+        taClass="font-display text-[length:var(--text-section-ta)] font-bold tracking-tight text-ivory leading-tight"
+        enClass="font-display text-[length:var(--text-product)] font-medium text-ivory-dim"
       />
       {subTa && subEn && (
         <Bi
           as="p"
           ta={subTa}
           en={subEn}
-          className="mt-4 flex flex-col gap-1 text-[length:var(--text-lg)] text-ivory-dim"
+          className="mt-2 flex flex-col gap-0.5 text-[length:var(--text-subhead)] text-ivory-dim"
         />
       )}
       {plainTa && plainEn && (
@@ -60,9 +62,10 @@ export function SectionHeading({
           as="p"
           ta={plainTa}
           en={plainEn}
-          className="mt-3 flex flex-col gap-1 border-l-2 border-[color:var(--accent)]/40 pl-3 text-sm text-ivory-dim"
+          className="mt-2 flex flex-col gap-0.5 border-l-2 border-[color:var(--accent)]/40 pl-3 text-xs sm:text-sm leading-relaxed text-ivory-dim/90"
         />
       )}
     </header>
   );
 }
+

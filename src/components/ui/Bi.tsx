@@ -4,8 +4,8 @@ import type { ElementType, ReactNode } from "react";
 import React from "react";
 
 /** Bilingual text primitive. Renders Tamil and/or English according to
-    the global TAM / ENG / BOTH mode, with correct lang attributes so
-    Tamil line-height rules apply. */
+    the global language mode, with fluid cross-fade transition and correct
+    lang attributes so Tamil line-height rules apply. */
 export function Bi({
   ta,
   en,
@@ -31,18 +31,26 @@ export function Bi({
   const content = (
     <>
       {lang !== "en" && (
-        <span lang="ta" className={`${d} ${taClass}`.trim()}>
+        <span
+          key={`ta-${lang}`}
+          lang="ta"
+          className={`bi-fade-in ${d} ${taClass}`.trim()}
+        >
           {ta}
         </span>
       )}
       {lang === "both" && separator}
       {lang !== "ta" && (
-        <span lang="en" className={`${d} ${enClass}`.trim()}>
+        <span
+          key={`en-${lang}`}
+          lang="en"
+          className={`bi-fade-in ${d} ${enClass}`.trim()}
+        >
           {en}
         </span>
       )}
     </>
   );
 
-  return React.createElement(Tag, { className }, content);
+  return React.createElement(Tag, { className: `${className} bi-text`.trim() }, content);
 }

@@ -4,7 +4,7 @@ import { THINAI } from "@/lib/content";
 import { useLang } from "@/lib/i18n";
 
 /** The five thinai as literal site navigation. Desktop: fixed left rail.
-    Mobile: bottom bar. Active landscape tracks scroll position. */
+    Mobile: bottom dock centered with safe-area insets. Active landscape tracks scroll position. */
 export function ThinaiRail() {
   const { lang } = useLang();
   const [active, setActive] = useState("kurinji");
@@ -34,8 +34,8 @@ export function ThinaiRail() {
 
   return (
     <nav
-      aria-label="ஐந்திணை / Five landscapes"
-      className="fixed z-40 max-lg:bottom-4 max-lg:left-1/2 max-lg:-translate-x-1/2 lg:left-6 lg:top-1/2 lg:-translate-y-1/2"
+      aria-label={lang === "en" ? "Five landscapes" : lang === "ta" ? "ஐந்திணை" : "ஐந்திணை / Five landscapes"}
+      className="fixed z-40 max-lg:bottom-[calc(0.75rem+env(safe-area-inset-bottom,0px))] max-lg:left-1/2 max-lg:-translate-x-1/2 lg:bottom-auto lg:left-[calc(1.5rem+env(safe-area-inset-left,0px))] lg:top-1/2 lg:translate-x-0 lg:-translate-y-1/2"
     >
       <ul className="flex gap-1.5 rounded-full border border-ivory/10 bg-night-2/80 p-1.5 backdrop-blur lg:flex-col lg:gap-2">
         {THINAI.map((t) => {
@@ -44,7 +44,7 @@ export function ThinaiRail() {
             <li key={t.key}>
               <button
                 onClick={() => go(t.section)}
-                aria-label={lang === "en" ? `${t.en} — ${t.landscape}` : `${t.ta} · ${t.en}`}
+                aria-label={lang === "en" ? `${t.en} — ${t.landscape}` : lang === "ta" ? `${t.ta}` : `${t.ta} · ${t.en}`}
                 aria-current={isActive ? "true" : undefined}
                 className={`group relative flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ${
                   isActive
@@ -54,7 +54,7 @@ export function ThinaiRail() {
               >
                 <span aria-hidden className="text-lg leading-none">{t.icon}</span>
                 <span className="pointer-events-none absolute left-full ml-3 hidden whitespace-nowrap rounded-md bg-night-2 px-2 py-1 text-xs text-ivory opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 lg:block">
-                  {lang === "en" ? t.en : t.ta}
+                  {lang === "en" ? t.en : lang === "ta" ? t.ta : `${t.ta} · ${t.en}`}
                 </span>
               </button>
             </li>

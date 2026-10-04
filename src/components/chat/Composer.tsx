@@ -1,6 +1,8 @@
 "use client";
 import { useRef, useState } from "react";
 
+import { Bi } from "@/components/ui/Bi";
+
 export function Composer({
   onSend,
   onStop,
@@ -66,7 +68,7 @@ export function Composer({
               type="button"
               onClick={submit}
               disabled={!text.trim()}
-              className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold text-night transition enabled:hover:bg-bronze enabled:hover:text-ivory disabled:opacity-30"
+              className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold text-night transition enabled:hover:bg-bronze enabled:hover:text-ivory disabled:opacity-30 [text-shadow:none]"
               aria-label="Send message"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -76,9 +78,12 @@ export function Composer({
             </button>
           )}
         </div>
-        <p className="px-1 text-[11px] text-ivory-dim/60">
-          Enter to send · Shift+Enter for a new line · replies stream from the yazhi-api backend
-        </p>
+        <Bi
+          as="p"
+          ta="அனுப்ப Enter · புதிய வரிக்கு Shift+Enter · பதில்கள் யாழ் இயங்குதளத்திலிருந்து வரும்"
+          en="Enter to send · Shift+Enter for a new line · replies stream from the yazhi-api backend"
+          className="px-1 text-[11px] text-ivory-dim/60"
+        />
       </div>
     </div>
   );

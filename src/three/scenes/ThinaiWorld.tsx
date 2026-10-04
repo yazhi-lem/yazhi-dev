@@ -39,11 +39,8 @@ export default function ThinaiWorld() {
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
-      {/* the WebGL world is blurred directly (not via backdrop-filter, which
-          doesn't reliably sample a canvas's own compositing layer in every
-          browser) — scaled up slightly so the blur's soft edge falls outside
-          the viewport instead of showing as a faded border */}
-      <div className="absolute inset-0 scale-110 blur-[6px]">
+      {/* Substantially reduced blur: atmospheric depth without losing landscape sharpness */}
+      <div className="absolute inset-0 scale-105 blur-[1.5px]">
         <Canvas
           dpr={low ? 1 : [1, 1.5]}
           gl={{ antialias: !low, powerPreference: "high-performance" }}

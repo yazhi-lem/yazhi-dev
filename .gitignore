@@ -44,3 +44,7 @@ next-env.d.ts
 
 # Playwright MCP session artifacts (screenshots, console logs)
 .playwright-mcp/
+
+# IDE
+.vscode/
+

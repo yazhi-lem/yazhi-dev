@@ -1,49 +1,158 @@
 "use client";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { GUARDIAN, LINKS } from "@/lib/content";
 import { Bi } from "@/components/ui/Bi";
 import { fadeUp, stagger } from "@/lib/motionPresets";
+import { YazhiMascot } from "@/components/mascot/YazhiMascot";
+import { useLang } from "@/lib/i18n";
 
-/** Palai (desert · hardship) governs Yazh Guardian: the guardian is the
-    figure who endures the harsh terrain to protect what crosses it. The
-    guardian motif is rendered as an SVG mark derived from temple-pillar
-    yazhi silhouettes — mane, tusk, coiled body — kept abstract enough to
-    stay a mark, not an illustration. */
+const GREETINGS: Record<
+  string,
+  { name: string; main: string; sub: string; voiceLang: string }
+> = {
+  ta: {
+    name: "தமிழ்",
+    main: "“வணக்கம்! நான் யாழ்!”",
+    sub: "“Hello! I am Yazh!”",
+    voiceLang: "ta-IN",
+  },
+  en: {
+    name: "English",
+    main: "“Hello! I am Yazh!”",
+    sub: "“வணக்கம்! நான் யாழ்!”",
+    voiceLang: "en-IN",
+  },
+  te: {
+    name: "తెలుగు",
+    main: "“నమస్కారం! నేను యాజ్!”",
+    sub: "“Hello! I am Yazh!”",
+    voiceLang: "te-IN",
+  },
+  hi: {
+    name: "हिन्दी",
+    main: "“नमस्ते! मैं याज़ हूँ!”",
+    sub: "“Hello! I am Yazh!”",
+    voiceLang: "hi-IN",
+  },
+  kn: {
+    name: "ಕನ್ನಡ",
+    main: "“ನಮಸ್ಕಾರ! ನಾನು ಯಾಜ್!”",
+    sub: "“Hello! I am Yazh!”",
+    voiceLang: "kn-IN",
+  },
+  ml: {
+    name: "മലയാളം",
+    main: "“നമസ്കാരം! ഞാൻ യാഴ്!”",
+    sub: "“Hello! I am Yazh!”",
+    voiceLang: "ml-IN",
+  },
+};
+
 export function Guardian() {
-  // Probe for the Yazhi character art: show it only once it successfully
-  // loads, otherwise keep the abstract SVG mark. No broken-image flash
-  // before public/yazhi.png is added.
-  const [hasArt, setHasArt] = useState(false);
+  const { lang: siteLang } = useLang();
+  const [selectedLang, setSelectedLang] = useState<string>("ta");
+  const [showGreeting, setShowGreeting] = useState(false);
+  const [greetingKey, setGreetingKey] = useState(0);
+
+  // Sync default greeting with site language toggle
   useEffect(() => {
-    const img = new window.Image();
-    img.onload = () => setHasArt(true);
-    img.src = "/yazhi.png";
-  }, []);
+    if (siteLang === "en") setSelectedLang("en");
+    else if (siteLang === "ta" || siteLang === "both") setSelectedLang("ta");
+  }, [siteLang]);
+
+  // Auto-dismiss greeting after 8 seconds
+  useEffect(() => {
+    if (!showGreeting) return;
+    const timer = setTimeout(() => {
+      setShowGreeting(false);
+    }, 8000);
+    return () => clearTimeout(timer);
+  }, [showGreeting, greetingKey]);
+
+  const speakGreeting = (text: string, voiceCode: string) => {
+    try {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+        const cleanText = text.replace(/[“”"']/g, "");
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = voiceCode;
+        utterance.rate = 0.95;
+        window.speechSynthesis.speak(utterance);
+      }
+    } catch {
+      // Audio speech ignored if blocked by browser policy
+    }
+  };
+
+  const toggleMascotGreeting = () => {
+    if (showGreeting) {
+      setShowGreeting(false);
+      try {
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+      } catch {
+        // Audio speech cancel ignored
+      }
+    } else {
+      setShowGreeting(true);
+      setGreetingKey((prev) => prev + 1);
+      const activeGreeting = GREETINGS[selectedLang] || GREETINGS.ta;
+      speakGreeting(activeGreeting.main, activeGreeting.voiceLang);
+    }
+  };
+
+  const handleLanguageSelect = (targetLang: string) => {
+    setSelectedLang(targetLang);
+    setShowGreeting(true);
+    setGreetingKey((prev) => prev + 1);
+    const activeGreeting = GREETINGS[targetLang] || GREETINGS.ta;
+    speakGreeting(activeGreeting.main, activeGreeting.voiceLang);
+  };
+
+  const currentGreeting = GREETINGS[selectedLang] || GREETINGS.ta;
+
   return (
-    <Section id="guardian">
-      <SectionHeading
-        thinaiTa="பாலை" thinaiEn="Palai" landscapeTa="பாலைவனம் · பிரிதல்" landscape="Desert · hardship endured"
-        titleTa={GUARDIAN.nameTa} titleEn={GUARDIAN.nameEn}
-        subTa={GUARDIAN.subTa} subEn={GUARDIAN.subEn}
-        plainTa={GUARDIAN.plainTa} plainEn={GUARDIAN.plainEn}
-      />
-      <Bi
-        as="p"
-        ta={GUARDIAN.eyebrowTa}
-        en={GUARDIAN.eyebrowEn}
-        className="mb-4 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]"
-        separator={<span aria-hidden>·</span>}
-      />
-      <div className="grid items-center gap-10 lg:grid-cols-[1fr_minmax(260px,380px)]">
-        <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}>
-          <motion.p variants={fadeUp} lang="en" className="max-w-prose text-ivory-dim">
-            {GUARDIAN.bodyEn}
-          </motion.p>
-          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
+    <Section id="guardian" fullHeight className="py-6 sm:py-8 lg:py-10">
+      <div className="grid items-center gap-6 lg:grid-cols-12 lg:gap-10">
+        {/* Left Column: Story, Voice Guardian Narrative & Dual CTAs */}
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          className="text-scrim flex flex-col justify-center lg:col-span-7"
+        >
+          <SectionHeading
+            thinaiTa="பாலை"
+            thinaiEn="Palai"
+            landscapeTa="பாலைவனம் · பிரிதல்"
+            landscape="Desert · hardship endured"
+            titleTa={GUARDIAN.nameTa}
+            titleEn={GUARDIAN.nameEn}
+            subTa={GUARDIAN.subTa}
+            subEn={GUARDIAN.subEn}
+            plainTa={GUARDIAN.plainTa}
+            plainEn={GUARDIAN.plainEn}
+            className="mb-3.5"
+          />
+
+          <motion.div variants={fadeUp}>
+            <Bi
+              as="p"
+              ta={GUARDIAN.bodyTa}
+              en={GUARDIAN.bodyEn}
+              className="max-w-3xl text-xs sm:text-sm leading-relaxed text-ivory-dim flex flex-col gap-1.5"
+            />
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-5 flex flex-wrap items-center gap-3">
             <Button href={GUARDIAN.ctaHref}>
               <Bi ta={GUARDIAN.ctaTa} en={GUARDIAN.ctaEn} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
             </Button>
@@ -55,50 +164,223 @@ export function Guardian() {
               <Bi ta={GUARDIAN.whatsappCtaTa} en={GUARDIAN.whatsappCtaEn} className="flex gap-1.5" separator={<span aria-hidden>·</span>} />
             </Button>
           </motion.div>
-          <motion.p variants={fadeUp} className="mt-4 max-w-prose text-xs text-ivory-dim/80">
-            <Bi ta={GUARDIAN.whatsappNoteTa} en={GUARDIAN.whatsappNoteEn} className="flex flex-col gap-0.5" />
-          </motion.p>
+
+          <motion.div variants={fadeUp} className="mt-3.5 border-l border-white/15 pl-3">
+            <Bi ta={GUARDIAN.whatsappNoteTa} en={GUARDIAN.whatsappNoteEn} className="flex flex-col gap-0.5 text-[11px] text-ivory-dim/75" />
+          </motion.div>
         </motion.div>
 
-        {/* Guardian — the Yazhi character art, or the abstract mark as fallback */}
-        <motion.figure
-          variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-          className="mx-auto"
+        {/* Right Column: Yazhi Animated Guardian Mascot on Ambient Pedestal Stage */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-60px" }}
+          className="relative flex flex-col items-center justify-center lg:col-span-5"
         >
-          {hasArt ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src="/yazhi.png"
-              alt="Yazhi — mythical guardian"
-              className="mx-auto h-56 w-56 object-contain drop-shadow-[0_12px_34px_rgba(0,0,0,0.45)] sm:h-72 sm:w-72"
-            />
-          ) : (
-            <svg
-              viewBox="0 0 200 200" role="img" aria-label="Abstract yazhi guardian mark"
-              className="h-56 w-56 sm:h-72 sm:w-72"
+          {/* Subtle ambient spotlight backdrop behind mascot */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-4 -z-10 rounded-full opacity-40 blur-3xl"
+            style={{
+              background: "radial-gradient(circle, color-mix(in oklab, var(--palai) 45%, transparent), transparent 70%)",
+            }}
+          />
+
+          <div className="relative flex flex-col items-center">
+            {/* Pop-up Incoming Text Message Notification */}
+            <AnimatePresence>
+              {showGreeting && (
+                <motion.div
+                  key={`msg-popup-${greetingKey}`}
+                  initial={{ opacity: 0, y: 16, scale: 0.88 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.92 }}
+                  transition={{ type: "spring", stiffness: 420, damping: 26 }}
+                  className="absolute -top-32 sm:-top-36 z-30 flex flex-col items-center select-none"
+                >
+                  <div className="relative flex flex-col rounded-2xl border border-gold/50 bg-[#0d0e12]/95 p-3 sm:p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.9),0_0_25px_rgba(211,179,106,0.25)] backdrop-blur-xl max-w-[290px] sm:max-w-[340px]">
+                    <div className="flex items-start gap-3">
+                      {/* Yazhi DP avatar thumbnail */}
+                      <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-gold/60 bg-night-2 p-0.5 shadow-md">
+                        <Image
+                          src="/images/mascot/yazhidp.png"
+                          alt="Yazh"
+                          width={36}
+                          height={36}
+                          className="h-full w-full rounded-full object-cover"
+                        />
+                        <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-emerald-400 ring-1 ring-black" />
+                      </div>
+
+                      {/* Message Bubble Content */}
+                      <div className="flex-1 min-w-0 pr-4">
+                        <div className="flex items-center justify-between gap-1.5">
+                          <Bi
+                            as="span"
+                            ta="யாழ்"
+                            en="Yazh"
+                            className="font-display text-xs font-bold text-ivory tracking-wide"
+                            separator=" · "
+                          />
+                          <Bi
+                            as="span"
+                            ta="11:11 · இப்போது"
+                            en="11:11 · now"
+                            className="font-mono text-[9px] text-ivory-dim/60"
+                          />
+                        </div>
+
+                        {/* Incoming Greeting Text: Strictly respects language mode */}
+                        {siteLang === "both" ? (
+                          <div className="mt-1 flex flex-col gap-0.5">
+                            <p className="font-display text-sm sm:text-base font-bold text-gold tracking-tight leading-snug">
+                              “வணக்கம்! நான் யாழ்!”
+                            </p>
+                            <p className="font-display text-xs sm:text-sm font-semibold text-ivory-dim/95 tracking-tight leading-snug">
+                              “Hello! I am Yazh!”
+                            </p>
+                          </div>
+                        ) : siteLang === "en" ? (
+                          <div className="mt-1">
+                            <p className="font-display text-sm sm:text-base font-bold text-gold tracking-tight leading-snug">
+                              “Hello! I am Yazh!”
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="mt-1">
+                            <p className="font-display text-sm sm:text-base font-bold text-gold tracking-tight leading-snug">
+                              {currentGreeting.main}
+                            </p>
+                          </div>
+                        )}
+
+                        <div className="mt-1.5 flex items-center gap-1.5">
+                          <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          <Bi
+                            as="span"
+                            ta="குரல் நண்பன்"
+                            en="Voice AI Friend"
+                            className="font-mono text-[9px] text-gold/85 uppercase tracking-wider"
+                            separator=" · "
+                          />
+                        </div>
+                      </div>
+
+                      {/* Close button */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowGreeting(false);
+                        }}
+                        className="absolute right-2.5 top-2.5 flex h-4 w-4 items-center justify-center rounded-full text-ivory-dim/50 hover:text-ivory hover:bg-white/10 transition-colors"
+                        aria-label="Dismiss greeting"
+                      >
+                        <svg className="h-3 w-3 fill-current" viewBox="0 0 24 24">
+                          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                      </button>
+                    </div>
+
+                    {/* Multi-language Selector Pills */}
+                    <div className="mt-2.5 flex flex-wrap items-center gap-1 border-t border-white/10 pt-2">
+                      <span className="font-mono text-[8px] uppercase tracking-wider text-ivory-dim/50 mr-0.5">
+                        {siteLang === "en" ? "Languages:" : "மொழிகள்:"}
+                      </span>
+                      {Object.entries(GREETINGS).map(([code, g]) => (
+                        <button
+                          key={code}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleLanguageSelect(code);
+                          }}
+                          className={`rounded-full px-2 py-0.5 text-[9px] font-medium transition-all ${
+                            selectedLang === code
+                              ? "bg-gold/25 text-gold border border-gold/45 shadow-xs"
+                              : "bg-white/[0.04] text-ivory-dim/70 hover:text-ivory hover:bg-white/10"
+                          }`}
+                        >
+                          {siteLang === "en" ? (code === "ta" ? "Tamil" : g.name) : g.name}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Speech bubble notch pointing to the mascot */}
+                    <div
+                      aria-hidden
+                      className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-0 w-0 border-x-8 border-x-transparent border-t-8 border-t-gold/50"
+                    />
+                    <div
+                      aria-hidden
+                      className="absolute -bottom-[6px] left-1/2 -translate-x-1/2 h-0 w-0 border-x-7 border-x-transparent border-t-7 border-t-[#0d0e12]"
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Tap Me Hint Chip before clicked */}
+            {!showGreeting && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, y: [0, -3, 0] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                className="pointer-events-none absolute -top-8 z-20 flex items-center gap-1 rounded-full border border-gold/30 bg-black/60 px-2.5 py-0.5 font-mono text-[10px] text-gold/90 shadow-sm backdrop-blur-sm"
+              >
+                <span>✨</span>
+                <Bi
+                  as="span"
+                  ta="தொட்டுப் பாருங்கள்"
+                  en="Tap me"
+                  separator={<span aria-hidden>·</span>}
+                />
+              </motion.div>
+            )}
+
+            {/* Interactive Clickable Mascot Container */}
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={toggleMascotGreeting}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  toggleMascotGreeting();
+                }
+              }}
+              aria-label={
+                siteLang === "en"
+                  ? "Tap Yazh to toggle greeting"
+                  : siteLang === "ta"
+                  ? "யாழ் வாழ்த்து பெற அல்லது மறைக்க தொடுக"
+                  : "யாழ் வாழ்த்து பெற அல்லது மறைக்க தொடுக · Tap Yazh to toggle greeting"
+              }
+              className="group relative cursor-pointer select-none transition-transform duration-300 hover:scale-[1.03] active:scale-95 focus:outline-none"
             >
-              <defs>
-                <linearGradient id="yz" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="var(--gold)" />
-                  <stop offset="100%" stopColor="var(--palai)" />
-                </linearGradient>
-              </defs>
-              {/* coiled body */}
-              <path d="M100 178c-42 0-72-30-72-68 0-40 32-70 72-70 30 0 54 20 54 46 0 22-17 38-40 38-17 0-29-11-29-26 0-11 8-19 19-19"
-                fill="none" stroke="url(#yz)" strokeWidth="7" strokeLinecap="round" />
-              {/* mane arcs */}
-              <path d="M52 60c-8 12-12 26-12 40" fill="none" stroke="var(--gold)" strokeWidth="4" strokeLinecap="round" opacity="0.7" />
-              <path d="M66 44c-10 9-17 20-21 33" fill="none" stroke="var(--gold)" strokeWidth="4" strokeLinecap="round" opacity="0.5" />
-              {/* tusk */}
-              <path d="M144 66c10-8 14-18 12-30" fill="none" stroke="var(--ivory)" strokeWidth="5" strokeLinecap="round" />
-              {/* eye */}
-              <circle cx="128" cy="78" r="5" fill="var(--gold)" />
-            </svg>
-          )}
-          <figcaption className="mt-3 text-center text-xs uppercase tracking-[0.3em] text-ivory-dim">
-            யாழி · temple guardian
-          </figcaption>
-        </motion.figure>
+              <YazhiMascot
+                mode="video"
+                size="lg"
+                priority
+                alt="Yazh — sovereign mythical temple guardian animation"
+              />
+            </div>
+
+            {/* Soft contact floor shadow */}
+            <div
+              aria-hidden
+              className="mt-1 h-3.5 w-44 rounded-full bg-black/50 blur-md"
+            />
+            <figcaption className="mt-3 text-center font-mono text-[11px] uppercase tracking-[0.25em] text-ivory-dim/70">
+              <Bi
+                ta="யாழ் · கோவில் காவலாளி"
+                en="Yazh · Temple Guardian"
+                separator={<span aria-hidden>·</span>}
+              />
+            </figcaption>
+          </div>
+        </motion.div>
       </div>
     </Section>
   );

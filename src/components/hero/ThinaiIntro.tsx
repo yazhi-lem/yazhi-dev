@@ -73,7 +73,7 @@ export function ThinaiIntro() {
             onClick={() => { window.sessionStorage.setItem("yazhi-intro", "1"); setDone(true); }}
             className="absolute bottom-8 text-xs uppercase tracking-widest text-ivory-dim hover:text-ivory"
           >
-            skip →
+            <Bi ta="தவிர் →" en="skip →" />
           </button>
         </motion.div>
       )}

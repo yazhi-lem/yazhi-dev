@@ -8,10 +8,12 @@ const AWAKENING = Date.UTC(2027, 0, 1, 0, 0, 0); // 2027-01-01 (month is 0-index
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-/** Always-on countdown to the Yazhi Awakening. Fixed to the viewport so it
-    stays on screen through the whole scroll. `now` starts null and is only
-    set in an effect, so the server and first client render agree — no
-    hydration mismatch — then it ticks live every second. */
+/** Always-on countdown to the Yazhi Awakening. Fixed to the viewport with
+    safe-area insets: positioned on the bottom-right above the ThinaiRail dock
+    on mobile, and bottom-right corner on desktop so it never collides with
+    the navbar or content. `now` starts null and is only set in an effect, so
+    the server and first client render agree — no hydration mismatch — then
+    it ticks live every second. */
 export function LaunchTimer() {
   const { lang } = useLang();
   const [now, setNow] = useState<number | null>(null);
@@ -40,7 +42,7 @@ export function LaunchTimer() {
     <div
       role="timer"
       aria-label={`Yazhi Awakening — ${days} days ${hrs} hours ${mins} minutes ${secs} seconds remaining`}
-      className="fixed right-3 top-16 z-40 flex items-center gap-2 rounded-full border border-ivory/15 bg-night-2/80 px-3 py-1.5 text-xs shadow-lg backdrop-blur lg:bottom-4 lg:right-4 lg:top-auto"
+      className="fixed z-40 flex items-center gap-2 rounded-full border border-ivory/15 bg-night-2/80 px-3 py-1.5 text-xs shadow-lg backdrop-blur right-[calc(1rem+env(safe-area-inset-right,0px))] bottom-[calc(1rem+env(safe-area-inset-bottom,0px))]"
     >
       <span aria-hidden className="text-sm leading-none">🌅</span>
       <span className="hidden text-[color:var(--accent)] sm:inline">{label}</span>

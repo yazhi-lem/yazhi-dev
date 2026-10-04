@@ -30,6 +30,12 @@ export function ThinaiTheme() {
         observer.observe(el);
       }
     });
+
+    const thinaiEl = document.getElementById("thinai");
+    if (thinaiEl) {
+      thinaiEl.dataset.thinai = "thinai";
+      observer.observe(thinaiEl);
+    }
     return () => observer.disconnect();
   }, []);
 

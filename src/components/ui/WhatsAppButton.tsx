@@ -2,8 +2,9 @@
 import { LINKS } from "@/lib/content";
 
 /** Floating invite to the community WhatsApp group. Fixed to the viewport,
-    stacked above the LaunchTimer's bottom-left position on mobile / opposite
-    corner on desktop so the two never overlap. */
+    positioned above the bottom ThinaiRail dock on mobile with safe-area
+    insets, opposite LaunchTimer, and in the bottom-left corner on desktop
+    so elements never overlap or become unclickable. */
 export function WhatsAppButton() {
   return (
     <a
@@ -11,7 +12,7 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Join the Yazhi WhatsApp group"
-      className="fixed bottom-4 left-4 z-40 grid h-12 w-12 place-items-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105"
+      className="fixed z-40 grid h-12 w-12 place-items-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105 left-[calc(1rem+env(safe-area-inset-left,0px))] bottom-[calc(1rem+env(safe-area-inset-bottom,0px))]"
     >
       <svg
         viewBox="0 0 24 24"

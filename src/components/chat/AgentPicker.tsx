@@ -1,6 +1,7 @@
 "use client";
 import { AGENTS, PROVIDER_META } from "@/lib/chat/agents";
 import type { Agent, Provider } from "@/lib/chat/types";
+import { YazhiMascot } from "@/components/mascot/YazhiMascot";
 
 const GROUPS: Provider[] = ["gemini", "openai"];
 
@@ -37,13 +38,17 @@ export function AgentPicker({ onSelect }: { onSelect: (agent: Agent) => void }) 
                     onClick={() => onSelect(agent)}
                     className="group flex items-start gap-3 rounded-xl border border-ivory/10 bg-night p-3 text-left transition hover:border-gold/50 hover:bg-night-2"
                   >
-                    <span
-                      aria-hidden
-                      className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-semibold text-night"
-                      style={{ backgroundColor: agent.accent }}
-                    >
-                      {agent.taName.charAt(0)}
-                    </span>
+                    {agent.id === "yazh-guide" ? (
+                      <YazhiMascot mode="avatar" size="custom" className="h-9 w-9 shrink-0" />
+                    ) : (
+                      <span
+                        aria-hidden
+                        className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-semibold text-night"
+                        style={{ backgroundColor: agent.accent }}
+                      >
+                        {agent.taName.charAt(0)}
+                      </span>
+                    )}
                     <span className="min-w-0">
                       <span className="flex flex-wrap items-baseline gap-x-2">
                         <span className="text-sm font-semibold text-ivory">{agent.name}</span>
