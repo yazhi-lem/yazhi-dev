@@ -45,7 +45,7 @@ export function Footer() {
       {/* sparkling bubbles rising through the water, in front of the scene */}
       <Bubbles className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" />
 
-      <div className="mx-auto grid max-w-[var(--max-w)] gap-10 px-6 pb-24 pt-24 sm:px-8 lg:px-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+      <div className="mx-auto grid max-w-[var(--max-w)] gap-10 px-6 pb-24 pt-24 sm:px-8 lg:pl-28 lg:pr-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div>
           <div className="flex items-center gap-2.5">
             <LogoMark size={30} />

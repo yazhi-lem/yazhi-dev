@@ -5,9 +5,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Bi } from "@/components/ui/Bi";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { LogoMark } from "@/components/ui/LogoMark";
-import { IDENTITY, NAV_GROUPS, NAV_TOP, UI } from "@/lib/content";
+import { IDENTITY, NAV_GROUPS, ADHAN, SANGAM, GUARDIAN, COMMUNITY } from "@/lib/content";
 
-const LINKS_TOP = NAV_TOP;
+const LINKS_TOP = [
+  { ta: IDENTITY.nameTa, en: IDENTITY.nameEn, href: "#yazhi" },
+  { ta: ADHAN.nameTa, en: ADHAN.nameEn, href: "#adhan" },
+  { ta: GUARDIAN.nameTa, en: GUARDIAN.nameEn, href: "#guardian" },
+  { ta: SANGAM.nameTa, en: SANGAM.nameEn, href: "#sangam" },
+  { ta: COMMUNITY.titleTa, en: COMMUNITY.titleEn, href: "#community" },
+];
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -23,37 +29,36 @@ export function Navbar() {
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28"
         style={{ background: "linear-gradient(to bottom, rgba(5,7,13,0.75), rgba(5,7,13,0.32) 55%, transparent)" }}
       />
-      <div className="mx-auto flex max-w-[var(--max-w)] items-center justify-between gap-4 px-5 py-4">
-        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="Yazhi home">
+      <div className="mx-auto flex max-w-[var(--max-w)] items-center justify-between px-5 py-4">
+        <Link href="/" className="flex items-center gap-2.5" aria-label="Yazhi home">
           <LogoMark size={34} />
           <Bi
             ta={IDENTITY.nameTa}
             en={IDENTITY.nameEn}
-            className="hidden items-baseline gap-2 font-serif text-lg font-black sm:flex"
+            className="flex items-baseline gap-2 font-serif text-lg font-black tracking-[-3px]"
             separator={<span aria-hidden className="text-ivory-dim">•</span>}
           />
         </Link>
 
         <div className="flex items-center gap-3">
-          <ul className="hidden items-center gap-5 lg:flex">
+          <ul className="hidden items-center gap-6 md:flex">
             {LINKS_TOP.map((l) => (
               <li key={l.href}>
                 <a href={l.href} className="text-sm text-ivory-dim transition-colors hover:text-ivory">
-                  {/* in BOTH mode the gloss sits under the word, so four links fit */}
-                  <Bi ta={l.ta} en={l.en} className="inline-flex flex-col items-center leading-tight" enClass="text-[0.6875rem] text-ivory-dim/80" />
+                  <Bi ta={l.ta} en={l.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
                 </a>
               </li>
             ))}
           </ul>
           <Link
             href="/chat"
-            className="hidden rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night sm:inline-flex"
+            className="rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night"
           >
-            <Bi ta={UI.chat.ta} en={UI.chat.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
+            <Bi ta="அரட்டை" en="Chat" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
           </Link>
           <LangToggle />
           <button
-            className="grid h-9 w-9 place-items-center rounded-lg border border-ivory/15 lg:hidden"
+            className="grid h-9 w-9 place-items-center rounded-lg border border-ivory/15 md:hidden"
             aria-expanded={open}
             aria-label="Menu"
             onClick={() => setOpen((v) => !v)}
@@ -70,7 +75,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-5 rounded-2xl border border-ivory/10 bg-gradient-to-b from-night-2/95 via-night-2/90 to-night-2/75 p-5 backdrop-blur lg:hidden"
+            className="mx-5 rounded-2xl border border-ivory/10 bg-gradient-to-b from-night-2/95 via-night-2/90 to-night-2/75 p-5 backdrop-blur md:hidden"
           >
             {NAV_GROUPS.map((g) => (
               <div key={g.en} className="mb-4 last:mb-0">
