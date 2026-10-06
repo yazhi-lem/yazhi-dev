@@ -1,105 +1,110 @@
-/** Server-only adapter between /chat and yazhi-api.
+/** Server-only adapter that fronts the chat UI to the yazhi-api backend.
+    THIS FILE IS THE SINGLE INTEGRATION POINT FOR yazhi-api.
 
-    A turn goes to yazhi.v1.AgentQueryService/QueryAgent (unary; the
-    agent's five-posture run returns one complete answer) through the same
-    Connect-JSON transport as every Bubble page (src/lib/yazhi-api/rpc.ts).
+    Contract (aligned with the OpenAI-compatible Chat Completions shape,
+    which most agent backends — including yazhi-api — follow):
+      POST {YAZHI_API_URL}{YAZHI_CHAT_PATH}
+      body: { model, messages: [{role, content}...], stream: true }
+      auth: Authorization: Bearer {YAZHI_API_KEY}   (optional)
+      response: Server-Sent Events (data: {choices:[{delta:{content}}]}, data: [DONE])
 
-    SOVEREIGNTY GATE (Aram rule 2 — data stays home; the Yazhi mark never
-    appears on anything that breaks it). Before a turn is forwarded,
-    yazhi.v1.YazhiSystem/GetHealth must report:
-      sovereignty.externalCalls === 0      (proto3 omits 0 → absent = 0)
-      sovereignty.inferenceLocal === true  (absent = false: must be stated)
-      sovereignty.dataResidency === "on-prem"
-    Otherwise the turn is refused with the reason. The check is enforced
-    here in code, not in a prompt, and is only as good as yazhi-api's
-    reporting — see docs/YBI-DEV-GUIDE.md §11. */
-import "server-only";
-import { RpcError, rpcConfigured, unary } from "@/lib/yazhi-api/rpc";
-import type { Agent, ChatErrorCode, ChatStatus, Message } from "./types";
-import { MAX_HISTORY_TURNS } from "./types";
+    The route handler re-streams this to the browser as NDJSON lines of
+    ChatChunk. If yazhi-api deviates from this shape, adapt parseSseLine()
+    below — nothing else needs to change. */
 
-interface HealthSnapshot {
-  status?: string;
-  sovereignty?: {
-    externalCalls?: number;
-    inferenceLocal?: boolean;
-    dataResidency?: string;
-    lastAuditTs?: string;
-  };
+import type { Agent, ChatChunk } from "./types";
+
+const YAZHI_API_URL = process.env.YAZHI_API_URL;
+const YAZHI_API_KEY = process.env.YAZHI_API_KEY;
+const YAZHI_CHAT_PATH = process.env.YAZHI_CHAT_PATH ?? "/v1/chat/completions";
+
+const encoder = new TextEncoder();
+
+function errorStream(message: string): ReadableStream<Uint8Array> {
+  const chunk: ChatChunk = { error: message };
+  return new ReadableStream({
+    start(controller) {
+      controller.enqueue(encoder.encode(JSON.stringify(chunk) + "\n"));
+      controller.close();
+    },
+  });
 }
 
-interface AgentQueryResponse {
-  response?: string;
-  agentNameId?: string;
-  trace?: string;
-}
-
-export class ChatError extends Error {
-  constructor(
-    readonly code: ChatErrorCode,
-    message: string,
-  ) {
-    super(message);
-  }
-}
-
-/** Is yazhi-api reachable and sovereign right now? Checked fresh on every call. */
-export async function chatStatus(): Promise<ChatStatus> {
-  if (!rpcConfigured()) {
-    return { state: "unconfigured", detail: "yazhi-api is not connected to this site yet (YAZHI_RPC_URL is unset)." };
-  }
-  let health: HealthSnapshot;
+/** Convert an SSE "data:" line into text content, or null when there is
+    nothing to forward (heartbeats, [DONE], malformed payloads). */
+function parseSseLine(line: string): string | null {
+  const trimmed = line.trim();
+  if (!trimmed.startsWith("data:")) return null;
+  const payload = trimmed.slice(5).trim();
+  if (!payload || payload === "[DONE]") return null;
   try {
-    // never cached: a gate must judge the service as it is now — a cached
-    // "ready" (stale-while-revalidate) would let turns through after
-    // yazhi-api stopped being sovereign
-    health = await unary<object, HealthSnapshot>("yazhi.v1.YazhiSystem", "GetHealth", {}, { revalidate: 0, timeoutMs: 4000 });
-  } catch (err) {
-    return { state: "unavailable", detail: err instanceof RpcError ? err.message : "yazhi-api did not answer." };
+    const json = JSON.parse(payload);
+    const delta = json.choices?.[0]?.delta?.content;
+    return typeof delta === "string" ? delta : null;
+  } catch {
+    return null;
   }
-  const s = health.sovereignty ?? {};
-  const external = s.externalCalls ?? 0;
-  const local = s.inferenceLocal === true;
-  const residency = s.dataResidency ?? "";
-  if (external !== 0 || !local || residency !== "on-prem") {
-    const why = [
-      external !== 0 && `${external} outbound call${external === 1 ? "" : "s"} since start-up`,
-      !local && "inference is not reported as local",
-      residency !== "on-prem" && `data residency is “${residency || "unreported"}”`,
-    ]
-      .filter(Boolean)
-      .join("; ");
-    return { state: "not_sovereign", detail: `yazhi-api is not running sovereign: ${why}.` };
-  }
-  return { state: "ready", residency };
 }
 
-/** Run one turn. Prior turns travel in context.history as JSON so the
-    agent can read the conversation; the newest user message is the query. */
-export async function askAgent(agent: Agent, messages: Pick<Message, "role" | "content">[], lang: string): Promise<string> {
-  const status = await chatStatus();
-  if (status.state !== "ready") throw new ChatError(status.state, status.detail);
-
-  const last = messages[messages.length - 1];
-  const history = messages.slice(0, -1).slice(-MAX_HISTORY_TURNS * 2);
-
-  let res: AgentQueryResponse;
-  try {
-    res = await unary<{ agentNameId: string; query: string; context: Record<string, string> }, AgentQueryResponse>(
-      "yazhi.v1.AgentQueryService",
-      "QueryAgent",
-      {
-        agentNameId: agent.id,
-        query: last.content,
-        context: { history: JSON.stringify(history), lang, surface: "yazhi-dev/chat" },
-      },
-      { revalidate: 0, timeoutMs: 60_000 },
+export async function streamFromBackend({
+  agent,
+  messages,
+}: {
+  agent: Agent;
+  messages: { role: "user" | "assistant"; content: string }[];
+}): Promise<ReadableStream<Uint8Array>> {
+  if (!YAZHI_API_URL) {
+    return errorStream(
+      "Chat is not configured yet — set YAZHI_API_URL (and YAZHI_API_KEY) in your .env to connect the yazhi-api backend. See .env.example."
     );
-  } catch (err) {
-    if (err instanceof RpcError && err.code === "unavailable") throw new ChatError("unavailable", err.message);
-    throw new ChatError("upstream", err instanceof Error ? err.message : "yazhi-api returned an error.");
   }
-  const reply = res.response?.trim();
-  if (!reply) throw new ChatError("upstream", `${agent.name.en} returned an empty answer.`);
-  return reply;
+
+  const upstream = await fetch(`${YAZHI_API_URL}${YAZHI_CHAT_PATH}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(YAZHI_API_KEY ? { Authorization: `Bearer ${YAZHI_API_KEY}` } : {}),
+    },
+    body: JSON.stringify({
+      model: agent.model,
+      messages: [{ role: "system", content: agent.systemPrompt }, ...messages],
+      stream: true,
+    }),
+  });
+
+  if (!upstream.ok || !upstream.body) {
+    const detail = await upstream.text().catch(() => "");
+    return errorStream(
+      `Backend responded ${upstream.status}: ${detail.slice(0, 300) || upstream.statusText}`
+    );
+  }
+
+  const reader = upstream.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  return new ReadableStream({
+    async pull(controller) {
+      const { done, value } = await reader.read();
+      if (done) {
+        controller.enqueue(encoder.encode(JSON.stringify({ done: true } as ChatChunk) + "\n"));
+        controller.close();
+        return;
+      }
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+      for (const line of lines) {
+        const text = parseSseLine(line);
+        if (text) {
+          controller.enqueue(
+            encoder.encode(JSON.stringify({ text } as ChatChunk) + "\n")
+          );
+        }
+      }
+    },
+    cancel() {
+      reader.cancel().catch(() => {});
+    },
+  });
 }

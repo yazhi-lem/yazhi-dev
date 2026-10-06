@@ -183,8 +183,7 @@ body {
   overflow-x: auto;
   border: 1px solid color-mix(in oklab, var(--ivory) 10%, transparent);
   border-radius: 10px;
-  /* themed: Ink 14.41:1, Mugil 12.22:1 for code text */
-  background: color-mix(in srgb, var(--ivory) 6%, var(--night-2));
+  background: color-mix(in oklab, var(--night) 70%, #000);
 }
 .chat-md pre code {
   background: none;
