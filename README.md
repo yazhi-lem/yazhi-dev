@@ -32,7 +32,7 @@ We draw on Marx (labour ownership), Ambedkar (dignity), Arignar Anna (language s
 ### 2026: what we're working towards
 
 - **Model:** a Tamil tokenizer benchmark, and Adhan Kutty v1 released publicly on Hugging Face.
-- **Community:** circle.yazhi.dev (coming soon) live, with external contributors shipping merged code.
+- **Community:** launch circle.yazhi.dev (not live yet) and see external contributors shipping merged code.
 
 > "Business is a form of social organizing. Let us organize for the many, not the few."
 
