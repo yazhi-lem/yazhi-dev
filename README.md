@@ -107,8 +107,6 @@ Replies are **streamed through the yazhi-api backend**, never from the browser d
 
 The backend contract is OpenAI-compatible Chat Completions with SSE streaming. `src/lib/chat/backend.ts` is the single integration point and shows the exact request and response shape. If `YAZHI_API_URL` isn't set, the UI streams a friendly "not configured" notice instead of failing silently.
 
-> **Honest status:** the current agents are bound to Gemini and ChatGPT, which doesn't meet our own rule of no foreign AI APIs in production. Moving `/chat` onto Adhan through yazhi-api is planned but not built yet.
-
 ### Deploying
 
 See [`docs/DEPLOYMENT-GUIDE.md`](docs/DEPLOYMENT-GUIDE.md) and `scripts/deploy.sh`.
