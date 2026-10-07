@@ -8,7 +8,7 @@ This repository is [yazhi.dev](https://yazhi.dev): the public, Tamil-first commu
 
 ## Our mission
 
-Yazhi builds AI that thinks in Tamil instead of translating into it. Our word for "sovereign" is **தற்சார்பு**, which means self-reliance. Indian citizen data stays in India. Safety-critical logic lives in code, not only in prompts. Every Tamil string you see is written natively and checked by a native speaker, never translated from English.
+Yazhi builds AI that thinks in Tamil instead of translating into it. Our word for "sovereign" is **தற்சார்பு**, which means self-reliance. We are working towards keeping Indian citizen data in India. Safety-critical logic lives in code, not only in prompts. Every Tamil string you see is written natively and checked by a native speaker, never translated from English.
 
 Our 2030 vision, in our own words:
 
@@ -21,7 +21,7 @@ The full text is in [`public/yazhi-vision-2030.md`](public/yazhi-vision-2030.md)
 ### What we hold to
 
 - **Founding Collective.** Interns are apprentice founders, not labour. Work done is recorded, and ownership follows contribution.
-- **தற்சார்பு (self-reliance).** Indian citizen data stays in India. No foreign AI APIs in production.
+- **தற்சார்பு (self-reliance).** Our goal is that Indian citizen data stays in India and production runs on no foreign AI APIs. We are moving towards it, starting with `/chat`, which will run on Adhan, our own Tamil model.
 - **Model proposes, Python decides.** Safety-critical logic is enforced in code, never only in prompts.
 - **Tamil written natively.** Every Tamil string users see passes a native reviewer.
 - **Open by default.** Models, benchmarks, red-team suites and curricula are published for the commons unless they expose people's data.
