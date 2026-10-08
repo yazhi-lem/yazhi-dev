@@ -5,7 +5,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Bi } from "@/components/ui/Bi";
-import { COMMUNITY, DEVELOPERS, SERVICES, UI } from "@/lib/content";
+import Link from "next/link";
+import { COMMUNITY, DEVELOPERS, REPO_INDEX, SERVICES, UI } from "@/lib/content";
 import { stagger, fadeUp } from "@/lib/motionPresets";
 
 /** Neytal (coastal · separation) governs Community: the diaspora across
@@ -65,6 +66,11 @@ export function Community() {
               <Bi as="p" ta={DEVELOPERS.eyebrowTa} en={DEVELOPERS.eyebrowEn} className="flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
               <Bi as="h3" ta={DEVELOPERS.titleTa} en={DEVELOPERS.titleEn} className="mt-1 flex flex-col font-display text-xl font-semibold sm:flex-row sm:gap-2" separator={<span aria-hidden className="hidden sm:inline">·</span>} />
               <p lang="en" className="mt-2 max-w-prose text-sm text-ivory-dim">{DEVELOPERS.bodyEn}</p>
+              <Link href="/repos" className="mt-3 inline-flex gap-1.5 text-sm text-[color:var(--accent)] hover:underline">
+                <span lang="ta">{REPO_INDEX.linkTa}</span>
+                <span aria-hidden>·</span>
+                <span lang="en">{REPO_INDEX.linkEn} →</span>
+              </Link>
             </div>
             <div className="flex flex-col gap-3 sm:items-end">
               <Button href={DEVELOPERS.ctaHref}>
