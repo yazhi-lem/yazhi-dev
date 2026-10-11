@@ -16,7 +16,8 @@ Before you do anything else, read the [Code of Conduct](CODE_OF_CONDUCT.md). Eve
 
 ## 2. Repository index
 
-Every public repository in the [yazhi-lem](https://github.com/yazhi-lem) organisation:
+Every public repository in the [yazhi-lem](https://github.com/yazhi-lem) organisation. The same list, with links to each
+repo's good first issues, is on the website at [yazhi.dev/repos](https://yazhi.dev/repos).
 
 | Repo | What it is | Main language | Start here |
 |---|---|---|---|
