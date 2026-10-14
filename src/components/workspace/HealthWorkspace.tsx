@@ -22,7 +22,7 @@ const records = (q?: string) => async () => {
   const r = await callApi<Records>("health.records", q ? { q } : undefined);
   const rows = r.records.map((x) => `| ${x.id} | ${x.name} | ${x.age} | ${x.diagnosis} | ${x.last_visit} | ${x.status} |`).join("\n");
   return {
-    content: `**రోగి రికార్డులు · Records** (${r.records.length})\n\n| ID | పేరు | వయస్సు | నిర్ధారణ | చివరి సందర్శన | స్థితి |\n|---|---|---|---|---|---|\n${rows}\n\n🔒 ${r.data_residency}`,
+    content: `**రోగి రికార్డులు · Records** (${r.records.length})\n\n| ID | పేరు | వయస్సు | నిర్ధారణ | చివరి సందర్శన | స్థితి |\n|---|---|---|---|---|---|\n${rows}`,
     meta: r,
   };
 };
@@ -72,10 +72,10 @@ function IntakeForm({ reply }: { reply: (say: string, run: Chip["run"]) => void 
 }
 
 const chips: Chip[] = [
-  { label: "🧾 కొత్త రోగి నమోదు", say: "కొత్త రోగిని నమోదు చేయాలి", run: async () => ({ content: "", form: "intake" }) },
-  { label: "💊 ప్రిస్క్రిప్షన్ వివరించు", say: `ఈ ప్రిస్క్రిప్షన్‌ను సాదా తెలుగులో వివరించండి:\n${SAMPLE_RX}`, run: () => explain(SAMPLE_RX) },
-  { label: "📋 అన్ని రికార్డులు", say: "రోగి రికార్డులు చూపించు", run: records() },
-  { label: "🔍 లక్ష్మి రికార్డు", say: "లక్ష్మి రికార్డు వెతకండి", run: records("లక్ష్మి") },
+  { label: "రోగి నమోదు", say: "కొత్త రోగిని నమోదు చేయాలి", run: async () => ({ content: "", form: "intake" }) },
+  { label: "ప్రిస్క్రిప్షన్ వివరించు", say: `ఈ ప్రిస్క్రిప్షన్‌ను సాదా తెలుగులో వివరించండి:\n${SAMPLE_RX}`, run: () => explain(SAMPLE_RX) },
+  { label: "రికార్డులు", say: "రోగి రికార్డులు చూపించు", run: records() },
+  { label: "రికార్డు వెతకండి", say: "లక్ష్మి రికార్డు వెతకండి", run: records("లక్ష్మి") },
 ];
 
 export function HealthWorkspace() {
@@ -84,8 +84,7 @@ export function HealthWorkspace() {
       kind="health"
       title="Healthcare workspace"
       teTitle="ఆరోగ్య వర్క్‌స్పేస్"
-      accent="#6fae8f"
-      greeting={"నమస్కారం! నేను Yazhi క్లినిక్ సహాయకుడిని. రోగి నమోదు, ప్రిస్క్రిప్షన్/డిశ్చార్జ్ సారాంశాన్ని సాదా తెలుగులో వివరించడం, రికార్డులు చూడడం — అన్నీ ఇక్కడే.\n\n_డాక్టర్ నోట్ పేస్ట్ చేయండి లేదా ఒక చిప్ ఎంచుకోండి._"}
+      greeting={"నమస్కారం! రోగి నమోదు, ప్రిస్క్రిప్షన్ వివరణ లేదా రికార్డుల కోసం అడగండి."}
       chips={chips}
       onText={explain}
       placeholder="ప్రిస్క్రిప్షన్ / డిశ్చార్జ్ నోట్ పేస్ట్ చేయండి…"

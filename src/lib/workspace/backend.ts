@@ -32,7 +32,12 @@ export async function callWorkspace(
   const spec = WORKSPACE_ENDPOINTS[endpoint];
   const ref = randomUUID().slice(0, 8);
   if (!BASE) {
-    console.error(`[workspace ${ref}] YAZHI_WORKSPACE_API_URL is not configured`);
+    console.error(`[workspace ${ref}] ${endpoint} refused: backend URL not configured`);
+    return { status: 503, body: { error: GENERIC_ERROR, ref } };
+  }
+  // Fail closed: outside development, never forward without the gateway token.
+  if (!GATEWAY_TOKEN && process.env.NODE_ENV !== "development") {
+    console.error(`[workspace ${ref}] ${endpoint} refused: gateway token not configured`);
     return { status: 503, body: { error: GENERIC_ERROR, ref } };
   }
   let url = `${BASE.replace(/\/$/, "")}${spec.path}`;
@@ -53,8 +58,9 @@ export async function callWorkspace(
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
     if (!res.ok) {
-      const detail = await res.text().catch(() => "");
-      console.error(`[workspace ${ref}] ${endpoint} upstream ${res.status}: ${detail.slice(0, 500)}`);
+      // Log status + ref + endpoint only — never the upstream body (may echo PHI).
+      await res.body?.cancel().catch(() => {});
+      console.error(`[workspace ${ref}] ${endpoint} upstream ${res.status}`);
       // 422 (e.g. missing DPDP consent) is the user's to fix; everything else is generic.
       const status = res.status === 422 ? 422 : 502;
       const error = res.status === 422 ? "చెల్లని వివరాలు · Please check the form (consent is required)." : GENERIC_ERROR;
@@ -63,7 +69,8 @@ export async function callWorkspace(
     return { status: 200, body: await res.json() };
   } catch (err) {
     const e = err as Error;
-    console.error(`[workspace ${ref}] ${endpoint} ${e.name}: ${e.message}`);
+    // Error name only — messages can carry the upstream host.
+    console.error(`[workspace ${ref}] ${endpoint} upstream ${e.name === "TimeoutError" ? "timeout" : "unreachable"}`);
     return { status: e.name === "TimeoutError" ? 504 : 502, body: { error: GENERIC_ERROR, ref } };
   }
 }

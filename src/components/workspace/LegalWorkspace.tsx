@@ -68,11 +68,9 @@ function DraftForm({ reply }: { reply: (say: string, run: Chip["run"]) => void }
 
 const chips: Chip[] = [
   { label: "చెక్ బౌన్స్ అయితే?", say: "చెక్ బౌన్స్ అయితే నేను ఏమి చేయాలి?", run: () => ask("చెక్ బౌన్స్ అయితే నేను ఏమి చేయాలి?") },
-  { label: "Limitation for money suit", say: "What is the limitation period for a money recovery suit?", run: () => ask("What is the limitation period for a money recovery suit?") },
   { label: "అద్దెదారు ఖాళీ చేయడం లేదు", say: "అద్దెదారు ఖాళీ చేయకపోతే యజమాని ఏమి చేయవచ్చు?", run: () => ask("అద్దెదారు ఖాళీ చేయకపోతే యజమాని ఏమి చేయవచ్చు?") },
-  { label: "📄 కేసు సారాంశం (తెలుగు)", say: "నమూనా కేసు O.S. 123/2026 సారాంశం తెలుగులో ఇవ్వండి", run: summary("te") },
-  { label: "📄 Case summary (English)", say: "Summarise sample case O.S. 123/2026 in English", run: summary("en") },
-  { label: "📝 నోటీసు / అఫిడవిట్", say: "నోటీసు లేదా అఫిడవిట్ డ్రాఫ్ట్ చేయాలి", run: async () => ({ content: "", form: "draft" }) },
+  { label: "కేసు సారాంశం", say: "నమూనా కేసు O.S. 123/2026 సారాంశం తెలుగులో ఇవ్వండి", run: summary("te") },
+  { label: "నోటీసు / అఫిడవిట్", say: "నోటీసు లేదా అఫిడవిట్ డ్రాఫ్ట్ చేయాలి", run: async () => ({ content: "", form: "draft" }) },
 ];
 
 export function LegalWorkspace() {
@@ -81,8 +79,7 @@ export function LegalWorkspace() {
       kind="legal"
       title="Legal workspace"
       teTitle="న్యాయ వర్క్‌స్పేస్"
-      accent="#c9932e"
-      greeting={"నమస్కారం! నేను Yazhi న్యాయ సహాయకుడిని. తెలుగు లేదా English లో అడగండి — చట్ట ప్రశ్నలు, కేసు పత్రాల సారాంశం, నోటీసు/అఫిడవిట్ డ్రాఫ్ట్‌లు.\n\n_క్రింది చిప్‌లలో ఒకటి ఎంచుకోండి._"}
+      greeting={"నమస్కారం! మీ న్యాయ ప్రశ్న అడగండి లేదా క్రింది సూచనల్లో ఒకటి ఎంచుకోండి."}
       chips={chips}
       onText={ask}
       placeholder="మీ న్యాయ ప్రశ్న టైప్ చేయండి… / Ask a legal question"

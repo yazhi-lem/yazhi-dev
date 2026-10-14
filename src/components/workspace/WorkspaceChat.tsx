@@ -15,20 +15,8 @@ let n = 0;
 const uid = () => `m${Date.now().toString(36)}${(n++).toString(36)}`;
 
 function Badges({ meta }: { meta: Envelope }) {
-  return (
-    <div className="mt-2 flex flex-wrap gap-1.5 text-[11px]">
-      {meta.demo ? (
-        <span className="rounded-full border border-gold/50 bg-gold/15 px-2 py-0.5 font-semibold text-gold" title={meta.demo_notice ?? ""}>
-          {meta.demo_notice?.startsWith("DEMO") ? meta.demo_notice : `DEMO DATA · ${meta.demo_notice ?? "canned sample"}`}
-        </span>
-      ) : (
-        <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2 py-0.5 text-emerald-300">
-          Yazhi model · on-prem
-        </span>
-      )}
-      <span className="rounded-full border border-ivory/15 px-2 py-0.5 text-ivory-dim">{meta.disclaimer}</span>
-    </div>
-  );
+  if (!meta.demo) return null;
+  return <p className="mt-2 text-[11px] uppercase tracking-wide text-ivory-dim/60" title={meta.demo_notice ?? ""}>demo data</p>;
 }
 
 const DEMO_TENANT: Record<WsSession["kind"], string> = { legal: "demo-lawfirm-hyd", health: "demo-clinic-hyd" };
@@ -78,7 +66,6 @@ export function WorkspaceChat({
   kind,
   title,
   teTitle,
-  accent,
   greeting,
   chips,
   onText,
@@ -88,7 +75,6 @@ export function WorkspaceChat({
   kind: WsSession["kind"];
   title: string;
   teTitle: string;
-  accent: string;
   greeting: string;
   chips: Chip[];
   onText: (text: string) => Promise<Omit<WsMessage, "id" | "role">>;
@@ -132,48 +118,41 @@ export function WorkspaceChat({
 
   return (
     <div className="te-workspace flex h-dvh flex-col bg-night text-ivory">
-      <header className="flex items-center justify-between gap-3 border-b border-ivory/10 px-4 py-3 sm:px-6">
+      <header className="flex items-center justify-between gap-3 border-b border-ivory/5 px-6 py-4 sm:px-10">
         <div className="flex items-center gap-3">
           <Link href="/" className="font-display text-lg font-black text-gold">யாழி</Link>
           <span className="h-5 w-px bg-ivory/15" />
-          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: accent }} />
           <h1 className="text-base font-semibold">
             {teTitle} <span className="text-sm font-normal text-ivory-dim">· {title}</span>
           </h1>
         </div>
         <nav className="flex items-center gap-1.5 text-xs">
           {signedIn && (
-            <span className="hidden items-center gap-2 rounded-full border border-ivory/15 bg-night-2 px-3 py-1 text-ivory-dim sm:flex" data-testid="tenant">
-              🏷️ {auth.session!.name}
+            <span className="flex items-center gap-3 text-ivory-dim" data-testid="tenant">
+              {auth.session!.name}
               <button type="button" onClick={auth.logout} className="text-gold hover:underline">sign out</button>
             </span>
           )}
-          <Link href="/workspaces/legal" className="rounded-lg border border-gold/40 px-3 py-1.5 text-gold hover:bg-gold hover:text-night">⚖️ న్యాయ</Link>
-          <Link href="/workspaces/health" className="rounded-lg border border-gold/40 px-3 py-1.5 text-gold hover:bg-gold hover:text-night">🩺 ఆరోగ్యం</Link>
         </nav>
       </header>
-      <div className="border-b border-gold/20 bg-gold/10 px-4 py-1.5 text-center text-[11px] text-gold">
-        🇮🇳 డేటా భారతదేశంలోనే · Data stays in India (on-prem / India-hosted yazhi-api) · DPDP Act 2023 consent & audit ·
-        Pilot demo — sample names, cases and records are fictional
-      </div>
 
       <main className="chat-scroll flex-1 overflow-y-auto" data-lenis-prevent>
         {!signedIn ? (
           <SignInGate kind={kind} demoLogin={auth.demoLogin} loading={auth.loading} onLogin={() => auth.login(DEMO_TENANT[kind])} />
         ) : (
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6">
+        <div className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-6 py-12 sm:px-8">
           {messages.map((m) =>
             m.role === "user" ? (
               <div key={m.id} className="flex justify-end gap-3">
-                <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-gold/15 px-4 py-2.5">
+                <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-gold/10 px-4 py-2.5">
                   <p className="whitespace-pre-wrap break-words leading-relaxed">{m.content}</p>
                 </div>
-                <span aria-hidden className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full bg-ivory/10 text-xs text-ivory-dim">మీరు</span>
+                
               </div>
             ) : (
               <div key={m.id} className="flex gap-3">
-                <span aria-hidden className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-semibold text-night" style={{ backgroundColor: accent }}>య</span>
-                <div className={`min-w-0 max-w-[90%] rounded-2xl rounded-tl-sm border px-4 py-3 ${m.error ? "border-red-400/40 bg-red-400/10" : "border-ivory/10 bg-night-2/80"}`}>
+                <span aria-hidden className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full text-xs font-semibold text-night bg-gold">య</span>
+                <div className={`min-w-0 max-w-[90%] rounded-2xl rounded-tl-sm px-4 py-3 ${m.error ? "bg-red-400/10" : "bg-night-2/70"}`}>
                   {m.form ? renderForm(m.form, exchange) : <Markdown>{m.content}</Markdown>}
                   {m.meta && <Badges meta={m.meta} />}
                 </div>
@@ -182,7 +161,7 @@ export function WorkspaceChat({
           )}
           {busy && (
             <div className="flex gap-3 text-sm text-ivory-dim">
-              <span className="grid h-7 w-7 place-items-center rounded-full text-xs text-night" style={{ backgroundColor: accent }}>య</span>
+              <span className="grid h-7 w-7 place-items-center rounded-full text-xs text-night bg-gold">య</span>
               <span className="animate-pulse">Yazhi ఆలోచిస్తోంది…</span>
             </div>
           )}
@@ -192,12 +171,12 @@ export function WorkspaceChat({
       </main>
 
       {signedIn && (
-      <div className="border-t border-ivory/10 bg-night/60 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-2 px-4 py-3 sm:px-6">
+      <div className="bg-night">
+        <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 px-6 pb-6 pt-2 sm:px-8">
           <div className="flex flex-wrap gap-2">
             {chips.map((c) => (
               <button key={c.label} type="button" disabled={busy} onClick={() => exchange(c.say, c.run)}
-                className="rounded-full border border-ivory/15 bg-night-2 px-3 py-1 text-xs text-ivory-dim transition hover:border-gold hover:text-gold disabled:opacity-40">
+                className="rounded-full border border-ivory/10 px-3 py-1 text-xs text-ivory-dim transition hover:border-gold hover:text-gold disabled:opacity-40">
                 {c.label}
               </button>
             ))}
@@ -210,6 +189,7 @@ export function WorkspaceChat({
             <button type="button" onClick={send} disabled={!text.trim() || busy} aria-label="Send"
               className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gold text-night disabled:opacity-30">↑</button>
           </div>
+          <p className="text-center text-[11px] text-ivory-dim/60">Demo · fictional sample data · not legal or medical advice · data stays in India</p>
         </div>
       </div>
       )}
