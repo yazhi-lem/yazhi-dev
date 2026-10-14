@@ -33,3 +33,9 @@ interface Project { id: string; name: string; launch: string; linear_project: st
 - **Load strip:** iterations as small dots, red when `over`.
 - Read-only: no write calls from the public site. Tamil and English labels, keyboard
   and screen-reader accessible. Respects reduced motion.
+
+## Agent Factory lane
+
+Iterations have `kind: "build" | "revenue"`. Revenue iterations get a
+distinct bubble outline and sort first in the "Now" view. The public board
+shows only iteration goals and status, never client names or amounts.
