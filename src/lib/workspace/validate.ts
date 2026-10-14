@@ -11,19 +11,19 @@ const S = (max: number, req = false, min = req ? 1 : 0): Rule => ({ t: "str", ma
 const LANG = { t: "enum", of: ["te", "en"] } as const;
 
 export const SCHEMAS: Record<string, Record<string, Rule>> = {
-  "legal.ask": { question: S(2000, true), language: LANG },
-  "legal.summary": { text: S(50000), sample_id: S(64), language: LANG },
+  "legal.ask": { question: S(2000, true), lang: LANG },
+  "legal.summary": { text: S(50000), sample_id: S(64), lang: LANG },
   "legal.draft": {
     kind: { t: "enum", of: ["cheque_bounce_notice", "name_change_affidavit"], req: true },
-    client_name: S(200, true), other_party: S(200), amount: S(50), old_name: S(200), place: S(100), date: S(20),
+    client_name: S(200, true), other_party: S(200), amount: S(50), old_name: S(200), place: S(100), date: S(20), lang: LANG,
   },
   "health.intake": {
     name: S(200, true), age: { t: "int", min: 0, max: 130, req: true },
     sex: { t: "enum", of: ["female", "male", "other"], req: true }, phone: S(20),
-    language: LANG, complaint: S(4000, true), consent: { t: "bool", req: true },
+    lang: LANG, complaint: S(4000, true), consent: { t: "bool", req: true },
   },
-  "health.explain": { note: S(8000, true) },
-  "health.records": { q: S(100) },
+  "health.explain": { note: S(8000, true), lang: LANG },
+  "health.records": { q: S(100), lang: LANG },
 };
 
 export function validate(endpoint: string, payload: unknown): { ok: true; value: Record<string, unknown> } | { ok: false; error: string } {

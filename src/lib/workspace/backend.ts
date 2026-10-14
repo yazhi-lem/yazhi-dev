@@ -21,8 +21,8 @@ const BASE = process.env.YAZHI_WORKSPACE_API_URL ?? process.env.YAZHI_API_URL;
 const GATEWAY_TOKEN = process.env.YAZHI_WORKSPACE_GATEWAY_TOKEN;
 const TIMEOUT_MS = 30_000;
 
-/** What the browser sees on any upstream failure — no hosts, no stack. */
-export const GENERIC_ERROR = "సేవ ప్రస్తుతం అందుబాటులో లేదు · The service is unavailable right now. Please try again.";
+/** Error code the browser sees on any upstream failure — localised client-side; no hosts, no stack. */
+export const GENERIC_ERROR = "unavailable";
 
 export async function callWorkspace(
   endpoint: WorkspaceEndpoint,
@@ -63,7 +63,7 @@ export async function callWorkspace(
       console.error(`[workspace ${ref}] ${endpoint} upstream ${res.status}`);
       // 422 (e.g. missing DPDP consent) is the user's to fix; everything else is generic.
       const status = res.status === 422 ? 422 : 502;
-      const error = res.status === 422 ? "చెల్లని వివరాలు · Please check the form (consent is required)." : GENERIC_ERROR;
+      const error = res.status === 422 ? "invalid" : GENERIC_ERROR;
       return { status, body: { error, ref } };
     }
     return { status: 200, body: await res.json() };

@@ -5,6 +5,7 @@ export interface Envelope {
   demo_notice?: string | null;
   disclaimer: string;
   data_residency: string;
+  lang?: "te" | "en";
 }
 
 export interface WsMessage {
@@ -29,11 +30,18 @@ export async function callApi<T extends Envelope>(
   });
   const json = await res.json().catch(() => ({}));
   if (res.status === 401) throw new AuthRequired();
-  if (!res.ok) {
-    const ref = json.ref ? ` (ref ${json.ref})` : "";
-    throw new Error(`${typeof json.error === "string" ? json.error : "Request failed"}${ref}`);
-  }
+  if (!res.ok) throw new WsError(ERROR_CODES.includes(json.error) ? json.error : "unavailable", json.ref);
   return json as T;
+}
+
+export const ERROR_CODES = ["unavailable", "invalid", "rate", "forbidden", "too_large", "bad_request"] as const;
+export type ErrorCode = (typeof ERROR_CODES)[number];
+
+/** API failure carrying a stable code; the UI localises it. */
+export class WsError extends Error {
+  constructor(public code: ErrorCode, public ref?: string) {
+    super(code);
+  }
 }
 
 export class AuthRequired extends Error {
