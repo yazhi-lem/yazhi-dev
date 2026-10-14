@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Markdown } from "@/components/chat/Markdown";
-import type { Envelope, WsMessage } from "@/lib/workspace/types";
+import { AuthRequired, type Envelope, type WsMessage, type WsSession } from "@/lib/workspace/types";
 
 export interface Chip {
   label: string;
@@ -31,7 +31,51 @@ function Badges({ meta }: { meta: Envelope }) {
   );
 }
 
+const DEMO_TENANT: Record<WsSession["kind"], string> = { legal: "demo-lawfirm-hyd", health: "demo-clinic-hyd" };
+
+function useSession() {
+  const [state, setState] = useState<{ loading: boolean; session: WsSession | null; demoLogin: boolean }>({
+    loading: true, session: null, demoLogin: false,
+  });
+  const refresh = () =>
+    fetch("/api/workspace/session", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((j) => setState({ loading: false, session: j.session, demoLogin: !!j.demoLogin }))
+      .catch(() => setState({ loading: false, session: null, demoLogin: false }));
+  useEffect(() => {
+    refresh();
+  }, []);
+  const login = async (tenant: string) => {
+    await fetch("/api/workspace/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ tenant }) });
+    await refresh();
+  };
+  const logout = async () => {
+    await fetch("/api/workspace/session", { method: "DELETE" });
+    await refresh();
+  };
+  return { ...state, login, logout, expire: () => setState((s) => ({ ...s, session: null })) };
+}
+
+function SignInGate({ kind, demoLogin, onLogin, loading }: { kind: WsSession["kind"]; demoLogin: boolean; onLogin: () => void; loading: boolean }) {
+  return (
+    <div className="mx-auto mt-16 w-full max-w-md rounded-2xl border border-ivory/10 bg-night-2/80 p-6 text-center">
+      <p className="text-lg font-semibold">🔐 సైన్ ఇన్ అవసరం · Sign in required</p>
+      <p className="mt-2 text-sm text-ivory-dim">
+        {kind === "health" ? "క్లినిక్" : "న్యాయ సంస్థ"} ఖాతాతో సైన్ ఇన్ చేయండి. Records are visible only within your {kind === "health" ? "clinic" : "firm"}.
+      </p>
+      {loading ? null : demoLogin ? (
+        <button type="button" onClick={onLogin} className={`${primaryBtn} mt-4`}>
+          డెమో {kind === "health" ? "క్లినిక్" : "సంస్థ"}గా ప్రవేశించండి · Demo sign-in (fictional tenant)
+        </button>
+      ) : (
+        <p className="mt-4 text-xs text-ivory-dim">Sign-in is not configured on this deployment.</p>
+      )}
+    </div>
+  );
+}
+
 export function WorkspaceChat({
+  kind,
   title,
   teTitle,
   accent,
@@ -41,6 +85,7 @@ export function WorkspaceChat({
   renderForm,
   placeholder,
 }: {
+  kind: WsSession["kind"];
   title: string;
   teTitle: string;
   accent: string;
@@ -54,6 +99,8 @@ export function WorkspaceChat({
   const [busy, setBusy] = useState(false);
   const [text, setText] = useState("");
   const bottom = useRef<HTMLDivElement>(null);
+  const auth = useSession();
+  const signedIn = auth.session?.kind === kind;
   useEffect(() => {
     bottom.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, busy]);
@@ -66,6 +113,10 @@ export function WorkspaceChat({
       const out = await run();
       setMessages((m) => [...m, { id: uid(), role: "assistant", ...out }]);
     } catch (e) {
+      if (e instanceof AuthRequired) {
+        auth.expire();
+        return;
+      }
       setMessages((m) => [...m, { id: uid(), role: "assistant", error: true, content: `⚠️ ${(e as Error).message}` }]);
     } finally {
       setBusy(false);
@@ -90,7 +141,13 @@ export function WorkspaceChat({
             {teTitle} <span className="text-sm font-normal text-ivory-dim">· {title}</span>
           </h1>
         </div>
-        <nav className="flex gap-1.5 text-xs">
+        <nav className="flex items-center gap-1.5 text-xs">
+          {signedIn && (
+            <span className="hidden items-center gap-2 rounded-full border border-ivory/15 bg-night-2 px-3 py-1 text-ivory-dim sm:flex" data-testid="tenant">
+              🏷️ {auth.session!.name}
+              <button type="button" onClick={auth.logout} className="text-gold hover:underline">sign out</button>
+            </span>
+          )}
           <Link href="/workspaces/legal" className="rounded-lg border border-gold/40 px-3 py-1.5 text-gold hover:bg-gold hover:text-night">⚖️ న్యాయ</Link>
           <Link href="/workspaces/health" className="rounded-lg border border-gold/40 px-3 py-1.5 text-gold hover:bg-gold hover:text-night">🩺 ఆరోగ్యం</Link>
         </nav>
@@ -101,6 +158,9 @@ export function WorkspaceChat({
       </div>
 
       <main className="chat-scroll flex-1 overflow-y-auto" data-lenis-prevent>
+        {!signedIn ? (
+          <SignInGate kind={kind} demoLogin={auth.demoLogin} loading={auth.loading} onLogin={() => auth.login(DEMO_TENANT[kind])} />
+        ) : (
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-4 py-6 sm:px-6">
           {messages.map((m) =>
             m.role === "user" ? (
@@ -128,8 +188,10 @@ export function WorkspaceChat({
           )}
           <div ref={bottom} />
         </div>
+        )}
       </main>
 
+      {signedIn && (
       <div className="border-t border-ivory/10 bg-night/60 backdrop-blur">
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-2 px-4 py-3 sm:px-6">
           <div className="flex flex-wrap gap-2">
@@ -150,6 +212,7 @@ export function WorkspaceChat({
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

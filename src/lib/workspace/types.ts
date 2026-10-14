@@ -27,10 +27,19 @@ export async function callApi<T extends Envelope>(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ endpoint, payload }),
   });
-  const json = await res.json();
+  const json = await res.json().catch(() => ({}));
+  if (res.status === 401) throw new AuthRequired();
   if (!res.ok) {
-    const d = json.detail ?? json.error;
-    throw new Error(typeof d === "string" ? d : JSON.stringify(d));
+    const ref = json.ref ? ` (ref ${json.ref})` : "";
+    throw new Error(`${typeof json.error === "string" ? json.error : "Request failed"}${ref}`);
   }
   return json as T;
 }
+
+export class AuthRequired extends Error {
+  constructor() {
+    super("Sign in required");
+  }
+}
+
+export interface WsSession { tenant: string; kind: "legal" | "health"; name: string }

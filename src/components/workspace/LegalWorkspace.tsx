@@ -78,6 +78,7 @@ const chips: Chip[] = [
 export function LegalWorkspace() {
   return (
     <WorkspaceChat
+      kind="legal"
       title="Legal workspace"
       teTitle="న్యాయ వర్క్‌స్పేస్"
       accent="#c9932e"

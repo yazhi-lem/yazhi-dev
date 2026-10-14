@@ -81,6 +81,7 @@ const chips: Chip[] = [
 export function HealthWorkspace() {
   return (
     <WorkspaceChat
+      kind="health"
       title="Healthcare workspace"
       teTitle="ఆరోగ్య వర్క్‌స్పేస్"
       accent="#6fae8f"

@@ -1,40 +1,43 @@
 /** Server-only proxy to the yazhi-api Telugu workspace routes (/telugu/*).
-    Mirrors src/lib/chat/backend.ts: the browser never talks to yazhi-api
-    directly, and only allow-listed endpoints can be reached. */
+    Mirrors src/lib/chat/backend.ts. Callers (src/app/api/workspace/route.ts)
+    must already have authenticated the session, checked the endpoint against
+    the tenant's kind, and validated the payload. */
+import { randomUUID } from "node:crypto";
+import type { TenantKind } from "./session";
 
 export const WORKSPACE_ENDPOINTS = {
-  "legal.ask": { method: "POST", path: "/telugu/legal/ask" },
-  "legal.summary": { method: "POST", path: "/telugu/legal/summary" },
-  "legal.draft": { method: "POST", path: "/telugu/legal/draft" },
-  "health.intake": { method: "POST", path: "/telugu/health/intake" },
-  "health.explain": { method: "POST", path: "/telugu/health/explain" },
-  "health.records": { method: "GET", path: "/telugu/health/records" },
-} as const;
+  "legal.ask": { method: "POST", path: "/telugu/legal/ask", kind: "legal" },
+  "legal.summary": { method: "POST", path: "/telugu/legal/summary", kind: "legal" },
+  "legal.draft": { method: "POST", path: "/telugu/legal/draft", kind: "legal" },
+  "health.intake": { method: "POST", path: "/telugu/health/intake", kind: "health" },
+  "health.explain": { method: "POST", path: "/telugu/health/explain", kind: "health" },
+  "health.records": { method: "GET", path: "/telugu/health/records", kind: "health" },
+} as const satisfies Record<string, { method: string; path: string; kind: TenantKind }>;
 
 export type WorkspaceEndpoint = keyof typeof WORKSPACE_ENDPOINTS;
 
-/** yazhi-api's HTTP shim (port 8080 by default) — separate from the chat
-    backend URL because the shim and the chat gateway can live apart. */
 const BASE = process.env.YAZHI_WORKSPACE_API_URL ?? process.env.YAZHI_API_URL;
-const KEY = process.env.YAZHI_API_KEY;
+/** Shared secret matching yazhi-api `TELUGU_GATEWAY_TOKEN`. Never sent to the browser. */
+const GATEWAY_TOKEN = process.env.YAZHI_WORKSPACE_GATEWAY_TOKEN;
+const TIMEOUT_MS = 30_000;
+
+/** What the browser sees on any upstream failure — no hosts, no stack. */
+export const GENERIC_ERROR = "సేవ ప్రస్తుతం అందుబాటులో లేదు · The service is unavailable right now. Please try again.";
 
 export async function callWorkspace(
-  endpoint: string,
-  payload: Record<string, unknown> | undefined
+  endpoint: WorkspaceEndpoint,
+  payload: Record<string, unknown>,
+  tenantId: string
 ): Promise<{ status: number; body: unknown }> {
-  const spec = WORKSPACE_ENDPOINTS[endpoint as WorkspaceEndpoint];
-  if (!spec) return { status: 400, body: { error: `Unknown endpoint: ${endpoint}` } };
+  const spec = WORKSPACE_ENDPOINTS[endpoint];
+  const ref = randomUUID().slice(0, 8);
   if (!BASE) {
-    return {
-      status: 503,
-      body: { error: "Workspace backend not configured — set YAZHI_WORKSPACE_API_URL (see .env.example)." },
-    };
+    console.error(`[workspace ${ref}] YAZHI_WORKSPACE_API_URL is not configured`);
+    return { status: 503, body: { error: GENERIC_ERROR, ref } };
   }
   let url = `${BASE.replace(/\/$/, "")}${spec.path}`;
-  if (spec.method === "GET" && payload) {
-    const qs = new URLSearchParams(
-      Object.entries(payload).filter(([, v]) => v != null && v !== "").map(([k, v]) => [k, String(v)])
-    ).toString();
+  if (spec.method === "GET") {
+    const qs = new URLSearchParams(Object.entries(payload).map(([k, v]) => [k, String(v)])).toString();
     if (qs) url += `?${qs}`;
   }
   try {
@@ -42,14 +45,25 @@ export async function callWorkspace(
       method: spec.method,
       headers: {
         "Content-Type": "application/json",
-        ...(KEY ? { Authorization: `Bearer ${KEY}` } : {}),
+        "X-Yazhi-Tenant": tenantId,
+        ...(GATEWAY_TOKEN ? { Authorization: `Bearer ${GATEWAY_TOKEN}` } : {}),
       },
-      body: spec.method === "POST" ? JSON.stringify(payload ?? {}) : undefined,
+      body: spec.method === "POST" ? JSON.stringify(payload) : undefined,
       cache: "no-store",
+      signal: AbortSignal.timeout(TIMEOUT_MS),
     });
-    const body = await res.json().catch(() => ({ error: res.statusText }));
-    return { status: res.status, body };
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      console.error(`[workspace ${ref}] ${endpoint} upstream ${res.status}: ${detail.slice(0, 500)}`);
+      // 422 (e.g. missing DPDP consent) is the user's to fix; everything else is generic.
+      const status = res.status === 422 ? 422 : 502;
+      const error = res.status === 422 ? "చెల్లని వివరాలు · Please check the form (consent is required)." : GENERIC_ERROR;
+      return { status, body: { error, ref } };
+    }
+    return { status: 200, body: await res.json() };
   } catch (err) {
-    return { status: 502, body: { error: `yazhi-api unreachable: ${(err as Error).message}` } };
+    const e = err as Error;
+    console.error(`[workspace ${ref}] ${endpoint} ${e.name}: ${e.message}`);
+    return { status: e.name === "TimeoutError" ? 504 : 502, body: { error: GENERIC_ERROR, ref } };
   }
 }
