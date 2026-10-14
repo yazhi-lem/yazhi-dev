@@ -2,6 +2,11 @@ This is the official developer portal and community hub for the **Yazhi** sovere
 
 See [NEXT_ACTION.md](./NEXT_ACTION.md) for the roadmap, **October 2026 Pilot**, and **December 2026 Launch** deliverables.
 
+## Community and contributing
+
+- **Contributing:** start with [CONTRIBUTING.md](./CONTRIBUTING.md). It has the repository index, local setup and PR rules.
+- **Code of Conduct:** everyone who takes part follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
+
 ## Getting Started
 
 First, run the development server:
