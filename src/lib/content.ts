@@ -272,6 +272,7 @@ export const NAV_GROUPS = [
       { ta: "வலையில் சேருக", en: "Join the Network", href: "/onboarding" },
       { ta: "Discord", en: "Discord", href: LINKS.discord },
       { ta: "GitHub", en: "GitHub", href: LINKS.github },
+      { ta: "களஞ்சியங்கள்", en: "Repositories", href: "/repos" }, // Tamil: DRAFT, native review pending
       { ta: "எங்களைப் பற்றி", en: "About", href: "/about" },
       { ta: "தனியுரிமை", en: "Privacy", href: "/privacy" },
     ],
@@ -317,3 +318,46 @@ export const DEVELOPERS = {
   ctaHref: "/onboarding?track=developer",
   discordCtaTa: "Discord இல் சேருக", discordCtaEn: "Join the Discord",
 };
+
+/* ---- Open-source repo index (/repos). Public repos only; descriptions
+        and languages from `gh repo list yazhi-lem` (8 Oct 2026) and each
+        README. Tamil strings below are DRAFTS pending the native-reviewer
+        sign-off gate — never add letter-spacing to Tamil text. ---- */
+export type RepoEntry = {
+  name: string;
+  what: string;
+  lang: string;
+  /** Reference forks are listed but not a place to start contributing. */
+  reference?: boolean;
+};
+
+export const REPOS: readonly RepoEntry[] = [
+  { name: "adhan", what: "Tamil language model work: Swaram tokenizer, corpus prep, training, evaluation, inference server", lang: "Python" },
+  { name: "open-sangam", what: "Classical Tamil corpus and layered reader: Sangam Tamil, modern Tamil, English", lang: "Python, JavaScript" },
+  { name: "illakiya", what: "Tamil mobile keyboard, Android first; nothing typed leaves the phone", lang: "TypeScript, Rust, Kotlin" },
+  { name: "yazh-unity", what: "Yazh: bilingual learning pet app for children (Unity 6)", lang: "C#" },
+  { name: "yazhi-dev", what: "The yazhi.dev website", lang: "TypeScript (Next.js)" },
+  { name: "yazhi-skills", what: "Agent skills and learning content (SKILL.md format)", lang: "Markdown, Python" },
+  { name: "styleguide", what: "Fork of Google's style guides (reference)", lang: "HTML", reference: true },
+];
+
+const GH_ORG = "https://github.com/yazhi-lem";
+
+export const repoLinks = (name: string) => ({
+  repo: `${GH_ORG}/${name}`,
+  goodFirstIssues: `${GH_ORG}/${name}/issues?q=is%3Aopen+label%3A%22good+first+issue%22`,
+  issues: `${GH_ORG}/${name}/issues`,
+  contributing: `${GH_ORG}/${name}/blob/main/CONTRIBUTING.md`,
+});
+
+export const REPO_INDEX = {
+  titleTa: "திறந்த களஞ்சியங்கள்", // DRAFT: native review pending
+  titleEn: "Open-source repositories",
+  introEn:
+    "Everything we build in the open lives on GitHub under yazhi-lem. Pick a repo, read its README, and start with an issue labelled good first issue. Every pull request gets a first review within 48 hours, and contributors are credited by name.",
+  noteEn:
+    "Good-first-issue lists are being filled in now. If a list is empty, browse the open issues or say hello on Discord.",
+  linkTa: "களஞ்சியங்களைப் பாருங்கள்", // DRAFT: native review pending
+  linkEn: "Browse our open-source repos",
+};
+
