@@ -68,7 +68,7 @@ const te = {
   "health.chip.records": "రికార్డులు",
   "health.q.records": "రోగి రికార్డులు చూపించు",
   "health.chip.search": "రికార్డు వెతకండి",
-  "health.q.search": "లక్ష్మి రికార్డు వెతకండి",
+  "health.q.search": "రికార్డు YZ-H-0012 వెతకండి",
   "records.title": "రోగి రికార్డులు",
   "records.id": "ID",
   "records.name": "పేరు",
@@ -158,7 +158,7 @@ const en: Record<WsKey, string> = {
   "health.chip.records": "Records",
   "health.q.records": "Show patient records",
   "health.chip.search": "Search a record",
-  "health.q.search": "Find Lakshmi's record",
+  "health.q.search": "Find record YZ-H-0012",
   "records.title": "Patient records",
   "records.id": "ID",
   "records.name": "Name",
@@ -201,6 +201,14 @@ export function WsLangProvider({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- restore persisted choice after hydration
     if (saved === "te" || saved === "en") setLangState(saved);
   }, []);
+  // Capture the site's own <html lang> first (effects run in order), restore it
+  // on unmount, and keep it in step with the active language meanwhile.
+  useEffect(() => {
+    const previous = document.documentElement.lang;
+    return () => {
+      document.documentElement.lang = previous;
+    };
+  }, []);
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
@@ -212,6 +220,16 @@ export function WsLangProvider({ children }: { children: ReactNode }) {
 }
 
 export const useWsLang = () => useContext(Ctx);
+
+/** Wrapper element whose lang attribute follows the active language. */
+export function WsLangScope({ children, style }: { children: ReactNode; style?: React.CSSProperties }) {
+  const { lang } = useWsLang();
+  return (
+    <div lang={lang} data-testid="ws-scope" style={style}>
+      {children}
+    </div>
+  );
+}
 
 export function WsLangToggle() {
   const { lang, setLang, t } = useWsLang();

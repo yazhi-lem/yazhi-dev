@@ -75,5 +75,5 @@ export function LegalWorkspace() {
     },
     { label: t("legal.chip.draft"), say: t("legal.q.draft"), run: async () => ({ content: "", form: "draft" }) },
   ];
-  return <WorkspaceChat kind="legal" chips={chips} onText={a} renderForm={(_, reply) => <DraftForm key={lang} reply={reply} />} />;
+  return <WorkspaceChat kind="legal" chips={chips} onText={a} renderForm={(_, reply) => <DraftForm reply={reply} />} />;
 }

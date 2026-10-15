@@ -9,6 +9,9 @@ type Intake = Envelope & { record: Rec; triage: string; doctor_summary_en: strin
 type Explain = Envelope & { explanation: string };
 type Records = Envelope & { records: Rec[] };
 
+/** Record ids are language-independent, so the search chip works in either UI language. */
+const SEARCH_ID = "YZ-H-0012";
+
 const SAMPLE_RX = `Dx: Essential hypertension, Type 2 DM.
 Tab Amlodipine 5mg 1-0-0 x 30 days
 Tab Metformin 500mg 1-0-1 after food x 30 days
@@ -77,7 +80,7 @@ export function HealthWorkspace() {
     { label: t("health.chip.intake"), say: t("health.q.intake"), run: async () => ({ content: "", form: "intake" }) },
     { label: t("health.chip.explain"), say: `${t("health.q.explain")}\n${SAMPLE_RX}`, run: () => ex(SAMPLE_RX) },
     { label: t("health.chip.records"), say: t("health.q.records"), run: records() },
-    { label: t("health.chip.search"), say: t("health.q.search"), run: records("లక్ష్మి") },
+    { label: t("health.chip.search"), say: t("health.q.search"), run: records(SEARCH_ID) },
   ];
-  return <WorkspaceChat kind="health" chips={chips} onText={ex} renderForm={(_, reply) => <IntakeForm key={lang} reply={reply} />} />;
+  return <WorkspaceChat kind="health" chips={chips} onText={ex} renderForm={(_, reply) => <IntakeForm reply={reply} />} />;
 }

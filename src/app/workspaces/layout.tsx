@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Serif_Telugu } from "next/font/google";
-import { WsLangProvider } from "@/lib/workspace/i18n";
+import { WsLangProvider, WsLangScope } from "@/lib/workspace/i18n";
 
 /* Telugu face for the Hyderabad workspaces. The brand system is serif-only
    ("No sans-serif. Ever."), so Noto Serif Telugu — the Telugu sibling of the
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 
 export default function WorkspacesLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div lang="te" style={{ fontFamily: `${notoTelugu.style.fontFamily}, var(--font-body, serif)` }}>
-      <WsLangProvider>{children}</WsLangProvider>
-    </div>
+    <WsLangProvider>
+      <WsLangScope style={{ fontFamily: `${notoTelugu.style.fontFamily}, var(--font-body, serif)` }}>{children}</WsLangScope>
+    </WsLangProvider>
   );
 }
