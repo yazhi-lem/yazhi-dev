@@ -25,7 +25,9 @@ export function Bi({
   display?: boolean;
   separator?: ReactNode;
 }) {
-  const { lang } = useLang();
+  const { lang: mode } = useLang();
+  // a name that reads the same in both (Open Sangam) is shown once
+  const lang = mode === "both" && typeof ta === "string" && ta === en ? "ta" : mode;
   const d = display ? "display" : "";
 
   const content = (

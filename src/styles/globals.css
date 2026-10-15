@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./tokens.css";
+@import "./bubble.css";
 
 /* Tailwind v4: register design tokens so utilities like text-ivory,
    bg-night-2/80 and font-display are generated. `inline` keeps these
