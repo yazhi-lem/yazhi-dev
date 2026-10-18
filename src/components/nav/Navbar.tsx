@@ -54,7 +54,7 @@ export function Navbar() {
             href="/chat"
             className="rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night"
           >
-            <Bi ta="அரட்டை" en="Chat" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
+            <Bi ta="உரையாடல்" en="Chat" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
           </Link>
           <LangToggle />
           <button

@@ -35,7 +35,7 @@ export const IDENTITY = {
   footerEn: "Sovereign Artificial Intelligence",
   // the plain-language layer: one sentence a ten-year-old can read,
   // sitting under the poetic/technical register — never replacing it
-  plainTa: "கணினிகளுக்குத் தமிழும் எல்லா இந்திய மொழிகளும் கற்றுத் தருகிறோம்.",
+  plainTa: "கணினிகள் தமிழையும் எல்லா இந்திய மொழிகளையும் புரிந்துகொள்ளவும் பேசவும் கற்றுத் தருகிறோம்.",
   plainEn: "We teach computers to understand and speak Tamil — and every Indian language.",
   // from the founding deck: the one-line pitch under the wordmark
   heroLineTa: "படிக்கவோ தட்டச்சு செய்யவோ இன்னும் தெரியாத குழந்தைகளுக்கான குரல் நண்பனுடன் தொடங்குகிறோம்.",
@@ -94,7 +94,7 @@ export const ADHAN = {
   nameEn: "Adhan",
   eyebrowTa: "உள்ளே இயங்கும் பொறி",
   eyebrowEn: "The engine underneath",
-  subTa: "திறந்த இந்திய அடிப்படை மாதிரி",
+  subTa: "திறந்த இந்திய மொழிகளுக்கான அடிப்படை மாதிரி",
   subEn: "Our open Indic foundation model",
   bodyEn:
     "Adhan is our open Indic foundation model, reaching 22+ Indian languages, with a tokenizer designed for agglutinative grammar rather than retrofitted from English. Open weights on GitHub, served from our own inference node in Sivakasi. It is not finished and is not meant to be — the model develops continuously, growing as the corpus grows and as each new language enters the pipeline.",
@@ -108,7 +108,7 @@ export const ADHAN = {
     ],
     sourceEn: "Petrov et al., NeurIPS 2023",
   },
-  ctaTa: "GitHub இல் காண்க →",
+  ctaTa: "அதனை GitHub-இல் காண்க →",
   ctaHref: "https://github.com/yazhi-lem/adhan",
   plainTa: "இந்திய மொழிகளைப் படிக்கவும் பேசவும் கற்றுக்கொண்டே இருக்கும் கணினி மூளை — வேலை இன்னும் முடியவில்லை, தொடர்ந்து வளர்கிறது.",
   plainEn: "A computer brain still learning to read and speak India's languages — the work isn't finished, it keeps growing.",
@@ -153,7 +153,7 @@ export const ADHAN_CHAT: {
   translationEn: string;
   tool?: string;
 }[] = [
-  { from: "user", lang: "TA", text: "என் பாட்டி சொன்ன கதையைத் தேடு", translationEn: "Find the story my grandmother told" },
+  { from: "user", lang: "TA", text: "என் பாட்டி சொன்ன கதையைத் தேடுங்கள்", translationEn: "Find the story my grandmother told" },
   { from: "agent", lang: "TA", text: "தொகுப்பில் தேடுகிறேன்… 3 கதைகள் கிடைத்தன 📖", translationEn: "Searching the corpus… found 3 stories", tool: "corpus_search" },
   { from: "user", lang: "TE", text: "మా అమ్మమ్మ కథ వాట్సాప్‌లో పంపు", translationEn: "Send grandma's story on WhatsApp" },
   { from: "agent", lang: "TE", text: "పంపాను ✅", translationEn: "Sent", tool: "whatsapp" },
@@ -166,20 +166,20 @@ export const ADHAN_CHAT: {
 export const GUARDIAN = {
   nameTa: "யாழ்",
   nameEn: "Yazh",
-  eyebrowTa: "இல்லங்கள் பயன்படுத்துவது",
+  eyebrowTa: "குடும்பங்கள் கட்டணம் செலுத்துவது இதற்காக",
   eyebrowEn: "What families pay for",
-  subTa: "குழந்தைகளுக்கான குரல் நண்பன் — WhatsApp இல்",
+  subTa: "4–8 வயதுக் குழந்தைகளுக்கான WhatsApp குரல் நண்பர்",
   subEn: "A voice AI friend for children aged 4–8, on WhatsApp",
   bodyEn:
     "Yazh is a guardian creature carved onto temple pillars across the Dravidian south — it stands at the doorway and keeps what is inside safe. Yazh is that guardian, drawn small enough for a four-year-old to talk to. He listens, answers in the child's mother tongue, and never asks them to read or type. Voice in, voice out — no app, no typing, on the phone families already own. Folk stories plus Maths, Science and English through conversation.",
   ctaTa: "தொடங்குக",
   ctaEn: "Get started",
   ctaHref: "/onboarding",
-  whatsappCtaTa: "WhatsApp இல் உரையாடுக",
+  whatsappCtaTa: "WhatsApp-இல் உரையாடுக",
   whatsappCtaEn: "Chat on WhatsApp",
   whatsappNoteTa: "தற்போது ஹைதராபாத்தைச் சுற்றியுள்ள 30+ முன்னோடி இல்லங்களுடன் தனி முன்னோட்டத்தில் — இணைந்து புதுப்பிப்புகளைப் பெறுக.",
   whatsappNoteEn: "Currently in private beta with 30+ founding families around Hyderabad — join the WhatsApp community for updates as we open up.",
-  plainTa: "இணையத்தில் தமிழ்க் கதைகளையும் பாடல்களையும் காக்கும் செயலி — கோவில் யாழியைப் போல.",
+  plainTa: "இணையத்தில் தமிழ்க் கதைகளையும் பாடல்களையும் காக்கும் செயலி — கோயில் யாழியைப் போல.",
   plainEn: "An app that watches over Tamil stories and songs on the internet — like the temple guardian it's named after.",
 };
 
@@ -196,12 +196,12 @@ export const SANGAM = {
   pillars: [
     { icon: "📜", ta: "செய்யுள் ஆய்வு", en: "Poem analysis" },
     { icon: "🏞️", ta: "திணை வகைப்பாடு", en: "Landscape classification" },
-    { icon: "📖", ta: "மொழி ஆய்வு", en: "Linguistic study" },
+    { icon: "📖", ta: "மொழியியல் ஆய்வு", en: "Linguistic study" },
   ],
   ctaTa: "மேலும் அறிக →",
   ctaEn: "Learn more",
   ctaHref: "https://sangam.yazhi.dev",
-  plainTa: "2,000 ஆண்டு பழைய தமிழ்ப் பாடல்களைப் படித்து, ஒவ்வொன்றும் எந்த நிலத்தைச் சேர்ந்தது என்று சொல்லும் கருவி — மாணாக்கர்க்கும் ஆசிரியர்க்கும் கட்டணமின்றி.",
+  plainTa: "2,000 ஆண்டுகள் பழமையான தமிழ்ப் பாடல்களைப் படித்து, ஒவ்வொன்றும் எந்த நிலத்தைச் சேர்ந்தது என்று சொல்லும் கருவி — மாணவர்களுக்கும் ஆசிரியர்களுக்கும் கட்டணமின்றி.",
   plainEn: "A tool that reads 2,000-year-old Tamil poems and tells you which of the five landscapes each belongs to — free for students and teachers.",
 };
 
@@ -237,7 +237,7 @@ export const MADURAI_KANCHI = {
 export const SERVICES = [
   { ta: "முகவர்கள்", en: "Agents" },
   { ta: "செயலிகள்", en: "Applications" },
-  { ta: "உரைகள்", en: "Annotations" },
+  { ta: "குறிப்புரைகள்", en: "Annotations" },
 ];
 
 export const LINKS = {
@@ -259,17 +259,17 @@ export const NAV_GROUPS = [
     ],
   },
   {
-    ta: "பணிகள்", en: "Services",
+    ta: "சேவைகள்", en: "Services",
     items: [
       { ta: "முகவர்கள்", en: "Agents", href: "#services" },
       { ta: "செயலிகள்", en: "Applications", href: "#services" },
-      { ta: "உரைகள்", en: "Annotations", href: "#services" },
+      { ta: "குறிப்புரைகள்", en: "Annotations", href: "#services" },
     ],
   },
   {
     ta: "மன்றம்", en: "Community",
     items: [
-      { ta: "வலையில் சேருக", en: "Join the Network", href: "/onboarding" },
+      { ta: "வலையமைப்பில் இணையுங்கள்", en: "Join the Network", href: "/onboarding" },
       { ta: "Discord", en: "Discord", href: LINKS.discord },
       { ta: "GitHub", en: "GitHub", href: LINKS.github },
       { ta: "எங்களைப் பற்றி", en: "About", href: "/about" },
@@ -283,20 +283,20 @@ export const NAV_GROUPS = [
 export const UI = {
   heroEyebrow: { ta: "குறிஞ்சி · மலை — 22+ எழுத்துமுறைகள், ஒற்றை மாதிரி", en: "Kurinji · Mountains — 22+ scripts, one model" },
   comingSoon: { ta: "விரைவில்", en: "Coming soon" },
-  servicesLabel: { ta: "பணிகள்", en: "Services" },
+  servicesLabel: { ta: "சேவைகள்", en: "Services" },
   scrollCue: { ta: "கீழே உருட்டி ஆராய்க", en: "scroll to explore" },
   adhanCtaEn: "View Adhan on GitHub →",
 };
 
 export const COMMUNITY = {
   titleTa: "மன்றம்", titleEn: "Community",
-  subTa: "கடல் கடந்த தமிழ் — வலையில் சேருக", subEn: "Tamil across the seas — join the network",
+  subTa: "கடல் கடந்த தமிழ் — வலையமைப்பில் இணையுங்கள்", subEn: "Tamil across the seas — join the network",
   plainTa: "தமிழையும் கணினியையும் விரும்பும் நாங்கள் இணைந்து இதை உருவாக்குகிறோம் — நீங்களும் வரலாம்.",
   plainEn: "Real people who love Tamil and computers, building this together — you're welcome to join.",
-  chatAgeTa: "உரையாடல் தளங்கள் (WhatsApp, Discord) 13+ வயதினருக்கு — குழந்தைகள் பெற்றோருடன் சேருக.",
+  chatAgeTa: "உரையாடல் தளங்கள் (WhatsApp, Discord) 13 வயதும் அதற்கு மேலும் உள்ளவர்களுக்கு — குழந்தைகள் பெற்றோருடன் இணையுங்கள்.",
   chatAgeEn: "Chat platforms (WhatsApp, Discord) require age 13+ — kids, join with a parent.",
   cards: [
-    { ta: "வலையில் சேருக", en: "Join the Network", bodyTa: "பங்களிப்பாளர்கள், விளக்கமிடுபவர்கள், உருவாக்குநர்களுக்கான நுழைவு.", bodyEn: "Onboarding for contributors, annotators, and builders.", href: "/onboarding", label: "/onboarding →", external: false },
+    { ta: "வலையமைப்பில் இணையுங்கள்", en: "Join the Network", bodyTa: "பங்களிப்பாளர்கள், விளக்கமிடுபவர்கள், உருவாக்குநர்களுக்கான நுழைவு.", bodyEn: "Onboarding for contributors, annotators, and builders.", href: "/onboarding", label: "/onboarding →", external: false },
     { ta: "Discord", en: "Discord", bodyTa: "அன்றாட உரையாடல் — தமிழ்ச் செயற்கை நுண்ணறிவு உருவாக்குநர்கள், ஆய்வாளர்கள், எழுத்தாளர்கள்.", bodyEn: "The daily conversation — Tamil AI builders, researchers, and writers.", href: "https://discord.gg/yazhi", label: "discord.gg/yazhi →", external: true },
     { ta: "GitHub", en: "GitHub", bodyTa: "திறந்த பணி — மாதிரிகள், கருவிகள், மதிப்பீட்டுத் தொகுப்புகள்.", bodyEn: "The open work — models, tooling, and evaluation suites.", href: "https://github.com/yazhi-lem", label: "github.com/yazhi-lem →", external: true },
   ],
@@ -313,7 +313,7 @@ export const DEVELOPERS = {
     "A community of developers across India, building AI for the languages we grew up speaking. Start on Adhan's open weights or the Yazhi API, ship agents and tools in your own language, and land support from engineers who've done the same.",
   plainTa: "இந்தியா முழுவதும் உள்ள உருவாக்குநர்கள் தங்கள் தாய்மொழிக்காகச் செயற்கை நுண்ணறிவுக் கருவிகளை வடிவமைக்கிறார்கள் — நீங்களும் இணையலாம்.",
   plainEn: "Developers across India building AI tools for their own mother tongues — you're welcome to join in.",
-  ctaTa: "உருவாக்குநராகச் சேருக", ctaEn: "Join as a developer",
+  ctaTa: "உருவாக்குநராக இணையுங்கள்", ctaEn: "Join as a developer",
   ctaHref: "/onboarding?track=developer",
-  discordCtaTa: "Discord இல் சேருக", discordCtaEn: "Join the Discord",
+  discordCtaTa: "Discord-இல் இணையுங்கள்", discordCtaEn: "Join the Discord",
 };
