@@ -237,7 +237,7 @@ export const MADURAI_KANCHI = {
 export const SERVICES = [
   { ta: "முகவர்கள்", en: "Agents" },
   { ta: "செயலிகள்", en: "Applications" },
-  { ta: "குறிப்புரைகள்", en: "Annotations" },
+  { ta: "உரைகள்", en: "Annotations" },
 ];
 
 export const LINKS = {
