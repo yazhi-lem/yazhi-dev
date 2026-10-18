@@ -5,13 +5,13 @@ import { useFrame } from "@react-three/fiber";
 import { sampleWorldHeight } from "@/three/materials/heightfield";
 
 /* A handful of squirrels running the length of the corridor — through
-   kurinji, mullai, marutham, palai — and leaping into the neytal sea at
+   palai, mullai, kurinji, marutham — and leaping into the neytal sea at
    the far end. Purely decorative wildlife: not instanced (only a few of
    them, each independently animated, unlike the hundreds of static trees),
    ground-following via the same `sampleWorldHeight` the terrain and prop
    placement use, so a squirrel's feet always match the land beneath it. */
 
-const RUN_START_Z = 22; // emerges near the hero, before kurinji begins
+const RUN_START_Z = 22; // emerges near the hero, before palai begins
 const JUMP_START_Z = -300; // the beach, just short of open water
 const JUMP_END_Z = -332; // out over the swell — the splash point
 const RUN_LEN = RUN_START_Z - JUMP_START_Z;

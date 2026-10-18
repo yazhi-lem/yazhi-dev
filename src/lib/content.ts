@@ -3,7 +3,7 @@
    BRAND_AND_CONTENT.md. Do not paraphrase Tamil lines here.
    ============================================================ */
 
-export type ThinaiKey = "kurinji" | "mullai" | "marutham" | "neytal" | "palai";
+export type ThinaiKey = "palai" | "mullai" | "kurinji" | "marutham" | "neytal";
 
 export const THINAI: {
   key: ThinaiKey;
@@ -14,9 +14,9 @@ export const THINAI: {
   poetic: string;
   section: string; // DOM id of the section this thinai governs
 }[] = [
-  { key: "kurinji", icon: "🏔️", ta: "குறிஞ்சி", en: "Kurinji", landscape: "Mountains", poetic: "Union", section: "yazhi" },
-  { key: "mullai", icon: "🌳", ta: "முல்லை", en: "Mullai", landscape: "Forest", poetic: "Waiting", section: "adhan" },
   { key: "palai", icon: "🏜️", ta: "பாலை", en: "Palai", landscape: "Desert", poetic: "Elopement / hardship", section: "guardian" },
+  { key: "mullai", icon: "🌳", ta: "முல்லை", en: "Mullai", landscape: "Forest", poetic: "Waiting", section: "adhan" },
+  { key: "kurinji", icon: "🏔️", ta: "குறிஞ்சி", en: "Kurinji", landscape: "Mountains", poetic: "Union", section: "yazhi" },
   { key: "marutham", icon: "🌾", ta: "மருதம்", en: "Marutham", landscape: "Agriculture", poetic: "Union, quarrel, domestic happiness", section: "sangam" },
   { key: "neytal", icon: "🌊", ta: "நெய்தல்", en: "Neytal", landscape: "Coastal", poetic: "Separation", section: "community" },
 ];
@@ -132,11 +132,11 @@ export const THINAI_WORLD = {
   eyebrowTa: "யாழின் உலகம் · திணை", eyebrowEn: "Yazh's world · Thinai",
   titleTa: "ஐந்து நிலம், ஐந்து உரிப்பொருள்", titleEn: "Five landscapes, five moods",
   landscapes: [
-    { key: "kurinji", ta: "குறிஞ்சி", en: "Kurinji", moodEn: "Mountains · first meetings", bodyEn: "Curiosity and discovery — where a story starts." },
+    { key: "palai", ta: "பாலை", en: "Palai", moodEn: "Drylands · endurance", bodyEn: "Courage and separation — the harder stories." },
     { key: "mullai", ta: "முல்லை", en: "Mullai", moodEn: "Forest · waiting", bodyEn: "Animals, patience and the folk tales children know." },
+    { key: "kurinji", ta: "குறிஞ்சி", en: "Kurinji", moodEn: "Mountains · first meetings", bodyEn: "Curiosity and discovery — where a story starts." },
     { key: "marutham", ta: "மருதம்", en: "Marutham", moodEn: "Farmland · everyday life", bodyEn: "Counting, work and family — where lessons live." },
     { key: "neytal", ta: "நெய்தல்", en: "Neytal", moodEn: "Coast · longing", bodyEn: "Voyages and distance — the diaspora's landscape." },
-    { key: "palai", ta: "பாலை", en: "Palai", moodEn: "Drylands · endurance", bodyEn: "Courage and separation — the harder stories." },
   ],
   footEn:
     "Sangam poetry sorts the world into these five tinai. Yazh's story library is organised the same way — the structure is Tamil at its root, not ornament laid on top.",

@@ -3,6 +3,12 @@ import { useEffect, useState } from "react";
 import { THINAI } from "@/lib/content";
 import { useLang } from "@/lib/i18n";
 
+/** Page sections in the order they appear on the page. THINAI (and the 3D
+    world) list the landscapes in journey order, but the rail follows the
+    page, so it is sorted by this scroll order. */
+const SCROLL_ORDER = ["yazhi", "adhan", "guardian", "sangam", "community"];
+const RAIL = [...THINAI].sort((a, b) => SCROLL_ORDER.indexOf(a.section) - SCROLL_ORDER.indexOf(b.section));
+
 /** The five thinai as literal site navigation. Desktop: fixed left rail.
     Mobile: bottom bar. Active landscape tracks scroll position. */
 export function ThinaiRail() {
@@ -38,7 +44,7 @@ export function ThinaiRail() {
       className="fixed z-40 max-lg:bottom-4 max-lg:left-1/2 max-lg:-translate-x-1/2 lg:left-6 lg:top-1/2 lg:-translate-y-1/2"
     >
       <ul className="flex gap-1.5 rounded-full border border-ivory/10 bg-night-2/80 p-1.5 backdrop-blur lg:flex-col lg:gap-2">
-        {THINAI.map((t) => {
+        {RAIL.map((t) => {
           const isActive = active === t.key;
           return (
             <li key={t.key}>
