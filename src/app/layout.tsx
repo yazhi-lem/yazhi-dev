@@ -47,7 +47,7 @@ const displayStack = `${playfair.style.fontFamily}, ${notoTamil.style.fontFamily
 const bodyStack = `${ebGaramond.style.fontFamily}, ${notoTamil.style.fontFamily}, serif`;
 
 export const metadata: Metadata = {
-  title: "யாழி • Yazhi — Sovereign AI & Language Initiative",
+  title: "யாழி — இறையாண்மைச் செயற்கை நுண்ணறிவும் மொழி முன்னெடுப்பும் • Yazhi — Sovereign AI & Language Initiative",
   description: "Reclaiming the agentic power of Thenmadurai. Sovereign Intelligence.",
 };
 

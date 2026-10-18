@@ -26,7 +26,7 @@ export function Guardian() {
   return (
     <Section id="guardian">
       <SectionHeading
-        thinaiTa="பாலை" thinaiEn="Palai" landscapeTa="பாலைவனம் · பிரிதல்" landscape="Desert · hardship endured"
+        thinaiTa="பாலை" thinaiEn="Palai" landscapeTa="பாலை நிலம் · பிரிதல்" landscape="Desert · hardship endured"
         titleTa={GUARDIAN.nameTa} titleEn={GUARDIAN.nameEn}
         subTa={GUARDIAN.subTa} subEn={GUARDIAN.subEn}
         plainTa={GUARDIAN.plainTa} plainEn={GUARDIAN.plainEn}

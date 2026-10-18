@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "தனியுரிமை • Privacy — Yazhi",
+  title: "தனியுரிமை — யாழி • Privacy — Yazhi",
   description: "What Yazhi collects, what stays on your device, and how families should use the site.",
 };
 
