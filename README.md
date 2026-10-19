@@ -6,6 +6,7 @@ See [NEXT_ACTION.md](./NEXT_ACTION.md) for the roadmap, **October 2026 Pilot**, 
 
 - **Contributing:** start with [CONTRIBUTING.md](./CONTRIBUTING.md). It has the repository index, local setup and PR rules.
 - **Code of Conduct:** everyone who takes part follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
+- **Moderation Rota:** our weekly community moderation schedule, response SLAs, and incident guidelines are in [docs/MODERATION_ROTA.md](./docs/MODERATION_ROTA.md).
 
 ## Getting Started
 
