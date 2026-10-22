@@ -1,6 +1,6 @@
 # Yazhi Community Moderation Rota & Guidelines
 
-**Tracked in Linear:** [LEM-248](https://linear.app/yazhi-lem/issue/LEM-248) · **GitHub Issue:** [#24](https://github.com/yazhi-lem/yazhi-dev/issues/24)  
+**GitHub Issue:** [#24](https://github.com/yazhi-lem/yazhi-dev/issues/24)  
 **Milestone:** Set up / October 2026 Pilot  
 **Owner:** Supriya Padmashini K  
 **Lead Reviewer:** Valavan Kay  
@@ -58,7 +58,6 @@ Below is the foundational rota for the **October 2026 Pilot Release** and ecosys
 | **W7** | Nov 17 – Nov 23, 2026 | **Valavan Kay** | **Sundaram R** | `Pending Confirmation` | Dev Space session moderation |
 | **W8** | Nov 24 – Nov 30, 2026 | **Karthik N** | **Supriya Padmashini K** | `Pending Confirmation` | Pre-December launch stabilization |
 
-*(Live updates and private contact details are synchronized in the internal team drive under `/ops/moderation-rota-2026.xlsx`.)*
 
 ---
 
@@ -125,7 +124,7 @@ Record the case in the internal confidential log with:
 
 ---
 
-## 7. Platform Gate Setup (LEM-209 Integration)
+## 7. Platform Gate Setup
 
 To satisfy the constraint **"Code of conduct in place before anyone joins"**, all community entry points must enforce explicit agreement:
 
