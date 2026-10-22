@@ -1,4 +1,6 @@
-/* The five thinai as world zones along the camera's -Z journey.
+/* The five thinai as world zones along the camera's -Z journey, in the
+   journey order palai → mullai → kurinji → marutham → neytal (hardship,
+   waiting, union, home, the sea).
    Hues match styles/tokens.css so the WebGL world and the DOM accent
    system stay in the same register. */
 export const ZONE_LEN = 70;
@@ -14,10 +16,10 @@ export type Zone = {
 };
 
 export const ZONES: Zone[] = [
-  { key: "kurinji",  ground: "#302a5c", glow: "#8b7ae0", amp: 22, freq: 0.045, props: "peaks"  },
-  { key: "mullai",   ground: "#1c4029", glow: "#5fb37e", amp: 6,  freq: 0.06,  props: "trees"  },
-  { key: "marutham", ground: "#3d371b", glow: "#b7a03c", amp: 2,  freq: 0.05,  props: "fields" },
   { key: "palai",    ground: "#48281a", glow: "#d97a58", amp: 9,  freq: 0.03,  props: "dunes"  },
+  { key: "mullai",   ground: "#1c4029", glow: "#5fb37e", amp: 6,  freq: 0.06,  props: "trees"  },
+  { key: "kurinji",  ground: "#302a5c", glow: "#8b7ae0", amp: 22, freq: 0.045, props: "peaks"  },
+  { key: "marutham", ground: "#3d371b", glow: "#b7a03c", amp: 2,  freq: 0.05,  props: "fields" },
   { key: "neytal",   ground: "#163044", glow: "#5f9fc9", amp: 3,  freq: 0.05,  props: "sea"    },
 ];
 

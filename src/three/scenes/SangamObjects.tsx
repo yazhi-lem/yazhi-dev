@@ -2,7 +2,7 @@
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
-import { ZONE_LEN, WORLD_LEN, mulberry32 } from "@/three/materials/zones";
+import { ZONES, ZONE_LEN, WORLD_LEN, mulberry32 } from "@/three/materials/zones";
 
 /* ============================================================
    Sangam-era set dressing — the holistic-utopia layer.
@@ -16,7 +16,13 @@ import { ZONE_LEN, WORLD_LEN, mulberry32 } from "@/three/materials/zones";
    · karthigai lamp-points drifting through the whole world
    ============================================================ */
 
-const zOf = (i: number) => -(i * ZONE_LEN) - ZONE_LEN / 2;
+/* Zones are addressed by thinai key, never by position, so the props stay
+   in the right land whatever order ZONES lists them in. */
+const zOf = (key: string) => {
+  const i = ZONES.findIndex((z) => z.key === key);
+  if (i < 0) throw new Error(`Unknown thinai zone: ${key}`);
+  return -(i * ZONE_LEN) - ZONE_LEN / 2;
+};
 
 /* ---- temple stone pillars at each zone threshold ----
    Free-standing South-Indian temple pillars (kal thoon): a stepped plinth,
@@ -46,7 +52,7 @@ function Pillar({ hue }: { hue: string }) {
 }
 
 function Gates() {
-  const hues = ["#5fb37e", "#b7a03c", "#d97a58", "#5f9fc9"]; // hue of the zone being entered
+  const hues = ZONES.slice(1).map((z) => z.glow); // hue of the zone being entered
   return (
     <group>
       {hues.map((hue, i) => {
@@ -75,7 +81,7 @@ function KurinjiBlooms() {
     const list: THREE.Matrix4[] = [];
     for (let i = 0; i < 130; i++) {
       const side = rand() > 0.5 ? 1 : -1;
-      tmp.position.set(side * (18 + rand() * 55), 0.4 + rand() * 7, zOf(0) + (rand() - 0.5) * ZONE_LEN);
+      tmp.position.set(side * (18 + rand() * 55), 0.4 + rand() * 7, zOf("kurinji") + (rand() - 0.5) * ZONE_LEN);
       tmp.scale.setScalar(0.5 + rand() * 0.8);
       tmp.updateMatrix();
       list.push(tmp.matrix.clone());
@@ -103,7 +109,7 @@ function Huts() {
     const rand = mulberry32(52);
     return Array.from({ length: 7 }, () => ({
       x: (rand() > 0.5 ? 1 : -1) * (22 + rand() * 30),
-      z: zOf(1) + (rand() - 0.5) * (ZONE_LEN - 14),
+      z: zOf("mullai") + (rand() - 0.5) * (ZONE_LEN - 14),
       r: rand() * Math.PI * 2,
       s: 0.85 + rand() * 0.5,
     }));
@@ -135,7 +141,7 @@ function Granaries() {
     () =>
       Array.from({ length: 6 }, () => ({
         x: (rand() > 0.5 ? 1 : -1) * (20 + rand() * 26),
-        z: zOf(2) + (rand() - 0.5) * (ZONE_LEN - 16),
+        z: zOf("marutham") + (rand() - 0.5) * (ZONE_LEN - 16),
         s: 0.9 + rand() * 0.5,
       })),
     [rand]
@@ -144,7 +150,7 @@ function Granaries() {
     () =>
       Array.from({ length: 10 }, () => ({
         x: (rand() > 0.5 ? 1 : -1) * (30 + rand() * 42),
-        z: zOf(2) + (rand() - 0.5) * ZONE_LEN,
+        z: zOf("marutham") + (rand() - 0.5) * ZONE_LEN,
         s: 0.8 + rand() * 0.7,
         lean: (rand() - 0.5) * 0.12,
       })),
@@ -186,7 +192,7 @@ function Nadukal() {
     const rand = mulberry32(74);
     return Array.from({ length: 8 }, () => ({
       x: (rand() > 0.5 ? 1 : -1) * (16 + rand() * 34),
-      z: zOf(3) + (rand() - 0.5) * (ZONE_LEN - 12),
+      z: zOf("palai") + (rand() - 0.5) * (ZONE_LEN - 12),
       tilt: (rand() - 0.5) * 0.14,
       s: 0.8 + rand() * 0.8,
     }));
@@ -218,7 +224,7 @@ function Shore() {
       x: (rand() - 0.5) * 70,
       // the open water is on the FAR side of the zone (local -z) since the
       // neytal shoreline flip in Terrain — boats float there, not on the beach
-      z: zOf(4) - 4 - rand() * (ZONE_LEN / 2 - 6),
+      z: zOf("neytal") - 4 - rand() * (ZONE_LEN / 2 - 6),
       r: rand() * Math.PI * 2,
       phase: rand() * Math.PI * 2,
     }));
@@ -258,7 +264,7 @@ function Shore() {
         ))}
       </group>
       {/* kalangarai vilakkam — the shore beacon, footed below the swell */}
-      <group position={[26, -2.5, zOf(4) - 10]}>
+      <group position={[26, -2.5, zOf("neytal") - 10]}>
         <mesh position={[0, 4, 0]}>
           <cylinderGeometry args={[0.9, 1.4, 8, 8]} />
           <meshStandardMaterial color="#243244" flatShading roughness={0.9} />

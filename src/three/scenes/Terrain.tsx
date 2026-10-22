@@ -343,7 +343,7 @@ function zoneGeometry(zone: Zone, detail: number, prev?: Zone, next?: Zone) {
     // overlaps the NEXT zone (its local coord there is z + ZONE_LEN) and
     // the local +z band overlaps the PREV zone (z - ZONE_LEN). Getting
     // this backwards blends in phantom terrain from the wrong neighbor —
-    // e.g. palai dunes rising out of the neytal open ocean.
+    // e.g. marutham fields rising out of the neytal open ocean.
     if (next && z < -half + feather) {
       t = 1 - THREE.MathUtils.smoothstep(z, -half - feather, -half + feather);
       other = next;
@@ -699,11 +699,11 @@ function ZoneProps({
           geometry: buildHut(),
           color: "#ffffff",
           vertexColors: true,
-          // up on the arrival shore (+z, the palai side), watching the water
+          // up on the arrival shore (+z, the marutham side), watching the water
           matrices: place(3, () => {
             const side = rand() > 0.5 ? 1 : -1;
             const x = side * (20 + rand() * 26);
-            const z = 8 + rand() * 14; // clear of the palai seam-blend band
+            const z = 8 + rand() * 14; // clear of the marutham seam-blend band
             return { x, z, scale: 0.9 + rand() * 0.4, h: ground(x, z) + 0.15, yaw: rand() * Math.PI * 2 };
           }),
         };
