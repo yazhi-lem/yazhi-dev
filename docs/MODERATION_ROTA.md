@@ -1,6 +1,6 @@
 # Yazhi Community Moderation Rota & Guidelines
 
-**Tracked in Linear:** [LEM-248](https://linear.app/yazhi-lem/issue/LEM-248) · **GitHub Issue:** [#24](https://github.com/yazhi-lem/yazhi-dev/issues/24)  
+**GitHub Issue:** [#24](https://github.com/yazhi-lem/yazhi-dev/issues/24)  
 **Milestone:** Set up / October 2026 Pilot  
 **Owner:** Supriya Padmashini K  
 **Lead Reviewer:** Valavan Kay  
@@ -51,14 +51,13 @@ Below is the foundational rota for the **October 2026 Pilot Release** and ecosys
 |:---:|:---|:---|:---|:---:|:---|
 | **W1** | Oct 06 – Oct 12, 2026 | **Supriya Padmashini K** | **Valavan Kay** | `Confirmed` | Pilot onboarding & Discord setup |
 | **W2** | Oct 13 – Oct 19, 2026 | **Valavan Kay** | **Supriya Padmashini K** | `Confirmed` | Circle launch & repo index rollout |
-| **W3** | Oct 20 – Oct 26, 2026 | **Karthik N** | **Supriya Padmashini K** | `Confirmed` | Sangam / Open-Sangam PR triage |
-| **W4** | Oct 27 – Nov 02, 2026 | **Ananya S** | **Valavan Kay** | `Confirmed` | Adhan tokenizer & dataset questions |
-| **W5** | Nov 03 – Nov 09, 2026 | **Supriya Padmashini K** | **Karthik N** | `Pending Confirmation` | Illakiya mobile keyboard testing |
-| **W6** | Nov 10 – Nov 16, 2026 | **Sundaram R** | **Ananya S** | `Pending Confirmation` | Community translation & corpus sprint |
-| **W7** | Nov 17 – Nov 23, 2026 | **Valavan Kay** | **Sundaram R** | `Pending Confirmation` | Dev Space session moderation |
-| **W8** | Nov 24 – Nov 30, 2026 | **Karthik N** | **Supriya Padmashini K** | `Pending Confirmation` | Pre-December launch stabilization |
+| **W3** | Oct 20 – Oct 26, 2026 | Open — to be confirmed in writing | **Supriya Padmashini K** | `Open` | Sangam / Open-Sangam PR triage |
+| **W4** | Oct 27 – Nov 02, 2026 | Open — to be confirmed in writing | **Valavan Kay** | `Open` | Adhan tokenizer & dataset questions |
+| **W5** | Nov 03 – Nov 09, 2026 | **Supriya Padmashini K** | Open — to be confirmed in writing | `Open` | Illakiya mobile keyboard testing |
+| **W6** | Nov 10 – Nov 16, 2026 | Open — to be confirmed in writing | Open — to be confirmed in writing | `Open` | Community translation & corpus sprint |
+| **W7** | Nov 17 – Nov 23, 2026 | **Valavan Kay** | Open — to be confirmed in writing | `Open` | Dev Space session moderation |
+| **W8** | Nov 24 – Nov 30, 2026 | Open — to be confirmed in writing | **Supriya Padmashini K** | `Open` | Pre-December launch stabilization |
 
-*(Live updates and private contact details are synchronized in the internal team drive under `/ops/moderation-rota-2026.xlsx`.)*
 
 ---
 
@@ -125,7 +124,7 @@ Record the case in the internal confidential log with:
 
 ---
 
-## 7. Platform Gate Setup (LEM-209 Integration)
+## 7. Platform Gate Setup
 
 To satisfy the constraint **"Code of conduct in place before anyone joins"**, all community entry points must enforce explicit agreement:
 
