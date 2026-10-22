@@ -6,6 +6,7 @@ See [NEXT_ACTION.md](./NEXT_ACTION.md) for the roadmap, **October 2026 Pilot**, 
 
 - **Contributing:** start with [CONTRIBUTING.md](./CONTRIBUTING.md). It has the repository index, local setup and PR rules.
 - **Code of Conduct:** everyone who takes part follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
+- **Moderation Rota:** our weekly community moderation schedule, response SLAs, and incident guidelines are in [docs/MODERATION_ROTA.md](./docs/MODERATION_ROTA.md).
 
 ## Getting Started
 
@@ -41,6 +42,28 @@ The backend contract is OpenAI-compatible Chat Completions with SSE
 streaming; `src/lib/chat/backend.ts` is the single integration point and
 shows the exact request/response shape. Until `YAZHI_API_URL` is set, the
 UI streams a friendly "not configured" notice instead of failing silently.
+
+## /bubble — Bubble UI, the Yazhi UI library, and Circle sign-in
+
+- `/bubble` — builder docs for the **Bubble UI** (the host Yazhi apps live
+  in) with a live demo, the `yazhi.bubble/v0` manifest reference, runtimes,
+  Circle sign-in and the code of conduct.
+- `/bubble/components`, `/bubble/modules`, `/bubble/pages` — **Yazhi UI**,
+  the component library in `src/ui` (import from `@/ui`): primitives,
+  app-level modules and full page templates for Avai, Nyaya, Kural, Guru,
+  Kadai, Open Sangam and the Yazh parent gate, each with live demos on
+  sample data.
+
+Builders sign in with their **Circle** account on yazhi-api (gRPC
+`yazhi.circle.v1.YazhiCircle`). `src/lib/circle/client.ts` is the single
+integration point; sessions are httpOnly cookies set by `/api/circle/*`.
+Set `YAZHI_GRPC_TARGET` (and the sign-up keys) from `.env.example`.
+Bubbles run either in the browser against a local OpenAI-compatible model
+server (no internet needed) or through `/api/bubble/run`, which requires a
+Circle session and only allows the models in `YAZHI_BUBBLE_MODELS`.
+
+The plan to grow this into a community platform is in
+[`docs/PROPOSAL-YAZHI-DEV-V3.md`](./docs/PROPOSAL-YAZHI-DEV-V3.md).
 
 ## Learn More
 
