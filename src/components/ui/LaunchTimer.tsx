@@ -33,8 +33,8 @@ export function LaunchTimer() {
     lang === "en"
       ? "Yazhi Awakening"
       : lang === "ta"
-        ? "யாழி எழுச்சி"
-        : "யாழி எழுச்சி · Awakening";
+        ? "யாழி விழிப்பு"
+        : "யாழி விழிப்பு · Awakening";
 
   return (
     <div

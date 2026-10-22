@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "எங்களைப் பற்றி • About — Yazhi",
+  title: "எங்களைப் பற்றி — யாழி • About — Yazhi",
   description: "Who is behind Yazhi, what we're building, and what the Awakening countdown means.",
 };
 
@@ -17,7 +17,7 @@ export default function AboutPage() {
       </Link>
 
       <h1 className="mt-8 font-display text-3xl font-semibold">
-        எங்களைப் பற்றி <span className="text-ivory-dim">·</span> About Yazhi
+        யாழியைப் பற்றி <span className="text-ivory-dim">·</span> About Yazhi
       </h1>
 
       <section className="mt-10 space-y-8 leading-relaxed text-ivory-dim">

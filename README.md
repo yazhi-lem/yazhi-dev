@@ -4,6 +4,14 @@
 
 This repository is [yazhi.dev](https://yazhi.dev): the public, Tamil-first community site of Yazhi, with an AI chat workspace for builders.
 
+## Community and contributing
+
+- **Contributing:** start with [CONTRIBUTING.md](./CONTRIBUTING.md). It has the repository index, local setup and PR rules.
+- **Code of Conduct:** everyone who takes part follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
+- **Moderation Rota:** our weekly community moderation schedule, response SLAs, and incident guidelines are in [docs/MODERATION_ROTA.md](./docs/MODERATION_ROTA.md).
+
+## Getting Started
+
 ---
 
 ## Our mission

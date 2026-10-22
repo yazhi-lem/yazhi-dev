@@ -51,10 +51,16 @@ export function Navbar() {
             ))}
           </ul>
           <Link
+            href="/bubble"
+            className="hidden rounded-full border border-ivory/20 px-3.5 py-1.5 text-xs font-semibold text-ivory-dim transition-colors hover:border-gold/60 hover:text-ivory sm:inline-block"
+          >
+            <Bi ta="உருவாக்கு" en="Build" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
+          </Link>
+          <Link
             href="/chat"
             className="rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night"
           >
-            <Bi ta="அரட்டை" en="Chat" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
+            <Bi ta="உரையாடல்" en="Chat" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
           </Link>
           <LangToggle />
           <button
