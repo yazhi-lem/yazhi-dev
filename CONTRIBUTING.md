@@ -72,6 +72,9 @@ Check any page you change at phone width as well as desktop.
 - **Reviewing Tamil:** if you are a native Tamil speaker, reviewing strings is one of the most valuable things you can do.
 - **Reporting bugs:** open an issue with steps to reproduce, what you expected, and what happened.
 
-## 7. Conduct
+## 7. Conduct & Moderation
 
-Everyone in this project follows the [Code of Conduct](CODE_OF_CONDUCT.md). Report problems as described there.
+Everyone in this project follows the [Code of Conduct](CODE_OF_CONDUCT.md). We maintain a community where language sovereignty, dignity, and inclusivity are respected across all channels.
+
+- **Reporting:** Send incident reports to [`conduct@yazhi.dev`](mailto:conduct@yazhi.dev) or flag them directly on `circle.yazhi.dev` / Discord `#mod-help`.
+- **Moderation Rota:** Review our weekly moderator rotation, response SLAs (< 24h acknowledgment, < 48h triage), and incident playbook in [docs/MODERATION_ROTA.md](docs/MODERATION_ROTA.md).
