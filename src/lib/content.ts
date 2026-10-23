@@ -35,7 +35,7 @@ export const IDENTITY = {
   footerEn: "Sovereign Artificial Intelligence",
   // the plain-language layer: one sentence a ten-year-old can read,
   // sitting under the poetic/technical register — never replacing it
-  plainTa: "தமிழையும் எல்லா இந்திய மொழிகளையும் புரிந்துகொள்ளவும் பேசவும் கணினிகளுக்குக் கற்றுத் தருகிறோம்.",
+  plainTa: "கணினிகள் தமிழையும் எல்லா இந்திய மொழிகளையும் புரிந்துகொள்ளவும் பேசவும் கற்றுத் தருகிறோம்.",
   plainEn: "We teach computers to understand and speak Tamil — and every Indian language.",
   // from the founding deck: the one-line pitch under the wordmark
   heroLineTa: "படிக்கவோ தட்டச்சு செய்யவோ இன்னும் அறியாத குழந்தைகளுக்கான குரல்வழி நண்பருடன் தொடங்குகிறோம்.",
@@ -166,9 +166,9 @@ export const ADHAN_CHAT: {
 export const GUARDIAN = {
   nameTa: "யாழ்",
   nameEn: "Yazh",
-  eyebrowTa: "குடும்பங்கள் கட்டணம் செலுத்திப் பெறுவது",
+  eyebrowTa: "குடும்பங்கள் கட்டணம் செலுத்துவது இதற்காக",
   eyebrowEn: "What families pay for",
-  subTa: "4–8 வயதுக் குழந்தைகளுக்கான குரல்வழிச் செயற்கை நுண்ணறிவு நண்பர் — WhatsApp-இல்",
+  subTa: "4–8 வயதுக் குழந்தைகளுக்கான WhatsApp குரல் நண்பர்",
   subEn: "A voice AI friend for children aged 4–8, on WhatsApp",
   bodyEn:
     "Yazh is a guardian creature carved onto temple pillars across the Dravidian south — it stands at the doorway and keeps what is inside safe. Yazh is that guardian, drawn small enough for a four-year-old to talk to. He listens, answers in the child's mother tongue, and never asks them to read or type. Voice in, voice out — no app, no typing, on the phone families already own. Folk stories plus Maths, Science and English through conversation.",
@@ -179,7 +179,7 @@ export const GUARDIAN = {
   whatsappCtaEn: "Chat on WhatsApp",
   whatsappNoteTa: "தற்போது ஹைதராபாத் சுற்றுவட்டாரத்தில் உள்ள 30-க்கும் மேற்பட்ட முன்னோடிக் குடும்பங்களுடன் தனிப்பட்ட முன்னோட்டத்தில் இருக்கிறோம் — திறக்கும்போது அறிய WhatsApp சமூகத்தில் இணையுங்கள்.",
   whatsappNoteEn: "Currently in private beta with 30+ founding families around Hyderabad — join the WhatsApp community for updates as we open up.",
-  plainTa: "இணையத்தில் தமிழ்க் கதைகளையும் பாடல்களையும் காக்கும் செயலி — கோயில் யாழியைப்போல.",
+  plainTa: "இணையத்தில் தமிழ்க் கதைகளையும் பாடல்களையும் காக்கும் செயலி — கோயில் யாழியைப் போல.",
   plainEn: "An app that watches over Tamil stories and songs on the internet — like the temple guardian it's named after.",
 };
 
@@ -201,7 +201,7 @@ export const SANGAM = {
   ctaTa: "மேலும் அறிக →",
   ctaEn: "Learn more",
   ctaHref: "https://sangam.yazhi.dev",
-  plainTa: "2,000 ஆண்டுகள் பழமையான தமிழ்ப் பாடல்களைப் படித்து, ஒவ்வொன்றும் ஐந்து நிலங்களில் எதற்குரியது என்று சொல்லும் கருவி — மாணவர்களுக்கும் ஆசிரியர்களுக்கும் கட்டணமின்றி.",
+  plainTa: "2,000 ஆண்டுகள் பழமையான தமிழ்ப் பாடல்களைப் படித்து, ஒவ்வொன்றும் எந்த நிலத்தைச் சேர்ந்தது என்று சொல்லும் கருவி — மாணவர்களுக்கும் ஆசிரியர்களுக்கும் கட்டணமின்றி.",
   plainEn: "A tool that reads 2,000-year-old Tamil poems and tells you which of the five landscapes each belongs to — free for students and teachers.",
 };
 
@@ -263,7 +263,7 @@ export const NAV_GROUPS = [
     items: [
       { ta: "முகவர்கள்", en: "Agents", href: "#services" },
       { ta: "செயலிகள்", en: "Applications", href: "#services" },
-      { ta: "தரவுக் குறிப்பீடு", en: "Annotations", href: "#services" },
+      { ta: "குறிப்புரைகள்", en: "Annotations", href: "#services" },
     ],
   },
   {
@@ -292,14 +292,14 @@ export const UI = {
 };
 
 export const COMMUNITY = {
-  titleTa: "சமூகம்", titleEn: "Community",
+  titleTa: "மன்றம்", titleEn: "Community",
   subTa: "கடல் கடந்த தமிழ் — வலையமைப்பில் இணையுங்கள்", subEn: "Tamil across the seas — join the network",
-  plainTa: "தமிழையும் கணினியையும் நேசிக்கும் உண்மையான மனிதர்களாகிய நாங்கள் இணைந்து இதை உருவாக்குகிறோம் — நீங்களும் வாருங்கள்.",
+  plainTa: "தமிழையும் கணினியையும் விரும்பும் நாங்கள் இணைந்து இதை உருவாக்குகிறோம் — நீங்களும் வரலாம்.",
   plainEn: "Real people who love Tamil and computers, building this together — you're welcome to join.",
-  chatAgeTa: "உரையாடல் தளங்களுக்கு (WhatsApp, Discord) 13 வயது நிறைந்திருக்க வேண்டும் — குழந்தைகள் பெற்றோருடன் இணையுங்கள்.",
+  chatAgeTa: "உரையாடல் தளங்கள் (WhatsApp, Discord) 13 வயதும் அதற்கு மேலும் உள்ளவர்களுக்கு — குழந்தைகள் பெற்றோருடன் இணையுங்கள்.",
   chatAgeEn: "Chat platforms (WhatsApp, Discord) require age 13+ — kids, join with a parent.",
   cards: [
-    { ta: "வலையமைப்பில் இணையுங்கள்", en: "Join the Network", bodyTa: "பங்களிப்பாளர்கள், தரவுக் குறிப்பீட்டாளர்கள், உருவாக்குநர்கள் ஆகியோருக்கான அறிமுகமும் வரவேற்பும்", bodyEn: "Onboarding for contributors, annotators, and builders.", href: "/onboarding", label: "/onboarding →", external: false },
+    { ta: "வலையமைப்பில் இணையுங்கள்", en: "Join the Network", bodyTa: "பங்களிப்பாளர்கள், விளக்கமிடுபவர்கள், உருவாக்குநர்களுக்கான நுழைவு.", bodyEn: "Onboarding for contributors, annotators, and builders.", href: "/onboarding", label: "/onboarding →", external: false },
     { ta: "Discord", en: "Discord", bodyTa: "அன்றாட உரையாடல் — தமிழ்ச் செயற்கை நுண்ணறிவு உருவாக்குநர்கள், ஆய்வாளர்கள், எழுத்தாளர்கள்.", bodyEn: "The daily conversation — Tamil AI builders, researchers, and writers.", href: "https://discord.gg/yazhi", label: "discord.gg/yazhi →", external: true },
     { ta: "GitHub", en: "GitHub", bodyTa: "திறந்த பணி — மாதிரிகள், கருவிகள், மதிப்பீட்டுத் தொகுப்புகள்.", bodyEn: "The open work — models, tooling, and evaluation suites.", href: "https://github.com/yazhi-lem", label: "github.com/yazhi-lem →", external: true },
   ],
