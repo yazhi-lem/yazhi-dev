@@ -82,7 +82,7 @@ export function Yazhi() {
   return (
     <Section id="yazhi">
       <SectionHeading
-        thinaiTa="குறிஞ்சி" thinaiEn="Kurinji" landscapeTa="மலை · புணர்தல்" landscape="Mountains · first meetings"
+        thinaiTa="குறிஞ்சி" thinaiEn="Kurinji" landscapeTa="மலை · கூடல்" landscape="Mountains · first meetings"
         titleTa={IDENTITY.nameTa} titleEn={IDENTITY.nameEn}
         subTa={YAZHI_SECTION.subTa} subEn={YAZHI_SECTION.subEn}
         plainTa={YAZHI_SECTION.plainTa} plainEn={YAZHI_SECTION.plainEn}

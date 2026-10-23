@@ -46,12 +46,30 @@ function parseSseLine(line: string): string | null {
   }
 }
 
+type Turn = { role: "user" | "assistant"; content: string };
+
 export async function streamFromBackend({
   agent,
   messages,
 }: {
   agent: Agent;
-  messages: { role: "user" | "assistant"; content: string }[];
+  messages: Turn[];
+}): Promise<ReadableStream<Uint8Array>> {
+  return streamCompletion({ model: agent.model, systemPrompt: agent.systemPrompt, messages });
+}
+
+/** Stream one completion from yazhi-api. `user` is an opaque caller id
+    (e.g. a Circle account id) passed through for attribution and limits. */
+export async function streamCompletion({
+  model,
+  systemPrompt,
+  messages,
+  user,
+}: {
+  model: string;
+  systemPrompt: string;
+  messages: Turn[];
+  user?: string;
 }): Promise<ReadableStream<Uint8Array>> {
   if (!YAZHI_API_URL) {
     return errorStream(
@@ -59,18 +77,24 @@ export async function streamFromBackend({
     );
   }
 
-  const upstream = await fetch(`${YAZHI_API_URL}${YAZHI_CHAT_PATH}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...(YAZHI_API_KEY ? { Authorization: `Bearer ${YAZHI_API_KEY}` } : {}),
-    },
-    body: JSON.stringify({
-      model: agent.model,
-      messages: [{ role: "system", content: agent.systemPrompt }, ...messages],
-      stream: true,
-    }),
-  });
+  let upstream: Response;
+  try {
+    upstream = await fetch(`${YAZHI_API_URL}${YAZHI_CHAT_PATH}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(YAZHI_API_KEY ? { Authorization: `Bearer ${YAZHI_API_KEY}` } : {}),
+      },
+      body: JSON.stringify({
+        model,
+        messages: [{ role: "system", content: systemPrompt }, ...messages],
+        stream: true,
+        ...(user ? { user } : {}),
+      }),
+    });
+  } catch {
+    return errorStream("yazhi-api is unreachable right now — try again shortly.");
+  }
 
   if (!upstream.ok || !upstream.body) {
     const detail = await upstream.text().catch(() => "");
