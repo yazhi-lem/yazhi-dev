@@ -44,3 +44,6 @@ next-env.d.ts
 
 # Playwright MCP session artifacts (screenshots, console logs)
 .playwright-mcp/
+
+# Runtime data: local SQLite DB, JWT keys, encrypted credential stores
+/data/
