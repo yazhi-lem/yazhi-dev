@@ -64,6 +64,7 @@ Every v3 feature has to pass these, in this order (Aram harness):
 |---|---|---|
 | `/bubble` | Builder docs + live Bubble UI | **Built** |
 | `/bubble/components`, `/bubble/modules`, `/bubble/pages` | Yazhi UI library: primitives, app modules, full app templates with live demos | **Built** (sample data) → B: published to the registry with each bubble |
+| `/bubble/design` | Bubble UI design book: five tinai environments (ink, motion, ambient field, Hairline figure each), principles, tokens, motion and access rules | **Built** → B: environments selectable per bubble in the manifest |
 | `/hub` | Browse and install published bubbles; filter by language, domain, runtime | B |
 | `/hub/<bubble-id>` | Bubble page: description, author, versions, reviews, "open in Bubble UI", "fork" | B |
 | `/b/<handle>` | Builder profile: bubbles, reviews given, Spaces, recognition | B |
@@ -253,7 +254,7 @@ Targets are proposals for the owner to set; there is no baseline yet.
 **yazhi-dev** (this branch)
 
 - `/bubble` — builder docs and a live Bubble UI.
-- Yazhi UI (`src/ui`, docs at `/bubble/components`, `/bubble/modules`, `/bubble/pages`) — 11 components, 10 modules and 7 page templates (Avai, Nyaya, Kural, Guru, Kadai, Open Sangam, Yazh parent gate) on sample data. An earlier agent builder (`/foundry`) was removed from yazhi.dev.
+- Yazhi UI (`src/ui`, docs at `/bubble/components`, `/bubble/modules`, `/bubble/pages`) — 11 components, 10 modules and 7 page templates (Avai, Nyaya, Kural, Guru, Kadai, Open Sangam, Yazh parent gate) on sample data. An earlier agent builder (`/foundry`) was removed from yazhi.dev. The design book (`/bubble/design`, `src/ui/tinai`, `src/ui/hairline`) adds the five tinai environments and one Hairline figure per landscape, built on Lucas Marques's MIT-licensed Hairline kernel.
 - Bubble UI host — canvas, packed tray, composer with Circle button; on-device runtime (browser → localhost, no internet) and yazhi-api runtime via `/api/bubble/run`.
 - Circle auth — `/api/circle/{session,signin,signup,signout}`, httpOnly cookies, gRPC client in `src/lib/circle/client.ts`.
 

@@ -5,7 +5,9 @@
       modules/     app-level blocks (cited answers, runbooks, hint ladder, reader)
       pages/       full app screens (Avai, Nyaya, Kural, Guru, Kadai, Open Sangam, Yazh)
 
-    Browse it live at /bubble/components, /bubble/modules and /bubble/pages. */
+    Browse it live at /bubble/components, /bubble/modules and /bubble/pages;
+    the design book at /bubble/design covers the tinai environments
+    (tinai/) and the Hairline figures (hairline/). */
 
 export { Bubble } from "./components/Bubble";
 export { Pill, RuntimeBadge, DraftTag, type Tone } from "./components/Pill";
@@ -29,3 +31,11 @@ export { FivePostureTrace, ConsentGate, type PostureResult } from "./modules/Tru
 export { AppFrame, type AppIdentity } from "./pages/AppFrame";
 export { PAGE_TEMPLATES, type PageTemplate, type TemplateSlug } from "./pages/catalog";
 export { PAGE_COMPONENTS } from "./pages/AppPages";
+
+export { TinaiScope } from "./tinai/TinaiScope";
+export { TinaiAmbient } from "./tinai/TinaiAmbient";
+export { MagneticTray, type MagneticItem } from "./tinai/MagneticTray";
+export { ENVIRONMENTS, ENV_BY_KEY, envVars, type Environment } from "./tinai/environments";
+export { HairlineFigure } from "./hairline/HairlineFigure";
+export { TINAI_FIGURES } from "./hairline/figures";
+export type { HairlineFigureDef } from "./hairline/types";

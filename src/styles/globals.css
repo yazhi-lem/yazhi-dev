@@ -218,3 +218,72 @@ body {
 }
 .chat-scroll::-webkit-scrollbar-track { background: transparent; }
 
+
+/* ============================================================
+   TINAI ENVIRONMENTS — Bubble UI design book (src/ui/tinai)
+   The --env-* colours are registered so that switching landscape
+   cross-fades every ground, surface and hairline stroke instead of
+   snapping. Values are set per landscape by envVars().
+   ============================================================ */
+@property --env-ground { syntax: "<color>"; inherits: true; initial-value: #0a0a0a; }
+@property --env-surface { syntax: "<color>"; inherits: true; initial-value: #161616; }
+@property --env-hi { syntax: "<color>"; inherits: true; initial-value: #f8f5ef; }
+@property --env-edge { syntax: "<color>"; inherits: true; initial-value: #7a7a7a; }
+@property --env-mid { syntax: "<color>"; inherits: true; initial-value: #3e3e44; }
+@property --env-lo { syntax: "<color>"; inherits: true; initial-value: #29292d; }
+@property --env-accent { syntax: "<color>"; inherits: true; initial-value: #8b7ae0; }
+@property --env-text { syntax: "<color>"; inherits: true; initial-value: #f8f5ef; }
+@property --env-text-dim { syntax: "<color>"; inherits: true; initial-value: #cbc9c4; }
+
+.tinai-scope {
+  background: var(--env-ground);
+  color: var(--env-text);
+  transition:
+    --env-ground 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-surface 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-hi 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-edge 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-mid 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-lo 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-accent 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-text 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-text-dim 900ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.tinai-scope.tinai-clear { background: transparent; }
+@media (prefers-reduced-motion: reduce) {
+  .tinai-scope { transition: none; }
+}
+
+/* the hairline: one rule, one weight, everywhere in the book */
+.hair { border-color: color-mix(in oklab, var(--env-edge) 55%, transparent); }
+.hair-lo { border-color: color-mix(in oklab, var(--env-edge) 28%, transparent); }
+
+/* MagneticTray: the ring a choice sends to its neighbours */
+.tray-ring {
+  border: 1px solid;
+  opacity: 0;
+  animation: tray-ring 700ms cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+@keyframes tray-ring {
+  0% { opacity: 0.9; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tray-ring { animation: none; }
+}
+
+/* Design book: the ambient field fades in when the landscape changes */
+.book-fade { animation: book-fade 900ms cubic-bezier(0.32, 0.72, 0, 1) both; }
+@keyframes book-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .book-fade { animation: none; } }
+
+/* a hairline range input in the landscape's ink */
+.book-range { appearance: none; -webkit-appearance: none; height: 16px; background: transparent; }
+.book-range::-webkit-slider-runnable-track { height: 1px; background: var(--env-edge); }
+.book-range::-moz-range-track { height: 1px; background: var(--env-edge); }
+.book-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 12px; height: 12px; margin-top: -5.5px; border-radius: 999px;
+  border: 1px solid var(--env-hi); background: var(--env-ground);
+}
+.book-range::-moz-range-thumb { width: 12px; height: 12px; border-radius: 999px; border: 1px solid var(--env-hi); background: var(--env-ground); }
+.book-range:focus-visible { outline: 1px solid var(--env-hi); outline-offset: 4px; border-radius: 4px; }

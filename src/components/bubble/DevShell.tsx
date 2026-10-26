@@ -8,6 +8,7 @@ import { CircleButton } from "@/components/circle/CircleButton";
 
 const NAV = [
   { href: "/bubble", en: "Bubble UI", ta: "குமிழ்", exact: true },
+  { href: "/bubble/design", en: "Design book", ta: "வடிவியல்" },
   { href: "/bubble/components", en: "Components", ta: "கூறுகள்" },
   { href: "/bubble/modules", en: "Modules", ta: "தொகுதிகள்" },
   { href: "/bubble/pages", en: "Pages", ta: "பக்கங்கள்" },
