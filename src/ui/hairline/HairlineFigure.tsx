@@ -16,6 +16,7 @@ export function HairlineFigure({
   intensity = 0.5,
   play = false,
   onRead,
+  caption = true,
   className = "",
 }: {
   figure: HairlineFigureDef;
@@ -24,6 +25,8 @@ export function HairlineFigure({
   /** walk the figure's tour until a real pointer arrives */
   play?: boolean;
   onRead?: (text: string) => void;
+  /** show the read-out in the corner */
+  caption?: boolean;
   className?: string;
 }) {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -83,9 +86,12 @@ export function HairlineFigure({
   return (
     <figure className={`relative ${className}`}>
       <div ref={stageRef} data-hairline={figure.name} role="img" aria-label={figure.means} />
-      <figcaption className="pointer-events-none absolute right-2 top-2 font-mono text-[10px] tabular-nums text-[color:var(--env-text-dim)]" aria-live="polite">
-        {read}
-      </figcaption>
+      {caption && (
+        // announced only when a person moves over it, not while it plays its tour
+        <figcaption className="pointer-events-none absolute right-2 top-2 font-mono text-[10px] tabular-nums text-[color:var(--env-text-dim)]" aria-live={play ? "off" : "polite"}>
+          {read}
+        </figcaption>
+      )}
     </figure>
   );
 }

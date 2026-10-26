@@ -10,6 +10,8 @@ export interface MagneticItem {
   /** Tamil name, shown under the bubble when it is lifted */
   ta?: string;
   glyph?: string;
+  /** a small identity dot on the bubble's rim */
+  accent?: string;
 }
 
 /** A row of bubbles that swell toward the pointer, each on its own spring
@@ -19,7 +21,8 @@ export interface MagneticItem {
 
     Hit areas never move: each button keeps its slot and only its drawn
     bubble scales (Hairline rule 01). Keyboard focus lifts a bubble the way
-    the pointer does. Under reduced motion the scale is applied instantly. */
+    the pointer does. Under reduced motion the scale is applied instantly.
+    `vertical` stacks the tray in a column that swells sideways, for a rail. */
 export function MagneticTray({
   items,
   tinai,
@@ -27,6 +30,8 @@ export function MagneticTray({
   onSelect,
   size = 44,
   reach = 2.2,
+  vertical = false,
+  label = "Bubbles",
 }: {
   items: MagneticItem[];
   tinai: ThinaiKey;
@@ -36,6 +41,9 @@ export function MagneticTray({
   size?: number;
   /** how far the swell reaches, in bubbles */
   reach?: number;
+  vertical?: boolean;
+  /** accessible name of the tray */
+  label?: string;
 }) {
   const rowRef = useRef<HTMLUListElement>(null);
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -62,7 +70,9 @@ export function MagneticTray({
     const apply = () =>
       sp.forEach((s, i) => {
         const el = dotRefs.current[i];
-        if (el) el.style.transform = `translateY(${(-(s.x - 1) * size * 0.35).toFixed(2)}px) scale(${s.x.toFixed(4)})`;
+        if (!el) return;
+        const lift = ((s.x - 1) * size * 0.35).toFixed(2);
+        el.style.transform = `${vertical ? `translateX(${lift}px)` : `translateY(-${lift}px)`} scale(${s.x.toFixed(4)})`;
       });
     function tick(now: number) {
       const dt = Math.min(0.05, (now - last) / 1000);
@@ -81,7 +91,10 @@ export function MagneticTray({
       raf = moving ? requestAnimationFrame(tick) : 0;
     }
 
-    const local = (e: PointerEvent) => e.clientX - row.getBoundingClientRect().left;
+    const local = (e: PointerEvent) => {
+      const r = row.getBoundingClientRect();
+      return vertical ? e.clientY - r.top : e.clientX - r.left;
+    };
     const onMove = (e: PointerEvent) => aim(local(e));
     const onLeave = () => aim(null);
     const onFocus = (e: FocusEvent) => {
@@ -100,20 +113,24 @@ export function MagneticTray({
       row.removeEventListener("focusin", onFocus);
       row.removeEventListener("focusout", onBlur);
     };
-  }, [items, tinai, slot, size, reach]);
+  }, [items, tinai, slot, size, reach, vertical]);
 
   return (
     <ul
       ref={rowRef}
-      aria-label="Bubbles"
-      className="flex items-end overflow-x-auto overflow-y-visible px-2 pb-7 pt-10 [scrollbar-width:none]"
+      aria-label={label}
+      className={
+        vertical
+          ? "flex flex-col items-start py-2 pl-2"
+          : "flex items-end overflow-x-auto overflow-y-visible px-2 pb-7 pt-10 [scrollbar-width:none]"
+      }
       data-lenis-prevent
     >
       {items.map((b, i) => {
         const active = b.id === activeId;
         const delay = pulse ? Math.abs(i - pulse.from) * 45 : 0;
         return (
-          <li key={b.id} className="relative shrink-0" style={{ width: slot, height: size }}>
+          <li key={b.id} className="relative shrink-0" style={vertical ? { width: size, height: slot } : { width: slot, height: size }}>
             <button
               type="button"
               data-i={i}
@@ -131,7 +148,7 @@ export function MagneticTray({
                 style={{
                   width: size,
                   height: size,
-                  transformOrigin: "50% 100%",
+                  transformOrigin: vertical ? "0% 50%" : "50% 100%",
                   background: "var(--env-surface)",
                   border: `1px solid ${active ? "var(--env-hi)" : "color-mix(in oklab, var(--env-edge) 70%, transparent)"}`,
                 }}
@@ -149,10 +166,17 @@ export function MagneticTray({
                   />
                 )}
                 <span className="absolute inset-[-4px] rounded-full ring-0 ring-[color:var(--env-hi)] group-focus-visible:ring-1" />
+                {b.accent && (
+                  <span aria-hidden className="absolute bottom-0 right-0 h-2 w-2 rounded-full border border-[color:var(--env-ground)]" style={{ background: b.accent }} />
+                )}
               </span>
               <span
                 aria-hidden
-                className={`pointer-events-none absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] text-[color:var(--env-text-dim)] transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 ${active ? "opacity-100" : "opacity-0"}`}
+                className={`pointer-events-none absolute z-10 whitespace-nowrap text-[10px] text-[color:var(--env-text-dim)] transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100 ${
+                  vertical
+                    ? "left-full top-1/2 ml-5 -translate-y-1/2 rounded-full border bg-[color:var(--env-surface)] px-2 py-0.5 opacity-0 hair-lo"
+                    : `-bottom-6 left-1/2 -translate-x-1/2 ${active ? "opacity-100" : "opacity-0"}`
+                }`}
               >
                 {b.label}
               </span>

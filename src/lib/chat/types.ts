@@ -2,6 +2,8 @@
     and the /api/chat route handler. Plain data only (no React), so it
     is safe to import from server and client code alike. */
 
+import type { ThinaiKey } from "@/lib/content";
+
 export type Provider = "gemini" | "openai";
 
 export interface Agent {
@@ -20,6 +22,10 @@ export interface Agent {
   greeting: string;
   /** accent hex used for the agent's avatar/badges */
   accent: string;
+  /** the landscape the agent's chat room is dressed in */
+  tinai: ThinaiKey;
+  /** a few first questions, shown before the conversation starts */
+  starters: string[];
 }
 
 export interface Message {
@@ -27,6 +33,8 @@ export interface Message {
   role: "user" | "assistant";
   content: string;
   createdAt: number;
+  /** where an assistant reply was generated */
+  via?: "cloud" | "device";
 }
 
 export interface Session {

@@ -295,3 +295,16 @@ body {
   transition: opacity 700ms cubic-bezier(0.32, 0.72, 0, 1), transform 700ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .book-reveal [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Yazhi Chat: focus in the landscape's bright stroke; the message box shows
+   focus on its whole pill (border turns --env-hi), not on the bare textarea */
+.yazhi-chat :focus-visible { outline-color: var(--env-hi); }
+.yazhi-chat #yazhi-composer:focus-visible { outline: none; }
+
+/* Yazhi Chat: model output in the landscape's ink instead of the site's gold */
+.yazhi-chat .chat-md { color: var(--env-text); }
+.yazhi-chat .chat-md a { color: var(--env-hi); text-decoration-color: var(--env-edge); }
+.yazhi-chat .chat-md blockquote { border-left-color: var(--env-edge); color: var(--env-text-dim); }
+.yazhi-chat .chat-md code { background: color-mix(in oklab, var(--env-text) 9%, transparent); }
+.yazhi-chat .chat-md pre { background: var(--env-surface); border: 1px solid color-mix(in oklab, var(--env-edge) 30%, transparent); }
+.yazhi-chat .chat-md hr, .yazhi-chat .chat-md th, .yazhi-chat .chat-md td { border-color: color-mix(in oklab, var(--env-edge) 35%, transparent); }

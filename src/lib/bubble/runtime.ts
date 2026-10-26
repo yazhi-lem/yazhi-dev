@@ -59,6 +59,30 @@ export async function runBubble(args: RunArgs): Promise<void> {
 }
 
 async function runOnDevice({ manifest, history, signal, onText }: RunArgs): Promise<void> {
+  return streamOnDevice({
+    model: manifest.runtime.deviceModel,
+    systemPrompt: effectiveSystemPrompt(manifest),
+    history,
+    signal,
+    onText,
+  });
+}
+
+/** Stream one completion from the on-device model server. Shared by the
+    Bubble UI and Yazhi Chat; nothing here leaves the machine or LAN. */
+export async function streamOnDevice({
+  model,
+  systemPrompt,
+  history,
+  signal,
+  onText,
+}: {
+  model: string;
+  systemPrompt: string;
+  history: BubbleMessage[];
+  signal: AbortSignal;
+  onText: (chunk: string) => void;
+}): Promise<void> {
   const endpoint = getDeviceEndpoint();
   let res: Response;
   try {
@@ -66,9 +90,9 @@ async function runOnDevice({ manifest, history, signal, onText }: RunArgs): Prom
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: manifest.runtime.deviceModel,
+        model,
         stream: true,
-        messages: [{ role: "system", content: effectiveSystemPrompt(manifest) }, ...toTurns(history)],
+        messages: [{ role: "system", content: systemPrompt }, ...toTurns(history)],
       }),
       signal,
     });
@@ -126,7 +150,7 @@ async function readSse(body: ReadableStream<Uint8Array>, onText: (t: string) => 
 }
 
 /** yazhi.dev NDJSON: `{text}` | `{error}` | `{done}` per line */
-async function readNdjson(body: ReadableStream<Uint8Array>, onText: (t: string) => void) {
+export async function readNdjson(body: ReadableStream<Uint8Array>, onText: (t: string) => void) {
   const reader = body.getReader();
   const decoder = new TextDecoder();
   let buf = "";

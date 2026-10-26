@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { ChatApp } from "@/components/chat/ChatApp";
+import { YazhiChat } from "@/components/chat/YazhiChat";
 
 export const metadata: Metadata = {
-  title: "யாழி Chat — Agents · Gemini & ChatGPT",
+  title: "யாழி Chat — Yazhi's agents, in their landscapes",
   description:
-    "Chat with Yazhi's agents — fixed to Gemini and ChatGPT, wired through the yazhi-api backend.",
+    "Talk to Yazhi's agents in the Bubble UI: each one lives in a Sangam landscape, replies stream from yazhi-api or a model on your own device.",
 };
 
 export default function ChatPage() {
-  return <ChatApp />;
+  return <YazhiChat />;
 }
