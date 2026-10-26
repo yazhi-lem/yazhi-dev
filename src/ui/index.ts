@@ -37,5 +37,5 @@ export { TinaiAmbient } from "./tinai/TinaiAmbient";
 export { MagneticTray, type MagneticItem } from "./tinai/MagneticTray";
 export { ENVIRONMENTS, ENV_BY_KEY, envVars, type Environment } from "./tinai/environments";
 export { HairlineFigure } from "./hairline/HairlineFigure";
-export { TINAI_FIGURES } from "./hairline/figures";
+export { TINAI_FIGURES, SANGAM_OBJECTS, type SangamObject } from "./hairline/figures";
 export type { HairlineFigureDef } from "./hairline/types";

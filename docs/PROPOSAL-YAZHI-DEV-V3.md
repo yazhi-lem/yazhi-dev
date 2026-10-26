@@ -254,7 +254,7 @@ Targets are proposals for the owner to set; there is no baseline yet.
 **yazhi-dev** (this branch)
 
 - `/bubble` — builder docs and a live Bubble UI.
-- Yazhi UI (`src/ui`, docs at `/bubble/components`, `/bubble/modules`, `/bubble/pages`) — 11 components, 10 modules and 7 page templates (Avai, Nyaya, Kural, Guru, Kadai, Open Sangam, Yazh parent gate) on sample data. An earlier agent builder (`/foundry`) was removed from yazhi.dev. The design book (`/bubble/design`, `src/ui/tinai`, `src/ui/hairline`) adds the five tinai environments and one Hairline figure per landscape, built on Lucas Marques's MIT-licensed Hairline kernel.
+- Yazhi UI (`src/ui`, docs at `/bubble/components`, `/bubble/modules`, `/bubble/pages`) — 11 components, 10 modules and 7 page templates (Avai, Nyaya, Kural, Guru, Kadai, Open Sangam, Yazh parent gate) on sample data. An earlier agent builder (`/foundry`) was removed from yazhi.dev. The design book (`/bubble/design`, `src/ui/tinai`, `src/ui/hairline`) adds the five tinai environments and one Hairline figure per landscape, built on Lucas Marques's MIT-licensed Hairline kernel. It also carries a draft karupporul atlas (`src/lib/sangam/karupporul.ts`, pending scholar review) and four Sangam objects drawn as Hairline figures: yazh, parai, vilakku and olai.
 - Bubble UI host — canvas, packed tray, composer with Circle button; on-device runtime (browser → localhost, no internet) and yazhi-api runtime via `/api/bubble/run`.
 - Circle auth — `/api/circle/{session,signin,signup,signout}`, httpOnly cookies, gRPC client in `src/lib/circle/client.ts`.
 

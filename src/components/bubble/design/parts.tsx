@@ -4,6 +4,7 @@ import type { Environment, Spring } from "@/ui/tinai/environments";
 import { HairlineFigure } from "@/ui/hairline/HairlineFigure";
 import { FIGURE_DIAL, TINAI_FIGURES } from "@/ui/hairline/figures";
 import type { ThinaiKey } from "@/lib/content";
+import type { HairlineFigureDef } from "@/ui/hairline/types";
 
 /** Step response of a spring (mass 1) from 0 to 1, sampled for a chart. */
 function stepResponse({ k, c }: Spring, seconds = 1.6, samples = 96) {
@@ -147,15 +148,14 @@ export function Swatches({ env }: { env: Environment }) {
   );
 }
 
-/** A Hairline figure with its dial and read-out, in the landscape's ink. */
-export function FigurePanel({ tinai, play = false, className = "" }: { tinai: ThinaiKey; play?: boolean; className?: string }) {
+/** A Hairline figure with its dial and read-out, in the surrounding ink. */
+export function FigureWithDial({ figure, dial, play = false, className = "" }: { figure: HairlineFigureDef; dial: string; play?: boolean; className?: string }) {
   const [intensity, setIntensity] = useState(0.5);
-  const fig = TINAI_FIGURES[tinai];
   return (
     <div className={className}>
-      <HairlineFigure figure={fig} intensity={intensity} play={play} className="w-full" />
+      <HairlineFigure figure={figure} intensity={intensity} play={play} className="w-full" />
       <label className="mt-2 flex items-center gap-3 font-mono text-[11px] text-[color:var(--env-text-dim)]">
-        <span className="w-20 shrink-0">{FIGURE_DIAL[tinai]}</span>
+        <span className="w-24 shrink-0">{dial}</span>
         <input
           type="range"
           min={0}
@@ -168,6 +168,11 @@ export function FigurePanel({ tinai, play = false, className = "" }: { tinai: Th
       </label>
     </div>
   );
+}
+
+/** The landscape's own figure. */
+export function FigurePanel({ tinai, play = false, className = "" }: { tinai: ThinaiKey; play?: boolean; className?: string }) {
+  return <FigureWithDial figure={TINAI_FIGURES[tinai]} dial={FIGURE_DIAL[tinai]} play={play} className={className} />;
 }
 
 /** A slice of the Bubble UI dressed in one environment: tray, a cited

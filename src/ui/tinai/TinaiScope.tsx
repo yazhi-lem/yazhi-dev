@@ -11,6 +11,7 @@ export function TinaiScope({
   as: Tag = "div",
   className = "",
   ground = true,
+  id,
   children,
 }: {
   tinai: ThinaiKey;
@@ -18,10 +19,11 @@ export function TinaiScope({
   className?: string;
   /** paint the landscape's ground; false lets an outer scope's ground show through */
   ground?: boolean;
+  id?: string;
   children: ReactNode;
 }) {
   return (
-    <Tag data-tinai={tinai} className={`tinai-scope ${ground ? "" : "tinai-clear "}${className}`} style={envVars(tinai)}>
+    <Tag id={id} data-tinai={tinai} className={`tinai-scope ${ground ? "" : "tinai-clear "}${className}`} style={envVars(tinai)}>
       {children}
     </Tag>
   );

@@ -7,6 +7,7 @@ import { TinaiScope } from "@/ui/tinai/TinaiScope";
 import { TinaiAmbient } from "@/ui/tinai/TinaiAmbient";
 import { MagneticTray, type MagneticItem } from "@/ui/tinai/MagneticTray";
 import { EnvPreview, FigurePanel, SpringCurve, SpringPlayground, Swatches } from "./parts";
+import { KaruStrip, KarupporulAtlas, ObjectsGallery } from "./sangam";
 
 const HAIRLINE = "https://github.com/lucasmarkes/hairline";
 
@@ -42,8 +43,24 @@ export function DesignBook() {
 
   const go = (k: ThinaiKey) => chapters.current[k]?.scrollIntoView({ behavior: "smooth", block: "start" });
 
+  // sections rise into place as they arrive; without script everything is simply shown
+  useEffect(() => {
+    const el = document.getElementById("design-book");
+    if (!el || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    el.classList.add("book-reveal");
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+      },
+      { rootMargin: "0px 0px -12% 0px" }
+    );
+    el.querySelectorAll("[data-reveal]").forEach((n) => io.observe(n));
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <TinaiScope tinai={active} as="main" className="relative">
+    <TinaiScope tinai={active} as="main" className="relative" id="design-book">
+      <Progress />
       <Rail active={active} onGo={go} />
       <Cover active={active} onPick={setActive} />
       <Principles />
@@ -60,12 +77,68 @@ export function DesignBook() {
           <Chapter env={env} n={i + 3} />
         </section>
       ))}
+      <Section
+        id="karu"
+        n={8}
+        title="Karupporul atlas"
+        ta="கருப்பொருள்"
+        intro={
+          <p>
+            The things native to each landscape — its god, people, birds and beasts, flowers and trees, food, water, drum,
+            yazh and melody, work and settlement. These are the raw material for each environment&apos;s icons, sounds and
+            illustrations. Hover a column to light it; click a landscape to go to its chapter.
+          </p>
+        }
+      >
+        <KarupporulAtlas active={active} onGo={go} />
+      </Section>
+      <Section
+        id="objects"
+        n={9}
+        title="Sangam objects"
+        ta="பொருள்கள்"
+        intro={
+          <p>
+            Things from the Sangam world drawn as Hairline objects, ready to sit in any landscape: they take whatever ink
+            they are placed in. Move over each one.
+          </p>
+        }
+      >
+        <ObjectsGallery />
+      </Section>
       <Foundations />
       <Motion />
       <Access />
       <DoDont />
       <Credits />
     </TinaiScope>
+  );
+}
+
+/** A hairline across the top that fills as you read, in the landscape's accent. */
+function Progress() {
+  const bar = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const max = document.documentElement.scrollHeight - innerHeight;
+      if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`;
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      removeEventListener("scroll", onScroll);
+      removeEventListener("resize", onScroll);
+    };
+  }, []);
+  return (
+    <div aria-hidden className="pointer-events-none fixed inset-x-0 top-14 z-30 h-px">
+      <span ref={bar} className="block h-full origin-left bg-[color:var(--env-accent)]" style={{ transform: "scaleX(0)" }} />
+    </div>
   );
 }
 
@@ -112,12 +185,14 @@ function Eyebrow({ children }: { children: ReactNode }) {
 function Section({ id, n, title, ta, children, intro }: { id: string; n: number; title: string; ta: string; intro?: ReactNode; children: ReactNode }) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className="mx-auto max-w-6xl scroll-mt-14 px-4 py-20 sm:py-28 lg:px-8">
-      <Eyebrow>{String(n).padStart(2, "0")}</Eyebrow>
-      <h2 id={`${id}-title`} className="display mt-2 font-display text-3xl font-black sm:text-4xl">
-        {title} <span lang="ta" className="font-normal text-[color:var(--env-text-dim)]">· {ta}</span>
-      </h2>
-      {intro && <div className="mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-[color:var(--env-text-dim)]">{intro}</div>}
-      <div className="mt-10">{children}</div>
+      <div data-reveal>
+        <Eyebrow>{String(n).padStart(2, "0")}</Eyebrow>
+        <h2 id={`${id}-title`} className="display mt-2 font-display text-3xl font-black sm:text-4xl">
+          {title} <span lang="ta" className="font-normal text-[color:var(--env-text-dim)]">· {ta}</span>
+        </h2>
+        {intro && <div className="mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-[color:var(--env-text-dim)]">{intro}</div>}
+      </div>
+      <div data-reveal className="mt-10">{children}</div>
     </section>
   );
 }
@@ -185,9 +260,33 @@ function Cover({ active, onPick }: { active: ThinaiKey; onPick: (k: ThinaiKey) =
           </p>
         </div>
       </div>
+      <nav aria-label="Contents" className="relative mx-auto max-w-6xl px-4 pb-10 lg:px-8">
+        <ol className="flex flex-wrap gap-x-6 gap-y-2 border-t pt-5 text-xs hair-lo">
+          {CONTENTS.map(([href, label], i) => (
+            <li key={href}>
+              <a href={href} className="group inline-flex items-baseline gap-1.5 text-[color:var(--env-text-dim)] transition-colors hover:text-[color:var(--env-text)]">
+                <span className="font-mono text-[10px] text-[color:var(--env-accent)]">{String(i + 1).padStart(2, "0")}</span>
+                {label}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
     </header>
   );
 }
+
+const CONTENTS: [string, string][] = [
+  ["#principles", "Principles"],
+  ["#tinai", "The tinai system"],
+  ...ENVIRONMENTS.map((e): [string, string] => [`#${e.key}`, e.en]),
+  ["#karu", "Karupporul atlas"],
+  ["#objects", "Sangam objects"],
+  ["#foundations", "Foundations"],
+  ["#motion", "Motion"],
+  ["#access", "Access and Tamil"],
+  ["#do", "Do and don’t"],
+];
 
 /* ------------------------------------------------------------------ */
 
@@ -327,7 +426,7 @@ function Chapter({ env, n }: { env: Environment; n: number }) {
         <TinaiAmbient tinai={env.key} />
       </div>
       <div className="relative mx-auto max-w-6xl px-4 py-20 sm:py-28 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
+        <div data-reveal className="grid gap-10 lg:grid-cols-[1fr_1fr]">
           <div className="min-w-0">
             <Eyebrow>
               {String(n).padStart(2, "0")} · {env.landscape}
@@ -363,7 +462,7 @@ function Chapter({ env, n }: { env: Environment; n: number }) {
           </div>
         </div>
 
-        <div className="mt-16 grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+        <div data-reveal className="mt-16 grid gap-10 lg:grid-cols-[1.2fr_1fr]">
           <div className="min-w-0">
             <h3 className="font-mono text-[11px] uppercase tracking-wider text-[color:var(--env-text-dim)]">Palette · click to copy</h3>
             <div className="mt-4">
@@ -391,6 +490,9 @@ function Chapter({ env, n }: { env: Environment; n: number }) {
             </pre>
           </div>
         </div>
+        <div data-reveal className="mt-14">
+          <KaruStrip tinai={env.key} />
+        </div>
       </div>
     </TinaiScope>
   );
@@ -413,7 +515,7 @@ function Foundations() {
   return (
     <Section
       id="foundations"
-      n={8}
+      n={10}
       title="Foundations"
       ta="அடித்தளம்"
       intro={<p>Small set, strictly used. Everything on this page is built from these and nothing else.</p>}
@@ -476,7 +578,7 @@ function Motion() {
   return (
     <Section
       id="motion"
-      n={9}
+      n={11}
       title="Motion"
       ta="இயக்கம்"
       intro={<p>Two clocks, and a landscape to set their character.</p>}
@@ -521,7 +623,7 @@ function Access() {
     ["Sleep", "Every animated surface sleeps when offscreen or when the tab is hidden. Batteries are a resource of the person, not of the app."],
   ];
   return (
-    <Section id="access" n={10} title="Access and Tamil" ta="அணுகல்">
+    <Section id="access" n={12} title="Access and Tamil" ta="அணுகல்">
       <dl className="grid gap-x-10 gap-y-6 sm:grid-cols-2">
         {rows.map(([t, d]) => (
           <div key={t} className="border-t pt-4 hair-lo">
@@ -543,7 +645,7 @@ function DoDont() {
     ["Change landscape across whole sections.", "Mix two tinai inside one card."],
   ];
   return (
-    <Section id="do" n={11} title="Do and don’t" ta="செய் · செய்யாதே">
+    <Section id="do" n={13} title="Do and don’t" ta="செய் · செய்யாதே">
       <ul className="grid gap-3">
         {pairs.map(([d, n]) => (
           <li key={d} className="grid gap-3 sm:grid-cols-2">
