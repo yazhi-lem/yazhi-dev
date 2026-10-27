@@ -308,3 +308,12 @@ body {
 .yazhi-chat .chat-md code { background: color-mix(in oklab, var(--env-text) 9%, transparent); }
 .yazhi-chat .chat-md pre { background: var(--env-surface); border: 1px solid color-mix(in oklab, var(--env-edge) 30%, transparent); }
 .yazhi-chat .chat-md hr, .yazhi-chat .chat-md th, .yazhi-chat .chat-md td { border-color: color-mix(in oklab, var(--env-edge) 35%, transparent); }
+
+
+/* Print (used for the design PDFs): show everything that would otherwise
+   wait for a scroll or a pointer, and drop fixed chrome */
+@media print {
+  .book-reveal [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .print-hide { display: none !important; }
+  .tinai-scope { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

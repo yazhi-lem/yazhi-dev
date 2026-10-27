@@ -1,0 +1,20 @@
+{
+  "name": "@yazhi/bubble",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Bubble UI/UX system for Yazhi: components, modules, pages, the five tinai themes with their personas, Hairline figures, Yazhi's agents, design PDFs and docs.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles/*": "./styles/*",
+    "./themes/*": "./themes/*"
+  },
+  "scripts": {
+    "themes": "node --experimental-strip-types --import ./scripts/ts-resolve.mjs scripts/build-themes.mjs",
+    "pdfs": "node scripts/build-pdfs.mjs"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  }
+}

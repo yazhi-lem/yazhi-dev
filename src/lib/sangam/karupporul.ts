@@ -16,6 +16,11 @@ import type { ThinaiKey } from "@/lib/content";
     to which tinai comes from the medieval commentators and the poems
     themselves; the table below is the standard teaching summary.
 
+    The Tolkāppiyam tradition also lists each landscape's people. That
+    category is left out on purpose: several of those names are also
+    present-day caste names, and Yazhi never names caste (Aram harness,
+    Tamil style rule 6).
+
     DRAFT — compiled for the design book and pending review by a Tamil
     scholar (same process as the Kabilar review of site strings). Items
     are kept to the best-attested two or three per cell. Do not present
@@ -25,7 +30,6 @@ export const KARU_DRAFT = true;
 
 export type KaruCategory =
   | "deity"
-  | "people"
   | "bird"
   | "beast"
   | "flower"
@@ -56,7 +60,6 @@ export interface TinaiKaru {
 
 export const KARU_CATEGORIES: { key: KaruCategory; ta: string; en: string }[] = [
   { key: "deity", ta: "தெய்வம்", en: "Deity" },
-  { key: "people", ta: "மக்கள்", en: "People" },
   { key: "bird", ta: "புள்", en: "Bird" },
   { key: "beast", ta: "மா", en: "Beast" },
   { key: "flower", ta: "பூ", en: "Flower" },
@@ -80,7 +83,6 @@ export const KARUPPORUL: TinaiKaru[] = [
     uri: { ta: "பிரிதல்", en: "separation" },
     karu: {
       deity: [{ ta: "கொற்றவை", en: "Korravai" }],
-      people: [{ ta: "எயினர்", en: "Eyinar" }, { ta: "மறவர்", en: "Maravar" }],
       bird: [{ ta: "புறா", en: "dove" }, { ta: "பருந்து", en: "kite" }],
       beast: [{ ta: "செந்நாய்", en: "wild dog" }, { ta: "வலியிழந்த யானை", en: "worn-out elephant" }],
       flower: [{ ta: "குரவம்", en: "kuravam" }, { ta: "பாதிரி", en: "trumpet flower" }],
@@ -102,7 +104,6 @@ export const KARUPPORUL: TinaiKaru[] = [
     uri: { ta: "இருத்தல்", en: "patient waiting" },
     karu: {
       deity: [{ ta: "மாயோன்", en: "Mayon" }],
-      people: [{ ta: "ஆயர்", en: "Ayar" }, { ta: "இடையர்", en: "Idaiyar" }],
       bird: [{ ta: "காட்டுக்கோழி", en: "jungle fowl" }],
       beast: [{ ta: "மான்", en: "deer" }, { ta: "முயல்", en: "hare" }],
       flower: [{ ta: "முல்லை", en: "jasmine" }, { ta: "தோன்றி", en: "glory lily" }],
@@ -124,7 +125,6 @@ export const KARUPPORUL: TinaiKaru[] = [
     uri: { ta: "புணர்தல்", en: "union" },
     karu: {
       deity: [{ ta: "சேயோன் (முருகன்)", en: "Seyon (Murugan)" }],
-      people: [{ ta: "குறவர்", en: "Kuravar" }, { ta: "கானவர்", en: "Kanavar" }],
       bird: [{ ta: "கிளி", en: "parrot" }, { ta: "மயில்", en: "peacock" }],
       beast: [{ ta: "புலி", en: "tiger" }, { ta: "யானை", en: "elephant" }, { ta: "கரடி", en: "bear" }],
       flower: [{ ta: "குறிஞ்சி", en: "kurinji" }, { ta: "காந்தள்", en: "glory lily" }],
@@ -146,7 +146,6 @@ export const KARUPPORUL: TinaiKaru[] = [
     uri: { ta: "ஊடல்", en: "lovers' quarrel" },
     karu: {
       deity: [{ ta: "வேந்தன் (இந்திரன்)", en: "Vendan (Indra)" }],
-      people: [{ ta: "உழவர்", en: "Uzhavar" }, { ta: "கடையர்", en: "Kadaiyar" }],
       bird: [{ ta: "நாரை", en: "stork" }, { ta: "குருகு", en: "heron" }],
       beast: [{ ta: "எருமை", en: "buffalo" }, { ta: "நீர்நாய்", en: "otter" }],
       flower: [{ ta: "தாமரை", en: "lotus" }, { ta: "கழுநீர்", en: "blue water lily" }],
@@ -168,7 +167,6 @@ export const KARUPPORUL: TinaiKaru[] = [
     uri: { ta: "இரங்கல்", en: "lament" },
     karu: {
       deity: [{ ta: "வருணன் (கடலோன்)", en: "Varunan" }],
-      people: [{ ta: "பரதவர்", en: "Paradavar" }, { ta: "நுளையர்", en: "Nulaiyar" }],
       bird: [{ ta: "கடற்காக்கை", en: "sea crow" }],
       beast: [{ ta: "சுறா", en: "shark" }, { ta: "முதலை", en: "crocodile" }],
       flower: [{ ta: "நெய்தல்", en: "water lily" }, { ta: "தாழை", en: "screwpine" }],

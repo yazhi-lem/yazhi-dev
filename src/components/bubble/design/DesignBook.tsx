@@ -84,7 +84,7 @@ export function DesignBook() {
         ta="கருப்பொருள்"
         intro={
           <p>
-            The things native to each landscape — its god, people, birds and beasts, flowers and trees, food, water, drum,
+            The things native to each landscape — its god, birds and beasts, flowers and trees, food, water, drum,
             yazh and melody, work and settlement. These are the raw material for each environment&apos;s icons, sounds and
             illustrations. Hover a column to light it; click a landscape to go to its chapter.
           </p>
@@ -136,7 +136,7 @@ function Progress() {
     };
   }, []);
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-x-0 top-14 z-30 h-px">
+    <div aria-hidden className="print-hide pointer-events-none fixed inset-x-0 top-14 z-30 h-px">
       <span ref={bar} className="block h-full origin-left bg-[color:var(--env-accent)]" style={{ transform: "scaleX(0)" }} />
     </div>
   );
@@ -146,7 +146,7 @@ function Progress() {
 
 function Rail({ active, onGo }: { active: ThinaiKey; onGo: (k: ThinaiKey) => void }) {
   return (
-    <nav aria-label="Landscapes" className="fixed right-4 top-1/2 z-30 hidden -translate-y-1/2 xl:block">
+    <nav aria-label="Landscapes" className="print-hide fixed right-4 top-1/2 z-30 hidden -translate-y-1/2 xl:block">
       <ul className="flex flex-col gap-3">
         {ENVIRONMENTS.map((e) => (
           <li key={e.key}>

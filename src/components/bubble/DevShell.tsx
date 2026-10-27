@@ -22,7 +22,7 @@ export function DevShell({ children, fullHeight = false }: { children: ReactNode
   return (
     <CircleProvider>
       <div className={fullHeight ? "flex h-dvh flex-col overflow-hidden bg-night" : "min-h-dvh bg-night"}>
-        <header className="sticky top-0 z-40 shrink-0 border-b border-ivory/10 bg-night/85 backdrop-blur">
+        <header className="print-hide sticky top-0 z-40 shrink-0 border-b border-ivory/10 bg-night/85 backdrop-blur">
           <div className="mx-auto flex h-14 max-w-[90rem] items-center justify-between gap-3 px-4">
             <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="Yazhi home">
               <LogoMark size={26} />

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="90" viewBox="0 0 420 90" role="img" aria-label="Yazhi logo lockup">
+  <svg x="0" y="7" width="76" height="76" viewBox="0 0 100 100">
+    <circle cx="30.8" cy="30.6" r="12.3" fill="#1840d8" />
+    <circle cx="65.2" cy="26.9" r="16.3" fill="#1840d8" />
+    <circle cx="47.2" cy="67.4" r="22" fill="#1840d8" />
+  </svg>
+  <text x="96" y="60" font-family="'Playfair Display', Georgia, 'Times New Roman', serif"
+        font-size="56" font-weight="900" letter-spacing="-3" fill="#0a0a0a">Yazhi</text>
+</svg>

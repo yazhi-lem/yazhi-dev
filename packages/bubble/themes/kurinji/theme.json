@@ -1,0 +1,221 @@
+{
+  "$schema": "yazhi.bubble.theme/v0",
+  "key": "kurinji",
+  "name": {
+    "ta": "குறிஞ்சி",
+    "en": "Kurinji"
+  },
+  "landscape": "Mountains",
+  "signature": "Mist on the ridge",
+  "mood": "First meetings — curiosity and discovery, where a story starts",
+  "useFor": "Launches and first releases",
+  "apps": [
+    "Avai",
+    "onboarding"
+  ],
+  "agents": [
+    {
+      "id": "pulavar",
+      "name": "Pulavar",
+      "ta": "புலவர்",
+      "home": "Avai",
+      "rule": "A source for every claim, else “தெரியவில்லை”"
+    }
+  ],
+  "palette": {
+    "ground": "#0a0912",
+    "surface": "#14121f",
+    "hi": "#e6e1fb",
+    "edge": "#7a70b3",
+    "mid": "#3d3760",
+    "lo": "#221f36",
+    "accent": "#8b7ae0",
+    "text": "#f2f0fb",
+    "textDim": "#c4bfdc"
+  },
+  "motion": {
+    "spring": {
+      "k": 120,
+      "c": 15
+    },
+    "pace": 0.7,
+    "settleMs": 700,
+    "words": "Buoyant. A little lift, a small overshoot, then still."
+  },
+  "light": "High, cool and clear; violet ink, ridgelines layered into distance",
+  "pointer": "The mist parts where the pointer passes and closes behind it.",
+  "persona": {
+    "key": "kurinji",
+    "name": {
+      "ta": "தேடுபவர்",
+      "en": "The Seeker"
+    },
+    "archetype": "A curious guide at first meetings, who opens one door at a time and shows where each thing comes from.",
+    "voice": "Bright and curious. One clear first step, then the next; names its sources as it goes.",
+    "tone": [
+      "curious",
+      "light",
+      "inviting"
+    ],
+    "microcopy": {
+      "empty": {
+        "ta": "எங்கிருந்து தொடங்கலாம்?",
+        "en": "Where shall we begin?"
+      },
+      "loading": {
+        "ta": "சான்றைத் தேடுகிறேன்…",
+        "en": "Looking for the source…"
+      },
+      "success": {
+        "ta": "கிடைத்தது — இது வருமிடம் இதோ.",
+        "en": "Found it — here is where it comes from."
+      },
+      "error": {
+        "ta": "சான்று கிடைக்கவில்லை; ஊகிக்க மாட்டேன் — தெரியவில்லை.",
+        "en": "I couldn't find a source, so I won't guess — I don't know."
+      },
+      "confirm": {
+        "ta": "இங்கிருந்து தொடங்கலாமா?",
+        "en": "Start here?"
+      }
+    },
+    "do": [
+      "Give one clear first step",
+      "Reveal a little at a time",
+      "Credit every source"
+    ],
+    "dont": [
+      "Front-load every feature",
+      "Guess",
+      "Hide where an answer came from"
+    ]
+  },
+  "karu": {
+    "draft": true,
+    "time": {
+      "ta": "யாமம்",
+      "en": "midnight"
+    },
+    "season": {
+      "ta": "கூதிர், முன்பனி",
+      "en": "autumn, early dew"
+    },
+    "land": {
+      "ta": "மலை",
+      "en": "mountains"
+    },
+    "feeling": {
+      "ta": "புணர்தல்",
+      "en": "union"
+    },
+    "deity": [
+      {
+        "ta": "சேயோன் (முருகன்)",
+        "en": "Seyon (Murugan)"
+      }
+    ],
+    "bird": [
+      {
+        "ta": "கிளி",
+        "en": "parrot"
+      },
+      {
+        "ta": "மயில்",
+        "en": "peacock"
+      }
+    ],
+    "beast": [
+      {
+        "ta": "புலி",
+        "en": "tiger"
+      },
+      {
+        "ta": "யானை",
+        "en": "elephant"
+      },
+      {
+        "ta": "கரடி",
+        "en": "bear"
+      }
+    ],
+    "flower": [
+      {
+        "ta": "குறிஞ்சி",
+        "en": "kurinji"
+      },
+      {
+        "ta": "காந்தள்",
+        "en": "glory lily"
+      }
+    ],
+    "tree": [
+      {
+        "ta": "சந்தனம்",
+        "en": "sandalwood"
+      },
+      {
+        "ta": "வேங்கை",
+        "en": "venkai"
+      },
+      {
+        "ta": "மூங்கில்",
+        "en": "bamboo"
+      }
+    ],
+    "food": [
+      {
+        "ta": "தினை",
+        "en": "foxtail millet"
+      },
+      {
+        "ta": "மூங்கிலரிசி",
+        "en": "bamboo rice"
+      }
+    ],
+    "water": [
+      {
+        "ta": "அருவி",
+        "en": "waterfall"
+      },
+      {
+        "ta": "சுனை",
+        "en": "mountain spring"
+      }
+    ],
+    "drum": [
+      {
+        "ta": "தொண்டகப் பறை",
+        "en": "tondagam drum"
+      }
+    ],
+    "yazh": [
+      {
+        "ta": "குறிஞ்சி யாழ்",
+        "en": "kurinji yazh"
+      }
+    ],
+    "pann": [
+      {
+        "ta": "குறிஞ்சிப் பண்",
+        "en": "kurinji pann"
+      }
+    ],
+    "work": [
+      {
+        "ta": "தேன் எடுத்தல்",
+        "en": "gathering honey"
+      },
+      {
+        "ta": "தினை காத்தல்",
+        "en": "guarding millet"
+      }
+    ],
+    "settlement": [
+      {
+        "ta": "சிறுகுடி",
+        "en": "hill hamlet"
+      }
+    ]
+  },
+  "draft": "Persona names, voice and all Tamil text are drafts pending native review."
+}

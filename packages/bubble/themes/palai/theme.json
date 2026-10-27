@@ -1,0 +1,209 @@
+{
+  "$schema": "yazhi.bubble.theme/v0",
+  "key": "palai",
+  "name": {
+    "ta": "பாலை",
+    "en": "Palai"
+  },
+  "landscape": "Drylands",
+  "signature": "Heat over sand",
+  "mood": "Endurance — courage and separation, the harder stories",
+  "useFor": "Security, infrastructure and hard engineering",
+  "apps": [
+    "Kural Desk",
+    "yazhi-api console"
+  ],
+  "agents": [
+    {
+      "id": "kural",
+      "name": "Kural",
+      "ta": "குறள்",
+      "home": "Kural Desk",
+      "rule": "No system change without a runbook and a human confirm"
+    }
+  ],
+  "palette": {
+    "ground": "#0e0a07",
+    "surface": "#18110c",
+    "hi": "#f3d2ab",
+    "edge": "#8a6447",
+    "mid": "#4d3828",
+    "lo": "#2a1f17",
+    "accent": "#c25b3c",
+    "text": "#f6ece0",
+    "textDim": "#c9b8a6"
+  },
+  "motion": {
+    "spring": {
+      "k": 70,
+      "c": 17
+    },
+    "pace": 0.35,
+    "settleMs": 900,
+    "words": "Heavy and unhurried. Things travel far and settle late."
+  },
+  "light": "Low sun from the west; warm ink, contours instead of surfaces",
+  "pointer": "Dune contours bend away from the pointer like heat haze.",
+  "persona": {
+    "key": "palai",
+    "name": {
+      "ta": "வழிப்போக்கர்",
+      "en": "The Wayfarer"
+    },
+    "archetype": "A steady guide across hard ground, who has crossed it before and will not hurry you.",
+    "voice": "Brief and exact. States the risk first, then the one next step. Calm when things are failing.",
+    "tone": [
+      "steady",
+      "spare",
+      "direct"
+    ],
+    "microcopy": {
+      "empty": {
+        "ta": "இப்போது சிக்கல் எதுவும் இல்லை. என்ன மாறியது என்று சொல்லுங்கள்.",
+        "en": "Nothing is wrong right now. Tell me what changed."
+      },
+      "loading": {
+        "ta": "இயக்க வழிமுறையைச் சரிபார்க்கிறேன்…",
+        "en": "Checking the runbook…"
+      },
+      "success": {
+        "ta": "முடிந்தது. திரும்பப் பெற ஒரே கட்டளை போதும்.",
+        "en": "Done. Rollback is one command away."
+      },
+      "error": {
+        "ta": "அது தோல்வியடைந்தது; எதுவும் மாறவில்லை. நான் கண்டது இதோ.",
+        "en": "That failed and nothing changed. Here is what I saw."
+      },
+      "confirm": {
+        "ta": "இது இயங்கும் அமைப்பை மாற்றும். தொடர உறுதி செய்யுங்கள்.",
+        "en": "This changes a live system. Confirm to continue."
+      }
+    },
+    "do": [
+      "Lead with the risk",
+      "One action per screen",
+      "Always show the rollback"
+    ],
+    "dont": [
+      "Celebrate routine work",
+      "Use alarm colours for normal states",
+      "Hurry the person"
+    ]
+  },
+  "karu": {
+    "draft": true,
+    "time": {
+      "ta": "நண்பகல்",
+      "en": "midday"
+    },
+    "season": {
+      "ta": "வேனில், பின்பனி",
+      "en": "summer, late dew"
+    },
+    "land": {
+      "ta": "சுரம் (வறண்ட நிலம்)",
+      "en": "parched wasteland"
+    },
+    "feeling": {
+      "ta": "பிரிதல்",
+      "en": "separation"
+    },
+    "deity": [
+      {
+        "ta": "கொற்றவை",
+        "en": "Korravai"
+      }
+    ],
+    "bird": [
+      {
+        "ta": "புறா",
+        "en": "dove"
+      },
+      {
+        "ta": "பருந்து",
+        "en": "kite"
+      }
+    ],
+    "beast": [
+      {
+        "ta": "செந்நாய்",
+        "en": "wild dog"
+      },
+      {
+        "ta": "வலியிழந்த யானை",
+        "en": "worn-out elephant"
+      }
+    ],
+    "flower": [
+      {
+        "ta": "குரவம்",
+        "en": "kuravam"
+      },
+      {
+        "ta": "பாதிரி",
+        "en": "trumpet flower"
+      }
+    ],
+    "tree": [
+      {
+        "ta": "இலுப்பை",
+        "en": "mahua"
+      },
+      {
+        "ta": "பாலை",
+        "en": "palai tree"
+      }
+    ],
+    "food": [
+      {
+        "ta": "வழிப்பறிப் பொருள்",
+        "en": "spoils of the road"
+      }
+    ],
+    "water": [
+      {
+        "ta": "வற்றிய சுனை",
+        "en": "dried spring"
+      },
+      {
+        "ta": "கூவல்",
+        "en": "dug pit"
+      }
+    ],
+    "drum": [
+      {
+        "ta": "துடி",
+        "en": "tudi, the hourglass drum"
+      }
+    ],
+    "yazh": [
+      {
+        "ta": "பாலை யாழ்",
+        "en": "palai yazh"
+      }
+    ],
+    "pann": [
+      {
+        "ta": "பஞ்சுரம்",
+        "en": "panchuram"
+      }
+    ],
+    "work": [
+      {
+        "ta": "வழிப்பறி",
+        "en": "raiding travellers"
+      },
+      {
+        "ta": "நிரை கவர்தல்",
+        "en": "cattle raids"
+      }
+    ],
+    "settlement": [
+      {
+        "ta": "குறும்பு",
+        "en": "fort-hamlet"
+      }
+    ]
+  },
+  "draft": "Persona names, voice and all Tamil text are drafts pending native review."
+}

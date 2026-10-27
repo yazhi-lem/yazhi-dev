@@ -1,0 +1,205 @@
+{
+  "$schema": "yazhi.bubble.theme/v0",
+  "key": "neytal",
+  "name": {
+    "ta": "நெய்தல்",
+    "en": "Neytal"
+  },
+  "landscape": "Coast",
+  "signature": "Tide lines",
+  "mood": "Longing — voyages and distance, the diaspora's landscape",
+  "useFor": "Diaspora, Yazh, and language loss",
+  "apps": [
+    "Open Sangam",
+    "Yazh (parents)"
+  ],
+  "agents": [],
+  "palette": {
+    "ground": "#050a11",
+    "surface": "#0c1623",
+    "hi": "#d6e8f6",
+    "edge": "#5a87ac",
+    "mid": "#2b4762",
+    "lo": "#172738",
+    "accent": "#4a8ab5",
+    "text": "#edf4fa",
+    "textDim": "#b7c8d6"
+  },
+  "motion": {
+    "spring": {
+      "k": 55,
+      "c": 10
+    },
+    "pace": 0.45,
+    "settleMs": 850,
+    "words": "Tidal. Long follow-through, a slow sway before it rests."
+  },
+  "light": "Moonlit; blue-black ink, long horizontal lines that breathe",
+  "pointer": "The pointer drops a ripple; rings spread and fade into the tide.",
+  "persona": {
+    "key": "neytal",
+    "name": {
+      "ta": "பயணி",
+      "en": "The Voyager"
+    },
+    "archetype": "A companion across distance, for families far from home, who carries the language across and keeps it safe.",
+    "voice": "Gentle and warm, a little wistful. Moves easily between Tamil and English; remembers for you.",
+    "tone": [
+      "tender",
+      "bilingual",
+      "reassuring"
+    ],
+    "microcopy": {
+      "empty": {
+        "ta": "நீங்கள் எங்கிருந்தாலும், தமிழ் இங்கே இருக்கிறது.",
+        "en": "Wherever you are, Tamil is here."
+      },
+      "loading": {
+        "ta": "கரை சேர்க்கிறேன்…",
+        "en": "Bringing it across…"
+      },
+      "success": {
+        "ta": "சேமித்தாயிற்று — நீங்கள் திரும்பும்போது இங்கே இருக்கும்.",
+        "en": "Saved — it will be here when you return."
+      },
+      "error": {
+        "ta": "இணைப்பு அறுந்தது. உங்கள் சொற்கள் இந்தக் கருவியில் பாதுகாப்பாக உள்ளன.",
+        "en": "The line dropped. Your words are safe on this device."
+      },
+      "confirm": {
+        "ta": "இதைக் குடும்பத்தோடு பகிரலாமா?",
+        "en": "Share this with your family?"
+      }
+    },
+    "do": [
+      "Offer both languages side by side",
+      "Keep data on the device",
+      "Move slowly; let things breathe"
+    ],
+    "dont": [
+      "Assume fluency",
+      "Correct mistakes harshly",
+      "Rush a goodbye"
+    ]
+  },
+  "karu": {
+    "draft": true,
+    "time": {
+      "ta": "எற்பாடு",
+      "en": "late afternoon"
+    },
+    "season": {
+      "ta": "எல்லாப் பருவமும்",
+      "en": "every season"
+    },
+    "land": {
+      "ta": "கடல்",
+      "en": "seashore"
+    },
+    "feeling": {
+      "ta": "இரங்கல்",
+      "en": "lament"
+    },
+    "deity": [
+      {
+        "ta": "வருணன் (கடலோன்)",
+        "en": "Varunan"
+      }
+    ],
+    "bird": [
+      {
+        "ta": "கடற்காக்கை",
+        "en": "sea crow"
+      }
+    ],
+    "beast": [
+      {
+        "ta": "சுறா",
+        "en": "shark"
+      },
+      {
+        "ta": "முதலை",
+        "en": "crocodile"
+      }
+    ],
+    "flower": [
+      {
+        "ta": "நெய்தல்",
+        "en": "water lily"
+      },
+      {
+        "ta": "தாழை",
+        "en": "screwpine"
+      }
+    ],
+    "tree": [
+      {
+        "ta": "புன்னை",
+        "en": "punnai"
+      },
+      {
+        "ta": "கண்டல்",
+        "en": "mangrove"
+      }
+    ],
+    "food": [
+      {
+        "ta": "மீன்",
+        "en": "fish"
+      },
+      {
+        "ta": "உப்பு விற்ற பண்டம்",
+        "en": "goods bartered for salt"
+      }
+    ],
+    "water": [
+      {
+        "ta": "கடல்",
+        "en": "sea"
+      },
+      {
+        "ta": "உவர்க்குழி",
+        "en": "brackish pit"
+      }
+    ],
+    "drum": [
+      {
+        "ta": "மீன்கோட் பறை",
+        "en": "fish-catch drum"
+      }
+    ],
+    "yazh": [
+      {
+        "ta": "விளரி யாழ்",
+        "en": "vilari yazh"
+      }
+    ],
+    "pann": [
+      {
+        "ta": "செவ்வழி",
+        "en": "sevvazhi"
+      }
+    ],
+    "work": [
+      {
+        "ta": "மீன் பிடித்தல்",
+        "en": "fishing"
+      },
+      {
+        "ta": "உப்பு விளைத்தல்",
+        "en": "making salt"
+      }
+    ],
+    "settlement": [
+      {
+        "ta": "பட்டினம்",
+        "en": "port town"
+      },
+      {
+        "ta": "பாக்கம்",
+        "en": "fishing hamlet"
+      }
+    ]
+  },
+  "draft": "Persona names, voice and all Tamil text are drafts pending native review."
+}
