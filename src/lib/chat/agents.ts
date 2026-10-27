@@ -1,12 +1,20 @@
 import type { Agent, Provider } from "./types";
+import { YAZHI_AGENTS } from "./yazhi-agents";
 
-/** Agent registry — each agent is bound to a fixed provider
-    (Gemini or ChatGPT) and carries its own persona/system prompt. */
+/** Agent registry. Yazhi's own agents come first and run on Adhan through
+    yazhi-api (see yazhi-agents.ts). The guest agents after them are
+    general assistants bound to an outside provider (Gemini or ChatGPT). */
 
 export const PROVIDER_META: Record<
   Provider,
   { label: string; tagline: string; accent: string; dot: string }
 > = {
+  adhan: {
+    label: "Adhan",
+    tagline: "Yazhi",
+    accent: "#d3b36a",
+    dot: "bg-[#d3b36a]",
+  },
   gemini: {
     label: "Gemini",
     tagline: "Google",
@@ -21,7 +29,7 @@ export const PROVIDER_META: Record<
   },
 };
 
-export const AGENTS: Agent[] = [
+const GUEST_AGENTS: Agent[] = [
   {
     id: "yazh-guide",
     provider: "gemini",
@@ -30,6 +38,8 @@ export const AGENTS: Agent[] = [
     description: "Tamil heritage & language guide — answers bilingual, Tamil first.",
     model: "gemini-2.5-flash",
     accent: "#8b7ae0",
+    group: "guest",
+    glyph: "யா",
     tinai: "kurinji",
     starters: [
       "எழுத்துகள் எத்தனை? How many letters does Tamil have?",
@@ -49,6 +59,8 @@ export const AGENTS: Agent[] = [
     description: "Classical Tamil literature — thinai classification & poem analysis.",
     model: "gemini-2.5-flash",
     accent: "#b7a03c",
+    group: "guest",
+    glyph: "ச",
     tinai: "marutham",
     starters: [
       "Classify a Kuruntokai poem by tinai",
@@ -68,6 +80,8 @@ export const AGENTS: Agent[] = [
     description: "Composes Tamil poetry across the five thinai landscapes.",
     model: "gemini-2.5-flash",
     accent: "#4a8ab5",
+    group: "guest",
+    glyph: "நெ",
     tinai: "neytal",
     starters: [
       "A neytal poem about waiting at the shore",
@@ -87,6 +101,8 @@ export const AGENTS: Agent[] = [
     description: "Full-stack engineering — Next.js, TypeScript, debugging, architecture.",
     model: "gpt-4o-mini",
     accent: "#e3b458",
+    group: "guest",
+    glyph: "நிர",
     tinai: "palai",
     starters: [
       "Review this React hook for bugs",
@@ -106,6 +122,8 @@ export const AGENTS: Agent[] = [
     description: "Sovereign LLM & Tamil NLP — modeling, data pipelines, evals.",
     model: "gpt-4o",
     accent: "#4f9d6b",
+    group: "guest",
+    glyph: "ஆ",
     tinai: "mullai",
     starters: [
       "How should we tokenize Tamil for an LLM?",
@@ -125,6 +143,8 @@ export const AGENTS: Agent[] = [
     description: "Deep reasoning, summarization, and structured research help.",
     model: "gpt-4o-mini",
     accent: "#c25b3c",
+    group: "guest",
+    glyph: "ஆய்",
     tinai: "palai",
     starters: [
       "Summarise this paper's argument",
@@ -137,6 +157,8 @@ export const AGENTS: Agent[] = [
       "Hello! I'm Research Assistant. Give me a question, a document, or a tangle of ideas — I'll structure it, reason through it, and cite what I'm not sure about.",
   },
 ];
+
+export const AGENTS: Agent[] = [...YAZHI_AGENTS, ...GUEST_AGENTS];
 
 export const AGENT_BY_ID: Record<string, Agent> = Object.fromEntries(
   AGENTS.map((a) => [a.id, a])

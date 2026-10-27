@@ -58,11 +58,11 @@ export interface BubbleMessage {
   via?: BubbleRuntime;
 }
 
-/** The system prompt actually sent to a model for this bubble. */
-export function effectiveSystemPrompt(m: BubbleManifest): string {
-  if (!m.agent.fivePosture) return m.agent.systemPrompt;
+/** Wraps a system prompt in the Five-Posture Reasoning Kernel that every
+    Yazhi agent runs through (Aram harness §4). */
+export function withFivePosture(systemPrompt: string): string {
   return [
-    m.agent.systemPrompt.trim(),
+    systemPrompt.trim(),
     "",
     "Before you answer, work through these five postures silently and let them shape the reply:",
     "1. Context (சூழல் அறிதல்) — who is asking, which language mix they use, which rules apply.",
@@ -71,6 +71,11 @@ export function effectiveSystemPrompt(m: BubbleManifest): string {
     "4. Respond (உரைத்தல்) — answer in the user's register; cite sources you rely on.",
     "5. Reflect (மீளாய்வு) — if you cannot support a claim, say \"தெரியவில்லை / I don't know\".",
   ].join("\n");
+}
+
+/** The system prompt actually sent to a model for this bubble. */
+export function effectiveSystemPrompt(m: BubbleManifest): string {
+  return m.agent.fivePosture ? withFivePosture(m.agent.systemPrompt) : m.agent.systemPrompt;
 }
 
 const HEX = /^#[0-9a-f]{6}$/i;

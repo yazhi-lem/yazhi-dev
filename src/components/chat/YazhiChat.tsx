@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import type { ThinaiKey } from "@/lib/content";
-import { AGENTS, getAgent } from "@/lib/chat/agents";
+import { AGENTS, PROVIDER_META, getAgent } from "@/lib/chat/agents";
 import { streamReply, type ChatRuntime } from "@/lib/chat/stream";
 import type { Agent, Message } from "@/lib/chat/types";
 import { useChatStore } from "@/lib/chat/useChatStore";
@@ -26,9 +26,16 @@ import tide from "@/ui/hairline/figures/tide.js";
 import cairn from "@/ui/hairline/figures/cairn.js";
 import grove from "@/ui/hairline/figures/grove.js";
 import vilakku from "@/ui/hairline/figures/vilakku.js";
+import paddy from "@/ui/hairline/figures/paddy.js";
+import parai from "@/ui/hairline/figures/parai.js";
 
 /** Each agent's Hairline emblem, drawn while its room is empty. */
 const EMBLEM: Record<string, HairlineFigureDef> = {
+  pulavar: yazh as HairlineFigureDef,
+  nyaya: paddy as HairlineFigureDef,
+  kural: cairn as HairlineFigureDef,
+  guru: grove as HairlineFigureDef,
+  annachi: parai as HairlineFigureDef,
   "yazh-guide": yazh as HairlineFigureDef,
   "sangam-scholar": olai as HairlineFigureDef,
   "neythal-poet": tide as HairlineFigureDef,
@@ -37,9 +44,10 @@ const EMBLEM: Record<string, HairlineFigureDef> = {
   "research-assistant": vilakku as HairlineFigureDef,
 };
 
-/** two agents start with ஆ; give the second its next letter too */
-const GLYPH: Record<string, string> = { "research-assistant": "ஆய்" };
-const glyphOf = (a: Agent) => GLYPH[a.id] ?? firstGrapheme(a.taName);
+const glyphOf = (a: Agent) => a.glyph ?? firstGrapheme(a.taName);
+const OWN = AGENTS.filter((a) => a.group === "yazhi");
+const GUESTS = AGENTS.filter((a) => a.group === "guest");
+const toItem = (a: Agent): MagneticItem => ({ id: a.id, label: a.name, ta: a.taName, accent: a.accent, glyph: glyphOf(a) });
 
 const THEME_KEY = "yazhi-chat-tinai";
 const RUNTIME_KEY = "yazhi-chat-runtime";
@@ -129,9 +137,14 @@ function ChatRoom() {
   useEffect(() => {
     const el = scroller.current;
     if (!el) return;
+    // a new room opens at the top, on the agent's emblem
+    if (!started) {
+      el.scrollTo({ top: 0 });
+      return;
+    }
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     el.scrollTo({ top: el.scrollHeight, behavior: reduced ? "auto" : "smooth" });
-  }, [messages.length, last]);
+  }, [messages.length, last, started, agent.id]);
 
   // Escape closes whichever panel is open
   useEffect(() => {
@@ -222,10 +235,8 @@ function ChatRoom() {
     [activeSession, agent, runtime, store, streaming]
   );
 
-  const trayItems = useMemo<MagneticItem[]>(
-    () => AGENTS.map((a) => ({ id: a.id, label: a.name, ta: a.taName, accent: a.accent, glyph: glyphOf(a) })),
-    []
-  );
+  const ownItems = useMemo(() => OWN.map(toItem), []);
+  const guestItems = useMemo(() => GUESTS.map(toItem), []);
 
   return (
     <TinaiScope tinai={tinai} as="div" className="yazhi-chat relative flex h-dvh flex-col overflow-hidden">
@@ -276,7 +287,10 @@ function ChatRoom() {
       <div className="relative z-10 flex min-h-0 flex-1">
         {/* agents: a vertical tray of bubbles on wide screens */}
         <nav aria-label="Agents" className="hidden shrink-0 flex-col items-center border-r pt-3 hair-lo md:flex md:w-[84px]">
-          <MagneticTray items={trayItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={46} vertical label="Agents" />
+          <RailLabel>யாழி</RailLabel>
+          <MagneticTray items={ownItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={40} vertical label="Yazhi agents" />
+          <RailLabel>Guests</RailLabel>
+          <MagneticTray items={guestItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={40} vertical label="Guest agents" />
           <button
             type="button"
             onClick={newThread}
@@ -293,7 +307,15 @@ function ChatRoom() {
         <main id="conversation" className="flex min-w-0 flex-1 flex-col" aria-label={`Conversation with ${agent.name}`}>
           {/* agents on phones: the same bubbles in a row */}
           <nav aria-label="Agents" className="-mb-3 shrink-0 md:hidden">
-            <MagneticTray items={trayItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={38} label="Agents" />
+            <div className="flex items-end overflow-x-auto [scrollbar-width:none]" data-lenis-prevent>
+              <div className="shrink-0">
+                <MagneticTray items={ownItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={38} label="Yazhi agents" />
+              </div>
+              <span aria-hidden className="mb-8 h-8 w-px shrink-0 bg-[color:var(--env-edge)] opacity-40" />
+              <div className="shrink-0">
+                <MagneticTray items={guestItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={38} label="Guest agents" />
+              </div>
+            </div>
           </nav>
 
           <div ref={scroller} className="chat-scroll min-h-0 flex-1 overflow-y-auto" data-lenis-prevent>
@@ -414,6 +436,7 @@ function Welcome({ agent, onPick }: { agent: Agent; onPick: (q: string) => void 
         <span className="mt-1 block text-sm text-[color:var(--env-text-dim)]">{agent.name}</span>
       </h2>
       <p className="mt-3 max-w-md text-[0.95rem] leading-relaxed text-[color:var(--env-text-dim)]">{agent.description}</p>
+      <Persona agent={agent} />
       <ul className="mt-7 flex w-full max-w-xl flex-col gap-2" aria-label="Ways to start">
         {agent.starters.map((q) => (
           <li key={q}>
@@ -430,7 +453,85 @@ function Welcome({ agent, onPick }: { agent: Agent; onPick: (q: string) => void 
           </li>
         ))}
       </ul>
+      {agent.sample && <Sample agent={agent} />}
     </section>
+  );
+}
+
+function RailLabel({ children }: { children: ReactNode }) {
+  return (
+    <p aria-hidden className="mb-1 mt-2 w-full border-t pt-2 text-center font-mono text-[9px] uppercase tracking-wider text-[color:var(--env-text-dim)] first:mt-0 first:border-t-0 first:pt-0 hair-lo">
+      {children}
+    </p>
+  );
+}
+
+/** Who the agent is: where it lives, its launch status, and the one rule it keeps. */
+function Persona({ agent }: { agent: Agent }) {
+  const provider = PROVIDER_META[agent.provider];
+  const chips =
+    agent.group === "yazhi"
+      ? [agent.home && `Lives in ${agent.home}`, `${provider.label} · yazhi-api`, agent.status && `Preview · ${agent.status}`]
+      : [`Guest · ${provider.label}`, "Runs on an outside model"];
+  return (
+    <div className="mt-5 flex w-full max-w-xl flex-col items-center gap-3">
+      <ul className="flex flex-wrap justify-center gap-1.5" aria-label="About this agent">
+        {chips.filter(Boolean).map((c) => (
+          <li key={c as string} className="rounded-full border px-2.5 py-1 font-mono text-[10px] tracking-wide text-[color:var(--env-text-dim)] hair-lo">
+            {c}
+          </li>
+        ))}
+      </ul>
+      {agent.persona && <p className="max-w-lg text-sm leading-relaxed">{agent.persona}</p>}
+      {agent.rule && (
+        <p className="flex items-center gap-2 text-xs text-[color:var(--env-text-dim)]">
+          <span aria-hidden className="h-px w-5 bg-[color:var(--env-edge)]" />
+          <span>
+            <span className="font-mono uppercase tracking-wider text-[color:var(--env-hi)]">Rule</span> {agent.rule}
+          </span>
+          <span aria-hidden className="h-px w-5 bg-[color:var(--env-edge)]" />
+        </p>
+      )}
+    </div>
+  );
+}
+
+/** One illustrative exchange, folded away until asked for. */
+function Sample({ agent }: { agent: Agent }) {
+  if (!agent.sample) return null;
+  return (
+    <details
+      className="group mt-6 w-full max-w-xl rounded-2xl border text-left hair-lo"
+      onToggle={(e) => {
+        const d = e.currentTarget;
+        if (d.open) requestAnimationFrame(() => d.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
+      }}
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-2xl px-4 py-3 text-sm [&::-webkit-details-marker]:hidden">
+        <span>See how {agent.name} answers</span>
+        <span aria-hidden className="text-[color:var(--env-text-dim)] transition-transform duration-300 group-open:rotate-90">
+          ›
+        </span>
+      </summary>
+      <div className="space-y-4 border-t px-4 pb-4 pt-4 hair-lo">
+        <p className="ml-auto w-fit max-w-[85%] whitespace-pre-wrap rounded-[1.2rem] rounded-br-md border bg-[color:var(--env-surface)] px-3.5 py-2 text-sm hair-lo">
+          <span className="sr-only">Sample question: </span>
+          {agent.sample.q}
+        </p>
+        <div className="flex gap-3">
+          <span aria-hidden className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border text-[11px] hair-lo" style={{ color: "var(--env-hi)" }}>
+            {glyphOf(agent)}
+          </span>
+          <div className="min-w-0 text-sm">
+            <span className="sr-only">Sample answer: </span>
+            <Markdown>{agent.sample.a}</Markdown>
+          </div>
+        </div>
+        <p className="font-mono text-[10px] uppercase tracking-wider text-[color:var(--env-text-dim)]">
+          Sample · illustrative, not a live answer{agent.group === "yazhi" ? " · Tamil is a draft for native review" : ""}
+        </p>
+      </div>
+    </details>
   );
 }
 

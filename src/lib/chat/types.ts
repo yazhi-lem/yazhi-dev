@@ -4,7 +4,7 @@
 
 import type { ThinaiKey } from "@/lib/content";
 
-export type Provider = "gemini" | "openai";
+export type Provider = "adhan" | "gemini" | "openai";
 
 export interface Agent {
   id: string;
@@ -26,6 +26,21 @@ export interface Agent {
   tinai: ThinaiKey;
   /** a few first questions, shown before the conversation starts */
   starters: string[];
+  /** "yazhi": Yazhi's own agents, on Adhan through yazhi-api;
+      "guest": general assistants on outside models */
+  group: "yazhi" | "guest";
+  /** the bubble's mark; defaults to the first letter of taName */
+  glyph?: string;
+  /** Yazhi agents: who the agent is, in a sentence or two */
+  persona?: string;
+  /** Yazhi agents: the product it lives in */
+  home?: string;
+  /** Yazhi agents: the rule it never breaks (Aram harness §4) */
+  rule?: string;
+  /** Yazhi agents: where it is on the launch line */
+  status?: string;
+  /** one illustrative exchange, labelled as a sample in the UI */
+  sample?: { q: string; a: string };
 }
 
 export interface Message {
