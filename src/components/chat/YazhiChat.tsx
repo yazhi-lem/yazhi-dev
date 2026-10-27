@@ -6,28 +6,29 @@ import { AGENTS, PROVIDER_META, getAgent } from "@/lib/chat/agents";
 import { streamReply, type ChatRuntime } from "@/lib/chat/stream";
 import type { Agent, Message } from "@/lib/chat/types";
 import { useChatStore } from "@/lib/chat/useChatStore";
-import { DEFAULT_DEVICE_ENDPOINT, getDeviceEndpoint, setDeviceEndpoint } from "@/lib/bubble/runtime";
+import { DEFAULT_DEVICE_ENDPOINT, getDeviceEndpoint, setDeviceEndpoint } from "@yazhi/bubble/lib/runtime";
 import { LogoMark } from "@/components/ui/LogoMark";
 import { CircleProvider } from "@/components/circle/CircleProvider";
-import { CircleButton } from "@/components/circle/CircleButton";
+import { MissionAccount, MissionButton, MissionPlaces } from "@/components/mission/Mission";
+import { MissionHeader, MissionSection, ModeSwitch } from "@yazhi/bubble";
 import { Markdown } from "./Markdown";
 import { YazhStrings } from "./YazhStrings";
 import { ChatComposer, type ComposerHandle } from "./ChatComposer";
-import { ENVIRONMENTS, ENV_BY_KEY } from "@/ui/tinai/environments";
-import { TinaiScope } from "@/ui/tinai/TinaiScope";
-import { TinaiAmbient } from "@/ui/tinai/TinaiAmbient";
-import { MagneticTray, type MagneticItem } from "@/ui/tinai/MagneticTray";
-import { HairlineFigure } from "@/ui/hairline/HairlineFigure";
-import type { HairlineFigureDef } from "@/ui/hairline/types";
-import { firstGrapheme } from "@/ui/text";
-import yazh from "@/ui/hairline/figures/yazh.js";
-import olai from "@/ui/hairline/figures/olai.js";
-import tide from "@/ui/hairline/figures/tide.js";
-import cairn from "@/ui/hairline/figures/cairn.js";
-import grove from "@/ui/hairline/figures/grove.js";
-import vilakku from "@/ui/hairline/figures/vilakku.js";
-import paddy from "@/ui/hairline/figures/paddy.js";
-import parai from "@/ui/hairline/figures/parai.js";
+import { ENVIRONMENTS, ENV_BY_KEY, tone } from "@yazhi/bubble/tinai/environments";
+import { TinaiScope } from "@yazhi/bubble/tinai/TinaiScope";
+import { TinaiAmbient } from "@yazhi/bubble/tinai/TinaiAmbient";
+import { MagneticTray, type MagneticItem } from "@yazhi/bubble/tinai/MagneticTray";
+import { HairlineFigure } from "@yazhi/bubble/hairline/HairlineFigure";
+import type { HairlineFigureDef } from "@yazhi/bubble/hairline/types";
+import { firstGrapheme } from "@yazhi/bubble/text";
+import yazh from "@yazhi/bubble/hairline/figures/yazh.js";
+import olai from "@yazhi/bubble/hairline/figures/olai.js";
+import tide from "@yazhi/bubble/hairline/figures/tide.js";
+import cairn from "@yazhi/bubble/hairline/figures/cairn.js";
+import grove from "@yazhi/bubble/hairline/figures/grove.js";
+import vilakku from "@yazhi/bubble/hairline/figures/vilakku.js";
+import paddy from "@yazhi/bubble/hairline/figures/paddy.js";
+import parai from "@yazhi/bubble/hairline/figures/parai.js";
 
 /** Each agent's Hairline emblem, drawn while its room is empty. */
 const EMBLEM: Record<string, HairlineFigureDef> = {
@@ -108,7 +109,7 @@ function ChatRoom() {
   const [theme, setTheme] = useState<ThemeChoice>("auto");
   const [runtimeChoice, setRuntimeChoice] = useState<RuntimeChoice>("auto");
   const [endpoint, setEndpoint] = useState(DEFAULT_DEVICE_ENDPOINT);
-  const [panel, setPanel] = useState<null | "threads" | "settings">(null);
+  const [panel, setPanel] = useState<null | "threads" | "mission">(null);
   const [streaming, setStreaming] = useState(false);
   const [announce, setAnnounce] = useState("");
   const abortRef = useRef<AbortController | null>(null);
@@ -239,7 +240,7 @@ function ChatRoom() {
   const guestItems = useMemo(() => GUESTS.map(toItem), []);
 
   return (
-    <TinaiScope tinai={tinai} as="div" className="yazhi-chat relative flex h-dvh flex-col overflow-hidden">
+    <TinaiScope tinai={tinai} as="div" className="bubble-root yazhi-chat relative flex h-dvh flex-col overflow-hidden">
       <a href="#yazhi-composer" className="sr-only z-50 rounded-full bg-[color:var(--env-surface)] px-4 py-2 focus:not-sr-only focus:absolute focus:left-3 focus:top-3">
         Skip to message box
       </a>
@@ -257,14 +258,13 @@ function ChatRoom() {
               <LogoMark size={30} />
             </span>
             <span className="hidden font-display text-lg font-semibold tracking-tight sm:inline">
-              <span lang="ta">யாழி</span> <span className="font-normal text-[color:var(--env-text-dim)]">Chat</span>
+              Yazhi <span className="font-normal text-[color:var(--env-text-dim)]">Chat</span>
             </span>
           </Link>
         </div>
         <h1 className="sr-only">Yazhi Chat, with {agent.name}</h1>
-        <p className="min-w-0 truncate text-center text-sm" aria-hidden>
-          <span lang="ta" className="font-display">{agent.taName}</span>
-          <span className="text-[color:var(--env-text-dim)]"> · {agent.name}</span>
+        <p className="min-w-0 truncate text-center font-display text-sm" aria-hidden>
+          {agent.name}
         </p>
         <div className="flex shrink-0 items-center gap-1.5">
           <span
@@ -277,17 +277,14 @@ function ChatRoom() {
           <IconButton label="Threads" pressed={panel === "threads"} onClick={() => setPanel((p) => (p === "threads" ? null : "threads"))}>
             <path d="M5 7h14M5 12h14M5 17h9" />
           </IconButton>
-          <IconButton label="Settings" pressed={panel === "settings"} onClick={() => setPanel((p) => (p === "settings" ? null : "settings"))}>
-            <circle cx="12" cy="12" r="3" />
-            <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" />
-          </IconButton>
+          <ModeSwitch compact />
         </div>
       </header>
 
       <div className="relative z-10 flex min-h-0 flex-1">
         {/* agents: a vertical tray of bubbles on wide screens */}
         <nav aria-label="Agents" className="hidden shrink-0 flex-col items-center border-r pt-3 hair-lo md:flex md:w-[84px]">
-          <RailLabel>யாழி</RailLabel>
+          <RailLabel>Yazhi</RailLabel>
           <MagneticTray items={ownItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={40} vertical label="Yazhi agents" />
           <RailLabel>Guests</RailLabel>
           <MagneticTray items={guestItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={40} vertical label="Guest agents" />
@@ -340,7 +337,14 @@ function ChatRoom() {
                 onStop={stop}
                 streaming={streaming}
                 placeholder={`Message ${agent.name}`}
-                leading={<CircleButton size={40} />}
+                leading={
+                  <MissionButton
+                    size={40}
+                    open={panel === "mission"}
+                    controls="mission-control"
+                    onOpen={() => setPanel((p) => (p === "mission" ? null : "mission"))}
+                  />
+                }
                 hint={
                   <>
                     Enter to send · Shift+Enter for a new line. Replies can be wrong — check what matters.{" "}
@@ -356,7 +360,8 @@ function ChatRoom() {
           <>
             <button type="button" aria-label="Close panel" tabIndex={-1} onClick={() => setPanel(null)} className="absolute inset-0 z-20 bg-black/40 md:hidden" />
             <aside
-              aria-label={panel === "threads" ? "Threads" : "Settings"}
+              id={panel === "mission" ? "mission-control" : undefined}
+              aria-label={panel === "threads" ? "Threads" : "Mission Control"}
               className="absolute inset-y-0 right-0 z-30 flex w-[min(22rem,100%)] flex-col border-l bg-[color:var(--env-surface)] hair-lo"
             >
               {panel === "threads" ? (
@@ -369,7 +374,7 @@ function ChatRoom() {
                   onClose={() => setPanel(null)}
                 />
               ) : (
-                <SettingsPanel
+                <MissionPanel
                   theme={theme}
                   agentTinai={agent.tinai}
                   onTheme={(t) => {
@@ -430,10 +435,7 @@ function Welcome({ agent, onPick }: { agent: Agent; onPick: (q: string) => void 
         </div>
       )}
       <h2 id="welcome-title" className="mt-1">
-        <span lang="ta" className="block font-display text-3xl font-semibold sm:text-4xl" style={{ lineHeight: "var(--leading-tamil-display)" }}>
-          {agent.taName}
-        </span>
-        <span className="mt-1 block text-sm text-[color:var(--env-text-dim)]">{agent.name}</span>
+        <span className="block font-display text-3xl font-semibold sm:text-4xl">{agent.name}</span>
       </h2>
       <p className="mt-3 max-w-md text-[0.95rem] leading-relaxed text-[color:var(--env-text-dim)]">{agent.description}</p>
       <Persona agent={agent} />
@@ -638,7 +640,7 @@ function ThreadsPanel({
                   aria-current={current ? "true" : undefined}
                   className={`flex min-w-0 flex-1 items-center gap-3 rounded-xl px-2.5 py-2.5 text-left text-sm transition-colors hover:bg-[color:var(--env-ground)] ${current ? "bg-[color:var(--env-ground)]" : ""}`}
                 >
-                  <span aria-hidden className="grid h-7 w-7 shrink-0 place-items-center rounded-full border text-[11px] hair-lo" style={{ color: a ? ENV_BY_KEY[a.tinai].palette.hi : undefined }}>
+                  <span aria-hidden className="grid h-7 w-7 shrink-0 place-items-center rounded-full border text-[11px] hair-lo" style={{ color: a ? tone(a.tinai, "hi") : undefined }}>
                     {a ? glyphOf(a) : "•"}
                   </span>
                   <span className="min-w-0">
@@ -665,7 +667,9 @@ function ThreadsPanel({
   );
 }
 
-function SettingsPanel({
+/** Mission Control in the chat: your account, the theme, the landscape the
+    room wears, where replies come from, and the way to the library. */
+function MissionPanel({
   theme,
   agentTinai,
   onTheme,
@@ -686,89 +690,96 @@ function SettingsPanel({
   onEndpointCommit: () => void;
   onClose: () => void;
 }) {
-  const themes: { key: ThemeChoice; ta: string; en: string; swatch: string; note: string }[] = [
-    { key: "auto", ta: "தானாக", en: "Follow the agent", swatch: ENV_BY_KEY[agentTinai].palette.accent, note: `Now ${ENV_BY_KEY[agentTinai].en}` },
-    ...ENVIRONMENTS.map((e) => ({ key: e.key as ThemeChoice, ta: e.ta, en: e.en, swatch: e.palette.accent, note: e.signature })),
+  const themes: { key: ThemeChoice; en: string; swatch: string; note: string }[] = [
+    { key: "auto", en: "Follow the agent", swatch: tone(agentTinai, "accent"), note: `Now ${ENV_BY_KEY[agentTinai].en}` },
+    ...ENVIRONMENTS.map((e) => ({ key: e.key as ThemeChoice, en: e.en, swatch: tone(e.key, "accent"), note: e.signature })),
   ];
   return (
     <>
-      <PanelHeader title="Settings" onClose={onClose} />
-      <div className="chat-scroll min-h-0 flex-1 space-y-7 overflow-y-auto px-4 py-5" data-lenis-prevent>
-        <fieldset>
-          <legend className="font-mono text-[11px] uppercase tracking-wider text-[color:var(--env-text-dim)]">Landscape</legend>
-          <div className="mt-3 grid gap-1.5">
-            {themes.map((t) => (
-              <label
-                key={t.key}
-                className={`flex cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition-colors has-[:focus-visible]:[border-color:var(--env-hi)] ${
-                  theme === t.key ? "bg-[color:var(--env-ground)] [border-color:var(--env-edge)]" : "border-transparent hover:bg-[color:var(--env-ground)]"
-                }`}
-              >
-                <input type="radio" name="yazhi-chat-theme" className="sr-only" checked={theme === t.key} onChange={() => onTheme(t.key)} />
-                <span aria-hidden className="h-3 w-3 shrink-0 rounded-full" style={{ background: t.swatch }} />
-                <span className="min-w-0 flex-1">
-                  <span lang="ta">{t.ta}</span> <span className="text-[color:var(--env-text-dim)]">· {t.en}</span>
-                  <span className="block text-[11px] text-[color:var(--env-text-dim)]">{t.note}</span>
-                </span>
-                {theme === t.key && (
-                  <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" aria-hidden>
-                    <path d="M5 12.5l4.5 4.5L19 7.5" />
-                  </svg>
-                )}
-              </label>
-            ))}
-          </div>
-        </fieldset>
+      <MissionHeader onClose={onClose} />
+      <div className="chat-scroll min-h-0 flex-1 overflow-y-auto border-t hair-lo" data-lenis-prevent>
+        <MissionAccount />
+        <MissionSection title="Theme">
+          <ModeSwitch />
+        </MissionSection>
+        <div className="space-y-7 border-t px-4 py-5 hair-lo">
+          <fieldset>
+            <legend className="font-mono text-[11px] uppercase tracking-wider text-[color:var(--env-text-dim)]">Landscape</legend>
+            <div className="mt-3 grid gap-1.5">
+              {themes.map((t) => (
+                <label
+                  key={t.key}
+                  className={`flex cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition-colors has-[:focus-visible]:[border-color:var(--env-hi)] ${
+                    theme === t.key ? "bg-[color:var(--env-ground)] [border-color:var(--env-edge)]" : "border-transparent hover:bg-[color:var(--env-ground)]"
+                  }`}
+                >
+                  <input type="radio" name="yazhi-chat-theme" className="sr-only" checked={theme === t.key} onChange={() => onTheme(t.key)} />
+                  <span aria-hidden className="h-3 w-3 shrink-0 rounded-full" style={{ background: t.swatch }} />
+                  <span className="min-w-0 flex-1">
+                    {t.en}
+                    <span className="block text-[11px] text-[color:var(--env-text-dim)]">{t.note}</span>
+                  </span>
+                  {theme === t.key && (
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" aria-hidden>
+                      <path d="M5 12.5l4.5 4.5L19 7.5" />
+                    </svg>
+                  )}
+                </label>
+              ))}
+            </div>
+          </fieldset>
 
-        <fieldset>
-          <legend className="font-mono text-[11px] uppercase tracking-wider text-[color:var(--env-text-dim)]">Where replies come from</legend>
-          <div className="mt-3 grid gap-1.5">
-            {(
-              [
-                ["auto", "Automatic", "yazhi-api when online, this device when not"],
-                ["cloud", "yazhi-api", "Yazhi's servers, through yazhi.dev"],
-                ["device", "On this device", "A local model; nothing leaves your machine"],
-              ] as [RuntimeChoice, string, string][]
-            ).map(([key, title, note]) => (
-              <label
-                key={key}
-                className={`flex cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition-colors has-[:focus-visible]:[border-color:var(--env-hi)] ${
-                  runtime === key ? "bg-[color:var(--env-ground)] [border-color:var(--env-edge)]" : "border-transparent hover:bg-[color:var(--env-ground)]"
-                }`}
-              >
-                <input type="radio" name="yazhi-chat-runtime" className="sr-only" checked={runtime === key} onChange={() => onRuntime(key)} />
-                <span className="min-w-0 flex-1">
-                  {title}
-                  <span className="block text-[11px] text-[color:var(--env-text-dim)]">{note}</span>
-                </span>
-                {runtime === key && (
-                  <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" aria-hidden>
-                    <path d="M5 12.5l4.5 4.5L19 7.5" />
-                  </svg>
-                )}
-              </label>
-            ))}
-          </div>
-          <label className="mt-4 block text-sm">
-            <span className="block text-[11px] text-[color:var(--env-text-dim)]">On-device endpoint (OpenAI-compatible)</span>
-            <input
-              value={endpoint}
-              onChange={(e) => onEndpoint(e.target.value)}
-              onBlur={onEndpointCommit}
-              spellCheck={false}
-              inputMode="url"
-              className="mt-1.5 w-full rounded-xl border bg-[color:var(--env-ground)] px-3 py-2 font-mono text-xs hair-lo focus:outline-none focus:[border-color:var(--env-hi)]"
-            />
-          </label>
-        </fieldset>
+          <fieldset>
+            <legend className="font-mono text-[11px] uppercase tracking-wider text-[color:var(--env-text-dim)]">Where replies come from</legend>
+            <div className="mt-3 grid gap-1.5">
+              {(
+                [
+                  ["auto", "Automatic", "yazhi-api when online, this device when not"],
+                  ["cloud", "yazhi-api", "Yazhi's servers, through yazhi.dev"],
+                  ["device", "On this device", "A local model; nothing leaves your machine"],
+                ] as [RuntimeChoice, string, string][]
+              ).map(([key, title, note]) => (
+                <label
+                  key={key}
+                  className={`flex cursor-pointer items-center gap-3 rounded-xl border px-3 py-2.5 text-sm transition-colors has-[:focus-visible]:[border-color:var(--env-hi)] ${
+                    runtime === key ? "bg-[color:var(--env-ground)] [border-color:var(--env-edge)]" : "border-transparent hover:bg-[color:var(--env-ground)]"
+                  }`}
+                >
+                  <input type="radio" name="yazhi-chat-runtime" className="sr-only" checked={runtime === key} onChange={() => onRuntime(key)} />
+                  <span className="min-w-0 flex-1">
+                    {title}
+                    <span className="block text-[11px] text-[color:var(--env-text-dim)]">{note}</span>
+                  </span>
+                  {runtime === key && (
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" aria-hidden>
+                      <path d="M5 12.5l4.5 4.5L19 7.5" />
+                    </svg>
+                  )}
+                </label>
+              ))}
+            </div>
+            <label className="mt-4 block text-sm">
+              <span className="block text-[11px] text-[color:var(--env-text-dim)]">On-device endpoint (OpenAI-compatible)</span>
+              <input
+                value={endpoint}
+                onChange={(e) => onEndpoint(e.target.value)}
+                onBlur={onEndpointCommit}
+                spellCheck={false}
+                inputMode="url"
+                className="mt-1.5 w-full rounded-xl border bg-[color:var(--env-ground)] px-3 py-2 font-mono text-xs hair-lo focus:outline-none focus:[border-color:var(--env-hi)]"
+              />
+            </label>
+          </fieldset>
 
-        <p className="text-[11px] leading-relaxed text-[color:var(--env-text-dim)]">
-          Threads and these choices are kept in this browser only. The landscapes and their motion are described in the{" "}
-          <Link href="/bubble/design" className="underline decoration-[color:var(--env-edge)] underline-offset-2 hover:text-[color:var(--env-text)]">
-            Bubble UI design book
-          </Link>
-          .
-        </p>
+          <p className="text-[11px] leading-relaxed text-[color:var(--env-text-dim)]">
+            Threads and these choices are kept in this browser only. The landscapes and their motion are described in the{" "}
+            <Link href="/bubble#themes" className="underline decoration-[color:var(--env-edge)] underline-offset-2 hover:text-[color:var(--env-text)]">
+              Bubble UI library
+            </Link>
+            .
+          </p>
+        </div>
+        <MissionPlaces />
       </div>
     </>
   );

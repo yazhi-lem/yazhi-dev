@@ -22,7 +22,7 @@ export function VerseReader({
   if (!verse) return null;
   return (
     <Panel
-      eyebrow={<span lang="ta">திறந்த சங்கம் · Open Sangam</span>}
+      eyebrow="Open Sangam"
       title={title}
       actions={reviewed ? <Pill tone="ok">scholar-verified</Pill> : <Pill tone="warn">awaiting scholar review</Pill>}
     >

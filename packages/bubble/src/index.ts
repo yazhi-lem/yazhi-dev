@@ -6,8 +6,8 @@
       modules/     app-level blocks (cited answers, runbooks, hint ladder, reader)
       pages/       full app screens (Avai, Nyaya, Kural, Guru, Kadai, Open Sangam, Yazh)
 
-    Live docs: yazhi.dev/bubble (components, modules, pages) and
-    yazhi.dev/bubble/design (the design book). See README.md. */
+    Beside them: mission/ (Mission Control and the light/dark switch) and
+    docs/ (the one-page library). Live at yazhi.dev/bubble. See README.md. */
 
 export { Bubble } from "./components/Bubble";
 export { Pill, RuntimeBadge, DraftTag, type Tone } from "./components/Pill";
@@ -47,3 +47,10 @@ export { YAZHI_AGENTS } from "./lib/agents";
 export type { Agent } from "./lib/agent-types";
 export { BUBBLE_SCHEMA, validateManifest, effectiveSystemPrompt, withFivePosture, type BubbleManifest, type BubbleRuntime } from "./lib/manifest";
 export { STARTER_BUBBLES } from "./lib/starters";
+
+export { MarkBubble } from "./mission/MarkBubble";
+export { MissionControl, MissionSection, MissionHeader } from "./mission/MissionControl";
+export { ModeSwitch } from "./mission/ModeSwitch";
+export { useColorMode, setColorMode, onColorModeChange, type ColorMode } from "./mode";
+export { MODE_SCRIPT, MODE_KEY } from "./mode-script";
+export { tone, type Palette } from "./tinai/environments";

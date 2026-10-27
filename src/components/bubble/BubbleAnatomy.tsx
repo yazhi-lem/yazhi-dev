@@ -1,6 +1,6 @@
 /** Labelled diagram of the Bubble UI host, drawn after the founding sketch:
     the window, the packed tray on the right, the composer along the bottom
-    with the Circle button and send, and the two things outside the frame —
+    with Mission Control and send, and the two things outside the frame —
     Capitol above, the insider-risk boundary beside the tray. */
 export function BubbleAnatomy() {
   const tray: [number, number, number][] = [
@@ -14,12 +14,12 @@ export function BubbleAnatomy() {
         viewBox="0 0 680 340"
         role="img"
         aria-labelledby="anatomy-title anatomy-desc"
-        className="w-full rounded-xl border border-ivory/10 bg-night-2/60"
+        className="w-full rounded-xl border border-ivory/10 bg-night-2"
       >
         <title id="anatomy-title">Bubble UI anatomy</title>
         <desc id="anatomy-desc">
           A rounded window. The conversation canvas fills the left. A tray of packed, non-touching circles runs down
-          the right edge. Along the bottom: the Circle button, the message input and the send arrow. Above the window
+          the right edge. Along the bottom: Mission Control (the three-bubble mark inside a bubble), the message input and the send arrow. Above the window
           an arrow rises to Capitol; beside the tray a line marks the insider-risk boundary.
         </desc>
         {/* Capitol */}
@@ -59,18 +59,23 @@ export function BubbleAnatomy() {
 
         {/* composer */}
         <circle cx="66" cy="284" r="15" fill="none" stroke="var(--gold)" strokeWidth="1.8" />
-        <text x="66" y="289" textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--gold)">C</text>
+        {/* the Yazhi mark, scaled into the bubble */}
+        <g transform="translate(66 284) scale(0.17) translate(-50 -50)" fill="var(--ivory)">
+          <circle cx="30.8" cy="30.6" r="12.3" />
+          <circle cx="65.2" cy="26.9" r="16.3" />
+          <circle cx="47.2" cy="67.4" r="22" />
+        </g>
         <rect x="94" y="270" width="300" height="28" rx="14" fill="none" stroke="var(--ivory)" strokeOpacity="0.5" />
         <path d="M404 274 l18 10 -18 10z" fill="var(--gold)" />
         <text x="110" y="288" fontSize="11" fill="var(--ivory-dim)">Composer</text>
-        <text x="66" y="314" textAnchor="middle" fontSize="9.5" fill="var(--ivory-dim)">Circle</text>
+        <text x="66" y="314" textAnchor="middle" fontSize="9.5" fill="var(--ivory-dim)">Mission Control</text>
         <text x="413" y="314" textAnchor="middle" fontSize="9.5" fill="var(--ivory-dim)">send</text>
 
         {/* principles along the top */}
         <text x="330" y="30" textAnchor="middle" fontSize="12" fill="var(--ivory)">Runs without internet · on-device models</text>
         <text x="330" y="48" textAnchor="middle" fontSize="10.5" fill="var(--ivory-dim)">0% cloud by default — Circle identity throughout</text>
       </svg>
-      <figcaption className="mt-2 text-xs text-ivory-dim/70">
+      <figcaption className="mt-2 text-xs text-ivory-dim">
         Redrawn from the founding notebook sketch. Capitol and the insider-risk line sit outside the frame on purpose:
         they are what the host answers to, not what the user sees.
       </figcaption>

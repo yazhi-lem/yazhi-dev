@@ -37,17 +37,17 @@ Yazhi agents in this landscape: **Kural** (குறள், Kural Desk) — No s
 - **Motion:** Heavy and unhurried. Things travel far and settle late. Spring k 70, c 17; settle 900 ms; ambient pace ×0.35.
 - **Pointer:** Dune contours bend away from the pointer like heat haze.
 
-| Token | Value |
-|---|---|
-| `--env-ground` | `#0e0a07` |
-| `--env-surface` | `#18110c` |
-| `--env-hi` | `#f3d2ab` |
-| `--env-edge` | `#8a6447` |
-| `--env-mid` | `#4d3828` |
-| `--env-lo` | `#2a1f17` |
-| `--env-accent` | `#c25b3c` |
-| `--env-text` | `#f6ece0` |
-| `--env-text-dim` | `#c9b8a6` |
+| Token | Dark | Light |
+|---|---|---|
+| `--env-ground` | `#0e0a07` | `#f8f1e8` |
+| `--env-surface` | `#18110c` | `#fffaf3` |
+| `--env-hi` | `#f3d2ab` | `#4a2614` |
+| `--env-edge` | `#8a6447` | `#9c7356` |
+| `--env-mid` | `#4d3828` | `#d2b9a2` |
+| `--env-lo` | `#2a1f17` | `#ebdfd0` |
+| `--env-accent` | `#c25b3c` | `#a8432a` |
+| `--env-text` | `#f6ece0` | `#24160d` |
+| `--env-text-dim` | `#c9b8a6` | `#5f4a3b` |
 
 ## Karupporul (draft)
 midday · summer, late dew · parched wasteland — the feeling is separation (பிரிதல்).

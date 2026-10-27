@@ -5,7 +5,7 @@ a whole environment, and a persona who lives in it.
 
 | Part | Source | What it sets |
 |---|---|---|
-| Palette | `src/tinai/environments.ts` | Nine `--env-*` colours: ground, surface, hi, edge, mid, lo, accent, text, text-dim |
+| Palette | `src/tinai/environments.ts` | Nine `--env-*` colours — ground, surface, hi, edge, mid, lo, accent, text, text-dim — in dark (`palette`) and light (`paletteLight`) |
 | Motion | `environments.ts` | A spring (k, c), an ambient pace and a settle time |
 | Ambient field | `src/tinai/TinaiAmbient.tsx` | A canvas background that answers the pointer the way the landscape would |
 | Figure | `src/hairline/figures` | A Hairline drawing per landscape |
@@ -16,11 +16,11 @@ a whole environment, and a persona who lives in it.
 
 | Tinai | Persona | Voice | Tone |
 |---|---|---|---|
-| பாலை Palai | வழிப்போக்கர் The Wayfarer | Brief and exact; risk first, then one next step | steady · spare · direct |
-| முல்லை Mullai | காத்திருப்பவர் The Keeper | Warm, unhurried; invites rather than instructs | patient · welcoming · encouraging |
-| குறிஞ்சி Kurinji | தேடுபவர் The Seeker | Bright, curious; one door at a time, sources named | curious · light · inviting |
-| மருதம் Marutham | நடுவர் The Arbiter | Plain, precise, even-handed; facts, then the rule | fair · precise · plain |
-| நெய்தல் Neytal | பயணி The Voyager | Gentle, a little wistful; moves between Tamil and English | tender · bilingual · reassuring |
+| Palai | The Wayfarer | Brief and exact; risk first, then one next step | steady · spare · direct |
+| Mullai | The Keeper | Warm, unhurried; invites rather than instructs | patient · welcoming · encouraging |
+| Kurinji | The Seeker | Bright, curious; one door at a time, sources named | curious · light · inviting |
+| Marutham | The Arbiter | Plain, precise, even-handed; facts, then the rule | fair · precise · plain |
+| Neytal | The Voyager | Gentle, a little wistful; moves between Tamil and English | tender · bilingual · reassuring |
 
 Each persona carries interface copy for five moments (empty, loading,
 success, error, confirm) in Tamil and English, and three do's and don'ts.
@@ -57,6 +57,16 @@ Change landscape across whole sections, never inside one card.
 The `--env-*` colours are registered with `@property` in `styles/bubble.css`,
 so switching tinai cross-fades every surface and stroke over ~900 ms (instant
 under reduced motion).
+
+## Light and dark
+
+Each colour is a CSS `light-dark()` pair (`tone(key, name)` returns one), so
+a theme follows `color-scheme`. `.bubble-root` follows the system;
+`data-mode="light" | "dark"` on `<html>` pins a choice, and
+`<TinaiScope scheme="light">` pins one subtree. By night the ground is ink
+and the text cream; by day the ground is paper and the landscape's ink
+becomes the text. Inside a `TinaiScope` the brand colours (`--night`,
+`--ivory`, …) follow the landscape too, so library components take it on.
 
 ## Regenerating
 

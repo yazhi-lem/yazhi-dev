@@ -8,6 +8,7 @@
       "en": "The Wayfarer"
     },
     "accent": "#c25b3c",
+    "accentLight": "#a8432a",
     "files": [
       "palai/theme.json",
       "palai/theme.css",
@@ -24,6 +25,7 @@
       "en": "The Keeper"
     },
     "accent": "#4f9d6b",
+    "accentLight": "#2d7547",
     "files": [
       "mullai/theme.json",
       "mullai/theme.css",
@@ -40,6 +42,7 @@
       "en": "The Seeker"
     },
     "accent": "#8b7ae0",
+    "accentLight": "#5a47b8",
     "files": [
       "kurinji/theme.json",
       "kurinji/theme.css",
@@ -56,6 +59,7 @@
       "en": "The Arbiter"
     },
     "accent": "#b7a03c",
+    "accentLight": "#6f6116",
     "files": [
       "marutham/theme.json",
       "marutham/theme.css",
@@ -72,6 +76,7 @@
       "en": "The Voyager"
     },
     "accent": "#4a8ab5",
+    "accentLight": "#25648f",
     "files": [
       "neytal/theme.json",
       "neytal/theme.css",

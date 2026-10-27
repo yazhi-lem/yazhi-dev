@@ -37,17 +37,17 @@ Yazhi agents in this landscape: **Pulavar** (புலவர், Avai) — A sou
 - **Motion:** Buoyant. A little lift, a small overshoot, then still. Spring k 120, c 15; settle 700 ms; ambient pace ×0.7.
 - **Pointer:** The mist parts where the pointer passes and closes behind it.
 
-| Token | Value |
-|---|---|
-| `--env-ground` | `#0a0912` |
-| `--env-surface` | `#14121f` |
-| `--env-hi` | `#e6e1fb` |
-| `--env-edge` | `#7a70b3` |
-| `--env-mid` | `#3d3760` |
-| `--env-lo` | `#221f36` |
-| `--env-accent` | `#8b7ae0` |
-| `--env-text` | `#f2f0fb` |
-| `--env-text-dim` | `#c4bfdc` |
+| Token | Dark | Light |
+|---|---|---|
+| `--env-ground` | `#0a0912` | `#f4f2fb` |
+| `--env-surface` | `#14121f` | `#fcfbff` |
+| `--env-hi` | `#e6e1fb` | `#291f66` |
+| `--env-edge` | `#7a70b3` | `#7d72b6` |
+| `--env-mid` | `#3d3760` | `#bcb5de` |
+| `--env-lo` | `#221f36` | `#e4e0f4` |
+| `--env-accent` | `#8b7ae0` | `#5a47b8` |
+| `--env-text` | `#f2f0fb` | `#17142b` |
+| `--env-text-dim` | `#c4bfdc` | `#4c4769` |
 
 ## Karupporul (draft)
 midnight · autumn, early dew · mountains — the feeling is union (புணர்தல்).

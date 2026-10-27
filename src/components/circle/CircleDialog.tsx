@@ -59,14 +59,14 @@ export function CircleDialog({ onClose }: { onClose: () => void }) {
       ref={dialogRef}
       onClose={onClose}
       onClick={(e) => e.target === dialogRef.current && onClose()}
-      className="m-auto w-[min(26rem,calc(100vw-2rem))] rounded-2xl border border-ivory/15 bg-night-2 p-0 text-ivory backdrop:bg-black/70 backdrop:backdrop-blur-sm"
+      className="m-auto w-[min(26rem,calc(100vw-2rem))] rounded-2xl border border-ivory/15 bg-night-2 p-0 text-ivory backdrop:bg-black/60 backdrop:backdrop-blur-sm"
       aria-labelledby="circle-dialog-title"
       data-lenis-prevent
     >
       <div className="p-6">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-widest text-gold">Circle · yazhi-api</p>
+            <p className="font-mono text-[11px] uppercase tracking-widest text-gold">Circle · Mission Control</p>
             <h2 id="circle-dialog-title" className="display font-display text-2xl font-bold">
               {state.status === "signed-in" ? "Your Circle" : mode === "signin" ? "Sign in" : "Join as a builder"}
             </h2>
@@ -74,10 +74,12 @@ export function CircleDialog({ onClose }: { onClose: () => void }) {
           <button
             type="button"
             onClick={onClose}
-            className="grid h-8 w-8 place-items-center rounded-full border border-ivory/15 text-ivory-dim hover:text-ivory"
+            className="grid h-11 w-11 place-items-center rounded-full border border-ivory/15 text-ivory-dim hover:text-ivory"
             aria-label="Close"
           >
-            ✕
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden>
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
           </button>
         </div>
 
@@ -98,12 +100,20 @@ export function CircleDialog({ onClose }: { onClose: () => void }) {
               <dd className="break-all font-mono text-xs">{state.account.accountId}</dd>
             </dl>
             <p className="text-ivory-dim">
-              Bubbles you publish are signed with this account. Build them from the{" "}
-              <Link href="/bubble/pages" className="text-gold underline-offset-4 hover:underline">
+              Mission Control is on: press the three-bubble mark for your account, the theme and your chat settings.
+              Bubbles you publish are signed with this account — build them from the{" "}
+              <Link href="/bubble#templates" className="text-gold underline-offset-4 hover:underline">
                 UI library
               </Link>
               .
             </p>
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-full rounded-lg bg-gold px-4 py-2 font-semibold text-night transition hover:bg-bronze hover:text-ivory"
+            >
+              Done
+            </button>
             <button
               type="button"
               disabled={busy}
@@ -118,9 +128,13 @@ export function CircleDialog({ onClose }: { onClose: () => void }) {
         {state.status === "signed-out" && !state.configured && (
           <p className="rounded-lg border border-ivory/10 bg-night/60 p-4 text-sm text-ivory-dim">
             Circle sign-in isn&apos;t connected on this deployment yet. Set <code className="font-mono text-xs text-ivory">YAZHI_GRPC_TARGET</code>{" "}
-            to reach yazhi-api — see <Link href="/bubble#circle" className="text-gold">Bubble docs → Circle</Link>.
+            to reach yazhi-api — see <Link href="/bubble#circle" className="text-gold">Bubble UI → Circle</Link>.
             The Bubble UI and the UI library still work locally.
           </p>
+        )}
+
+        {state.status === "signed-out" && state.configured && (
+          <p className="-mt-2 mb-4 text-sm text-ivory-dim">Mission Control wakes once you have a Circle account.</p>
         )}
 
         {state.status === "signed-out" && state.configured && (

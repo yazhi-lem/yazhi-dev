@@ -37,17 +37,17 @@ Yazhi agents in this landscape: **Guru** (குரு, Guru) — The hint ladde
 - **Motion:** Gentle and patient. Nothing hurries; everything arrives. Spring k 85, c 18; settle 760 ms; ambient pace ×0.5.
 - **Pointer:** Fireflies drift toward the pointer, slowly, and keep their distance.
 
-| Token | Value |
-|---|---|
-| `--env-ground` | `#070d09` |
-| `--env-surface` | `#0f1a13` |
-| `--env-hi` | `#d4ecd9` |
-| `--env-edge` | `#5f8a6c` |
-| `--env-mid` | `#2f4a38` |
-| `--env-lo` | `#1a2a20` |
-| `--env-accent` | `#4f9d6b` |
-| `--env-text` | `#eef5ef` |
-| `--env-text-dim` | `#b9cbbd` |
+| Token | Dark | Light |
+|---|---|---|
+| `--env-ground` | `#070d09` | `#f0f6f1` |
+| `--env-surface` | `#0f1a13` | `#fafdfb` |
+| `--env-hi` | `#d4ecd9` | `#123a22` |
+| `--env-edge` | `#5f8a6c` | `#5e8a6c` |
+| `--env-mid` | `#2f4a38` | `#adc8b4` |
+| `--env-lo` | `#1a2a20` | `#dce9df` |
+| `--env-accent` | `#4f9d6b` | `#2d7547` |
+| `--env-text` | `#eef5ef` | `#0f2016` |
+| `--env-text-dim` | `#b9cbbd` | `#43584a` |
 
 ## Karupporul (draft)
 evening · rains · forest and pasture — the feeling is patient waiting (இருத்தல்).

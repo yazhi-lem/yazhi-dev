@@ -21,15 +21,18 @@ export function BubbleTray({
   activeId,
   onSelect,
   width = 150,
+  label = "Bubbles",
 }: {
   items: TrayItem[];
   activeId?: string;
   onSelect?: (id: string) => void;
   width?: number;
+  /** the tray's accessible name; make it unique when a page has two */
+  label?: string;
 }) {
   const { placed, height } = useMemo(() => packColumn(items.map((i) => i.size), width), [items, width]);
   return (
-    <nav aria-label="Bubbles">
+    <nav aria-label={label}>
       <ul className="flex gap-2 overflow-x-auto px-3 py-2 md:hidden" data-lenis-prevent>
         {items.map((b) => (
           <li key={b.id}>

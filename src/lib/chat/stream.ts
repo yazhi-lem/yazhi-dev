@@ -1,5 +1,5 @@
 "use client";
-import { readNdjson, streamOnDevice } from "@/lib/bubble/runtime";
+import { readNdjson, streamOnDevice } from "@yazhi/bubble/lib/runtime";
 import type { Agent, Message } from "./types";
 
 /** Where a Yazhi Chat reply comes from.

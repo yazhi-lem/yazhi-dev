@@ -1,7 +1,7 @@
 /* The five thinai as world zones along the camera's -Z journey, in the
    journey order palai → mullai → kurinji → marutham → neytal (hardship,
    waiting, union, home, the sea).
-   Hues match styles/tokens.css so the WebGL world and the DOM accent
+   Hues match packages/bubble/styles/tokens.css so the WebGL world and the DOM accent
    system stay in the same register. */
 export const ZONE_LEN = 70;
 export const WORLD_LEN = ZONE_LEN * 5;

@@ -73,7 +73,7 @@ export function LegalAnswerCard({
   return (
     <Panel
       accentEdge
-      eyebrow={<span lang="ta">நியாயம் · Nyaya</span>}
+      eyebrow="Nyaya"
       title={question}
       actions={<Pill tone={pct >= 95 ? "ok" : "risk"} title="Cited sections matched to stored Act text">{pct}% matched</Pill>}
     >

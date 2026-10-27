@@ -1,8 +1,8 @@
 "use client";
 import { useState, type FormEvent, type ReactNode } from "react";
 
-/** The message bar from the Bubble UI sketch: a leading slot (the Circle
-    button), the input, and the ▷ send — or ■ stop while streaming. */
+/** The message bar from the Bubble UI sketch: a leading slot (Mission
+    Control), the input, and the ▷ send — or ■ stop while streaming. */
 export function Composer({
   onSend,
   onStop,

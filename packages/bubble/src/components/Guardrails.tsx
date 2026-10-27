@@ -7,7 +7,7 @@ export function IDontKnow({ reason, next }: { reason: ReactNode; next?: ReactNod
   return (
     <div role="note" className="rounded-xl border border-gold/40 bg-gold/5 p-3 text-sm">
       <p className="font-semibold text-ivory">
-        <span lang="ta">தெரியவில்லை</span> · I don&apos;t know
+        I don&apos;t know
       </p>
       <p className="mt-1 text-ivory-dim">{reason}</p>
       {next && <p className="mt-2 text-xs text-ivory-dim">{next}</p>}

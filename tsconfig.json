@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@yazhi/bubble": ["./packages/bubble/src/index.ts"],
+      "@yazhi/bubble/*": ["./packages/bubble/src/*"]
     }
   },
   "include": [

@@ -45,24 +45,29 @@ export interface Environment {
   pace: number;
   /** discrete-change duration, ms */
   settle: number;
-  palette: {
-    /** page ground */
-    ground: string;
-    /** raised surfaces */
-    surface: string;
-    /** bright stroke — the only highlight */
-    hi: string;
-    /** silhouettes */
-    edge: string;
-    /** ordinary strokes */
-    mid: string;
-    /** receding strokes */
-    lo: string;
-    /** the tinai hue (site token) */
-    accent: string;
-    text: string;
-    textDim: string;
-  };
+  /** the dark palette: the brand's default, an ink ground */
+  palette: Palette;
+  /** the same landscape by day: a paper ground, the ink becomes the text */
+  paletteLight: Palette;
+}
+
+export interface Palette {
+  /** page ground */
+  ground: string;
+  /** raised surfaces */
+  surface: string;
+  /** bright stroke — the only highlight */
+  hi: string;
+  /** silhouettes */
+  edge: string;
+  /** ordinary strokes */
+  mid: string;
+  /** receding strokes */
+  lo: string;
+  /** the tinai hue (site token) */
+  accent: string;
+  text: string;
+  textDim: string;
 }
 
 export const ENVIRONMENTS: Environment[] = [
@@ -92,6 +97,17 @@ export const ENVIRONMENTS: Environment[] = [
       text: "#f6ece0",
       textDim: "#c9b8a6",
     },
+    paletteLight: {
+      ground: "#f8f1e8",
+      surface: "#fffaf3",
+      hi: "#4a2614",
+      edge: "#9c7356",
+      mid: "#d2b9a2",
+      lo: "#ebdfd0",
+      accent: "#a8432a",
+      text: "#24160d",
+      textDim: "#5f4a3b",
+    },
   },
   {
     key: "mullai",
@@ -118,6 +134,17 @@ export const ENVIRONMENTS: Environment[] = [
       accent: "#4f9d6b",
       text: "#eef5ef",
       textDim: "#b9cbbd",
+    },
+    paletteLight: {
+      ground: "#f0f6f1",
+      surface: "#fafdfb",
+      hi: "#123a22",
+      edge: "#5e8a6c",
+      mid: "#adc8b4",
+      lo: "#dce9df",
+      accent: "#2d7547",
+      text: "#0f2016",
+      textDim: "#43584a",
     },
   },
   {
@@ -146,6 +173,17 @@ export const ENVIRONMENTS: Environment[] = [
       text: "#f2f0fb",
       textDim: "#c4bfdc",
     },
+    paletteLight: {
+      ground: "#f4f2fb",
+      surface: "#fcfbff",
+      hi: "#291f66",
+      edge: "#7d72b6",
+      mid: "#bcb5de",
+      lo: "#e4e0f4",
+      accent: "#5a47b8",
+      text: "#17142b",
+      textDim: "#4c4769",
+    },
   },
   {
     key: "marutham",
@@ -172,6 +210,17 @@ export const ENVIRONMENTS: Environment[] = [
       accent: "#b7a03c",
       text: "#f7f3e3",
       textDim: "#cdc6a6",
+    },
+    paletteLight: {
+      ground: "#f7f4e4",
+      surface: "#fdfcf3",
+      hi: "#3d360c",
+      edge: "#8f803d",
+      mid: "#cdc28d",
+      lo: "#ebe5c8",
+      accent: "#6f6116",
+      text: "#1f1c0a",
+      textDim: "#55502d",
     },
   },
   {
@@ -200,27 +249,46 @@ export const ENVIRONMENTS: Environment[] = [
       text: "#edf4fa",
       textDim: "#b7c8d6",
     },
+    paletteLight: {
+      ground: "#eef4f9",
+      surface: "#f9fcfe",
+      hi: "#0f3352",
+      edge: "#5b88ad",
+      mid: "#a9c3d8",
+      lo: "#d9e6f1",
+      accent: "#25648f",
+      text: "#0c1b29",
+      textDim: "#425668",
+    },
   },
 ];
 
 export const ENV_BY_KEY = Object.fromEntries(ENVIRONMENTS.map((e) => [e.key, e])) as Record<ThinaiKey, Environment>;
 
-/** The CSS custom properties one environment sets. The --env-* colours are
-    registered with @property (globals.css), so switching environments
+/** One colour of a landscape in both modes, as CSS light-dark(): it
+    resolves by the color-scheme of where it is used, so a single value
+    serves the dark and the light theme (see .bubble-root in bubble.css). */
+export function tone(key: ThinaiKey, name: keyof Palette): string {
+  const e = ENV_BY_KEY[key];
+  return `light-dark(${e.paletteLight[name]}, ${e.palette[name]})`;
+}
+
+/** The CSS custom properties one environment sets, in both modes. The --env-* colours are
+    registered with @property (styles/bubble.css), so switching environments
     animates every surface and stroke instead of snapping. The Hairline
     figures read --hairline-*, mapped onto the same values. */
 export function envVars(key: ThinaiKey): CSSProperties {
-  const p = ENV_BY_KEY[key].palette;
+  const c = (n: keyof Palette) => tone(key, n);
   return {
-    "--env-ground": p.ground,
-    "--env-surface": p.surface,
-    "--env-hi": p.hi,
-    "--env-edge": p.edge,
-    "--env-mid": p.mid,
-    "--env-lo": p.lo,
-    "--env-accent": p.accent,
-    "--env-text": p.text,
-    "--env-text-dim": p.textDim,
+    "--env-ground": c("ground"),
+    "--env-surface": c("surface"),
+    "--env-hi": c("hi"),
+    "--env-edge": c("edge"),
+    "--env-mid": c("mid"),
+    "--env-lo": c("lo"),
+    "--env-accent": c("accent"),
+    "--env-text": c("text"),
+    "--env-text-dim": c("textDim"),
     "--accent": "var(--env-accent)",
     "--hairline-plate": "var(--env-ground)",
     "--hairline-hi": "var(--env-hi)",

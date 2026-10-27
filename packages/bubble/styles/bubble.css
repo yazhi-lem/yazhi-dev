@@ -4,7 +4,8 @@
      @import "@yazhi/bubble/styles/tokens.css";
      @import "@yazhi/bubble/styles/bubble.css";
    The components use the Tailwind colour names below (night, ivory, gold,
-   the five tinai) and the --env-* variables a TinaiScope sets. */
+   the five tinai) and the --env-* variables a TinaiScope sets. Wrap a
+   Bubble screen in .bubble-root to get the light theme as well. */
 
 @theme inline {
   --color-night: var(--night);
@@ -26,7 +27,41 @@
 }
 
 /* ============================================================
-   TINAI ENVIRONMENTS — Bubble UI design book (src/ui/tinai)
+   COLOUR MODE — light and dark
+   Everything Bubble draws sits inside .bubble-root. Its colours are
+   CSS light-dark() pairs, so the whole system changes with one
+   property, color-scheme: it follows the system by default, and
+   data-mode="light" | "dark" on <html> pins a choice (useColorMode
+   sets it; MODE_SCRIPT applies it before the first paint). Inside,
+   data-scheme="light" | "dark" pins one subtree, e.g. a preview.
+   ============================================================ */
+.bubble-root { color-scheme: light dark; }
+:root[data-mode="light"] .bubble-root { color-scheme: light; }
+:root[data-mode="dark"] .bubble-root { color-scheme: dark; }
+[data-scheme="light"] { color-scheme: light; }
+[data-scheme="dark"] { color-scheme: dark; }
+
+.bubble-root {
+  /* the brand by day: cream paper, ink text, a gold deep enough to read */
+  --night: light-dark(#f6f3ec, #0a0a0a);
+  --night-2: light-dark(#fdfbf7, #161616);
+  --ivory: light-dark(#15130f, #f8f5ef);
+  --ivory-dim: light-dark(#57534b, #cbc9c4);
+  --bronze: light-dark(#866419, #c49a38);
+  --gold: light-dark(#6e5312, #d3b36a);
+  --kurinji: light-dark(#5a47b8, #8b7ae0);
+  --mullai: light-dark(#2d7547, #4f9d6b);
+  --marutham: light-dark(#6f6116, #b7a03c);
+  --neytal: light-dark(#25648f, #4a8ab5);
+  --palai: light-dark(#a8432a, #d6704f);
+  --accent: var(--kurinji);
+  background: var(--night);
+  color: var(--ivory);
+}
+.bubble-root ::selection { background: var(--gold); color: var(--night); }
+
+/* ============================================================
+   TINAI ENVIRONMENTS — Bubble UI design book (src/tinai)
    The --env-* colours are registered so that switching landscape
    cross-fades every ground, surface and hairline stroke instead of
    snapping. Values are set per landscape by envVars().
@@ -42,6 +77,11 @@
 @property --env-text-dim { syntax: "<color>"; inherits: true; initial-value: #cbc9c4; }
 
 .tinai-scope {
+  /* the library's brand colours follow the landscape inside a scope */
+  --night: var(--env-ground);
+  --night-2: var(--env-surface);
+  --ivory: var(--env-text);
+  --ivory-dim: var(--env-text-dim);
   background: var(--env-ground);
   color: var(--env-text);
   transition:
@@ -77,6 +117,15 @@
 @media (prefers-reduced-motion: reduce) {
   .tray-ring { animation: none; }
 }
+
+/* Mission Control: the mark breathes once when it wakes */
+.mission-wake { animation: mission-wake 900ms cubic-bezier(0.32, 0.72, 0, 1) both; }
+@keyframes mission-wake {
+  0% { transform: scale(0.82); opacity: 0.4; }
+  60% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .mission-wake { animation: none; } }
 
 /* Design book: the ambient field fades in when the landscape changes */
 .book-fade { animation: book-fade 900ms cubic-bezier(0.32, 0.72, 0, 1) both; }

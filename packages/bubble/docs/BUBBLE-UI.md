@@ -1,8 +1,8 @@
 # Bubble UI
 
 A Bubble screen has three parts, after the original sketch: a **conversation
-canvas**, a **tray of bubbles** and a **composer** with the **Circle** button.
-The live developer docs are at `yazhi.dev/bubble`.
+canvas**, a **tray of bubbles** and a **composer** led by **Mission Control**.
+The whole library is live on one page at `yazhi.dev/bubble`, in light and dark.
 
 ## Bubbles
 
@@ -33,10 +33,15 @@ prompt actually sent.
   distance, and it has a vertical mode for a rail.
 - Hit areas never move; keyboard focus lifts a bubble the way hover does.
 
-## Composer and Circle
+## Composer and Mission Control
 
-The composer leads with the Circle button (your account), then the text
-box, then send — or stop while a reply streams. Enter sends; Shift+Enter
+The composer leads with Mission Control — the Yazhi mark, three bubbles,
+inside a bubble — then the text box, then send, or stop while a reply
+streams. Mission Control sleeps (open rings on a dashed bubble) until a
+Circle account is signed in, and pressing it then opens sign-in or join. Once
+the account exists it wakes and opens the person's controls: the account,
+light / dark / system, and in a chat the landscape and where replies run.
+The theme switch also sits beside it, so it is never behind a sign-in. Enter sends; Shift+Enter
 breaks a line; **Enter never sends while an input method is composing**
 (Tamil keyboards confirm letters with Enter).
 
@@ -66,6 +71,9 @@ and it respects reduced motion.
    reader, commerce cards, Five-Posture trace, consent gate, tray.
 3. **pages/** — full app templates: Avai, Nyaya, Kural, Guru, Kadai, Open
    Sangam, Yazh (parent gate).
+
+`mission/` (Mission Control, the mode switch) and `docs/` (the one-page
+library and its live demos) sit beside them.
 
 Each layer is built only from the one below. Dress any of them in a tinai
 with `TinaiScope` (see [THEMES.md](THEMES.md)).

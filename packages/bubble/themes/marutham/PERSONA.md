@@ -37,17 +37,17 @@ Yazhi agents in this landscape: **Nyaya** (நியாயம், Nyaya) — Inf
 - **Motion:** Precise and fair. Critically damped: it arrives exactly, never bounces. Spring k 100, c 20; settle 700 ms; ambient pace ×0.6.
 - **Pointer:** The pointer is the wind; seedlings bow in a wave that spreads from it.
 
-| Token | Value |
-|---|---|
-| `--env-ground` | `#0c0b06` |
-| `--env-surface` | `#17150c` |
-| `--env-hi` | `#efe6bd` |
-| `--env-edge` | `#8e7f3e` |
-| `--env-mid` | `#4a4222` |
-| `--env-lo` | `#2a2614` |
-| `--env-accent` | `#b7a03c` |
-| `--env-text` | `#f7f3e3` |
-| `--env-text-dim` | `#cdc6a6` |
+| Token | Dark | Light |
+|---|---|---|
+| `--env-ground` | `#0c0b06` | `#f7f4e4` |
+| `--env-surface` | `#17150c` | `#fdfcf3` |
+| `--env-hi` | `#efe6bd` | `#3d360c` |
+| `--env-edge` | `#8e7f3e` | `#8f803d` |
+| `--env-mid` | `#4a4222` | `#cdc28d` |
+| `--env-lo` | `#2a2614` | `#ebe5c8` |
+| `--env-accent` | `#b7a03c` | `#6f6116` |
+| `--env-text` | `#f7f3e3` | `#1f1c0a` |
+| `--env-text-dim` | `#cdc6a6` | `#55502d` |
 
 ## Karupporul (draft)
 before dawn · every season · farmland — the feeling is lovers' quarrel (ஊடல்).

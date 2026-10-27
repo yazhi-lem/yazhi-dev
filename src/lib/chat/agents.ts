@@ -1,5 +1,5 @@
 import type { Agent, Provider } from "./types";
-import { YAZHI_AGENTS } from "./yazhi-agents";
+import { YAZHI_AGENTS } from "@yazhi/bubble/lib/agents";
 
 /** Agent registry. Yazhi's own agents come first and run on Adhan through
     yazhi-api (see yazhi-agents.ts). The guest agents after them are

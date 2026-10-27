@@ -21,16 +21,21 @@ export function AppFrame({
   account,
   sample = true,
   aside,
+  embedded = false,
   children,
 }: {
   app: AppIdentity;
-  /** right side of the header — usually the CircleButton */
+  /** right side of the header — usually Mission Control */
   account?: ReactNode;
   /** show the sample-data notice (template previews) */
   sample?: boolean;
   aside?: ReactNode;
+  /** a preview inside another page: the columns are plain divs, not main/aside */
+  embedded?: boolean;
   children: ReactNode;
 }) {
+  const Main = embedded ? "div" : "main";
+  const Aside = embedded ? "div" : "aside";
   return (
     <div className="flex min-h-full flex-col bg-night text-ivory" style={{ "--accent": app.accent } as CSSProperties}>
       <header className="flex items-center justify-between gap-3 border-b border-ivory/10 px-4 py-3">
@@ -38,7 +43,7 @@ export function AppFrame({
           <Bubble accent={app.accent} label={app.name} glyph={firstGrapheme(app.taName)} size={36} />
           <div className="min-w-0">
             <p className="truncate text-base font-semibold">
-              <span lang="ta">{app.taName}</span> · {app.name}
+              {app.name}
             </p>
             <p className="truncate text-xs text-ivory-dim">{app.tagline}</p>
           </div>
@@ -54,8 +59,8 @@ export function AppFrame({
         </div>
       )}
       <div className={`grid flex-1 gap-4 p-4 ${aside ? "lg:grid-cols-[1fr_20rem]" : ""}`}>
-        <main className="min-w-0 space-y-4">{children}</main>
-        {aside && <aside className="min-w-0 space-y-4">{aside}</aside>}
+        <Main className="min-w-0 space-y-4">{children}</Main>
+        {aside && <Aside className="min-w-0 space-y-4">{aside}</Aside>}
       </div>
     </div>
   );

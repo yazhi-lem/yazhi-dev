@@ -20,7 +20,7 @@ export function KuralQuote({
       </blockquote>
       <figcaption className="mt-2 flex flex-wrap items-baseline justify-between gap-2 text-xs text-ivory-dim">
         <span>
-          <span lang="ta">திருக்குறள்</span> {number}
+          Thirukkural {number}
         </span>
         {gloss && (
           <span className="max-w-prose italic">

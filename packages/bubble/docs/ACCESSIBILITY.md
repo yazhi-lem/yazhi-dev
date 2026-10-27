@@ -1,7 +1,8 @@
 # Access and Tamil
 
-Rules every Bubble screen keeps. Yazhi Chat meets them with no axe-core
-WCAG A/AA or best-practice violations.
+Rules every Bubble screen keeps. Yazhi Chat and the library page meet them
+with no axe-core WCAG A/AA or best-practice violations, in light and dark,
+with Mission Control open.
 
 ## Everyone
 - **Hit areas stay put.** Only the drawing moves.
@@ -14,7 +15,10 @@ WCAG A/AA or best-practice violations.
 - **Targets are at least 44 px.** Escape closes panels; focus moves into a
   panel when it opens.
 - **Contrast.** Text and the bright stroke stay above WCAG AA on every
-  ground (text ≥ 16.9:1, dim text ≥ 9.7:1, accents ≥ 4.56:1).
+  ground, in both modes (dark: text ≥ 16.9:1, dim text ≥ 9.7:1, accents ≥
+  4.56:1; light: text ≥ 15.5:1, dim text ≥ 6.9:1, accents ≥ 5.1:1).
+- **Light, dark, system.** The theme switch is always one press away, signed
+  in or not; a chosen mode applies before the first paint.
 - **Reduced motion.** Springs and tweens jump to their end, ambient fields
   draw one still frame, colour changes are instant.
 - **Sleep.** Animated surfaces sleep offscreen and in hidden tabs.

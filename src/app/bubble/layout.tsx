@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { DevShell } from "@/components/bubble/DevShell";
 
-/** Every page under /bubble — the Bubble UI docs and the UI library —
-    shares the builder header and one Circle session. */
+/** /bubble — the Bubble UI library — shares the shell, one Circle session
+    and Mission Control. */
 export default function BubbleLayout({ children }: { children: ReactNode }) {
   return <DevShell>{children}</DevShell>;
 }

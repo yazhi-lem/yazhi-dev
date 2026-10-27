@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import type { ThinaiKey } from "./keys";
 import { ENV_BY_KEY } from "./environments";
+import { onColorModeChange } from "../mode";
 
 /** The living background of a tinai: one canvas of hairlines that answers
     the pointer the way its landscape would.
@@ -94,6 +95,12 @@ export function TinaiAmbient({ tinai, className = "" }: { tinai: ThinaiKey; clas
     const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) wake(); }, { rootMargin: "120px" });
     io.observe(canvas);
     const onVis = () => wake();
+    // light or dark: the --env-* colours cross-fade again, so read them through it
+    const stopMode = onColorModeChange(() => {
+      readInk();
+      wake();
+      window.setTimeout(() => { readInk(); wake(); }, 1000);
+    });
     document.addEventListener("visibilitychange", onVis);
     window.addEventListener("pointermove", onMove, { passive: true });
     fit();
@@ -109,6 +116,7 @@ export function TinaiAmbient({ tinai, className = "" }: { tinai: ThinaiKey; clas
       ro.disconnect();
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
+      stopMode();
       window.removeEventListener("pointermove", onMove);
     };
   }, [tinai]);

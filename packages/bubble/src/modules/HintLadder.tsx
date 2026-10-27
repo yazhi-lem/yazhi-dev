@@ -17,7 +17,7 @@ export function HintLadder({
   const [shown, setShown] = useState(0);
   const done = shown >= hints.length;
   return (
-    <Panel eyebrow={<span lang="ta">குரு · Guru</span>} title={prompt} accentEdge>
+    <Panel eyebrow="Guru" title={prompt} accentEdge>
       <ol className="space-y-2">
         {hints.slice(0, shown).map((h, i) => (
           <li key={i} className="flex gap-3 rounded-lg bg-night/60 p-3 text-sm text-ivory">

@@ -40,7 +40,7 @@ export function RunbookPanel({ title, steps }: { title: string; steps: RunbookSt
   const [done, setDone] = useState<Record<string, boolean>>({});
   const [gates, setGates] = useState<Record<string, GateState>>({});
   return (
-    <Panel eyebrow={<span lang="ta">குறள் · Kural runbook</span>} title={title} accentEdge>
+    <Panel eyebrow="Kural runbook" title={title} accentEdge>
       <ol className="space-y-3">
         {steps.map((s, i) => (
           <li key={s.id} className="flex gap-3">

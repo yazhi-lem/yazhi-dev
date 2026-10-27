@@ -40,6 +40,17 @@
     "text": "#f7f3e3",
     "textDim": "#cdc6a6"
   },
+  "paletteLight": {
+    "ground": "#f7f4e4",
+    "surface": "#fdfcf3",
+    "hi": "#3d360c",
+    "edge": "#8f803d",
+    "mid": "#cdc28d",
+    "lo": "#ebe5c8",
+    "accent": "#6f6116",
+    "text": "#1f1c0a",
+    "textDim": "#55502d"
+  },
   "motion": {
     "spring": {
       "k": 100,

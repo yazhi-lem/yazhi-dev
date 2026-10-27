@@ -33,6 +33,17 @@
     "text": "#f6ece0",
     "textDim": "#c9b8a6"
   },
+  "paletteLight": {
+    "ground": "#f8f1e8",
+    "surface": "#fffaf3",
+    "hi": "#4a2614",
+    "edge": "#9c7356",
+    "mid": "#d2b9a2",
+    "lo": "#ebdfd0",
+    "accent": "#a8432a",
+    "text": "#24160d",
+    "textDim": "#5f4a3b"
+  },
   "motion": {
     "spring": {
       "k": 70,

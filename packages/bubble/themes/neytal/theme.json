@@ -25,6 +25,17 @@
     "text": "#edf4fa",
     "textDim": "#b7c8d6"
   },
+  "paletteLight": {
+    "ground": "#eef4f9",
+    "surface": "#f9fcfe",
+    "hi": "#0f3352",
+    "edge": "#5b88ad",
+    "mid": "#a9c3d8",
+    "lo": "#d9e6f1",
+    "accent": "#25648f",
+    "text": "#0c1b29",
+    "textDim": "#425668"
+  },
   "motion": {
     "spring": {
       "k": 55,

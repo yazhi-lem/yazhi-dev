@@ -10,12 +10,12 @@ export interface PostureResult {
   note: string;
 }
 
-const NAMES: Record<PostureResult["posture"], [string, string]> = {
-  context: ["சூழல் அறிதல்", "Context"],
-  reason: ["ஆய்தல்", "Reason"],
-  plan: ["திட்டமிடல்", "Plan"],
-  respond: ["உரைத்தல்", "Respond"],
-  reflect: ["மீளாய்வு", "Reflect"],
+const NAMES: Record<PostureResult["posture"], string> = {
+  context: "Context",
+  reason: "Reason",
+  plan: "Plan",
+  respond: "Respond",
+  reflect: "Reflect",
 };
 
 /** The Five-Posture Reasoning Kernel for one turn, as the Reflection agent
@@ -30,7 +30,7 @@ export function FivePostureTrace({ results }: { results: PostureResult[] }) {
             <span className={`mt-0.5 font-mono text-xs ${r.pass ? "text-mullai" : "text-palai"}`}>{r.pass ? "✓" : "✕"}</span>
             <div>
               <p className="text-ivory">
-                <span lang="ta">{NAMES[r.posture][0]}</span> · {NAMES[r.posture][1]}
+                {NAMES[r.posture]}
               </p>
               <p className="text-xs text-ivory-dim">{r.note}</p>
             </div>
@@ -48,7 +48,7 @@ export function ConsentGate({ verified, children, onStart }: { verified: boolean
   const [asked, setAsked] = useState(false);
   if (verified) return <>{children}</>;
   return (
-    <Panel title="A parent's consent comes first" eyebrow={<span lang="ta">யாழ் · Yazh</span>}>
+    <Panel title="A parent's consent comes first" eyebrow="Yazh">
       <div className="space-y-3 text-sm">
         <Disclaimer kind="children" />
         <ul className="list-disc space-y-1 pl-5 text-ivory-dim">

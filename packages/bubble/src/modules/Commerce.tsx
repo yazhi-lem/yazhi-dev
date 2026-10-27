@@ -13,7 +13,7 @@ export function ProductCard({ product, onAdd }: { product: Product; onAdd?: (p: 
     <div className="flex items-center gap-3 rounded-xl border border-ivory/10 bg-night/60 p-3">
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-semibold text-ivory">
-          <span lang="ta">{product.taName}</span> · {product.name}
+          {product.name}
         </p>
         <p className="text-xs text-ivory-dim">
           {product.unit} · {rupees(product.price)}

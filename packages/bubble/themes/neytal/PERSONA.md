@@ -35,17 +35,17 @@ Diaspora, Yazh, and language loss. Default home of Open Sangam and Yazh (parents
 - **Motion:** Tidal. Long follow-through, a slow sway before it rests. Spring k 55, c 10; settle 850 ms; ambient pace ×0.45.
 - **Pointer:** The pointer drops a ripple; rings spread and fade into the tide.
 
-| Token | Value |
-|---|---|
-| `--env-ground` | `#050a11` |
-| `--env-surface` | `#0c1623` |
-| `--env-hi` | `#d6e8f6` |
-| `--env-edge` | `#5a87ac` |
-| `--env-mid` | `#2b4762` |
-| `--env-lo` | `#172738` |
-| `--env-accent` | `#4a8ab5` |
-| `--env-text` | `#edf4fa` |
-| `--env-text-dim` | `#b7c8d6` |
+| Token | Dark | Light |
+|---|---|---|
+| `--env-ground` | `#050a11` | `#eef4f9` |
+| `--env-surface` | `#0c1623` | `#f9fcfe` |
+| `--env-hi` | `#d6e8f6` | `#0f3352` |
+| `--env-edge` | `#5a87ac` | `#5b88ad` |
+| `--env-mid` | `#2b4762` | `#a9c3d8` |
+| `--env-lo` | `#172738` | `#d9e6f1` |
+| `--env-accent` | `#4a8ab5` | `#25648f` |
+| `--env-text` | `#edf4fa` | `#0c1b29` |
+| `--env-text-dim` | `#b7c8d6` | `#425668` |
 
 ## Karupporul (draft)
 late afternoon · every season · seashore — the feeling is lament (இரங்கல்).

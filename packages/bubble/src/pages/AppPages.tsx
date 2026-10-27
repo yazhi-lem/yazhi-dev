@@ -26,9 +26,9 @@ import { AVAI, GURU, KADAI, KURAL_DESK, NYAYA, OPEN_SANGAM, YAZH_PARENT, type Te
 
 /** Page templates for the Yazhi apps. Each is a complete screen composed
     only from library components and modules, filled with sample data.
-    `account` is the header slot for the Circle button. */
+    `account` is the header slot for Mission Control. */
 
-type PageProps = { account?: ReactNode };
+type PageProps = { account?: ReactNode; /** shown inside another page: no main/aside landmarks */ embedded?: boolean };
 
 let n = 0;
 const id = () => `t${(n += 1)}`;
@@ -49,7 +49,7 @@ function useSampleThread(initial: ThreadTurn[]) {
 
 /* ------------------------------------------------------------------ Avai */
 
-export function AvaiPage({ account }: PageProps) {
+export function AvaiPage({ account, embedded }: PageProps) {
   const k = KURALS[1];
   const sources = [kuralSource(k)];
   const { turns, send } = useSampleThread([
@@ -84,7 +84,7 @@ export function AvaiPage({ account }: PageProps) {
   return (
     <AppFrame
       app={AVAI}
-      account={account}
+      account={account} embedded={embedded}
       aside={
         <>
           <SourcesPanel sources={sources} />
@@ -112,11 +112,11 @@ export function AvaiPage({ account }: PageProps) {
 
 /* ----------------------------------------------------------------- Nyaya */
 
-export function NyayaPage({ account }: PageProps) {
+export function NyayaPage({ account, embedded }: PageProps) {
   return (
     <AppFrame
       app={NYAYA}
-      account={account}
+      account={account} embedded={embedded}
       aside={
         <Panel title="Need advice on your situation?" eyebrow="Get help">
           <ul className="space-y-2 text-sm text-ivory-dim">
@@ -147,13 +147,13 @@ export function NyayaPage({ account }: PageProps) {
 
 /* ----------------------------------------------------------------- Kural */
 
-export function KuralDeskPage({ account }: PageProps) {
+export function KuralDeskPage({ account, embedded }: PageProps) {
   const [selected, setSelected] = useState(SAMPLE_TICKETS[0].id);
   const ticket = SAMPLE_TICKETS.find((t) => t.id === selected) ?? SAMPLE_TICKETS[0];
   return (
     <AppFrame
       app={KURAL_DESK}
-      account={account}
+      account={account} embedded={embedded}
       aside={
         <Panel title="Queue" eyebrow={`${SAMPLE_TICKETS.length} open`}>
           <div className="space-y-2">
@@ -190,11 +190,11 @@ export function KuralDeskPage({ account }: PageProps) {
 
 /* ------------------------------------------------------------------ Guru */
 
-export function GuruPage({ account }: PageProps) {
+export function GuruPage({ account, embedded }: PageProps) {
   return (
     <AppFrame
       app={GURU}
-      account={account}
+      account={account} embedded={embedded}
       aside={
         <Panel title="Where this runs" eyebrow="Institute data">
           <p className="text-sm text-ivory-dim">
@@ -213,7 +213,7 @@ export function GuruPage({ account }: PageProps) {
 
 /* ----------------------------------------------------------------- Kadai */
 
-export function KadaiPage({ account }: PageProps) {
+export function KadaiPage({ account, embedded }: PageProps) {
   const [lines, setLines] = useState<CartLine[]>([]);
   const add = (p: CartLine["product"]) =>
     setLines((ls) => {
@@ -223,10 +223,10 @@ export function KadaiPage({ account }: PageProps) {
   return (
     <AppFrame
       app={KADAI}
-      account={account}
+      account={account} embedded={embedded}
       aside={<PaymentIntentCard lines={lines} onRemove={(pid) => setLines((ls) => ls.filter((l) => l.product.id !== pid))} />}
     >
-      <Panel title="Annachi" eyebrow={<span lang="ta">அண்ணாச்சி</span>} accentEdge>
+      <Panel title="Annachi" eyebrow="Annachi" accentEdge>
         <ChatThread
           turns={[
             { id: "k1", role: "user", content: "அரிசி ஒரு மூட்டை வேணும்" },
@@ -245,11 +245,11 @@ export function KadaiPage({ account }: PageProps) {
 
 /* ---------------------------------------------------------- Open Sangam */
 
-export function SangamReaderPage({ account }: PageProps) {
+export function SangamReaderPage({ account, embedded }: PageProps) {
   return (
     <AppFrame
       app={OPEN_SANGAM}
-      account={account}
+      account={account} embedded={embedded}
       aside={
         <Panel title="About this corpus" eyebrow="Provenance">
           <p className="text-sm text-ivory-dim">
@@ -266,9 +266,9 @@ export function SangamReaderPage({ account }: PageProps) {
 
 /* ------------------------------------------------------------------- Yazh */
 
-export function YazhParentPage({ account }: PageProps) {
+export function YazhParentPage({ account, embedded }: PageProps) {
   return (
-    <AppFrame app={YAZH_PARENT} account={account}>
+    <AppFrame app={YAZH_PARENT} account={account} embedded={embedded}>
       <ConsentGate verified={false}>
         <p>Behind the gate: the parent&apos;s view of their child&apos;s Yazh.</p>
       </ConsentGate>

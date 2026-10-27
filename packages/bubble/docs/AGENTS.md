@@ -6,11 +6,11 @@ respond, reflect). Defined in `src/lib/agents.ts`.
 
 | Agent | Lives in | Tinai | Rule it always keeps | Status |
 |---|---|---|---|---|
-| புலவர் Pulavar | Avai | Kurinji | A source for every claim, else "தெரியவில்லை" | Public beta from 21 Nov |
-| நியாயம் Nyaya | Nyaya | Marutham | Information, never advice; refer to legal aid | Closed beta from 12 Dec |
-| குறள் Kural | Kural Desk | Palai | No system change without a runbook and a human confirm | Internal 30 Nov · paid pilot 15 Dec |
-| குரு Guru | Guru | Mullai | The hint ladder — never hand over the answer | Paid pilot from 28 Nov |
-| அண்ணாச்சி Annachi | Kadai | Marutham | Payment intent only — no money moves | In development |
+| Pulavar | Avai | Kurinji | A source for every claim, else "தெரியவில்லை" | Public beta from 21 Nov |
+| Nyaya | Nyaya | Marutham | Information, never advice; refer to legal aid | Closed beta from 12 Dec |
+| Kural | Kural Desk | Palai | No system change without a runbook and a human confirm | Internal 30 Nov · paid pilot 15 Dec |
+| Guru | Guru | Mullai | The hint ladder — never hand over the answer | Paid pilot from 28 Nov |
+| Annachi | Kadai | Marutham | Payment intent only — no money moves | In development |
 
 Every agent's system prompt carries the shared Aram rules: a source or
 "தெரியவில்லை", drafts marked as drafts, no caste, and natural Tamil first.
