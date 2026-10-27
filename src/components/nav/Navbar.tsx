@@ -1,75 +1,94 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Bi } from "@/components/ui/Bi";
 import { LangToggle } from "@/components/ui/LangToggle";
 import { LogoMark } from "@/components/ui/LogoMark";
-import { IDENTITY, NAV_GROUPS, ADHAN, SANGAM, GUARDIAN, COMMUNITY } from "@/lib/content";
+import { JoinCircle } from "@/components/circle/JoinCircle";
+import { MissionMenu } from "@/components/mission/Mission";
+import { useLang } from "@/lib/i18n";
+import { ADHAN, GUARDIAN, IDENTITY } from "@/lib/content";
 
-const LINKS_TOP = [
-  { ta: IDENTITY.nameTa, en: IDENTITY.nameEn, href: "#yazhi" },
-  { ta: ADHAN.nameTa, en: ADHAN.nameEn, href: "#adhan" },
+/** Four places, one word each, in the reader's language. */
+const LINKS = [
   { ta: GUARDIAN.nameTa, en: GUARDIAN.nameEn, href: "#guardian" },
-  { ta: SANGAM.nameTa, en: SANGAM.nameEn, href: "#sangam" },
-  { ta: COMMUNITY.titleTa, en: COMMUNITY.titleEn, href: "#community" },
+  { ta: ADHAN.nameTa, en: ADHAN.nameEn, href: "#adhan" },
+  { ta: "சங்கம்", en: "Sangam", href: "#sangam" },
+  { ta: "உருவாக்கு", en: "Build", href: "/bubble" },
 ];
 
+/** The site bar: the mark, four short links, the language and one call to
+    action — Join Circle, which becomes Mission Control once an account
+    exists. Clear over the hero; once the page moves it gathers a soft
+    shadow, a hairline and a blur so it reads over anything beneath. */
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const { lang } = useLang();
+  const word = (l: { ta: string; en: string }) => (lang === "en" ? l.en : l.ta);
+
+  useEffect(() => {
+    let raf = 0;
+    const read = () => {
+      raf = 0;
+      setScrolled(window.scrollY > 8);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(read);
+    };
+    read();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      {/* the bar itself carries no flat fill — a gradient scrim fading from
-          the night at the very top down to nothing keeps the logo/links
-          legible over whatever the world is doing beneath them, without
-          ever reading as a hard, static bar */}
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
       <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28"
-        style={{ background: "linear-gradient(to bottom, rgba(5,7,13,0.75), rgba(5,7,13,0.32) 55%, transparent)" }}
-      />
-      <div className="mx-auto flex max-w-[var(--max-w)] items-center justify-between px-5 py-4">
-        <Link href="/" className="flex items-center gap-2.5" aria-label="Yazhi home">
-          <LogoMark size={34} />
-          <Bi
-            ta={IDENTITY.nameTa}
-            en={IDENTITY.nameEn}
-            className="flex items-baseline gap-2 font-serif text-lg font-black tracking-[-3px]"
-            separator={<span aria-hidden className="text-ivory-dim">•</span>}
-          />
+        className={`mx-auto flex h-14 max-w-[var(--max-w)] items-center justify-between gap-3 rounded-full border pl-4 pr-2 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+          scrolled || open
+            ? "border-ivory/10 bg-night/70 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.65),0_2px_10px_-4px_rgba(0,0,0,0.4)] backdrop-blur-xl"
+            : "border-transparent bg-transparent shadow-none"
+        }`}
+      >
+        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="Yazhi home">
+          <LogoMark size={28} />
+          <span lang={lang === "en" ? "en" : "ta"} className="font-serif text-lg font-black">
+            {lang === "en" ? IDENTITY.nameEn : IDENTITY.nameTa}
+          </span>
         </Link>
 
-        <div className="flex items-center gap-3">
-          <ul className="hidden items-center gap-6 md:flex">
-            {LINKS_TOP.map((l) => (
+        <nav aria-label="Yazhi" className="hidden md:block">
+          <ul className="flex items-center gap-1">
+            {LINKS.map((l) => (
               <li key={l.href}>
-                <a href={l.href} className="text-sm text-ivory-dim transition-colors hover:text-ivory">
-                  <Bi ta={l.ta} en={l.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
+                <a
+                  href={l.href}
+                  lang={lang === "en" ? "en" : "ta"}
+                  className="rounded-full px-3 py-2 text-sm text-ivory-dim transition-colors hover:bg-ivory/[0.06] hover:text-ivory"
+                >
+                  {word(l)}
                 </a>
               </li>
             ))}
           </ul>
-          <Link
-            href="/bubble"
-            className="hidden rounded-full border border-ivory/20 px-3.5 py-1.5 text-xs font-semibold text-ivory-dim transition-colors hover:border-gold/60 hover:text-ivory sm:inline-block"
-          >
-            <Bi ta="உருவாக்கு" en="Build" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
-          </Link>
-          <Link
-            href="/chat"
-            className="rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold hover:text-night"
-          >
-            <Bi ta="உரையாடல்" en="Chat" className="inline-flex gap-1.5" separator={<span aria-hidden className="text-gold/40">·</span>} />
-          </Link>
-          <LangToggle />
+        </nav>
+
+        <div className="flex shrink-0 items-center gap-1">
+          <LangToggle compact />
+          <JoinCircle className="max-sm:hidden" signedIn={<MissionMenu size={34} />} />
           <button
-            className="grid h-9 w-9 place-items-center rounded-lg border border-ivory/15 md:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full text-ivory-dim hover:bg-ivory/10 hover:text-ivory md:hidden"
             aria-expanded={open}
+            aria-controls="site-menu"
             aria-label="Menu"
             onClick={() => setOpen((v) => !v)}
           >
-            <span aria-hidden className="text-lg leading-none">{open ? "✕" : "☰"}</span>
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden>
+              {open ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 8h16M4 16h16" />}
+            </svg>
           </button>
         </div>
       </div>
@@ -77,26 +96,31 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.nav
+            id="site-menu"
+            aria-label="Yazhi"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-5 rounded-2xl border border-ivory/10 bg-gradient-to-b from-night-2/95 via-night-2/90 to-night-2/75 p-5 backdrop-blur md:hidden"
+            className="mx-auto mt-2 max-w-[var(--max-w)] rounded-3xl border border-ivory/10 bg-night/85 p-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl md:hidden"
           >
-            {NAV_GROUPS.map((g) => (
-              <div key={g.en} className="mb-4 last:mb-0">
-                <Bi as="p" ta={g.ta} en={g.en} className="mb-2 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
-                <ul className="flex flex-col gap-2">
-                  {g.items.map((it) => (
-                    <li key={`${g.en}-${it.en}`}>
-                      <a href={it.href} onClick={() => setOpen(false)} className="text-ivory-dim hover:text-ivory">
-                        <Bi ta={it.ta} en={it.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <ul className="flex flex-col">
+              {LINKS.map((l) => (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    lang={lang === "en" ? "en" : "ta"}
+                    className="block rounded-2xl px-4 py-3 text-ivory-dim hover:bg-ivory/[0.06] hover:text-ivory"
+                  >
+                    {word(l)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-2 border-t border-ivory/10 px-1 pt-3">
+              <JoinCircle className="w-full justify-center" signedIn={null} />
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>

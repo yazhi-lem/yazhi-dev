@@ -9,9 +9,9 @@ const field =
   "w-full rounded-lg border border-ivory/15 bg-night px-3 py-2 text-sm text-ivory placeholder:text-ivory-dim/40 focus:border-gold/60 focus:outline-none";
 
 /** Sign in / join / account panel for a Circle account on yazhi-api. */
-export function CircleDialog({ onClose }: { onClose: () => void }) {
+export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () => void; /** "signup" opens straight on joining */ initialMode?: Mode }) {
   const { state, signIn, signUp, signOut } = useCircleSession();
-  const [mode, setMode] = useState<Mode>("signin");
+  const [mode, setMode] = useState<Mode>(initialMode);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);

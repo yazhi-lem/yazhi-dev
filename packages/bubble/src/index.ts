@@ -54,3 +54,4 @@ export { ModeSwitch } from "./mission/ModeSwitch";
 export { useColorMode, setColorMode, onColorModeChange, type ColorMode } from "./mode";
 export { MODE_SCRIPT, MODE_KEY } from "./mode-script";
 export { tone, type Palette } from "./tinai/environments";
+export { TinaiMark } from "./tinai/TinaiMark";

@@ -76,10 +76,12 @@ export function Adhan() {
               return (
                 <div key={r.lang} className="flex items-center gap-3 text-sm">
                   <dt className="w-16 shrink-0 text-ivory-dim">{r.lang}</dt>
-                  <div className="h-2 flex-1 overflow-hidden rounded-full bg-ivory/10">
-                    <div className="h-full rounded-full bg-[color:var(--accent)]" style={{ width: `${pct}%` }} />
-                  </div>
-                  <dd className="w-10 shrink-0 text-right text-ivory-dim">{r.multiplier}</dd>
+                  <dd className="flex flex-1 items-center gap-3 text-ivory-dim">
+                    <span aria-hidden className="h-2 flex-1 overflow-hidden rounded-full bg-ivory/10">
+                      <span className="block h-full rounded-full bg-[color:var(--accent)]" style={{ width: `${pct}%` }} />
+                    </span>
+                    <span className="w-10 shrink-0 text-right">{r.multiplier}</span>
+                  </dd>
                 </div>
               );
             })}

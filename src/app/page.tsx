@@ -13,10 +13,13 @@ import { World } from "@/components/providers/World";
 import { LaunchTimer } from "@/components/ui/LaunchTimer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { FloatingGlyphs } from "@/components/ui/FloatingGlyphs";
+import { CircleProvider } from "@/components/circle/CircleProvider";
 
 export default function Home() {
+  // one Circle session for the page: Join Circle in the bar and the hero,
+  // and Mission Control once an account exists
   return (
-    <>
+    <CircleProvider>
       <World />
       <FloatingGlyphs />
       <ThinaiIntro />
@@ -38,6 +41,6 @@ export default function Home() {
         <Community />
       </main>
       <Footer />
-    </>
+    </CircleProvider>
   );
 }
