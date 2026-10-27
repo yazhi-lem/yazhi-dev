@@ -174,7 +174,7 @@ export function ObjectsGallery() {
               <span className="rounded-full border px-2 py-0.5 font-mono text-[10px] text-[color:var(--env-accent)] hair-lo">karu · {o.karu}</span>
             )}
           </div>
-          <FigureWithDial figure={o.figure} dial={o.dial} className="mt-2" />
+          <FigureWithDial figure={o.figure} dial={o.dial} sound={o.key === "yazh"} className="mt-2" />
           <p className="mt-3 text-sm leading-relaxed text-[color:var(--env-text-dim)]">{o.note}</p>
         </li>
       ))}

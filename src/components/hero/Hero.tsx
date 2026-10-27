@@ -84,7 +84,7 @@ export function Hero() {
 
         <motion.div variants={fadeUp} initial="hidden" animate="show" className="mx-auto w-full max-w-[30rem] lg:max-w-none">
           <TinaiScope tinai="kurinji" scheme="dark" ground={false} className="rounded-[2rem] border border-ivory/10 bg-night/45 p-5 backdrop-blur-md">
-            <HairlineFigure figure={yazh as HairlineFigureDef} play caption={false} className="w-full" />
+            <HairlineFigure figure={yazh as HairlineFigureDef} play caption={false} sound className="w-full" />
             <p lang={tongue} className="mt-1 text-center text-xs text-ivory-dim">
               {t("யாழை மீட்டுங்கள் — ஒவ்வொரு நரம்பும் அடுத்ததை எழுப்பும்", "Pluck the yazh — each string wakes the next")}
             </p>

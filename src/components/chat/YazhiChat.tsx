@@ -431,7 +431,7 @@ function Welcome({ agent, onPick }: { agent: Agent; onPick: (q: string) => void 
     <section aria-labelledby="welcome-title" className="mx-auto flex max-w-3xl flex-col items-center px-4 pb-6 pt-6 text-center sm:pt-10">
       {emblem && (
         <div className="w-full max-w-[19rem]">
-          <HairlineFigure key={agent.id} figure={emblem} play caption={false} className="w-full" />
+          <HairlineFigure key={agent.id} figure={emblem} play caption={false} sound={emblem === yazh} className="w-full" />
         </div>
       )}
       <h2 id="welcome-title" className="mt-1">

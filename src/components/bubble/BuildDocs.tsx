@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { Code, Pre, Section, Table } from "@yazhi/bubble/docs/kit";
 import type { TocGroup } from "@yazhi/bubble/docs/Library";
@@ -73,9 +74,9 @@ export function BuildDocs() {
           rows={[
             ["Canvas", "The active bubble’s conversation. Markdown replies; each notes which runtime produced it."],
             ["Tray", "Every installed bubble, packed as circles that never touch. Size (s, m, l) is set by the manifest."],
-            ["Composer", <>Message input and send <Code>▷</Code>. Enter sends; the square stops a stream.</>],
+            ["Composer", <Fragment key="f1">Message input and send <Code>▷</Code>. Enter sends; the square stops a stream.</Fragment>],
             ["Mission Control", "Bottom left, the Yazhi mark in a bubble. Asleep until a Circle account is signed in; awake, it opens the account, theme and places."],
-            ["Status", <>Header chips: <Code>online</Code>/<Code>offline</Code> and the runtime in use.</>],
+            ["Status", <Fragment key="f1">Header chips: <Code>online</Code>/<Code>offline</Code> and the runtime in use.</Fragment>],
           ]}
         />
       </Section>
@@ -132,9 +133,9 @@ export function BuildDocs() {
             [<Code key="a">agent.greeting</Code>, "string", "First message in a fresh thread, ≤1,000."],
             [<Code key="a">agent.fivePosture</Code>, "boolean", "Wraps the prompt in Context → Reason → Plan → Respond → Reflect."],
             [<Code key="a">runtime.prefer</Code>, '"device" | "yazhi-api"', "Tried first when online. Offline always means device."],
-            [<Code key="a">runtime.model</Code>, "string", <>Model on yazhi-api; must be on the server allow-list (default <Code>adhan</Code>).</>],
+            [<Code key="a">runtime.model</Code>, "string", <Fragment key="f1">Model on yazhi-api; must be on the server allow-list (default <Code>adhan</Code>).</Fragment>],
             [<Code key="a">runtime.deviceModel</Code>, "string", "Model name your local server knows, e.g. a GGUF alias or an Ollama tag."],
-            [<Code key="a">permissions</Code>, "string[]", <><Code>yazhi-api</Code>, <Code>clipboard</Code>. Nothing undeclared is granted.</>],
+            [<Code key="a">permissions</Code>, "string[]", <Fragment key="f1"><Code>yazhi-api</Code>, <Code>clipboard</Code>. Nothing undeclared is granted.</Fragment>],
             [<Code key="a">author</Code>, "object?", "The publishing builder’s Circle account. Absent on unsigned manifests."],
           ]}
         />
@@ -147,7 +148,7 @@ export function BuildDocs() {
             ["Path", "Browser → model server on this machine or LAN", "Browser → yazhi.dev /api/bubble/run → chat endpoint at YAZHI_API_URL"],
             ["Internet needed", "No", "Yes (or a LAN route to yazhi-api)"],
             ["Sign-in needed", "No", "Yes — a Circle session"],
-            ["Model", <><Code key="m">runtime.deviceModel</Code> on your server</>, <><Code key="m">runtime.model</Code>, allow-listed</>],
+            ["Model", <Fragment key="f1"><Code key="m">runtime.deviceModel</Code> on your server</Fragment>, <Fragment key="f2"><Code key="m">runtime.model</Code>, allow-listed</Fragment>],
             ["Data leaves the device", "No", "To the configured Yazhi endpoint only; the allow-list keeps foreign models off this path"],
           ]}
         />

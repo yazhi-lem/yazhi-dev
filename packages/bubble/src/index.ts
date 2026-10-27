@@ -55,3 +55,5 @@ export { useColorMode, setColorMode, onColorModeChange, type ColorMode } from ".
 export { MODE_SCRIPT, MODE_KEY } from "./mode-script";
 export { tone, type Palette } from "./tinai/environments";
 export { TinaiMark } from "./tinai/TinaiMark";
+export { SoundToggle, useYazhSound, voiceStage } from "./sound/SoundToggle";
+export { wake as wakeYazh, pluck as pluckYazh, strum as strumYazh, YAZH_SCALE } from "./sound/yazhVoice";

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import HL from "./kernel.js";
 import type { HairlineFigureDef } from "./types";
+import { SoundToggle, useYazhSound, voiceStage } from "../sound/SoundToggle";
 
 /** Hosts one Hairline figure: an isometric line drawing that answers the
     pointer. Does what Hairline's own bench does — injects the stroke
@@ -17,6 +18,7 @@ export function HairlineFigure({
   play = false,
   onRead,
   caption = true,
+  sound = false,
   className = "",
 }: {
   figure: HairlineFigureDef;
@@ -27,12 +29,26 @@ export function HairlineFigure({
   onRead?: (text: string) => void;
   /** show the read-out in the corner */
   caption?: boolean;
+  /** offer the yazh's voice: a sound switch, and the figure's plucks played
+      while it is on (only a person's own, never the tour) */
+  sound?: boolean;
   className?: string;
 }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<{ set: (v: number) => void; destroy: () => void } | null>(null);
   const onReadRef = useRef(onRead);
   const [read, setRead] = useState("rest");
+  const [voiced] = useYazhSound();
+  const voicedRef = useRef(voiced);
+  useEffect(() => {
+    voicedRef.current = voiced;
+  }, [voiced]);
+
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!sound || !stage) return;
+    return voiceStage(stage, () => voicedRef.current);
+  }, [sound]);
 
   useEffect(() => {
     onReadRef.current = onRead;
@@ -86,6 +102,7 @@ export function HairlineFigure({
   return (
     <figure className={`relative ${className}`}>
       <div ref={stageRef} data-hairline={figure.name} role="img" aria-label={figure.means} />
+      {sound && <SoundToggle className="absolute bottom-1 left-1" />}
       {caption && (
         // announced only when a person moves over it, not while it plays its tour
         <figcaption className="pointer-events-none absolute right-2 top-2 font-mono text-[10px] tabular-nums text-[color:var(--env-text-dim)]" aria-live={play ? "off" : "polite"}>

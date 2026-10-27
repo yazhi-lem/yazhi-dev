@@ -54,7 +54,7 @@ export const SANGAM_OBJECTS: SangamObject[] = [
     figure: yazh as HairlineFigureDef,
     dial: "sympathy",
     karu: "yazh",
-    note: "The bow harp of the poems, and the instrument Yazhi is named for. Tolkāppiyam counts the yazh among the karu, so each landscape has its own.",
+    note: "The harp of the poems, and the instrument Yazhi is named for: one carved S-shaped body, a scroll above and a resonating belly below. Tolkāppiyam counts the yazh among the karu, so each landscape has its own. Turn on its sound and run a finger across the strings — tuned to Sempaalai pann.",
   },
   {
     key: "parai",

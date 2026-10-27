@@ -149,11 +149,11 @@ export function Swatches({ env, mode = "dark" }: { env: Environment; mode?: "dar
 }
 
 /** A Hairline figure with its dial and read-out, in the surrounding ink. */
-export function FigureWithDial({ figure, dial, play = false, className = "" }: { figure: HairlineFigureDef; dial: string; play?: boolean; className?: string }) {
+export function FigureWithDial({ figure, dial, play = false, sound = false, className = "" }: { figure: HairlineFigureDef; dial: string; play?: boolean; sound?: boolean; className?: string }) {
   const [intensity, setIntensity] = useState(0.5);
   return (
     <div className={className}>
-      <HairlineFigure figure={figure} intensity={intensity} play={play} className="w-full" />
+      <HairlineFigure figure={figure} intensity={intensity} play={play} sound={sound} className="w-full" />
       <label className="mt-2 flex items-center gap-3 font-mono text-[11px] text-[color:var(--env-text-dim)]">
         <span className="w-24 shrink-0">{dial}</span>
         <input
