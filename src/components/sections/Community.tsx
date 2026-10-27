@@ -48,7 +48,7 @@ export function Community() {
           for their own mother tongues, distinct from the family-facing
           "Join the Network" card above. Routes to the same onboarding form
           with a developer track flag, then to Discord — see
-          docs/PRD-DEVELOPER-COMMUNITY.md for the account-provisioning plan. */}
+          docs/community/PRD-DEVELOPER-COMMUNITY.md for the account-provisioning plan. */}
       <motion.div
         variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
         className="mt-12"
