@@ -307,7 +307,7 @@ export const COMMUNITY = {
 /** New: a dedicated track for developers — distinct from the family/parent
     "Join the Network" card above. Same onboarding form, but routes toward
     Discord + a future Yazhi API (Circle) account rather than a child
-    profile. See docs/PRD-DEVELOPER-COMMUNITY.md for the full flow. */
+    profile. See docs/community/PRD-DEVELOPER-COMMUNITY.md for the full flow. */
 export const DEVELOPERS = {
   eyebrowTa: "உருவாக்குநர்களுக்காக", eyebrowEn: "For developers",
   titleTa: "உங்கள் தாய்மொழிக்காக உருவாக்குங்கள்", titleEn: "Build for your mother tongue",

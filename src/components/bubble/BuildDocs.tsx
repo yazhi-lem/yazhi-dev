@@ -224,7 +224,7 @@ browser   ◀── Set-Cookie: yz_circle_at, yz_circle_rt (httpOnly, SameSite=L
         <P>
           Share bubbles today in <a href={LINKS.discord} className={link}>Discord</a> or as a pull request; new components and modules come in as pull
           requests to <Code>packages/bubble</Code>. Next: a shared registry on yazhi-api, Circle-signed publishing and reviews — see{" "}
-          <a href={`${LINKS.github}/yazhi-dev/blob/main/docs/PROPOSAL-YAZHI-DEV-V3.md`} className={link}>
+          <a href={`${LINKS.github}/yazhi-dev/blob/main/docs/community/PROPOSAL-YAZHI-DEV-V3.md`} className={link}>
             the Yazhi Dev v3 proposal
           </a>
           .

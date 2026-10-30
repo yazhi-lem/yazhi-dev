@@ -17,7 +17,7 @@ type Geo = { cluster: string; country: string | null };
     tags the new user's role as Developer and, after submit, shows a
     developer-specific next-steps panel instead of jumping straight to
     /profile/edit — Discord today, a Yazhi API (Circle) account once
-    self-serve provisioning ships. See docs/PRD-DEVELOPER-COMMUNITY.md. */
+    self-serve provisioning ships. See docs/community/PRD-DEVELOPER-COMMUNITY.md. */
 function OnboardingForm() {
   const router = useRouter();
   const isDeveloper = useSearchParams().get("track") === "developer";
@@ -71,7 +71,7 @@ function OnboardingForm() {
             <li>
               <span className="text-zinc-200">2. Your Yazhi API account</span> — we provision these by hand while
               self-serve account creation is still being built (tracked in
-              docs/PRD-DEVELOPER-COMMUNITY.md). We&apos;ll reach out on WhatsApp/Discord once it&apos;s ready.
+              docs/community/PRD-DEVELOPER-COMMUNITY.md). We&apos;ll reach out on WhatsApp/Discord once it&apos;s ready.
             </li>
           </ul>
           <a

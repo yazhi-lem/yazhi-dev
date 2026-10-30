@@ -6,9 +6,9 @@ This repository is [yazhi.dev](https://yazhi.dev): the public, Tamil-first commu
 
 ## Community and contributing
 
-- **Contributing:** start with [CONTRIBUTING.md](./CONTRIBUTING.md). It has the repository index, local setup and PR rules.
+- **Contributing:** start with [CONTRIBUTING.md](./CONTRIBUTING.md). It has the repository index, local setup and contribution rules.
 - **Code of Conduct:** everyone who takes part follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
-- **Moderation Rota:** our weekly community moderation schedule, response SLAs, and incident guidelines are in [docs/MODERATION_ROTA.md](./docs/MODERATION_ROTA.md).
+- **Moderation Rota:** our weekly community moderation schedule, response SLAs, and incident guidelines are in [docs/community/MODERATION_ROTA.md](./docs/community/MODERATION_ROTA.md).
 
 ## Getting Started
 
@@ -79,7 +79,7 @@ A Next.js 16 (App Router) site with React 19, Tailwind CSS 4, and three.js throu
 | `/profile/[id]`, `/profile/edit` | Community profiles |
 | `/chat` | AI chat workspace (see below) |
 
-More detail is in [`docs/`](docs/): `3D-ARCHITECTURE.md`, `DESIGN-SYSTEM.md`, `SCROLL-EXPERIENCE.md`, `AUDIO-SETUP.md`, `DEPLOYMENT-GUIDE.md` and `PRD-DEVELOPER-COMMUNITY.md`. The roadmap is in [`NEXT_ACTION.md`](NEXT_ACTION.md).
+More detail is in [`docs/`](docs): [`SITE.md`](docs/SITE.md) (3D world, design tokens, audio, build) and `PRD-DEVELOPER-COMMUNITY.md`. Plan and status live in [`factory/`](factory) (`CURRENT` · `NEXT` · `RUNWAY`); retired docs are summarised in [`archives/`](archives).
 
 ---
 
@@ -99,7 +99,7 @@ Open [http://localhost:3000](http://localhost:3000). Most pages live in `src/app
 | Script | What it does |
 |---|---|
 | `npm run dev` | Start the development server |
-| `npm run build` | Production build (CI runs this on every PR to `main`) |
+| `npm run build` | Production build (CI runs this on every proposed change) |
 | `npm run start` | Serve the production build |
 | `npm run lint` | Run ESLint |
 
@@ -117,7 +117,7 @@ The backend contract is OpenAI-compatible Chat Completions with SSE streaming. `
 
 ### Deploying
 
-See [`docs/DEPLOYMENT-GUIDE.md`](docs/DEPLOYMENT-GUIDE.md) and `scripts/deploy.sh`.
+See [`docs/SITE.md`](docs/SITE.md) §5 and `scripts/deploy.sh`.
 
 ---
 
@@ -133,7 +133,7 @@ A few rules every contribution follows:
 
 - **Human review.** AI-generated code doesn't reach production without founder review.
 - **Native-speaker sign-off.** Every Tamil string users see is checked by a native speaker. Write Tamil natively; don't translate it from English.
-- **Brand and type.** Follow [`docs/DESIGN-SYSTEM.md`](docs/DESIGN-SYSTEM.md) and `brand-kit/`. Never letter-space Tamil script, because tracking splits grapheme clusters.
+- **Brand and type.** Follow [`docs/SITE.md`](docs/SITE.md) §3 and `brand-kit/`. Never letter-space Tamil script, because tracking splits grapheme clusters.
 - **Honest framing.** Mark drafts as drafts, and keep what's built separate from what's planned.
 
 Good first issues are labelled for community contributors, and they get a first review within 48 hours.
@@ -142,4 +142,4 @@ Good first issues are labelled for community contributors, and they get a first 
 
 ## License
 
-There is no license file on `main` yet. Open PR [#32](https://github.com/yazhi-lem/yazhi-dev/pull/32) proposes **GPL-3.0**. This section will be updated when it merges.
+Licensed under **GPL-3.0**; see [`LICENSE`](LICENSE).

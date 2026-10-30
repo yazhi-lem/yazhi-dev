@@ -57,7 +57,6 @@ cp -r .next/static/* "$TARGET_DIR/static/" 2>/dev/null || true
 cp -r public/* "$TARGET_DIR/public/" 2>/dev/null || true
 cp -r docs/* "$TARGET_DIR/docs/" 2>/dev/null || true
 cp package.json "$TARGET_DIR/"
-cp INTEGRATION-SUMMARY.md "$TARGET_DIR/" 2>/dev/null || true
 
 # Create deployment manifest
 cat > "$TARGET_DIR/DEPLOYMENT-INFO.md" << DEPLOY_EOF
@@ -75,7 +74,6 @@ cat > "$TARGET_DIR/DEPLOYMENT-INFO.md" << DEPLOY_EOF
 - \`public/\` — Public assets (fonts, images, audio placeholder)
 - \`docs/\` — Documentation (architecture, design, audio setup)
 - \`DEPLOYMENT-INFO.md\` — This file
-- \`INTEGRATION-SUMMARY.md\` — Integration summary
 
 ## Quick Start
 
@@ -119,14 +117,10 @@ To add Tamil yazh & pann music:
 1. Obtain/create audio file (3-5 min, instrumental MP3)
 2. Optimize: \`ffmpeg -i input.wav -b:a 192k -ar 44100 output.mp3\`
 3. Place at: \`public/audio/yazhi-ambient.mp3\`
-4. See \`docs/AUDIO-SETUP.md\` for integration details
+4. See \`docs/SITE.md\` §4 for integration details
 
 ## Documentation
-- **SCROLL-EXPERIENCE.md** — Journey through 5 landscapes
-- **3D-ARCHITECTURE.md** — Technical implementation
-- **DESIGN-SYSTEM.md** — Colors, typography, accessibility
-- **AUDIO-SETUP.md** — Audio file specs and integration
-- **INTEGRATION-SUMMARY.md** — Full integration overview
+- **SITE.md** — 3D world, design tokens, audio, build
 
 ## Troubleshooting
 
@@ -393,10 +387,7 @@ cat > "$TARGET_DIR/index.html" << 'HTML_EOF'
     <div style="margin: 2rem 0;">
       <p style="margin-bottom: 1rem; color: #c5a8e0;">📖 Documentation:</p>
       <div>
-        <a href="./docs/SCROLL-EXPERIENCE.md" class="cta secondary">Journey Map</a>
-        <a href="./docs/3D-ARCHITECTURE.md" class="cta secondary">Architecture</a>
-        <a href="./docs/DESIGN-SYSTEM.md" class="cta secondary">Design</a>
-        <a href="./docs/AUDIO-SETUP.md" class="cta secondary">Audio</a>
+        <a href="./docs/SITE.md" class="cta secondary">Site guide</a>
       </div>
     </div>
 

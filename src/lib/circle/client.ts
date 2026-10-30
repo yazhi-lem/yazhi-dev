@@ -253,7 +253,7 @@ export async function getSessionAccount(accessToken: string): Promise<CircleAcco
     developer the key for the shared company would let one developer delete
     another. Developers act through their session instead; issuing personal
     API keys waits on the yazhi-api change described in
-    docs/PROPOSAL-YAZHI-DEV-V3.md §6. */
+    docs/community/PROPOSAL-YAZHI-DEV-V3.md §6. */
 export async function createAccountAndSignIn(input: {
   email: string;
   password: string;

@@ -77,4 +77,4 @@ Check any page you change at phone width as well as desktop.
 Everyone in this project follows the [Code of Conduct](CODE_OF_CONDUCT.md). We maintain a community where language sovereignty, dignity, and inclusivity are respected across all channels.
 
 - **Reporting:** Send incident reports to [`conduct@yazhi.dev`](mailto:conduct@yazhi.dev) or flag them directly on `circle.yazhi.dev` / Discord `#mod-help`.
-- **Moderation Rota:** Review our weekly moderator rotation, response SLAs (< 24h acknowledgment, < 48h triage), and incident playbook in [docs/MODERATION_ROTA.md](docs/MODERATION_ROTA.md).
+- **Moderation Rota:** Review our weekly moderator rotation, response SLAs (< 24h acknowledgment, < 48h triage), and incident playbook in [docs/community/MODERATION_ROTA.md](docs/community/MODERATION_ROTA.md).

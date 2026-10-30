@@ -140,7 +140,7 @@ violation.
 ## Who Handles Reports & The Moderation Rota
 
 Reports are reviewed and resolved by our community moderation rota. The rota details, weekly schedules, active moderators,
-and backup coverage are documented in [docs/MODERATION_ROTA.md](docs/MODERATION_ROTA.md).
+and backup coverage are documented in [docs/community/MODERATION_ROTA.md](docs/community/MODERATION_ROTA.md).
 
 All moderators are bound by strict confidentiality and must confirm their weekly availability before entering the rotation.
 Maintainers or moderators who fail to uphold or enforce this code in good faith are subject to immediate removal from the rota.
