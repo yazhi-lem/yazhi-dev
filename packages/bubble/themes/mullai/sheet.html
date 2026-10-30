@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Mullai theme sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600&family=Playfair+Display:wght@700;900&family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 landscape; margin: 0 }
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:297mm;height:210mm;background:#070d09;color:#eef5ef;font:12px/1.5 "EB Garamond",serif;padding:14mm 16mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+[lang=ta]{font-family:"Noto Sans Tamil",sans-serif;letter-spacing:0}
+.top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #2f4a38;padding-bottom:6mm}
+.eyebrow{font:10px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.14em;color:#4f9d6b}
+h1{font:900 34px/1.1 "Playfair Display",serif;margin-top:3mm}
+h1 [lang=ta]{font-weight:600;font-size:38px;margin-right:4mm}
+.persona{text-align:right}
+.persona h2{font:700 20px/1.2 "Playfair Display",serif}
+.persona p{color:#b9cbbd}
+.grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:9mm;margin-top:7mm}
+h3{font:10px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.12em;color:#b9cbbd;margin-bottom:3mm}
+.sw-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2mm 2.5mm}
+.sw span{display:block;height:7mm;border:1px solid #2f4a38;border-radius:2mm}
+.sw b{display:block;font:10px ui-monospace,monospace;margin-top:1mm}
+.sw i{font:9px ui-monospace,monospace;color:#b9cbbd;font-style:normal;text-transform:uppercase}
+table{border-collapse:collapse;width:100%}
+td,th{border-top:1px solid #1a2a20;padding:1.6mm 1.5mm 1.6mm 0;vertical-align:top;text-align:left}
+th{font:9px ui-monospace,monospace;text-transform:uppercase;color:#4f9d6b;width:16mm}
+.small{font-size:11px;color:#b9cbbd}
+ul{list-style:none}li{border-top:1px solid #1a2a20;padding:1.4mm 0}li b{font:9px ui-monospace,monospace;text-transform:uppercase;color:#4f9d6b;display:inline-block;width:14mm}
+.rule{margin-top:3mm;font-size:11px}.rule b{color:#d4ecd9;font:10px ui-monospace,monospace;text-transform:uppercase;margin-right:2mm}
+svg{width:100%;height:auto;display:block}
+.foot{position:absolute;bottom:9mm;left:16mm;right:16mm;display:flex;justify-content:space-between;font:9px ui-monospace,monospace;color:#b9cbbd}
+.mark circle{fill:#eef5ef}
+</style></head><body>
+<div class="top">
+  <div><p class="eyebrow">Bubble UI · Tinai theme · Forest</p><h1><span lang="ta">முல்லை</span>Mullai</h1><p class="small" style="margin-top:2mm">Fireflies under the canopy. Waiting — patience, animals and the folk tales children know.</p></div>
+  <div class="persona"><p class="eyebrow">Persona</p><h2><span lang="ta">காத்திருப்பவர்</span> · The Keeper</h2><p style="max-width:95mm;margin-left:auto">The patient host of the community, who waits for you to be ready and keeps a place for you.</p><p class="small">patient · welcoming · encouraging</p></div>
+</div>
+<div class="grid">
+  <section>
+    <h3>Palette · dark</h3><div class="sw-grid"><div class="sw"><span style="background:#070d09"></span><b>ground</b><i>#070d09</i></div><div class="sw"><span style="background:#0f1a13"></span><b>surface</b><i>#0f1a13</i></div><div class="sw"><span style="background:#d4ecd9"></span><b>hi</b><i>#d4ecd9</i></div><div class="sw"><span style="background:#5f8a6c"></span><b>edge</b><i>#5f8a6c</i></div><div class="sw"><span style="background:#2f4a38"></span><b>mid</b><i>#2f4a38</i></div><div class="sw"><span style="background:#1a2a20"></span><b>lo</b><i>#1a2a20</i></div><div class="sw"><span style="background:#4f9d6b"></span><b>accent</b><i>#4f9d6b</i></div><div class="sw"><span style="background:#eef5ef"></span><b>text</b><i>#eef5ef</i></div><div class="sw"><span style="background:#b9cbbd"></span><b>text-dim</b><i>#b9cbbd</i></div></div>
+    <h3 style="margin-top:4mm">Palette · light</h3><div class="sw-grid"><div class="sw"><span style="background:#f0f6f1"></span><b>ground</b><i>#f0f6f1</i></div><div class="sw"><span style="background:#fafdfb"></span><b>surface</b><i>#fafdfb</i></div><div class="sw"><span style="background:#123a22"></span><b>hi</b><i>#123a22</i></div><div class="sw"><span style="background:#5e8a6c"></span><b>edge</b><i>#5e8a6c</i></div><div class="sw"><span style="background:#adc8b4"></span><b>mid</b><i>#adc8b4</i></div><div class="sw"><span style="background:#dce9df"></span><b>lo</b><i>#dce9df</i></div><div class="sw"><span style="background:#2d7547"></span><b>accent</b><i>#2d7547</i></div><div class="sw"><span style="background:#0f2016"></span><b>text</b><i>#0f2016</i></div><div class="sw"><span style="background:#43584a"></span><b>text-dim</b><i>#43584a</i></div></div>
+    <h3 style="margin-top:6mm">Motion · spring k 85 c 18 · overshoot 0% · settle 760ms</h3>
+    <svg viewBox="0 0 240 80"><line x1="0" x2="240" y1="20.8" y2="20.8" stroke="#1a2a20" stroke-dasharray="1 3"/><path d="M0.0 72.0L2.5 71.4L5.0 70.0L7.5 67.9L10.0 65.4L12.5 62.6L15.0 59.7L17.5 56.8L20.0 53.8L22.5 51.0L25.0 48.3L27.5 45.7L30.0 43.3L32.5 41.1L35.0 39.0L37.5 37.1L40.0 35.4L42.5 33.8L45.0 32.3L47.5 31.0L50.0 29.9L52.5 28.8L55.0 27.9L57.5 27.0L60.0 26.3L62.5 25.6L65.0 25.0L67.5 24.5L70.0 24.0L72.5 23.6L75.0 23.3L77.5 23.0L80.0 22.7L82.5 22.4L85.0 22.2L87.5 22.0L90.0 21.9L92.5 21.7L95.0 21.6L97.5 21.5L100.0 21.4L102.5 21.3L105.0 21.2L107.5 21.2L110.0 21.1L112.5 21.1L115.0 21.0L117.5 21.0L120.0 21.0L122.5 21.0L125.0 20.9L127.5 20.9L130.0 20.9L132.5 20.9L135.0 20.9L137.5 20.9L140.0 20.9L142.5 20.8L145.0 20.8L147.5 20.8L150.0 20.8L152.5 20.8L155.0 20.8L157.5 20.8L160.0 20.8L162.5 20.8L165.0 20.8L167.5 20.8L170.0 20.8L172.5 20.8L175.0 20.8L177.5 20.8L180.0 20.8L182.5 20.8L185.0 20.8L187.5 20.8L190.0 20.8L192.5 20.8L195.0 20.8L197.5 20.8L200.0 20.8L202.5 20.8L205.0 20.8L207.5 20.8L210.0 20.8L212.5 20.8L215.0 20.8L217.5 20.8L220.0 20.8L222.5 20.8L225.0 20.8L227.5 20.8L230.0 20.8L232.5 20.8L235.0 20.8L237.5 20.8L240.0 20.8" fill="none" stroke="#d4ecd9" stroke-width="1"/></svg>
+    <p class="small">Gentle and patient. Nothing hurries; everything arrives. Fireflies drift toward the pointer, slowly, and keep their distance.</p>
+  </section>
+  <section>
+    <h3>Voice</h3><p>Warm and unhurried. Invites rather than instructs; asks before it tells.</p>
+    <h3 style="margin-top:5mm">Interface copy (draft)</h3><table><tr><th>empty</th><td lang="ta">நேரம் எடுத்துக்கொள்ளுங்கள். தயாரானதும் கேளுங்கள்.</td><td>Take your time. Ask when you're ready.</td></tr><tr><th>loading</th><td lang="ta">உங்களோடு சேர்ந்து யோசிக்கிறேன்…</td><td>Thinking it through with you…</td></tr><tr><th>success</th><td lang="ta">நீங்களே கண்டுபிடித்துவிட்டீர்கள்.</td><td>You got there yourself.</td></tr><tr><th>error</th><td lang="ta">வேறு வழியில் முயல்வோம்.</td><td>Let's try that another way.</td></tr><tr><th>confirm</th><td lang="ta">இதை வட்டத்தோடு பகிரலாமா?</td><td>Share this with the circle?</td></tr></table>
+  </section>
+  <section>
+    <h3>Use for</h3><p>Community, Dev Spaces and Yazhi Academy.</p><p class="small">Home of Guru, Dev Spaces.</p>
+    <p class="rule"><b>Guru</b><span lang="ta">குரு</span> — The hint ladder — never hand over the answer</p>
+    <h3 style="margin-top:5mm">Karupporul (draft)</h3><ul><li><b>Bird</b> <span lang="ta">காட்டுக்கோழி</span></li><li><b>Beast</b> <span lang="ta">மான் · முயல்</span></li><li><b>Flower</b> <span lang="ta">முல்லை · தோன்றி</span></li><li><b>Tree</b> <span lang="ta">கொன்றை · காயா · குருந்தம்</span></li><li><b>Drum</b> <span lang="ta">ஏறுகோட் பறை</span></li><li><b>Yazh</b> <span lang="ta">முல்லை யாழ்</span></li><li><b>Melody</b> <span lang="ta">சாதாரி</span></li></ul>
+    <h3 style="margin-top:5mm">Do · Don't</h3>
+    <p class="small">Hint before the answer · Praise the effort, not the person · Leave room on the screen</p><p class="small" style="margin-top:1mm">Not: Rush · Hand over homework answers · Crowd the screen</p>
+  </section>
+</div>
+<div class="foot"><span><svg class="mark" viewBox="0 0 100 100" style="width:5mm;display:inline-block;vertical-align:middle"><circle cx="30.8" cy="30.6" r="12.3"/><circle cx="65.2" cy="26.9" r="16.3"/><circle cx="47.2" cy="67.4" r="22"/></svg> யாழி · Bubble UI</span><span>Persona and Tamil text are drafts pending native review · generated from packages/bubble</span></div>
+</body></html>

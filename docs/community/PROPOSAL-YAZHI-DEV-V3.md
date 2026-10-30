@@ -4,7 +4,7 @@
 **Date:** 3 October 2026
 **Proposed owner:** Supriya Padmashini K (O4 — human community of builders, Dev Spaces)
 **With:** Deepika (O1 — yazhi-api), Valavan K (engineering and editorial gate)
-**Related:** `docs/community/PRD-DEVELOPER-COMMUNITY.md`, `/bubble`, `src/ui`, yazhi-api `docs/access/CIRCLE.md` §6a, `factory/RUNWAY.md`
+**Related:** `docs/community/PRD-DEVELOPER-COMMUNITY.md`, `/bubble`, `packages/bubble`, yazhi-api `docs/access/CIRCLE.md` §6a, `factory/RUNWAY.md`
 
 > Owners are proposed from the Pulavar map; confirm them in Linear before
 > work is assigned. Tamil strings in this proposal and in the new pages are
@@ -63,7 +63,8 @@ Every v3 feature has to pass these, in this order (Aram harness):
 | Route | Purpose | Phase |
 |---|---|---|
 | `/bubble` | Builder docs + live Bubble UI | **Built** |
-| `/bubble/components`, `/bubble/modules`, `/bubble/pages` | Yazhi UI library: primitives, app modules, full app templates with live demos | **Built** (sample data) → B: published to the registry with each bubble |
+| `/bubble` (one page) | Yazhi UI library: primitives, app modules, full app templates and agents with live demos, in light and dark | **Built** (sample data) → B: published to the registry with each bubble |
+| `/bubble#themes` | Bubble UI design system: five tinai themes (ink in light and dark, motion, ambient field, Hairline figure, persona each), principles, tokens, motion and access rules; Mission Control | **Built** → B: environments selectable per bubble in the manifest |
 | `/hub` | Browse and install published bubbles; filter by language, domain, runtime | B |
 | `/hub/<bubble-id>` | Bubble page: description, author, versions, reviews, "open in Bubble UI", "fork" | B |
 | `/b/<handle>` | Builder profile: bubbles, reviews given, Spaces, recognition | B |
@@ -253,7 +254,7 @@ Targets are proposals for the owner to set; there is no baseline yet.
 **yazhi-dev** (this branch)
 
 - `/bubble` — builder docs and a live Bubble UI.
-- Yazhi UI (`src/ui`, docs at `/bubble/components`, `/bubble/modules`, `/bubble/pages`) — 11 components, 10 modules and 7 page templates (Avai, Nyaya, Kural, Guru, Kadai, Open Sangam, Yazh parent gate) on sample data. An earlier agent builder (`/foundry`) was removed from yazhi.dev.
+- Yazhi UI (`packages/bubble`, one live page at `/bubble`) — 11 components, 10 modules and 7 page templates (Avai, Nyaya, Kural, Guru, Kadai, Open Sangam, Yazh parent gate) on sample data. An earlier agent builder (`/foundry`) was removed from yazhi.dev. The design system (`/bubble#themes`, `packages/bubble/src/{tinai,hairline}`) adds the five tinai environments and one Hairline figure per landscape, built on Lucas Marques's MIT-licensed Hairline kernel. It also carries a draft karupporul atlas (`packages/bubble/src/lib/karupporul.ts`, pending scholar review) and four Sangam objects drawn as Hairline figures: yazh, parai, vilakku and olai.
 - Bubble UI host — canvas, packed tray, composer with Circle button; on-device runtime (browser → localhost, no internet) and yazhi-api runtime via `/api/bubble/run`.
 - Circle auth — `/api/circle/{session,signin,signup,signout}`, httpOnly cookies, gRPC client in `src/lib/circle/client.ts`.
 

@@ -1,0 +1,87 @@
+[
+  {
+    "key": "palai",
+    "ta": "பாலை",
+    "en": "Palai",
+    "persona": {
+      "ta": "வழிப்போக்கர்",
+      "en": "The Wayfarer"
+    },
+    "accent": "#c25b3c",
+    "accentLight": "#a8432a",
+    "files": [
+      "palai/theme.json",
+      "palai/theme.css",
+      "palai/PERSONA.md",
+      "palai/sheet.html"
+    ]
+  },
+  {
+    "key": "mullai",
+    "ta": "முல்லை",
+    "en": "Mullai",
+    "persona": {
+      "ta": "காத்திருப்பவர்",
+      "en": "The Keeper"
+    },
+    "accent": "#4f9d6b",
+    "accentLight": "#2d7547",
+    "files": [
+      "mullai/theme.json",
+      "mullai/theme.css",
+      "mullai/PERSONA.md",
+      "mullai/sheet.html"
+    ]
+  },
+  {
+    "key": "kurinji",
+    "ta": "குறிஞ்சி",
+    "en": "Kurinji",
+    "persona": {
+      "ta": "தேடுபவர்",
+      "en": "The Seeker"
+    },
+    "accent": "#8b7ae0",
+    "accentLight": "#5a47b8",
+    "files": [
+      "kurinji/theme.json",
+      "kurinji/theme.css",
+      "kurinji/PERSONA.md",
+      "kurinji/sheet.html"
+    ]
+  },
+  {
+    "key": "marutham",
+    "ta": "மருதம்",
+    "en": "Marutham",
+    "persona": {
+      "ta": "நடுவர்",
+      "en": "The Arbiter"
+    },
+    "accent": "#b7a03c",
+    "accentLight": "#6f6116",
+    "files": [
+      "marutham/theme.json",
+      "marutham/theme.css",
+      "marutham/PERSONA.md",
+      "marutham/sheet.html"
+    ]
+  },
+  {
+    "key": "neytal",
+    "ta": "நெய்தல்",
+    "en": "Neytal",
+    "persona": {
+      "ta": "பயணி",
+      "en": "The Voyager"
+    },
+    "accent": "#4a8ab5",
+    "accentLight": "#25648f",
+    "files": [
+      "neytal/theme.json",
+      "neytal/theme.css",
+      "neytal/PERSONA.md",
+      "neytal/sheet.html"
+    ]
+  }
+]

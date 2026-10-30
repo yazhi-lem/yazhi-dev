@@ -6,6 +6,7 @@ import { LangProvider } from "@/lib/i18n";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { ThinaiTheme } from "@/components/providers/ThinaiTheme";
 import { Motion } from "@/components/providers/Motion";
+import { MODE_SCRIPT } from "@yazhi/bubble/mode-script";
 
 /* Type system, per the Brand Identity System (v1.1): "Two typefaces, one
    system. Playfair Display carries titles and the wordmark. EB Garamond
@@ -55,6 +56,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="ta"
+      // the Bubble theme script below may set data-mode before hydration
+      suppressHydrationWarning
       className={mono.variable}
       style={
         {
@@ -65,6 +68,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       }
     >
       <body>
+        {/* a chosen light or dark theme applies before the first paint */}
+        <script dangerouslySetInnerHTML={{ __html: MODE_SCRIPT }} />
         <LangProvider>
           <ThinaiTheme />
           <Motion>

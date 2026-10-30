@@ -1,0 +1,235 @@
+{
+  "$schema": "yazhi.bubble.theme/v0",
+  "key": "marutham",
+  "name": {
+    "ta": "மருதம்",
+    "en": "Marutham"
+  },
+  "landscape": "Farmland",
+  "signature": "Wind over paddy",
+  "mood": "Everyday life — counting, work and family; quarrel and reconciliation",
+  "useFor": "Civic and legal: Nyaya, Sezhi; everyday commerce",
+  "apps": [
+    "Nyaya",
+    "Kadai"
+  ],
+  "agents": [
+    {
+      "id": "nyaya",
+      "name": "Nyaya",
+      "ta": "நியாயம்",
+      "home": "Nyaya",
+      "rule": "Information, never advice; refer to legal aid"
+    },
+    {
+      "id": "annachi",
+      "name": "Annachi",
+      "ta": "அண்ணாச்சி",
+      "home": "Kadai",
+      "rule": "Payment intent only — no money moves"
+    }
+  ],
+  "palette": {
+    "ground": "#0c0b06",
+    "surface": "#17150c",
+    "hi": "#efe6bd",
+    "edge": "#8e7f3e",
+    "mid": "#4a4222",
+    "lo": "#2a2614",
+    "accent": "#b7a03c",
+    "text": "#f7f3e3",
+    "textDim": "#cdc6a6"
+  },
+  "paletteLight": {
+    "ground": "#f7f4e4",
+    "surface": "#fdfcf3",
+    "hi": "#3d360c",
+    "edge": "#8f803d",
+    "mid": "#cdc28d",
+    "lo": "#ebe5c8",
+    "accent": "#6f6116",
+    "text": "#1f1c0a",
+    "textDim": "#55502d"
+  },
+  "motion": {
+    "spring": {
+      "k": 100,
+      "c": 20
+    },
+    "pace": 0.6,
+    "settleMs": 700,
+    "words": "Precise and fair. Critically damped: it arrives exactly, never bounces."
+  },
+  "light": "Even daylight; olive ink, rows and plots, nothing hidden",
+  "pointer": "The pointer is the wind; seedlings bow in a wave that spreads from it.",
+  "persona": {
+    "key": "marutham",
+    "name": {
+      "ta": "நடுவர்",
+      "en": "The Arbiter"
+    },
+    "archetype": "A fair clerk of everyday life, law and trade, who takes no side and keeps the record straight.",
+    "voice": "Plain, precise and even-handed. Facts first, then the rule, then the next step; never takes sides.",
+    "tone": [
+      "fair",
+      "precise",
+      "plain"
+    ],
+    "microcopy": {
+      "empty": {
+        "ta": "என்ன நடந்தது என்று வரிசையாகச் சொல்லுங்கள்.",
+        "en": "Tell me what happened, in order."
+      },
+      "loading": {
+        "ta": "சட்டத்தின் வாசகத்தோடு பொருத்திப் பார்க்கிறேன்…",
+        "en": "Matching this to the Act's text…"
+      },
+      "success": {
+        "ta": "இதோ அந்தப் பிரிவு, சொல்லுக்குச் சொல்.",
+        "en": "Here is the section, word for word."
+      },
+      "error": {
+        "ta": "இதை எந்தப் பிரிவோடும் பொருத்த முடியவில்லை; அதனால் சொல்ல மாட்டேன்.",
+        "en": "I can't match this to a section, so I won't state it."
+      },
+      "confirm": {
+        "ta": "இந்தக் கட்டண வேண்டுகோளை அனுப்பலாமா? நீங்கள் உறுதி செய்யும் வரை பணம் நகராது.",
+        "en": "Send this payment request? No money moves until you confirm."
+      }
+    },
+    "do": [
+      "Show the exact text",
+      "Label information apart from advice",
+      "Show totals before any confirm"
+    ],
+    "dont": [
+      "Take sides",
+      "Paraphrase the law",
+      "Hide a fee"
+    ]
+  },
+  "karu": {
+    "draft": true,
+    "time": {
+      "ta": "வைகறை",
+      "en": "before dawn"
+    },
+    "season": {
+      "ta": "எல்லாப் பருவமும்",
+      "en": "every season"
+    },
+    "land": {
+      "ta": "வயல்",
+      "en": "farmland"
+    },
+    "feeling": {
+      "ta": "ஊடல்",
+      "en": "lovers' quarrel"
+    },
+    "deity": [
+      {
+        "ta": "வேந்தன் (இந்திரன்)",
+        "en": "Vendan (Indra)"
+      }
+    ],
+    "bird": [
+      {
+        "ta": "நாரை",
+        "en": "stork"
+      },
+      {
+        "ta": "குருகு",
+        "en": "heron"
+      }
+    ],
+    "beast": [
+      {
+        "ta": "எருமை",
+        "en": "buffalo"
+      },
+      {
+        "ta": "நீர்நாய்",
+        "en": "otter"
+      }
+    ],
+    "flower": [
+      {
+        "ta": "தாமரை",
+        "en": "lotus"
+      },
+      {
+        "ta": "கழுநீர்",
+        "en": "blue water lily"
+      }
+    ],
+    "tree": [
+      {
+        "ta": "மருதம்",
+        "en": "arjuna"
+      },
+      {
+        "ta": "காஞ்சி",
+        "en": "kanji"
+      }
+    ],
+    "food": [
+      {
+        "ta": "செந்நெல்",
+        "en": "red paddy"
+      },
+      {
+        "ta": "வெண்ணெல்",
+        "en": "white paddy"
+      }
+    ],
+    "water": [
+      {
+        "ta": "ஆறு",
+        "en": "river"
+      },
+      {
+        "ta": "பொய்கை",
+        "en": "pond"
+      }
+    ],
+    "drum": [
+      {
+        "ta": "நெல்லரி கிணை",
+        "en": "harvest drum"
+      },
+      {
+        "ta": "மண முழவு",
+        "en": "wedding drum"
+      }
+    ],
+    "yazh": [
+      {
+        "ta": "மருத யாழ்",
+        "en": "marutha yazh"
+      }
+    ],
+    "pann": [
+      {
+        "ta": "மருதப் பண்",
+        "en": "marutham pann"
+      }
+    ],
+    "work": [
+      {
+        "ta": "களை கட்டல்",
+        "en": "weeding"
+      },
+      {
+        "ta": "நெல்லரிதல்",
+        "en": "reaping paddy"
+      }
+    ],
+    "settlement": [
+      {
+        "ta": "ஊர்",
+        "en": "village"
+      }
+    ]
+  },
+  "draft": "Persona names, voice and all Tamil text are drafts pending native review."
+}

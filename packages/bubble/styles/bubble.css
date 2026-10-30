@@ -1,0 +1,173 @@
+/* @yazhi/bubble styles.
+   Import after Tailwind v4 and tokens.css:
+     @import "tailwindcss";
+     @import "@yazhi/bubble/styles/tokens.css";
+     @import "@yazhi/bubble/styles/bubble.css";
+   The components use the Tailwind colour names below (night, ivory, gold,
+   the five tinai) and the --env-* variables a TinaiScope sets. Wrap a
+   Bubble screen in .bubble-root to get the light theme as well. */
+
+@theme inline {
+  --color-night: var(--night);
+  --color-night-2: var(--night-2);
+  --color-ivory: var(--ivory);
+  --color-ivory-dim: var(--ivory-dim);
+  --color-bronze: var(--bronze);
+  --color-gold: var(--gold);
+  --color-kurinji: var(--kurinji);
+  --color-mullai: var(--mullai);
+  --color-marutham: var(--marutham);
+  --color-neytal: var(--neytal);
+  --color-palai: var(--palai);
+  --color-accent: var(--accent);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+}
+
+/* ============================================================
+   COLOUR MODE — light and dark
+   Everything Bubble draws sits inside .bubble-root. Its colours are
+   CSS light-dark() pairs, so the whole system changes with one
+   property, color-scheme: it follows the system by default, and
+   data-mode="light" | "dark" on <html> pins a choice (useColorMode
+   sets it; MODE_SCRIPT applies it before the first paint). Inside,
+   data-scheme="light" | "dark" pins one subtree, e.g. a preview.
+   ============================================================ */
+.bubble-root { color-scheme: light dark; }
+:root[data-mode="light"] .bubble-root { color-scheme: light; }
+:root[data-mode="dark"] .bubble-root { color-scheme: dark; }
+[data-scheme="light"] { color-scheme: light; }
+[data-scheme="dark"] { color-scheme: dark; }
+
+.bubble-root {
+  /* the brand by day: cream paper, ink text, a gold deep enough to read */
+  --night: light-dark(#f6f3ec, #0a0a0a);
+  --night-2: light-dark(#fdfbf7, #161616);
+  --ivory: light-dark(#15130f, #f8f5ef);
+  --ivory-dim: light-dark(#57534b, #cbc9c4);
+  --bronze: light-dark(#866419, #c49a38);
+  --gold: light-dark(#6e5312, #d3b36a);
+  --kurinji: light-dark(#5a47b8, #8b7ae0);
+  --mullai: light-dark(#2d7547, #4f9d6b);
+  --marutham: light-dark(#6f6116, #b7a03c);
+  --neytal: light-dark(#25648f, #4a8ab5);
+  --palai: light-dark(#a8432a, #d6704f);
+  --accent: var(--kurinji);
+  background: var(--night);
+  color: var(--ivory);
+}
+.bubble-root ::selection { background: var(--gold); color: var(--night); }
+
+/* ============================================================
+   TINAI ENVIRONMENTS — Bubble UI design book (src/tinai)
+   The --env-* colours are registered so that switching landscape
+   cross-fades every ground, surface and hairline stroke instead of
+   snapping. Values are set per landscape by envVars().
+   ============================================================ */
+@property --env-ground { syntax: "<color>"; inherits: true; initial-value: #0a0a0a; }
+@property --env-surface { syntax: "<color>"; inherits: true; initial-value: #161616; }
+@property --env-hi { syntax: "<color>"; inherits: true; initial-value: #f8f5ef; }
+@property --env-edge { syntax: "<color>"; inherits: true; initial-value: #7a7a7a; }
+@property --env-mid { syntax: "<color>"; inherits: true; initial-value: #3e3e44; }
+@property --env-lo { syntax: "<color>"; inherits: true; initial-value: #29292d; }
+@property --env-accent { syntax: "<color>"; inherits: true; initial-value: #8b7ae0; }
+@property --env-text { syntax: "<color>"; inherits: true; initial-value: #f8f5ef; }
+@property --env-text-dim { syntax: "<color>"; inherits: true; initial-value: #cbc9c4; }
+
+.tinai-scope {
+  /* the library's brand colours follow the landscape inside a scope */
+  --night: var(--env-ground);
+  --night-2: var(--env-surface);
+  --ivory: var(--env-text);
+  --ivory-dim: var(--env-text-dim);
+  background: var(--env-ground);
+  color: var(--env-text);
+  transition:
+    --env-ground 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-surface 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-hi 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-edge 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-mid 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-lo 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-accent 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-text 900ms cubic-bezier(0.32, 0.72, 0, 1),
+    --env-text-dim 900ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.tinai-scope.tinai-clear { background: transparent; }
+@media (prefers-reduced-motion: reduce) {
+  .tinai-scope { transition: none; }
+}
+
+/* the hairline: one rule, one weight, everywhere in the book */
+.hair { border-color: color-mix(in oklab, var(--env-edge) 55%, transparent); }
+.hair-lo { border-color: color-mix(in oklab, var(--env-edge) 28%, transparent); }
+
+/* MagneticTray: the ring a choice sends to its neighbours */
+.tray-ring {
+  border: 1px solid;
+  opacity: 0;
+  animation: tray-ring 700ms cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+@keyframes tray-ring {
+  0% { opacity: 0.9; transform: scale(0.9); }
+  100% { opacity: 0; transform: scale(1.35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tray-ring { animation: none; }
+}
+
+/* Mission Control: the mark breathes once when it wakes */
+.mission-wake { animation: mission-wake 900ms cubic-bezier(0.32, 0.72, 0, 1) both; }
+@keyframes mission-wake {
+  0% { transform: scale(0.82); opacity: 0.4; }
+  60% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .mission-wake { animation: none; } }
+
+/* Design book: the ambient field fades in when the landscape changes */
+.book-fade { animation: book-fade 900ms cubic-bezier(0.32, 0.72, 0, 1) both; }
+@keyframes book-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .book-fade { animation: none; } }
+
+/* a hairline range input in the landscape's ink */
+.book-range { appearance: none; -webkit-appearance: none; height: 16px; background: transparent; }
+.book-range::-webkit-slider-runnable-track { height: 1px; background: var(--env-edge); }
+.book-range::-moz-range-track { height: 1px; background: var(--env-edge); }
+.book-range::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 12px; height: 12px; margin-top: -5.5px; border-radius: 999px;
+  border: 1px solid var(--env-hi); background: var(--env-ground);
+}
+.book-range::-moz-range-thumb { width: 12px; height: 12px; border-radius: 999px; border: 1px solid var(--env-hi); background: var(--env-ground); }
+.book-range:focus-visible { outline: 1px solid var(--env-hi); outline-offset: 4px; border-radius: 4px; }
+
+/* Design book: sections rise into place once (set up by script, so no-JS shows everything) */
+.book-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms cubic-bezier(0.32, 0.72, 0, 1), transform 700ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.book-reveal [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Yazhi Chat: focus in the landscape's bright stroke; the message box shows
+   focus on its whole pill (border turns --env-hi), not on the bare textarea */
+.yazhi-chat :focus-visible { outline-color: var(--env-hi); }
+.yazhi-chat #yazhi-composer:focus-visible { outline: none; }
+
+/* Yazhi Chat: model output in the landscape's ink instead of the site's gold */
+.yazhi-chat .chat-md { color: var(--env-text); }
+.yazhi-chat .chat-md a { color: var(--env-hi); text-decoration-color: var(--env-edge); }
+.yazhi-chat .chat-md blockquote { border-left-color: var(--env-edge); color: var(--env-text-dim); }
+.yazhi-chat .chat-md code { background: color-mix(in oklab, var(--env-text) 9%, transparent); }
+.yazhi-chat .chat-md pre { background: var(--env-surface); border: 1px solid color-mix(in oklab, var(--env-edge) 30%, transparent); }
+.yazhi-chat .chat-md hr, .yazhi-chat .chat-md th, .yazhi-chat .chat-md td { border-color: color-mix(in oklab, var(--env-edge) 35%, transparent); }
+
+/* Print (used for the design PDFs): show everything that would otherwise
+   wait for a scroll or a pointer, and drop fixed chrome */
+@media print {
+  .book-reveal [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .print-hide { display: none !important; }
+  .tinai-scope { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
