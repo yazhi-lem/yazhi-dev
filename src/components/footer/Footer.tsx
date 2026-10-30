@@ -1,91 +1,67 @@
 "use client";
 import Link from "next/link";
-import { Bi } from "@/components/ui/Bi";
 import { LogoMark } from "@/components/ui/LogoMark";
-import { SunkenRuins } from "@/components/ui/SunkenRuins";
-import { Bubbles } from "@/components/ui/Bubbles";
+import { HairlineHorizon } from "@/components/ui/HairlineHorizon";
 import { IDENTITY, NAV_GROUPS } from "@/lib/content";
+import { useLang } from "@/lib/i18n";
 
+/** The footer as a hairline drawing: the five landscapes run along its top
+    edge as one line, then a grid of plain columns divided by hairlines —
+    the mark, three link groups, and a last rule with the copyright. */
 export function Footer() {
+  const { lang } = useLang();
+  const say = (l: { ta: string; en: string }) => (lang === "en" ? l.en : l.ta);
+  const tongue = lang === "en" ? "en" : "ta";
   return (
-    <footer
-      className="relative isolate overflow-hidden"
-      style={{
-        // a steep dive: a brief transparent gap eases the neytal section
-        // above into the water, then it drops fast through the shallow and
-        // mid bands so most of the footer's height reads as genuinely deep
-        // ocean — dark, near-black — rather than lingering in the paler
-        // surface blue
-        background:
-          "linear-gradient(to bottom," +
-          " transparent 0%," +
-          " color-mix(in oklab, var(--neytal) 32%, var(--ocean-shallow)) 8%," +
-          " var(--ocean-shallow) 16%," +
-          " color-mix(in oklab, var(--ocean-shallow), var(--ocean-mid)) 26%," +
-          " var(--ocean-mid) 38%," +
-          " color-mix(in oklab, var(--ocean-mid), var(--ocean-deep)) 52%," +
-          " var(--ocean-deep) 66%," +
-          " color-mix(in oklab, var(--ocean-deep), #000000 40%) 100%)",
-      }}
-    >
-      {/* neytal glow rising off the sea floor */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-2/3"
-        style={{
-          background:
-            "radial-gradient(120% 90% at 50% 120%, color-mix(in oklab, var(--neytal) 18%, transparent), transparent 70%)",
-        }}
-      />
+    <footer className="relative isolate bg-[linear-gradient(to_bottom,transparent,var(--night)_7rem)] pb-20 lg:pb-6">
+      <HairlineHorizon className="pointer-events-none block h-24 w-full sm:h-32" />
 
-      {/* smooth layered rocks + the drowned city on the trench floor —
-          taller than before so more of the footer's depth reads as seabed */}
-      <SunkenRuins className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-72 w-full" />
-
-      {/* sparkling bubbles rising through the water, in front of the scene */}
-      <Bubbles className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" />
-
-      <div className="mx-auto grid max-w-[var(--max-w)] gap-10 px-6 pb-24 pt-24 sm:px-8 lg:pl-28 lg:pr-10 md:grid-cols-[1.4fr_repeat(3,1fr)]">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <LogoMark size={30} />
-            <Bi
-              ta={IDENTITY.nameTa}
-              en={IDENTITY.nameEn}
-              className="flex items-baseline gap-2 font-serif text-xl font-black tracking-[-3px]"
-              separator={<span aria-hidden className="text-ivory-dim">•</span>}
-            />
+      <div className="mx-auto max-w-[var(--max-w)] px-6 sm:px-8">
+        <div className="grid md:grid-cols-[1.3fr_repeat(3,1fr)]">
+          <div className="py-10 md:pr-8">
+            <Link href="/" className="inline-flex items-center gap-2.5" aria-label="Yazhi home">
+              <LogoMark size={26} />
+              <span lang={tongue} className="font-serif text-lg font-black">
+                {lang === "en" ? IDENTITY.nameEn : IDENTITY.nameTa}
+              </span>
+            </Link>
+            <p lang={tongue} className="mt-3 max-w-[22rem] text-sm text-ivory-dim">
+              {lang === "en" ? IDENTITY.footerEn : IDENTITY.footerTa}
+            </p>
           </div>
-          <Bi
-            as="p"
-            ta={IDENTITY.footerTa}
-            en={IDENTITY.footerEn}
-            className="mt-2 flex flex-col gap-0.5 text-sm text-ivory-dim"
-          />
-          <p className="mt-6 font-serif text-xs text-ivory-dim">{IDENTITY.copyright}</p>
+
+          {NAV_GROUPS.map((g) => (
+            <nav key={g.en} aria-label={g.en} className="border-t border-ivory/10 py-10 md:border-l md:border-t-0 md:pl-8">
+              <p lang={tongue} className={`text-ivory-dim/80 ${lang === "en" ? "font-mono text-[11px] uppercase tracking-widest" : "text-xs font-semibold"}`}>
+                {say(g)}
+              </p>
+              <ul className="mt-4 flex flex-col gap-2.5">
+                {g.items.map((it) => {
+                  const ext = it.href.startsWith("http");
+                  return (
+                    <li key={`${g.en}-${it.en}`}>
+                      <Link
+                        href={it.href}
+                        {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        lang={tongue}
+                        className="text-sm text-ivory-dim underline-offset-4 transition-colors hover:text-ivory hover:underline"
+                      >
+                        {say(it)}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        {NAV_GROUPS.map((g) => (
-          <nav key={g.en} aria-label={g.en}>
-            <Bi as="p" ta={g.ta} en={g.en} className="mb-3 flex gap-2 text-xs uppercase tracking-widest text-[color:var(--accent)]" separator={<span aria-hidden>·</span>} />
-            <ul className="flex flex-col gap-2">
-              {g.items.map((it) => {
-                const ext = it.href.startsWith("http");
-                return (
-                  <li key={`${g.en}-${it.en}`}>
-                    <Link
-                      href={it.href}
-                      {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                      className="text-sm text-ivory-dim transition-colors hover:text-ivory"
-                    >
-                      <Bi ta={it.ta} en={it.en} className="inline-flex gap-1.5" separator={<span aria-hidden className="text-ivory/30">·</span>} />
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-        ))}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-ivory/10 py-6 text-xs text-ivory-dim">
+          <p className="font-serif">{IDENTITY.copyright}</p>
+          <a href="#hero" lang={tongue} className="inline-flex items-center gap-1.5 hover:text-ivory">
+            <span aria-hidden>↑</span> {lang === "en" ? "Back to top" : "மேலே செல்ல"}
+          </a>
+        </div>
       </div>
     </footer>
   );

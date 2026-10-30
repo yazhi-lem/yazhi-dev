@@ -273,8 +273,7 @@ export const NAV_GROUPS = [
       { ta: "Discord", en: "Discord", href: LINKS.discord },
       { ta: "GitHub", en: "GitHub", href: LINKS.github },
       { ta: "களஞ்சியங்கள்", en: "Repositories", href: "/repos" }, // Tamil: DRAFT, native review pending
-      { ta: "குமிழ் ஆவணம்", en: "Bubble docs", href: "/bubble" },
-      { ta: "UI நூலகம்", en: "UI library", href: "/bubble/components" },
+      { ta: "குமிழ் UI", en: "Bubble UI", href: "/bubble" },
       { ta: "எங்களைப் பற்றி", en: "About", href: "/about" },
       { ta: "தனியுரிமை", en: "Privacy", href: "/privacy" },
     ],

@@ -1,0 +1,216 @@
+{
+  "$schema": "yazhi.bubble.theme/v0",
+  "key": "mullai",
+  "name": {
+    "ta": "முல்லை",
+    "en": "Mullai"
+  },
+  "landscape": "Forest",
+  "signature": "Fireflies under the canopy",
+  "mood": "Waiting — patience, animals and the folk tales children know",
+  "useFor": "Community, Dev Spaces and Yazhi Academy",
+  "apps": [
+    "Guru",
+    "Dev Spaces"
+  ],
+  "agents": [
+    {
+      "id": "guru",
+      "name": "Guru",
+      "ta": "குரு",
+      "home": "Guru",
+      "rule": "The hint ladder — never hand over the answer"
+    }
+  ],
+  "palette": {
+    "ground": "#070d09",
+    "surface": "#0f1a13",
+    "hi": "#d4ecd9",
+    "edge": "#5f8a6c",
+    "mid": "#2f4a38",
+    "lo": "#1a2a20",
+    "accent": "#4f9d6b",
+    "text": "#eef5ef",
+    "textDim": "#b9cbbd"
+  },
+  "paletteLight": {
+    "ground": "#f0f6f1",
+    "surface": "#fafdfb",
+    "hi": "#123a22",
+    "edge": "#5e8a6c",
+    "mid": "#adc8b4",
+    "lo": "#dce9df",
+    "accent": "#2d7547",
+    "text": "#0f2016",
+    "textDim": "#43584a"
+  },
+  "motion": {
+    "spring": {
+      "k": 85,
+      "c": 18
+    },
+    "pace": 0.5,
+    "settleMs": 760,
+    "words": "Gentle and patient. Nothing hurries; everything arrives."
+  },
+  "light": "Dappled; green-black ink, small lights that come and go",
+  "pointer": "Fireflies drift toward the pointer, slowly, and keep their distance.",
+  "persona": {
+    "key": "mullai",
+    "name": {
+      "ta": "காத்திருப்பவர்",
+      "en": "The Keeper"
+    },
+    "archetype": "The patient host of the community, who waits for you to be ready and keeps a place for you.",
+    "voice": "Warm and unhurried. Invites rather than instructs; asks before it tells.",
+    "tone": [
+      "patient",
+      "welcoming",
+      "encouraging"
+    ],
+    "microcopy": {
+      "empty": {
+        "ta": "நேரம் எடுத்துக்கொள்ளுங்கள். தயாரானதும் கேளுங்கள்.",
+        "en": "Take your time. Ask when you're ready."
+      },
+      "loading": {
+        "ta": "உங்களோடு சேர்ந்து யோசிக்கிறேன்…",
+        "en": "Thinking it through with you…"
+      },
+      "success": {
+        "ta": "நீங்களே கண்டுபிடித்துவிட்டீர்கள்.",
+        "en": "You got there yourself."
+      },
+      "error": {
+        "ta": "வேறு வழியில் முயல்வோம்.",
+        "en": "Let's try that another way."
+      },
+      "confirm": {
+        "ta": "இதை வட்டத்தோடு பகிரலாமா?",
+        "en": "Share this with the circle?"
+      }
+    },
+    "do": [
+      "Hint before the answer",
+      "Praise the effort, not the person",
+      "Leave room on the screen"
+    ],
+    "dont": [
+      "Rush",
+      "Hand over homework answers",
+      "Crowd the screen"
+    ]
+  },
+  "karu": {
+    "draft": true,
+    "time": {
+      "ta": "மாலை",
+      "en": "evening"
+    },
+    "season": {
+      "ta": "கார்",
+      "en": "rains"
+    },
+    "land": {
+      "ta": "காடு",
+      "en": "forest and pasture"
+    },
+    "feeling": {
+      "ta": "இருத்தல்",
+      "en": "patient waiting"
+    },
+    "deity": [
+      {
+        "ta": "மாயோன்",
+        "en": "Mayon"
+      }
+    ],
+    "bird": [
+      {
+        "ta": "காட்டுக்கோழி",
+        "en": "jungle fowl"
+      }
+    ],
+    "beast": [
+      {
+        "ta": "மான்",
+        "en": "deer"
+      },
+      {
+        "ta": "முயல்",
+        "en": "hare"
+      }
+    ],
+    "flower": [
+      {
+        "ta": "முல்லை",
+        "en": "jasmine"
+      },
+      {
+        "ta": "தோன்றி",
+        "en": "glory lily"
+      }
+    ],
+    "tree": [
+      {
+        "ta": "கொன்றை",
+        "en": "golden shower"
+      },
+      {
+        "ta": "காயா",
+        "en": "kaya"
+      },
+      {
+        "ta": "குருந்தம்",
+        "en": "wild lime"
+      }
+    ],
+    "food": [
+      {
+        "ta": "வரகு",
+        "en": "kodo millet"
+      },
+      {
+        "ta": "சாமை",
+        "en": "little millet"
+      }
+    ],
+    "water": [
+      {
+        "ta": "காட்டாறு",
+        "en": "forest stream"
+      }
+    ],
+    "drum": [
+      {
+        "ta": "ஏறுகோட் பறை",
+        "en": "bull-taming drum"
+      }
+    ],
+    "yazh": [
+      {
+        "ta": "முல்லை யாழ்",
+        "en": "mullai yazh"
+      }
+    ],
+    "pann": [
+      {
+        "ta": "சாதாரி",
+        "en": "sadari"
+      }
+    ],
+    "work": [
+      {
+        "ta": "நிரை மேய்த்தல்",
+        "en": "herding cattle"
+      }
+    ],
+    "settlement": [
+      {
+        "ta": "பாடி",
+        "en": "herders' camp"
+      }
+    ]
+  },
+  "draft": "Persona names, voice and all Tamil text are drafts pending native review."
+}

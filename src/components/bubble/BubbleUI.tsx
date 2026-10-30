@@ -1,18 +1,18 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { Markdown } from "@/components/chat/Markdown";
-import { Composer } from "@/ui/components/Composer";
-import { firstGrapheme } from "@/ui/text";
-import { CircleButton } from "@/components/circle/CircleButton";
+import { Composer } from "@yazhi/bubble/components/Composer";
+import { firstGrapheme } from "@yazhi/bubble/text";
+import { MissionMenu } from "@/components/mission/Mission";
 import {
   chooseRuntime,
   DEFAULT_DEVICE_ENDPOINT,
   getDeviceEndpoint,
   runBubble,
   setDeviceEndpoint,
-} from "@/lib/bubble/runtime";
-import type { BubbleManifest, BubbleMessage, BubbleRuntime } from "@/lib/bubble/types";
-import { BubbleTray, type TrayItem } from "@/ui/modules/BubbleTray";
+} from "@yazhi/bubble/lib/runtime";
+import type { BubbleManifest, BubbleMessage, BubbleRuntime } from "@yazhi/bubble/lib/manifest";
+import { BubbleTray, type TrayItem } from "@yazhi/bubble/modules/BubbleTray";
 
 
 let counter = 0;
@@ -91,7 +91,7 @@ export function BubbleUI({
         accent: b.accent,
         size: b.size,
         glyph: glyph(b),
-        title: `${b.taName ? `${b.taName} · ` : ""}${b.name}\n${b.description}`,
+        title: `${b.name}\n${b.description}`,
       })),
     [bubbles]
   );
@@ -153,14 +153,13 @@ export function BubbleUI({
         <div className="flex min-w-0 items-center gap-2.5">
           <span
             aria-hidden
-            className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-semibold text-night"
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-semibold text-[#0a0a0a]"
             style={{ backgroundColor: active.accent }}
           >
             {glyph(active)}
           </span>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-ivory">
-              {active.taName && <span lang="ta">{active.taName} · </span>}
               {active.name}
             </p>
             <p className="truncate text-[11px] text-ivory-dim">{active.description}</p>
@@ -247,10 +246,10 @@ export function BubbleUI({
             )}
           </div>
 
-          {/* composer: Circle · input · send */}
+          {/* composer: Mission Control · input · send */}
           <div className="border-t border-ivory/10 px-3 py-3">
             <Composer
-              leading={<CircleButton size={38} />}
+              leading={<MissionMenu size={38} up />}
               onSend={(t) => void send(t)}
               onStop={() => abortRef.current?.abort()}
               streaming={streaming}

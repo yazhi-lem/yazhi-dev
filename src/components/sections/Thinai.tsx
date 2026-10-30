@@ -1,8 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
+import { TinaiMark } from "@yazhi/bubble";
 import { Section } from "@/components/ui/Section";
 import { Bi } from "@/components/ui/Bi";
-import { THINAI_WORLD } from "@/lib/content";
+import { THINAI_WORLD, type ThinaiKey } from "@/lib/content";
 import { stagger, fadeUp } from "@/lib/motionPresets";
 
 /** Yazh's world — the five thinai, straight from the deck (p5). Sangam
@@ -35,9 +36,15 @@ export function Thinai() {
           <motion.li
             key={l.key}
             variants={fadeUp}
-            className="border-t-2 pt-4"
-            style={{ borderColor: `var(--${l.key})` }}
+            className="border-t border-ivory/15 pt-4"
           >
+            <span
+              aria-hidden
+              className="mb-3 grid h-10 w-10 place-items-center rounded-full border"
+              style={{ color: `var(--${l.key})`, borderColor: `color-mix(in oklab, var(--${l.key}) 45%, transparent)` }}
+            >
+              <TinaiMark tinai={l.key as ThinaiKey} size={18} />
+            </span>
             <Bi
               ta={l.ta} en={l.en}
               className="flex flex-col gap-0.5"

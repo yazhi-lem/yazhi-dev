@@ -1,12 +1,20 @@
 import type { Agent, Provider } from "./types";
+import { YAZHI_AGENTS } from "@yazhi/bubble/lib/agents";
 
-/** Agent registry — each agent is bound to a fixed provider
-    (Gemini or ChatGPT) and carries its own persona/system prompt. */
+/** Agent registry. Yazhi's own agents come first and run on Adhan through
+    yazhi-api (see yazhi-agents.ts). The guest agents after them are
+    general assistants bound to an outside provider (Gemini or ChatGPT). */
 
 export const PROVIDER_META: Record<
   Provider,
   { label: string; tagline: string; accent: string; dot: string }
 > = {
+  adhan: {
+    label: "Adhan",
+    tagline: "Yazhi",
+    accent: "#d3b36a",
+    dot: "bg-[#d3b36a]",
+  },
   gemini: {
     label: "Gemini",
     tagline: "Google",
@@ -21,7 +29,7 @@ export const PROVIDER_META: Record<
   },
 };
 
-export const AGENTS: Agent[] = [
+const GUEST_AGENTS: Agent[] = [
   {
     id: "yazh-guide",
     provider: "gemini",
@@ -30,6 +38,14 @@ export const AGENTS: Agent[] = [
     description: "Tamil heritage & language guide — answers bilingual, Tamil first.",
     model: "gemini-2.5-flash",
     accent: "#8b7ae0",
+    group: "guest",
+    glyph: "யா",
+    tinai: "kurinji",
+    starters: [
+      "எழுத்துகள் எத்தனை? How many letters does Tamil have?",
+      "Explain the five tinai in two lines each",
+      "What is Yazhi building with Adhan?",
+    ],
     systemPrompt:
       "You are Yazh Guide (யாழ் வழிகாட்டி), a warm, knowledgeable guide to Tamil language, history, and culture, and to Yazhi's projects (Adhan, Sangam, Yazh). Answer in Tamil first, then repeat or expand in English when helpful. Be accurate, cite sources you know, and gently correct misconceptions about Tamil history. Keep answers clear and well-structured. When asked about code or unrelated topics, help cheerfully but steer back toward Tamil heritage when relevant.",
     greeting:
@@ -43,6 +59,14 @@ export const AGENTS: Agent[] = [
     description: "Classical Tamil literature — thinai classification & poem analysis.",
     model: "gemini-2.5-flash",
     accent: "#b7a03c",
+    group: "guest",
+    glyph: "ச",
+    tinai: "marutham",
+    starters: [
+      "Classify a Kuruntokai poem by tinai",
+      "What is the difference between akam and puram?",
+      "Explain uripporul with one example",
+    ],
     systemPrompt:
       "You are Sangam Scholar (சங்கப் புலவர்), a specialist in Classical Tamil (Sangam) literature. You analyze poems, classify them by thinai (குறிஞ்சி, முல்லை, மருதம், நெய்தல், பாலை) and tinai-mutal, and explain poetic devices, akam/puram distinctions, and historical context. Quote original Tamil lines with transliteration and translation. Be scholarly but accessible; teach as you go. Respond Tamil-first when the question is in Tamil.",
     greeting:
@@ -56,6 +80,14 @@ export const AGENTS: Agent[] = [
     description: "Composes Tamil poetry across the five thinai landscapes.",
     model: "gemini-2.5-flash",
     accent: "#4a8ab5",
+    group: "guest",
+    glyph: "நெ",
+    tinai: "neytal",
+    starters: [
+      "A neytal poem about waiting at the shore",
+      "Write a short mullai verse on evening rain",
+      "Turn my sentence into Sangam imagery",
+    ],
     systemPrompt:
       "You are Neythal Poet (நெய்தல் புலவர்), a composer of new Tamil poetry in the Sangam tradition. Write in any of the five thinai moods (kurinji union, mullai waiting, marutham domestic, neytal coastal longing, palai separation) with authentic imagery from the corresponding landscape. Use classical Tamil verse when the user asks for it, and offer transliteration plus a short English gloss. Match the user's language, Tamil first. Be evocative, restrained, and true to Sangam imagery.",
     greeting:
@@ -69,6 +101,14 @@ export const AGENTS: Agent[] = [
     description: "Full-stack engineering — Next.js, TypeScript, debugging, architecture.",
     model: "gpt-4o-mini",
     accent: "#e3b458",
+    group: "guest",
+    glyph: "நிர",
+    tinai: "palai",
+    starters: [
+      "Review this React hook for bugs",
+      "Why is my Next.js route not streaming?",
+      "Design a rate limiter for an API",
+    ],
     systemPrompt:
       "You are Code Companion, a senior full-stack engineer helping build Yazhi's web platform (Next.js, TypeScript, Tailwind, React Three Fiber). Write clean, idiomatic code with TypeScript types; explain tradeoffs briefly; prefer minimal dependencies. When the user shares code, review it for bugs, type-safety, and performance. Be concise, concrete, and direct. Respond in the language the user uses.",
     greeting:
@@ -82,6 +122,14 @@ export const AGENTS: Agent[] = [
     description: "Sovereign LLM & Tamil NLP — modeling, data pipelines, evals.",
     model: "gpt-4o",
     accent: "#4f9d6b",
+    group: "guest",
+    glyph: "ஆ",
+    tinai: "mullai",
+    starters: [
+      "How should we tokenize Tamil for an LLM?",
+      "Plan an eval set for Tamil QA",
+      "Fine-tune or RAG for a Tamil legal corpus?",
+    ],
     systemPrompt:
       "You are Adhan Architect, an ML engineer focused on sovereign AI for Indian languages, especially Tamil. You help design model training runs, multilingual tokenizers, data pipelines, alignment, and evaluation suites for Adhan (7B, 22+ Indian languages) and Project Sangam corpora. Give concrete, actionable guidance with realistic parameter choices. Be rigorous about evaluation. Respond in the language the user uses.",
     greeting:
@@ -95,12 +143,22 @@ export const AGENTS: Agent[] = [
     description: "Deep reasoning, summarization, and structured research help.",
     model: "gpt-4o-mini",
     accent: "#c25b3c",
+    group: "guest",
+    glyph: "ஆய்",
+    tinai: "palai",
+    starters: [
+      "Summarise this paper's argument",
+      "Compare two approaches with a table",
+      "What would falsify this claim?",
+    ],
     systemPrompt:
       "You are Research Assistant, a careful, thorough reasoning partner. For complex questions, work through the problem step by step, separate facts from assumptions, and offer a structured answer (headings, lists, tables when useful). Summarize long inputs faithfully. Flag uncertainty explicitly. Respond in the language the user uses.",
     greeting:
       "Hello! I'm Research Assistant. Give me a question, a document, or a tangle of ideas — I'll structure it, reason through it, and cite what I'm not sure about.",
   },
 ];
+
+export const AGENTS: Agent[] = [...YAZHI_AGENTS, ...GUEST_AGENTS];
 
 export const AGENT_BY_ID: Record<string, Agent> = Object.fromEntries(
   AGENTS.map((a) => [a.id, a])

@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Marutham theme sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600&family=Playfair+Display:wght@700;900&family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<style>
+@page { size: A4 landscape; margin: 0 }
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:297mm;height:210mm;background:#0c0b06;color:#f7f3e3;font:12px/1.5 "EB Garamond",serif;padding:14mm 16mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+[lang=ta]{font-family:"Noto Sans Tamil",sans-serif;letter-spacing:0}
+.top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid #4a4222;padding-bottom:6mm}
+.eyebrow{font:10px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.14em;color:#b7a03c}
+h1{font:900 34px/1.1 "Playfair Display",serif;margin-top:3mm}
+h1 [lang=ta]{font-weight:600;font-size:38px;margin-right:4mm}
+.persona{text-align:right}
+.persona h2{font:700 20px/1.2 "Playfair Display",serif}
+.persona p{color:#cdc6a6}
+.grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:9mm;margin-top:7mm}
+h3{font:10px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.12em;color:#cdc6a6;margin-bottom:3mm}
+.sw-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2mm 2.5mm}
+.sw span{display:block;height:7mm;border:1px solid #4a4222;border-radius:2mm}
+.sw b{display:block;font:10px ui-monospace,monospace;margin-top:1mm}
+.sw i{font:9px ui-monospace,monospace;color:#cdc6a6;font-style:normal;text-transform:uppercase}
+table{border-collapse:collapse;width:100%}
+td,th{border-top:1px solid #2a2614;padding:1.6mm 1.5mm 1.6mm 0;vertical-align:top;text-align:left}
+th{font:9px ui-monospace,monospace;text-transform:uppercase;color:#b7a03c;width:16mm}
+.small{font-size:11px;color:#cdc6a6}
+ul{list-style:none}li{border-top:1px solid #2a2614;padding:1.4mm 0}li b{font:9px ui-monospace,monospace;text-transform:uppercase;color:#b7a03c;display:inline-block;width:14mm}
+.rule{margin-top:3mm;font-size:11px}.rule b{color:#efe6bd;font:10px ui-monospace,monospace;text-transform:uppercase;margin-right:2mm}
+svg{width:100%;height:auto;display:block}
+.foot{position:absolute;bottom:9mm;left:16mm;right:16mm;display:flex;justify-content:space-between;font:9px ui-monospace,monospace;color:#cdc6a6}
+.mark circle{fill:#f7f3e3}
+</style></head><body>
+<div class="top">
+  <div><p class="eyebrow">Bubble UI · Tinai theme · Farmland</p><h1><span lang="ta">மருதம்</span>Marutham</h1><p class="small" style="margin-top:2mm">Wind over paddy. Everyday life — counting, work and family; quarrel and reconciliation.</p></div>
+  <div class="persona"><p class="eyebrow">Persona</p><h2><span lang="ta">நடுவர்</span> · The Arbiter</h2><p style="max-width:95mm;margin-left:auto">A fair clerk of everyday life, law and trade, who takes no side and keeps the record straight.</p><p class="small">fair · precise · plain</p></div>
+</div>
+<div class="grid">
+  <section>
+    <h3>Palette · dark</h3><div class="sw-grid"><div class="sw"><span style="background:#0c0b06"></span><b>ground</b><i>#0c0b06</i></div><div class="sw"><span style="background:#17150c"></span><b>surface</b><i>#17150c</i></div><div class="sw"><span style="background:#efe6bd"></span><b>hi</b><i>#efe6bd</i></div><div class="sw"><span style="background:#8e7f3e"></span><b>edge</b><i>#8e7f3e</i></div><div class="sw"><span style="background:#4a4222"></span><b>mid</b><i>#4a4222</i></div><div class="sw"><span style="background:#2a2614"></span><b>lo</b><i>#2a2614</i></div><div class="sw"><span style="background:#b7a03c"></span><b>accent</b><i>#b7a03c</i></div><div class="sw"><span style="background:#f7f3e3"></span><b>text</b><i>#f7f3e3</i></div><div class="sw"><span style="background:#cdc6a6"></span><b>text-dim</b><i>#cdc6a6</i></div></div>
+    <h3 style="margin-top:4mm">Palette · light</h3><div class="sw-grid"><div class="sw"><span style="background:#f7f4e4"></span><b>ground</b><i>#f7f4e4</i></div><div class="sw"><span style="background:#fdfcf3"></span><b>surface</b><i>#fdfcf3</i></div><div class="sw"><span style="background:#3d360c"></span><b>hi</b><i>#3d360c</i></div><div class="sw"><span style="background:#8f803d"></span><b>edge</b><i>#8f803d</i></div><div class="sw"><span style="background:#cdc28d"></span><b>mid</b><i>#cdc28d</i></div><div class="sw"><span style="background:#ebe5c8"></span><b>lo</b><i>#ebe5c8</i></div><div class="sw"><span style="background:#6f6116"></span><b>accent</b><i>#6f6116</i></div><div class="sw"><span style="background:#1f1c0a"></span><b>text</b><i>#1f1c0a</i></div><div class="sw"><span style="background:#55502d"></span><b>text-dim</b><i>#55502d</i></div></div>
+    <h3 style="margin-top:6mm">Motion · spring k 100 c 20 · overshoot 0% · settle 700ms</h3>
+    <svg viewBox="0 0 240 80"><line x1="0" x2="240" y1="20.8" y2="20.8" stroke="#2a2614" stroke-dasharray="1 3"/><path d="M0.0 72.0L2.5 71.3L5.0 69.6L7.5 67.3L10.0 64.5L12.5 61.5L15.0 58.3L17.5 55.2L20.0 52.2L22.5 49.2L25.0 46.5L27.5 43.9L30.0 41.5L32.5 39.3L35.0 37.3L37.5 35.4L40.0 33.8L42.5 32.3L45.0 31.0L47.5 29.8L50.0 28.7L52.5 27.7L55.0 26.9L57.5 26.2L60.0 25.5L62.5 24.9L65.0 24.4L67.5 23.9L70.0 23.5L72.5 23.2L75.0 22.9L77.5 22.6L80.0 22.4L82.5 22.2L85.0 22.0L87.5 21.8L90.0 21.7L92.5 21.6L95.0 21.5L97.5 21.4L100.0 21.3L102.5 21.2L105.0 21.2L107.5 21.1L110.0 21.1L112.5 21.0L115.0 21.0L117.5 21.0L120.0 21.0L122.5 20.9L125.0 20.9L127.5 20.9L130.0 20.9L132.5 20.9L135.0 20.9L137.5 20.9L140.0 20.9L142.5 20.8L145.0 20.8L147.5 20.8L150.0 20.8L152.5 20.8L155.0 20.8L157.5 20.8L160.0 20.8L162.5 20.8L165.0 20.8L167.5 20.8L170.0 20.8L172.5 20.8L175.0 20.8L177.5 20.8L180.0 20.8L182.5 20.8L185.0 20.8L187.5 20.8L190.0 20.8L192.5 20.8L195.0 20.8L197.5 20.8L200.0 20.8L202.5 20.8L205.0 20.8L207.5 20.8L210.0 20.8L212.5 20.8L215.0 20.8L217.5 20.8L220.0 20.8L222.5 20.8L225.0 20.8L227.5 20.8L230.0 20.8L232.5 20.8L235.0 20.8L237.5 20.8L240.0 20.8" fill="none" stroke="#efe6bd" stroke-width="1"/></svg>
+    <p class="small">Precise and fair. Critically damped: it arrives exactly, never bounces. The pointer is the wind; seedlings bow in a wave that spreads from it.</p>
+  </section>
+  <section>
+    <h3>Voice</h3><p>Plain, precise and even-handed. Facts first, then the rule, then the next step; never takes sides.</p>
+    <h3 style="margin-top:5mm">Interface copy (draft)</h3><table><tr><th>empty</th><td lang="ta">என்ன நடந்தது என்று வரிசையாகச் சொல்லுங்கள்.</td><td>Tell me what happened, in order.</td></tr><tr><th>loading</th><td lang="ta">சட்டத்தின் வாசகத்தோடு பொருத்திப் பார்க்கிறேன்…</td><td>Matching this to the Act's text…</td></tr><tr><th>success</th><td lang="ta">இதோ அந்தப் பிரிவு, சொல்லுக்குச் சொல்.</td><td>Here is the section, word for word.</td></tr><tr><th>error</th><td lang="ta">இதை எந்தப் பிரிவோடும் பொருத்த முடியவில்லை; அதனால் சொல்ல மாட்டேன்.</td><td>I can't match this to a section, so I won't state it.</td></tr><tr><th>confirm</th><td lang="ta">இந்தக் கட்டண வேண்டுகோளை அனுப்பலாமா? நீங்கள் உறுதி செய்யும் வரை பணம் நகராது.</td><td>Send this payment request? No money moves until you confirm.</td></tr></table>
+  </section>
+  <section>
+    <h3>Use for</h3><p>Civic and legal: Nyaya, Sezhi; everyday commerce.</p><p class="small">Home of Nyaya, Kadai.</p>
+    <p class="rule"><b>Nyaya</b><span lang="ta">நியாயம்</span> — Information, never advice; refer to legal aid</p><p class="rule"><b>Annachi</b><span lang="ta">அண்ணாச்சி</span> — Payment intent only — no money moves</p>
+    <h3 style="margin-top:5mm">Karupporul (draft)</h3><ul><li><b>Bird</b> <span lang="ta">நாரை · குருகு</span></li><li><b>Beast</b> <span lang="ta">எருமை · நீர்நாய்</span></li><li><b>Flower</b> <span lang="ta">தாமரை · கழுநீர்</span></li><li><b>Tree</b> <span lang="ta">மருதம் · காஞ்சி</span></li><li><b>Drum</b> <span lang="ta">நெல்லரி கிணை · மண முழவு</span></li><li><b>Yazh</b> <span lang="ta">மருத யாழ்</span></li><li><b>Melody</b> <span lang="ta">மருதப் பண்</span></li></ul>
+    <h3 style="margin-top:5mm">Do · Don't</h3>
+    <p class="small">Show the exact text · Label information apart from advice · Show totals before any confirm</p><p class="small" style="margin-top:1mm">Not: Take sides · Paraphrase the law · Hide a fee</p>
+  </section>
+</div>
+<div class="foot"><span><svg class="mark" viewBox="0 0 100 100" style="width:5mm;display:inline-block;vertical-align:middle"><circle cx="30.8" cy="30.6" r="12.3"/><circle cx="65.2" cy="26.9" r="16.3"/><circle cx="47.2" cy="67.4" r="22"/></svg> யாழி · Bubble UI</span><span>Persona and Tamil text are drafts pending native review · generated from packages/bubble</span></div>
+</body></html>

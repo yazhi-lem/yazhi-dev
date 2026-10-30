@@ -7,9 +7,27 @@ const OPTIONS: { value: Lang; label: string }[] = [
   { value: "both", label: "இரண்டும்" },
 ];
 
-/** The three-way TAM / ENG / BOTH toggle — same pattern as the live site. */
-export function LangToggle() {
+const SHORT: Record<Lang, string> = { ta: "த", en: "EN", both: "த·EN" };
+const NAMES: Record<Lang, string> = { ta: "Tamil", en: "English", both: "Tamil and English" };
+
+/** The three-way TAM / ENG / BOTH toggle — same pattern as the live site.
+    `compact` is one small button that steps through the three. */
+export function LangToggle({ compact = false }: { compact?: boolean }) {
   const { lang, setLang } = useLang();
+  if (compact) {
+    const next = OPTIONS[(OPTIONS.findIndex((o) => o.value === lang) + 1) % OPTIONS.length].value;
+    return (
+      <button
+        type="button"
+        onClick={() => setLang(next)}
+        aria-label={`Language / மொழி: ${NAMES[lang]}. Switch to ${NAMES[next]}`}
+        title="மொழி / Language"
+        className="grid h-10 min-w-10 place-items-center rounded-full px-2 text-sm text-ivory-dim transition-colors hover:bg-ivory/10 hover:text-ivory"
+      >
+        <span aria-hidden>{SHORT[lang]}</span>
+      </button>
+    );
+  }
   return (
     <div
       role="radiogroup"

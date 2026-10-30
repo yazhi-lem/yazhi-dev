@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { streamCompletion } from "@/lib/chat/backend";
 import { currentAccount, sameOrigin } from "@/lib/circle/session";
 import { CircleCallError } from "@/lib/circle/client";
-import { effectiveSystemPrompt, validateManifest, type BubbleManifest } from "@/lib/bubble/types";
+import { effectiveSystemPrompt, validateManifest, type BubbleManifest } from "@yazhi/bubble/lib/manifest";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
