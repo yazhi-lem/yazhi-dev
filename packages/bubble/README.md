@@ -123,4 +123,4 @@ so edit those and regenerate rather than editing `themes/` by hand.
 - [docs/HAIRLINE.md](docs/HAIRLINE.md) — the figures and the ten rules
 - [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) — the rules every Bubble screen keeps
 - [INVENTORY.md](INVENTORY.md) — where everything came from, and what stays in the app
-- [design/system/](design/system/README.md) — the Yazhi Bubble design system: `tokens.json` (Sovereign palette, the five tinai in light and dark, type, radii), the brand book, component guidelines with static previews (`components/<Name>/`), and their stylesheet
+- [design-system/](design-system/README.md) — the Yazhi Bubble design system: `tokens.json` (Sovereign palette, the five tinai in light and dark, type, radii), the brand book, component guidelines with static previews (`components/<Name>/`), and their stylesheet

@@ -60,6 +60,6 @@ of `/bubble`.
    Plex Mono. The Brand Identity System v1.1 and the Aram harness name
    Playfair Display (titles), EB Garamond (body) and Noto Sans Tamil (every
    Tamil run). Since Nov 2026 body and Tamil text are Nunito and Baloo
-   Thambi 2 (rounded, see `design/system/`); titles stay Playfair Display.
+   Thambi 2 (rounded, see `design-system/`); titles stay Playfair Display.
 3. **Brand kit README paths.** `design/brand/README.md` was written for the
    repo root; its `../src/...` links point at the app's sources.
