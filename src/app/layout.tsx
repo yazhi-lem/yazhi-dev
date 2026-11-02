@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Playfair_Display, Nunito, Baloo_Thambi_2, Noto_Serif_Tamil } from "next/font/google";
+import { Playfair_Display, Nunito, Baloo_Thambi_2 } from "next/font/google";
 import "@/styles/globals.css";
 import { LangProvider } from "@/lib/i18n";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -29,9 +29,14 @@ const balooThambi = Baloo_Thambi_2({
   subsets: ["tamil"],
   display: "swap",
 });
-const notoTamil = Noto_Serif_Tamil({
-  subsets: ["tamil", "latin"],
-  weight: ["400", "600"],
+// Self-hosted (Tamil subset, OFL): the Google-served stylesheet for Noto
+// Serif Tamil stopped resolving under Turbopack's next/font/google loader
+// in CI, so it loads from public/fonts like IBM Plex Mono.
+const notoTamil = localFont({
+  src: [
+    { path: "../../public/fonts/NotoSerifTamil-Tamil-Regular.woff2", weight: "400" },
+    { path: "../../public/fonts/NotoSerifTamil-Tamil-SemiBold.woff2", weight: "600" },
+  ],
   display: "swap",
 });
 const mono = localFont({

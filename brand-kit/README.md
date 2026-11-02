@@ -95,8 +95,8 @@ Brand Identity System and left as-is: `../src/styles/tokens.css`.
   self-hosted — `../public/fonts/IBMPlexMono-*.woff2`
 
 The live site self-hosts all four via `next/font` in `../src/app/layout.tsx`
-(Playfair Display / Nunito / Baloo Thambi 2 / Noto Serif Tamil via
-`next/font/google`, IBM Plex Mono via `next/font/local`). This specimen page
+(Playfair Display / Nunito / Baloo Thambi 2 via `next/font/google`;
+Noto Serif Tamil and IBM Plex Mono via `next/font/local` from `public/fonts/`). This specimen page
 loads the Google faces from the public Google Fonts CDN since it has no build step.
 
 ## Not covered here
