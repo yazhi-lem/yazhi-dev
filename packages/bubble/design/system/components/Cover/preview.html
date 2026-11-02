@@ -1,0 +1,39 @@
+<!-- @dsCard height=300 -->
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  html, body { margin: 0; background: var(--night); }
+  .cover { position: relative; width: 960px; height: 300px; overflow: hidden; background: var(--night); }
+  .cover svg { position: absolute; left: 0; top: 0; }
+  .gold { fill: var(--gold); } .bronze { fill: var(--bronze); } .ivory { fill: var(--ivory); }
+  .kurinji { fill: var(--kurinji); } .mullai { fill: var(--mullai); } .marutham { fill: var(--marutham); }
+  .neytal { fill: var(--neytal); } .palai { fill: var(--palai); } .ground { fill: var(--night); }
+  .card { rx: var(--radius-card); ry: var(--radius-card); }
+  .name { position: absolute; left: 40px; bottom: 76px; max-width: 440px; margin: 0;
+    font-family: var(--font-display); font-weight: 700; font-size: 104px; line-height: .95; color: var(--ivory); letter-spacing: 0; }
+  .tag { position: absolute; left: 40px; bottom: 40px; max-width: 440px; margin: 0;
+    font-family: var(--font-body); font-size: 14px; line-height: 1.55; color: var(--ivory-dim); }
+</style></head>
+<body>
+<div class="cover">
+  <svg width="960" height="300" viewBox="0 0 960 300" aria-hidden="true">
+    <!--
+      blocks: gold slab 240×300 bleeding top/bottom (radius-card), kurinji 200×144, neytal 200×140 bleeding right — tokens gold, kurinji, neytal; palai, mullai, neytal, ivory and night as discs
+      arrangement: one tall gold slab with satellites, flush to the right edge, blocks from x = 520
+      pattern: discs at bubble-l / bubble-m / bubble-s radii (38 / 28 / 21), packed so they never touch — "Bubbles … packed so they never touch" (Bubble UI)
+      scales: radius-card 1rem on blocks, radius-pill discs; gaps 16px (space 4) between blocks
+    -->
+    <rect class="gold card" x="520" y="-16" width="240" height="332"/>
+    <rect class="kurinji card" x="776" y="-16" width="200" height="160"/>
+    <rect class="neytal card" x="776" y="160" width="200" height="156"/>
+    <circle class="ground" cx="640" cy="96" r="38"/>
+    <circle class="palai" cx="716" cy="168" r="28"/>
+    <circle class="mullai" cx="600" cy="196" r="21"/>
+    <circle class="ground" cx="660" cy="250" r="28"/>
+    <circle class="neytal" cx="580" cy="60" r="21"/>
+    <circle class="ivory" cx="876" cy="148" r="21"/>
+  </svg>
+  <h1 class="name">Yazhi Bubble</h1>
+  <p class="tag">Tamil-first interfaces in five Sangam landscapes.</p>
+</div>
+</body></html>
