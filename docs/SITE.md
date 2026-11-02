@@ -41,8 +41,8 @@ gallery and the 3D zones (`src/lib/content.ts`, `src/three/materials/zones.ts`).
 ## 3. Design tokens
 
 - **Source of truth:** `src/styles/tokens.css`, generated into `brand-kit/`. Brand Identity v1.1 is the mark (three
-  bubbles, ratio 1.00 : 0.74 : 0.56), solid Cobalt/Cream, and Playfair Display / EB Garamond.
-- **Type:** Playfair Display + EB Garamond (Latin), Noto Serif Tamil (Tamil), plus a local display font, all
+  bubbles, ratio 1.00 : 0.74 : 0.56), solid Cobalt/Cream, and Playfair Display titles.
+- **Type:** Playfair Display (titles, with Noto Serif Tamil), Nunito + Baloo Thambi 2 (rounded body, Latin + Tamil), plus a local display font, all
   loaded in `src/app/layout.tsx`. Sizes are fluid with `clamp()`. **Never letter-space Tamil.**
 - **Accessibility:** zone colours are checked for contrast against their backgrounds (accent on dark ≈ 10:1); focus
   states are visible; motion respects user settings.

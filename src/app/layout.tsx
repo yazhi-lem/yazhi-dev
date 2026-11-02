@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Playfair_Display, EB_Garamond, Noto_Serif_Tamil } from "next/font/google";
+import { Playfair_Display, Nunito, Baloo_Thambi_2 } from "next/font/google";
 import "@/styles/globals.css";
 import { LangProvider } from "@/lib/i18n";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -8,12 +8,12 @@ import { ThinaiTheme } from "@/components/providers/ThinaiTheme";
 import { Motion } from "@/components/providers/Motion";
 import { MODE_SCRIPT } from "@yazhi/bubble/mode-script";
 
-/* Type system, per the Brand Identity System (v1.1): "Two typefaces, one
-   system. Playfair Display carries titles and the wordmark. EB Garamond
-   carries all body copy and captions. No sans-serif. Ever." Neither has
-   Tamil glyph coverage, so Noto Serif Tamil — the spec's own named
-   "Tamil face" — is chained in as the fallback in both stacks; Tamil
-   text (e.g. யாழி) falls through to it automatically per-character.
+/* Type system (Yazhi Bubble design system, Nov 2026). Playfair Display
+   carries titles and the wordmark, as in the Brand Identity System v1.1.
+   Body copy and Tamil text are rounded and readable, to match the bubbles:
+   Nunito for Latin, Baloo Thambi 2 (the Tamil member of the Baloo family)
+   for Tamil. This replaces v1.1's EB Garamond body. Tamil inside a
+   Playfair heading still falls through to Noto Serif Tamil.
    IBM Plex Mono is unaddressed by the brand kit (code/label context, not
    prose) and stays as-is. */
 const playfair = Playfair_Display({
@@ -21,14 +21,22 @@ const playfair = Playfair_Display({
   weight: ["700", "900"],
   display: "swap",
 });
-const ebGaramond = EB_Garamond({
+const nunito = Nunito({
   subsets: ["latin"],
-  weight: ["400"],
   display: "swap",
 });
-const notoTamil = Noto_Serif_Tamil({
-  subsets: ["tamil", "latin"],
-  weight: ["400", "600"],
+const balooThambi = Baloo_Thambi_2({
+  subsets: ["tamil"],
+  display: "swap",
+});
+// Self-hosted (Tamil subset, OFL): the Google-served stylesheet for Noto
+// Serif Tamil stopped resolving under Turbopack's next/font/google loader
+// in CI, so it loads from public/fonts like IBM Plex Mono.
+const notoTamil = localFont({
+  src: [
+    { path: "../../public/fonts/NotoSerifTamil-Tamil-Regular.woff2", weight: "400" },
+    { path: "../../public/fonts/NotoSerifTamil-Tamil-SemiBold.woff2", weight: "600" },
+  ],
   display: "swap",
 });
 const mono = localFont({
@@ -42,10 +50,10 @@ const mono = localFont({
 
 // Wordmark and display headings share the Playfair register (weight is
 // set per-use via font-weight utilities: 900 for the wordmark, 700 for
-// section headings); body copy uses EB Garamond. Both chain to Noto
-// Serif Tamil for glyphs neither Latin serif covers.
+// section headings) and chain to Noto Serif Tamil. Body copy is Nunito,
+// chained to Baloo Thambi 2 for Tamil glyphs.
 const displayStack = `${playfair.style.fontFamily}, ${notoTamil.style.fontFamily}, serif`;
-const bodyStack = `${ebGaramond.style.fontFamily}, ${notoTamil.style.fontFamily}, serif`;
+const bodyStack = `${nunito.style.fontFamily}, ${balooThambi.style.fontFamily}, system-ui, sans-serif`;
 
 export const metadata: Metadata = {
   title: "யாழி — இறையாண்மைச் செயற்கை நுண்ணறிவும் மொழி முன்னெடுப்பும் • Yazhi — Sovereign AI & Language Initiative",

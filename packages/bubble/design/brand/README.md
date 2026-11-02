@@ -4,7 +4,8 @@ Generated from the live design tokens (`../src/styles/tokens.css`) and the
 existing mark (`../src/components/ui/LogoMark.tsx`), brought into compliance
 with the Brand Identity System v1.1 (`Yazhi Brand Kit.pdf`, May 2026):
 three floating bubbles at ratio 1.00:0.74:0.56 with equal edge gaps, solid
-Cobalt/Cream fill (no gradient), and Playfair Display / EB Garamond type.
+Cobalt/Cream fill (no gradient), and Playfair Display headings over a
+rounded Nunito / Baloo Thambi 2 body.
 
 ## Contents
 
@@ -84,17 +85,19 @@ Brand Identity System and left as-is: `../src/styles/tokens.css`.
 
 - **Wordmark**: Playfair Display, Black (900), −3px tracking
 - **Section headings**: Playfair Display, Bold (700)
-- **Body**: EB Garamond, Regular (400)
-- **Tamil**: Noto Serif Tamil (400/600) — chained as the fallback for any
-  Tamil glyph in both the display and body stacks, since neither Playfair
-  Display nor EB Garamond has Tamil coverage
+- **Body**: Nunito (variable) — rounded and readable, to match the bubbles.
+  Replaces v1.1's EB Garamond (Yazhi Bubble design system, Nov 2026)
+- **Tamil text**: Baloo Thambi 2 (variable) — chained after Nunito in the
+  body stack; the Tamil member of the Baloo family, round like Nunito
+- **Tamil in headings**: Noto Serif Tamil (400/600) — chained after
+  Playfair Display, which has no Tamil coverage
 - **Mono** (code/labels, unaddressed by the brand kit): IBM Plex Mono,
   self-hosted — `../public/fonts/IBMPlexMono-*.woff2`
 
 The live site self-hosts all four via `next/font` in `../src/app/layout.tsx`
-(Playfair Display / EB Garamond / Noto Serif Tamil via `next/font/google`,
-IBM Plex Mono via `next/font/local`). This specimen page loads the same
-three from the public Google Fonts CDN since it has no build step.
+(Playfair Display / Nunito / Baloo Thambi 2 via `next/font/google`;
+Noto Serif Tamil and IBM Plex Mono via `next/font/local` from `public/fonts/`). This specimen page
+loads the Google faces from the public Google Fonts CDN since it has no build step.
 
 ## Not covered here
 

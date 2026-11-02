@@ -159,12 +159,12 @@ ${karuRows}
   writeFileSync(
     join(dir, "sheet.html"),
     `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${env.en} theme sheet</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600&family=Playfair+Display:wght@700;900&family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;600&family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
 <style>
 @page { size: A4 landscape; margin: 0 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{width:297mm;height:210mm;background:${p.ground};color:${p.text};font:12px/1.5 "EB Garamond",serif;padding:14mm 16mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-[lang=ta]{font-family:"Noto Sans Tamil",sans-serif;letter-spacing:0}
+body{width:297mm;height:210mm;background:${p.ground};color:${p.text};font:12px/1.5 "Nunito",sans-serif;padding:14mm 16mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+[lang=ta]{font-family:"Baloo Thambi 2",sans-serif;letter-spacing:0}
 .top{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid ${p.mid};padding-bottom:6mm}
 .eyebrow{font:10px/1 ui-monospace,monospace;text-transform:uppercase;letter-spacing:.14em;color:${p.accent}}
 h1{font:900 34px/1.1 "Playfair Display",serif;margin-top:3mm}

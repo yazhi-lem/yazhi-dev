@@ -28,7 +28,8 @@ with Mission Control open.
 - **Cut by grapheme** (`src/text.ts`, `Intl.Segmenter`), so கு is never
   torn into க and ு.
 - **Line height:** 1.75 in text, 1.35 in display.
-- **Noto Sans Tamil** for every Tamil run.
+- **Baloo Thambi 2** for Tamil text, chained after Nunito; Tamil inside a
+  Playfair heading falls through to Noto Serif Tamil.
 - **Input methods:** never act on Enter while `isComposing`.
 - **Drafts:** all Tamil is a draft until a native reviewer signs it off, and
   the screen says so.
