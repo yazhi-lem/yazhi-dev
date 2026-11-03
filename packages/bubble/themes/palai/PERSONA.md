@@ -45,7 +45,7 @@ Yazhi agents in this landscape: **Kural** (குறள், Kural Desk) — No s
 | `--env-edge` | `#8a6447` | `#9c7356` |
 | `--env-mid` | `#4d3828` | `#d2b9a2` |
 | `--env-lo` | `#2a1f17` | `#ebdfd0` |
-| `--env-accent` | `#c25b3c` | `#a8432a` |
+| `--env-accent` | `#cc6444` | `#a8432a` |
 | `--env-text` | `#f6ece0` | `#24160d` |
 | `--env-text-dim` | `#c9b8a6` | `#5f4a3b` |
 

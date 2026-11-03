@@ -1,0 +1,14 @@
+{
+  "name": "@yazhi/workspace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The shared bilingual shell for Yazhi's product workspaces: manifests, modular views, customizable layouts, workflows and the Pettagam audit log. Built on @yazhi/bubble.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19"
+  }
+}

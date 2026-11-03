@@ -21,7 +21,10 @@
     "paths": {
       "@/*": ["./src/*"],
       "@yazhi/bubble": ["./packages/bubble/src/index.ts"],
-      "@yazhi/bubble/*": ["./packages/bubble/src/*"]
+      "@yazhi/bubble/*": ["./packages/bubble/src/*"],
+      "@yazhi/workspace": ["./packages/workspace/src/index.ts"],
+      "@yazhi/workspace/*": ["./packages/workspace/src/*"],
+      "@yazhi/apps/*": ["./apps/*"]
     }
   },
   "include": [

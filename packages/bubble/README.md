@@ -122,5 +122,6 @@ so edit those and regenerate rather than editing `themes/` by hand.
 - [docs/AGENTS.md](docs/AGENTS.md) — Yazhi's agents and which are held back
 - [docs/HAIRLINE.md](docs/HAIRLINE.md) — the figures and the ten rules
 - [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) — the rules every Bubble screen keeps
+- [design-system/components/Workspace](design-system/components/Workspace/README.md) — PageChip, MachineDraft, SampleTag, HandoffCard, UploadCard, Segmented: the primitives the product workspaces share (see `/apps` and `packages/workspace`)
 - [INVENTORY.md](INVENTORY.md) — where everything came from, and what stays in the app
 - [design-system/](design-system/README.md) — the Yazhi Bubble design system: `tokens.json` (Sovereign palette, the five tinai in light and dark, type, radii), the brand book, component guidelines with static previews (`components/<Name>/`), and their stylesheet

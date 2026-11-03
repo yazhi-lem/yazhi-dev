@@ -8,7 +8,7 @@
   --env-edge: light-dark(#9c7356, #8a6447);
   --env-mid: light-dark(#d2b9a2, #4d3828);
   --env-lo: light-dark(#ebdfd0, #2a1f17);
-  --env-accent: light-dark(#a8432a, #c25b3c);
+  --env-accent: light-dark(#a8432a, #cc6444);
   --env-text: light-dark(#24160d, #f6ece0);
   --env-text-dim: light-dark(#5f4a3b, #c9b8a6);
   --accent: var(--env-accent);

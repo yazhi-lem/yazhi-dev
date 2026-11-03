@@ -54,7 +54,7 @@ export function ConfirmGate({
               onChange={(e) => setTyped(e.target.value)}
               placeholder={`Type ${confirmWord}`}
               aria-label={`Type ${confirmWord} to confirm`}
-              className="w-32 rounded-md border border-ivory/15 bg-night px-2 py-1 font-mono text-xs text-ivory focus:border-gold/60 focus:outline-none"
+              className="min-h-10 w-32 rounded-md border border-ivory/15 bg-night px-2 font-mono text-xs text-ivory focus:border-gold/60 focus:outline-none"
             />
           )}
           <button
@@ -64,7 +64,7 @@ export function ConfirmGate({
               setLocal("confirmed");
               onConfirm?.();
             }}
-            className="rounded-md bg-gold px-3 py-1 text-xs font-semibold text-night hover:bg-bronze disabled:opacity-40"
+            className="min-h-10 rounded-full bg-gold px-4 text-xs font-semibold text-night hover:bg-bronze disabled:opacity-40"
           >
             Confirm and run
           </button>
@@ -74,7 +74,7 @@ export function ConfirmGate({
               setLocal("declined");
               onDecline?.();
             }}
-            className="rounded-md border border-ivory/20 px-3 py-1 text-xs text-ivory-dim hover:text-ivory"
+            className="min-h-10 rounded-full border border-ivory/20 px-4 text-xs text-ivory-dim hover:text-ivory"
           >
             Don&apos;t run
           </button>

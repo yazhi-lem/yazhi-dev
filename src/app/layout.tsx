@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Playfair_Display, Nunito, Baloo_Thambi_2 } from "next/font/google";
+import { Playfair_Display, Nunito, Baloo_Thambi_2, Baloo_Tammudu_2 } from "next/font/google";
 import "@/styles/globals.css";
 import { LangProvider } from "@/lib/i18n";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -29,6 +29,13 @@ const balooThambi = Baloo_Thambi_2({
   subsets: ["tamil"],
   display: "swap",
 });
+// Telugu (Nyaya, then Kural): Baloo Tammudu 2, the Telugu member of the
+// same rounded family, so Tamil, Telugu and Latin sit together.
+const balooTammudu = Baloo_Tammudu_2({
+  subsets: ["telugu"],
+  display: "swap",
+  preload: false,
+});
 // Self-hosted (Tamil subset, OFL): the Google-served stylesheet for Noto
 // Serif Tamil stopped resolving under Turbopack's next/font/google loader
 // in CI, so it loads from public/fonts like IBM Plex Mono.
@@ -51,9 +58,9 @@ const mono = localFont({
 // Wordmark and display headings share the Playfair register (weight is
 // set per-use via font-weight utilities: 900 for the wordmark, 700 for
 // section headings) and chain to Noto Serif Tamil. Body copy is Nunito,
-// chained to Baloo Thambi 2 for Tamil glyphs.
+// chained to Baloo Thambi 2 for Tamil glyphs and Baloo Tammudu 2 for Telugu.
 const displayStack = `${playfair.style.fontFamily}, ${notoTamil.style.fontFamily}, serif`;
-const bodyStack = `${nunito.style.fontFamily}, ${balooThambi.style.fontFamily}, system-ui, sans-serif`;
+const bodyStack = `${nunito.style.fontFamily}, ${balooThambi.style.fontFamily}, ${balooTammudu.style.fontFamily}, system-ui, sans-serif`;
 
 export const metadata: Metadata = {
   title: "யாழி — இறையாண்மைச் செயற்கை நுண்ணறிவும் மொழி முன்னெடுப்பும் • Yazhi — Sovereign AI & Language Initiative",
