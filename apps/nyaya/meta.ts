@@ -23,6 +23,7 @@ export const NYAYA_META: WorkspaceMeta = {
   views: [
     {
       id: "ask",
+      icon: "scale",
       label: { ta: "கேள்", en: "Ask", te: "అడగండి" },
       purpose: {
         ta: "சட்டக் கேள்வி கேளுங்கள். ஒவ்வொரு படியும் சட்டப் பிரிவைச் சுட்டும்; பொருந்தாவிட்டால் “தெரியவில்லை” என்று சட்ட உதவியிடம் ஒப்படைக்கும்.",
@@ -33,6 +34,7 @@ export const NYAYA_META: WorkspaceMeta = {
     },
     {
       id: "explain",
+      icon: "doc",
       label: { ta: "ஆவண விளக்கம்", en: "Explain a document", te: "పత్రం వివరణ" },
       purpose: {
         ta: "ஒப்பந்தத்தைப் பதிவேற்றுங்கள்: தரப்பினர், கடமைகள், தொகைகள், தேதிகள், கவனிக்க வேண்டிய பிரிவுகள் — ஒவ்வொன்றும் மூலப் பிரிவுடன். கையெழுத்திடலாமா என்று சொல்லாது.",
@@ -43,6 +45,7 @@ export const NYAYA_META: WorkspaceMeta = {
     },
     {
       id: "eligibility",
+      icon: "shield",
       label: { ta: "இலவச சட்ட உதவி", en: "Legal-aid check", te: "ఉచిత న్యాయ సహాయం" },
       purpose: {
         ta: "சில ஆம்/இல்லை கேள்விகள்: இலவச சட்ட உதவிக்குத் தகுதியிருக்கலாமா என்று அறியுங்கள். பதில்கள் எங்கும் சேமிக்கப்படாது.",
@@ -53,6 +56,7 @@ export const NYAYA_META: WorkspaceMeta = {
     },
     {
       id: "draft",
+      icon: "pen",
       label: { ta: "வரைவு", en: "Summary & draft", te: "ముసాయిదా" },
       purpose: {
         ta: "வழக்கு உண்மைகளை ஒட்டுங்கள்: சுருக்கமும் அறிவிப்பு வரைவும் — “வழக்கறிஞர் மதிப்பாய்வுக்கான வரைவு”. திருத்தங்கள் பதிவாகும்.",

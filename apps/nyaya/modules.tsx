@@ -186,6 +186,7 @@ function Explain({ ctx }: { ctx: ModuleContext }) {
             hint={t({ ta: "டெமோ முறையில் மாதிரி ஒப்பந்தம் மட்டுமே விளக்கப்படும்; உங்கள் கோப்பு இந்த உலாவியை விட்டு வெளியேறாது.", en: "In demo mode only the sample agreement is explained; your file never leaves this browser.", te: "డెమోలో నమూనా ఒప్పందం మాత్రమే వివరించబడుతుంది; మీ ఫైల్ ఈ బ్రౌజర్ దాటదు." })}
             accept=".pdf,image/*"
             items={items}
+            labels={{ choose: t({ ta: "கோப்புகளைத் தேர்ந்தெடு", en: "Choose files", te: "ఫైళ్లను ఎంచుకోండి" }), tickFirst: t({ ta: "முதலில் மேலே உள்ள பெட்டியைத் தேர்வு செய்யுங்கள்", en: "Tick the box above to choose files", te: "ముందుగా పై పెట్టెను ఎంచుకోండి" }) }}
             onFiles={(fs) => setItems(fs.map((f, i) => ({ id: `${i}`, name: f.name, size: f.size, status: "rejected", note: "demo: sample only" })))}
             consent={t({ ta: "இந்த ஆவணத்தைப் பகிர அதன் உரிமையாளரின் ஒப்புதல் உள்ளது; அமர்வு முடிந்ததும் அது நீக்கப்படும்.", en: "The person this document belongs to agrees to share it; it is deleted when the session ends.", te: "ఈ పత్రం యజమాని దీనిని పంచుకోవడానికి అంగీకరించారు; సెషన్ ముగిసినప్పుడు తొలగించబడుతుంది." })}
           />

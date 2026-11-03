@@ -19,3 +19,6 @@ export { AuditPanel, appendAudit, useAudit, verifyChain, IST, type AuditEntry } 
 export { useWorkspacePrefs, type WorkspacePrefs } from "./prefs";
 export { useWsLang, LangToggle, pick, LANG_KEY, LANG_NAMES } from "./lang";
 export { useStored, useShared, getShared, setShared, readStored, writeStored, uid } from "./store";
+export { Icon, type IconName } from "./icons";
+export { useDialogFocus, useTextSize, useSlashToAsk, TEXT_SIZES, type TextSize } from "./a11y";
+export { Tabs } from "./Tabs";

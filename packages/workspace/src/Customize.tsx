@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useDialogFocus } from "./a11y";
 import { ENVIRONMENTS, Segmented, TinaiMark, type ThinaiKey } from "@yazhi/bubble";
 import type { useWorkspacePrefs } from "./prefs";
 import type { Bi, ViewMeta, WorkspaceManifest } from "./types";
@@ -32,7 +33,7 @@ const L = {
 } satisfies Record<string, Bi>;
 
 const iconBtn =
-  "grid h-8 w-8 place-items-center rounded-full border border-ivory/15 text-xs text-ivory-dim hover:border-ivory/40 hover:text-ivory disabled:opacity-30";
+  "grid h-10 w-10 place-items-center rounded-full border border-ivory/15 text-xs text-ivory-dim hover:border-ivory/40 hover:text-ivory disabled:opacity-30";
 
 /** The Customize drawer: which modules a view shows, in which column and
     order; the landscape; and the workflows — switch steps off, reorder
@@ -53,16 +54,11 @@ export function CustomizeDrawer({
   const [tab, setTab] = useState<Tab>("layout");
   const panel = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    panel.current?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  useDialogFocus(panel, onClose);
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
-      <button type="button" aria-label={t(L.close)} onClick={onClose} className="absolute inset-0 bg-night/60 backdrop-blur-[2px]" />
+      <button type="button" tabIndex={-1} aria-hidden onClick={onClose} className="absolute inset-0 bg-night/60 backdrop-blur-[2px]" />
       <div
         ref={panel}
         tabIndex={-1}
@@ -76,7 +72,7 @@ export function CustomizeDrawer({
             <p className="text-[11px] text-[color:var(--accent)]">{manifest.name}</p>
             <h2 className="text-base font-semibold">{t(L.title)}</h2>
           </div>
-          <button type="button" onClick={onClose} className="min-h-10 rounded-full border border-ivory/20 px-3 text-sm text-ivory-dim hover:text-ivory">
+          <button type="button" data-autofocus onClick={onClose} className="min-h-11 rounded-full border border-ivory/20 px-4 text-sm text-ivory-dim hover:text-ivory">
             {t(L.close)}
           </button>
         </header>

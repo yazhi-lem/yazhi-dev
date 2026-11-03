@@ -24,7 +24,10 @@ export function Pill({
   lang?: "ta" | "en";
   title?: string;
 }) {
-  const type = lang === "ta" ? "text-[11px]" : "font-mono text-[10px] uppercase tracking-wider";
+  // Tamil and Telugu are never letter-spaced or set in mono caps, whether
+  // or not the caller remembered to pass lang
+  const indic = lang === "ta" || (typeof children === "string" && /[\u0B80-\u0BFF\u0C00-\u0C7F]/.test(children));
+  const type = indic ? "text-[11px]" : "font-mono text-[10px] uppercase tracking-wider";
   return (
     <span lang={lang} title={title} className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 ${type} ${TONES[tone]}`}>
       {children}

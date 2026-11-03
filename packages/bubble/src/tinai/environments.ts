@@ -93,7 +93,7 @@ export const ENVIRONMENTS: Environment[] = [
       edge: "#8a6447",
       mid: "#4d3828",
       lo: "#2a1f17",
-      accent: "#c25b3c",
+      accent: "#cc6444", // #c25b3c measured 4.32:1 on its surface; this keeps AA (4.87:1)
       text: "#f6ece0",
       textDim: "#c9b8a6",
     },

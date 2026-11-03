@@ -23,6 +23,7 @@ export const KURAL_META: WorkspaceMeta = {
   views: [
     {
       id: "desk",
+      icon: "desk",
       label: { ta: "வாடிக்கையாளர் மேசை", en: "Customer desk" },
       purpose: {
         ta: "அரட்டையிலோ மின்னஞ்சலிலோ வாடிக்கையாளர் கேட்பதற்கு, கடையின் பதிவுகளிலிருந்து மட்டுமே பதில். இல்லையெனில் ஊழியரிடம் ஒப்படைப்பு.",
@@ -32,6 +33,7 @@ export const KURAL_META: WorkspaceMeta = {
     },
     {
       id: "queue",
+      icon: "inbox",
       label: { ta: "சீட்டு வரிசை", en: "Ticket queue" },
       purpose: {
         ta: "வரும் சீட்டுகள் வகை, முன்னுரிமை, பரிந்துரைப் பதிலுடன். அனுப்புவதற்கு முன் நீங்கள் ஒப்புக்கொள்ளுங்கள்.",
@@ -41,6 +43,7 @@ export const KURAL_META: WorkspaceMeta = {
     },
     {
       id: "returns",
+      icon: "undo",
       label: { ta: "திருப்புதல்", en: "Returns" },
       purpose: {
         ta: "அண்ணாச்சி திருப்பும் கோரிக்கையை முன்மொழிகிறார்; உரிமையாளர் உறுதிசெய்கிறார்; நிலையை வாடிக்கையாளர் பின்தொடரலாம்.",
@@ -50,6 +53,7 @@ export const KURAL_META: WorkspaceMeta = {
     },
     {
       id: "knowledge",
+      icon: "base",
       label: { ta: "அறிவுத் தளம்", en: "Knowledge base" },
       purpose: {
         ta: "குரல் பதில் சொல்லக்கூடியவை இவை மட்டுமே: கேள்வி-பதில்கள், பொருட்பட்டியல், கொள்கைகள், ஆர்டர்கள்.",

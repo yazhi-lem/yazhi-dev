@@ -7,7 +7,7 @@ One folder per product, each a thin workspace on the shared shell
 
 | Workspace | Route | Landscape | Views | Agents |
 |---|---|---|---|---|
-| **Guru · குரு** | `/guru` | Mullai | Notebook · Tiers · Quiz · Teacher | Note agent, Vaathi |
+| **Guru · குரு** | `/guru` | Mullai | Notebooks · Ask · Practice · History · Faculty | Note agent, Vaathi |
 | **Nyaya · நியாயா · న్యాయ** | `/nyaya` | Marutham | Ask · Explain a document · Legal-aid check · Summary & draft | Nyaya |
 | **Kural · குரல்** | `/kural` | Palai | Customer desk · Ticket queue · Returns · Knowledge base | Kural, Annachi |
 | **Kadai · கடை** | `/kadai` | Marutham (gold) | Counter · Orders · Kural desk · Returns | Annachi, Kanaku, Kural |
@@ -75,10 +75,54 @@ records completions in Pettagam.
 - **Sample data** on every reply; **†** — all Tamil and Telugu here is an AI
   draft until Kabilar and the Telugu reviewer sign it off.
 
+## Guru, after the Guru Book mockups
+
+Guru follows the five Guru Book mockup screens:
+
+1. **Notebooks** — a greeting, one ask box (தமிழ் · English · Tanglish) and
+   the notebooks as covers with their code, faculty and source count.
+2. **Cited answer** — numbered marks in the answer, then the numbered
+   sources (file, page, faculty); each opens in place with the verified
+   span. "Answer in" switches the answer between Tamil, English and
+   Tanglish; "Practice this" opens the past papers on that topic.
+3. **Not in your notes** — said plainly, with the closest page the faculty
+   shared, "Open … page 20", and "Flag for [faculty] (anonymous)", which
+   reaches the faculty's Questions tab without the student's name.
+4. **Practice** — past-paper questions with paper and marks tags; "Try
+   answer" asks the student to write first, then compares with the outline
+   from their notes. Summary (three tiers) and a quick quiz sit beside it.
+5. **Faculty** — the notebook's title, then Sources (upload, and a table of
+   type, pages and status: searchable, indexing with progress, scanned),
+   Study aids (approve machine drafts) and Questions (anonymous flags, top
+   questions, weak areas); Shared with (sections behind a confirm) and
+   Answer languages beside it.
+
+History keeps a student's questions and quizzes on their device only.
+
+## Accessibility
+
+Checked with axe-core (WCAG 2.2 A/AA and best practice) on every route, in
+light and dark and at phone width: no violations. Beyond that:
+
+- **Skip link** to the content, one `h1` per view, `h2`/`h3` in order.
+- **Phones:** views move to a bottom tab bar within thumb reach; nothing
+  scrolls sideways at 390px; touch targets 44px.
+- **Display** (Aa in the header): text size 100 / 112.5 / 125% for every
+  workspace, light or dark, and the language on phones.
+- **Keyboard:** `/` jumps to the question box; tabs follow the ARIA tabs
+  pattern (arrow keys, Home, End); the Display and Customize dialogs keep
+  focus inside, close on Escape and hand focus back.
+- **Screen readers:** answers are announced when ready; citation marks are
+  named ("Source 1: Unit 8 Notes…, page 18"); disclosures say whether they
+  are open; quiz marks say "correct" or "your answer, wrong", not just ✓ ✕.
+- **Language:** Tamil and Telugu are never letter-spaced (Pill now checks
+  the script itself); Telugu renders in Baloo Tammudu 2.
+- **Contrast:** Palai's dark accent moved from `#c25b3c` (4.32:1 on its
+  surface) to `#cc6444` (4.87:1), so small accent text passes AA in every
+  landscape.
+
 ## Not yet wired
 
 Replies come from fixtures. In the product each module calls yazhi-api
 (gateway → Aram harness → inference API); the module boundaries are where
-those calls go. The Guru Book mockup in Claude Design was not reachable from
-this build, so Guru follows the Bubble design system; fold the mockup in when
-it's exported.
+those calls go.

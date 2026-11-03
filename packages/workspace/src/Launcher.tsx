@@ -12,12 +12,18 @@ export function WorkspaceLauncher({ workspaces, Link, account, home }: { workspa
   return (
     <TinaiScope tinai="kurinji" className="min-h-dvh">
       <div lang={lang} className="flex min-h-dvh flex-col">
+        <a
+          href="#ws-main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[60] focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-night"
+        >
+          {t({ ta: "உள்ளடக்கத்துக்குச் செல்", en: "Skip to content", te: "విషయానికి వెళ్ళు" })}
+        </a>
         <header className="sticky top-0 z-40 border-b border-ivory/10 bg-night/90 backdrop-blur">
           <div className="mx-auto flex max-w-[90rem] flex-wrap items-center justify-between gap-3 px-4 py-2.5">
             <div className="flex min-w-0 items-center gap-3">
               {home}
               <div className="min-w-0">
-                <p className="truncate text-base font-semibold text-ivory">{t({ ta: "பணியிடங்கள்", en: "Workspaces", te: "వర్క్‌స్పేస్‌లు" })}</p>
+                <h1 className="truncate text-base font-semibold text-ivory">{t({ ta: "பணியிடங்கள்", en: "Workspaces", te: "వర్క్‌స్పేస్‌లు" })}</h1>
                 <p className="truncate text-xs text-ivory-dim">
                   {t({ ta: "ஒரே தளம், ஒவ்வொரு தயாரிப்புக்கும் ஒரு பணியிடம்", en: "One shell, one workspace per product", te: "ఒకే షెల్, ప్రతి ఉత్పత్తికి ఒక వర్క్‌స్పేస్" })}
                 </p>
@@ -30,7 +36,7 @@ export function WorkspaceLauncher({ workspaces, Link, account, home }: { workspa
             </div>
           </div>
         </header>
-        <main className="mx-auto w-full max-w-[90rem] flex-1 px-4 py-6">
+        <main id="ws-main" tabIndex={-1} className="mx-auto w-full max-w-[90rem] flex-1 px-4 py-6 focus:outline-none">
           <ul className="grid gap-4 md:grid-cols-2">
             {workspaces.map((w) => {
               const local = lang === "te" && w.teName ? w.teName : w.taName;
@@ -57,13 +63,13 @@ export function WorkspaceLauncher({ workspaces, Link, account, home }: { workspa
                         <dd className="text-ivory">{t(w.pilot)}</dd>
                       </dl>
                       <div>
-                        <p className="mb-1.5 font-mono text-[10px] uppercase tracking-wider text-ivory-dim">Views</p>
+                        <h3 className="mb-1.5 text-xs font-semibold text-ivory-dim">{t({ ta: "பார்வைகள்", en: "Views", te: "వీక్షణలు" })}</h3>
                         <ul className="flex flex-wrap gap-1.5">
                           {w.views.map((v, i) => (
                             <li key={v.id}>
                               <Link
                                 href={i === 0 ? w.base : `${w.base}/${v.id}`}
-                                className="inline-flex min-h-9 items-center rounded-full border border-[color:var(--accent)]/40 px-3 text-xs text-[color:var(--accent)] hover:bg-[color:var(--accent)]/10"
+                                className="inline-flex min-h-10 items-center rounded-full border border-[color:var(--accent)]/40 px-3 text-xs text-[color:var(--accent)] hover:bg-[color:var(--accent)]/10"
                               >
                                 {t(v.label)}
                               </Link>
@@ -72,7 +78,7 @@ export function WorkspaceLauncher({ workspaces, Link, account, home }: { workspa
                         </ul>
                       </div>
                       <div>
-                        <p className="mb-1.5 font-mono text-[10px] uppercase tracking-wider text-ivory-dim">Workflows</p>
+                        <h3 className="mb-1.5 text-xs font-semibold text-ivory-dim">{t({ ta: "பணிவழிகள்", en: "Workflows", te: "వర్క్‌ఫ్లోలు" })}</h3>
                         <ul className="space-y-1 text-xs">
                           {w.workflows.map((f) => (
                             <li key={f.id} className="flex flex-wrap items-baseline gap-x-2 text-ivory">

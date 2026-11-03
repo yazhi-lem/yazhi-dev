@@ -118,6 +118,7 @@ export function UploadCard({
   items = [],
   onFiles,
   consent,
+  labels = {},
 }: {
   title: ReactNode;
   hint?: ReactNode;
@@ -127,6 +128,8 @@ export function UploadCard({
   onFiles: (files: File[]) => void;
   /** a consent line the person must tick before choosing files (DPDP) */
   consent?: ReactNode;
+  /** the button's words in the screen's language */
+  labels?: { choose?: string; tickFirst?: string };
 }) {
   const id = useId();
   const input = useRef<HTMLInputElement>(null);
@@ -139,8 +142,8 @@ export function UploadCard({
   return (
     <div className="space-y-3">
       {consent && (
-        <label className="flex items-start gap-2 text-xs text-ivory-dim">
-          <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="mt-0.5 accent-[var(--gold)]" />
+        <label className="flex min-h-11 cursor-pointer items-start gap-3 text-sm text-ivory">
+          <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="mt-0.5 h-6 w-6 shrink-0 accent-[var(--gold)]" />
           <span>{consent}</span>
         </label>
       )}
@@ -157,18 +160,18 @@ export function UploadCard({
         }}
         className={`grid place-items-center gap-2 rounded-xl border border-dashed px-4 py-6 text-center transition ${
           over ? "border-[color:var(--accent)] bg-[color:var(--accent)]/10" : "border-ivory/20"
-        } ${agreed ? "" : "opacity-50"}`}
+        }`}
       >
         <p className="text-sm font-semibold text-ivory">{title}</p>
         {hint && <p className="max-w-sm text-xs text-ivory-dim">{hint}</p>}
-        <input id={id} ref={input} type="file" multiple accept={accept} className="sr-only" disabled={!agreed} onChange={(e) => take(e.target.files)} />
-        <label
-          htmlFor={id}
-          aria-disabled={!agreed}
-          className={`inline-flex min-h-11 cursor-pointer items-center rounded-full bg-gold px-4 text-sm font-semibold text-night hover:bg-bronze ${agreed ? "" : "pointer-events-none"}`}
-        >
-          Choose files
-        </label>
+        <input id={id} ref={input} type="file" multiple accept={accept} aria-label={labels.choose ?? "Choose files"} className="sr-only" disabled={!agreed} onChange={(e) => take(e.target.files)} />
+        {agreed ? (
+          <label htmlFor={id} className="inline-flex min-h-11 cursor-pointer items-center rounded-full bg-gold px-5 text-sm font-semibold text-night hover:bg-bronze">
+            {labels.choose ?? "Choose files"}
+          </label>
+        ) : (
+          <p className="inline-flex min-h-11 items-center rounded-full border border-dashed border-ivory/30 px-4 text-xs text-ivory-dim">{labels.tickFirst ?? "Tick the box above to choose files"}</p>
+        )}
       </div>
       {items.length > 0 && (
         <ul className="space-y-1.5">

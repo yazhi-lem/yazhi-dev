@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { WorkspaceLauncher, WorkspaceShell, type LinkLike } from "@yazhi/workspace";
 import { MANIFESTS } from "@yazhi/apps/registry";
 import { WORKSPACES } from "@yazhi/apps/meta";
@@ -14,7 +15,7 @@ const NextLink: LinkLike = ({ href, className, children, ...rest }) => (
 
 function Home({ to = "/workspaces", label = "All workspaces" }: { to?: string; label?: string }) {
   return (
-    <Link href={to} aria-label={label} title={label} className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-ivory/15 hover:border-ivory/40">
+    <Link href={to} aria-label={label} title={label} className="grid h-11 w-11 shrink-0 place-items-center rounded-full border sm:h-9 sm:w-9 border-ivory/15 hover:border-ivory/40">
       <LogoMark size={20} />
     </Link>
   );
@@ -24,11 +25,13 @@ function Home({ to = "/workspaces", label = "All workspaces" }: { to?: string; l
 export function WorkspaceRoute({ id, view }: { id: string; view?: string }) {
   const manifest = MANIFESTS[id];
   const host = manifest.mountsIn ? MANIFESTS[manifest.mountsIn] : undefined;
+  const router = useRouter();
   return (
     <WorkspaceShell
       manifest={manifest}
       viewId={view}
       Link={NextLink}
+      navigate={router.push}
       home={<Home />}
       account={<MissionMenu size={34} />}
       embeddedIn={host ? `${host.name} · ${host.taName}` : undefined}

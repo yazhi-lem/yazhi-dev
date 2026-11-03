@@ -24,6 +24,7 @@ export const KADAI_META: WorkspaceMeta = {
   views: [
     {
       id: "counter",
+      icon: "store",
       label: { ta: "கவுண்டர்", en: "Counter" },
       purpose: {
         ta: "வாடிக்கையாளர் தமிழில் சொல்கிறார்; அண்ணாச்சி பொருட்களைக் காட்டுகிறார்; கடை உறுதிசெய்கிறது. பணம் யாழி வழியாகச் செல்லாது.",
@@ -33,6 +34,7 @@ export const KADAI_META: WorkspaceMeta = {
     },
     {
       id: "orders",
+      icon: "list",
       label: { ta: "ஆர்டர்கள்", en: "Orders" },
       purpose: {
         ta: "கடையின் ஆர்டர்கள். நிலை மாற்றம் ஒவ்வொன்றும் உங்கள் ஒப்புதலுடன் — குரல் வாடிக்கையாளருக்குச் சொல்வது இதையே.",
@@ -42,6 +44,7 @@ export const KADAI_META: WorkspaceMeta = {
     },
     {
       id: "desk",
+      icon: "desk",
       label: { ta: "குரல் மேசை", en: "Kural desk" },
       purpose: {
         ta: "குரல், கடைக்குள்: வாடிக்கையாளர் அரட்டை, மின்னஞ்சல் வரிசை, அறிவுத் தளம் — அதே தொகுதிகள்.",
@@ -51,6 +54,7 @@ export const KADAI_META: WorkspaceMeta = {
     },
     {
       id: "returns",
+      icon: "undo",
       label: { ta: "திருப்புதல்", en: "Returns" },
       purpose: {
         ta: "அண்ணாச்சி திருப்புதலை முன்மொழிகிறார்; நீங்கள் உறுதிசெய்கிறீர்கள்.",

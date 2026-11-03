@@ -10,7 +10,7 @@ The pieces the product workspaces (Guru, Nyaya, Kural, Kadai) share. Same rules 
 
 **HandoffCard** — `title`, `reason`, `ticket`, `who`. When the agent isn't sure it hands the conversation to a person and says so, with the ticket the person will pick up. Neytal tone.
 
-**UploadCard** — `title`, `hint`, `accept`, `items`, `onFiles`, `consent`. Drop zone plus a gold "Choose files"; an optional consent line must be ticked first (DPDP). The card sends nothing anywhere; the host decides what happens to the files.
+**UploadCard** — `title`, `hint`, `accept`, `items`, `onFiles`, `consent`, `labels`. Drop zone plus a gold "Choose files"; an optional consent line (24px checkbox) must be ticked first (DPDP) — until then the button says so instead of fading out, so every line stays readable. `labels` puts the button's words in the screen's language. The card sends nothing anywhere; the host decides what happens to the files.
 
 **Segmented** — `label`, `options`, `value`, `onChange`. A radio group drawn as pills: tiers, channels, languages. The chosen pill is filled `accent` with `night` text.
 

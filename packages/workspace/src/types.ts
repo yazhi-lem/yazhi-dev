@@ -1,5 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
 import type { ThinaiKey } from "@yazhi/bubble";
+import type { IconName } from "./icons";
 
 /** The languages a workspace can speak. Tamil leads; English is second;
     Telugu is the next local language (Nyaya first). */
@@ -30,6 +31,8 @@ export interface ViewMeta {
   /** one line under the tabs: what this view is for */
   purpose: Bi;
   layout: Layout;
+  /** shown in the phone tab bar beside the label */
+  icon?: IconName;
 }
 
 /** A step in a workflow: a place (the view) and a thing to do there. */
@@ -95,6 +98,8 @@ export interface ModuleContext {
   log: (what: string, sources?: string[]) => void;
   /** a link to another view of this workspace */
   href: (viewId: string) => string;
+  /** go to another view (after an action, e.g. asking from the home view) */
+  go: (viewId: string) => void;
   Link: LinkLike;
   /** the workspace's workflows as this person has arranged them */
   workflows: WorkflowDef[];
