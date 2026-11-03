@@ -57,6 +57,7 @@ export function MissionAccount() {
 const PLACES = [
   { href: "/chat", name: "Yazhi Chat", note: "Talk to Yazhi's agents" },
   { href: "/bubble", name: "Bubble UI", note: "The UI library and design system" },
+  { href: "/workspaces", name: "Workspaces", note: "Guru, Nyaya, Kural and Kadai" },
 ];
 
 /** Where Mission Control can take you. */

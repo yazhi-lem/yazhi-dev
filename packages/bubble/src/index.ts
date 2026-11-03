@@ -18,6 +18,7 @@ export { ConfirmGate, type GateState } from "./components/ConfirmGate";
 export { MessageBubble, TypingDots } from "./components/Message";
 export { Composer } from "./components/Composer";
 export { KuralQuote, Stepper } from "./components/Verse";
+export { PageChip, MachineDraft, SampleTag, HandoffCard, UploadCard, Segmented, type UploadItem } from "./components/Workspace";
 
 export { BubbleTray, type TrayItem } from "./modules/BubbleTray";
 export { ChatThread, type ThreadTurn } from "./modules/ChatThread";

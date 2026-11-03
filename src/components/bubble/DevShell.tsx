@@ -10,6 +10,7 @@ import { MissionMenu } from "@/components/mission/Mission";
 const NAV = [
   { href: "/bubble", name: "UI library" },
   { href: "/chat", name: "Chat" },
+  { href: "/workspaces", name: "Workspaces" },
 ];
 
 /** Chrome for the Bubble UI library: logo, two places, the theme and
