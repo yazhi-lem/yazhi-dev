@@ -1,0 +1,563 @@
+{
+  "source": "open-sangam data/knowledge/tinai_context.json",
+  "rules": "see TINAI_REFERENCE_PACK.md",
+  "objects": [
+    {
+      "tinai": "kurinji",
+      "ta": "அருவி",
+      "en": "Waterfall",
+      "subject": "Western Ghats cascade",
+      "verses": 85,
+      "size": "30–60 m drop",
+      "mustMatch": "Stepped granite ledges, thin braided falls, a plunge pool",
+      "decide": false,
+      "references": [],
+      "searchHint": "Habitat search only: \"Western Ghats waterfall\", Commons",
+      "approved": false
+    },
+    {
+      "tinai": "kurinji",
+      "ta": "வேங்கை",
+      "en": "Venkai",
+      "subject": "Pterocarpus marsupium",
+      "verses": 77,
+      "size": "15–25 m",
+      "mustMatch": "Crooked trunk; grey, cracked bark; pinnate leaves of 5–7 leaflets; dense golden-yellow panicles at branch tips",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Pterocarpus_marsupium",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Vengai AJTJ IMG8408",
+          "url": "https://commons.wikimedia.org/wiki/File:Vengai,_Pterocarpus_marsupium_AJTJ_IMG8408.jpg",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "kurinji",
+      "ta": "யானை",
+      "en": "Elephant",
+      "subject": "Elephas maximus indicus",
+      "verses": 68,
+      "size": "2.5–3 m at the shoulder",
+      "mustMatch": "Twin-domed head, small rounded ears, back highest mid-body, one \"finger\" on the trunk tip, a tusked bull",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Elephas_maximus",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Asian elephant (Tamil file)",
+          "url": "https://commons.wikimedia.org/wiki/File:%E0%AE%86%E0%AE%9A%E0%AE%BF%E0%AE%AF_%E0%AE%AF%E0%AE%BE%E0%AE%A9%E0%AF%88_-_Asian_elephant_-_Elephas_maximus.jpg",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Bull Indian elephant",
+          "url": "https://commons.wikimedia.org/wiki/File:Bull_Indian_elephant.jpg",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "kurinji",
+      "ta": "காந்தள்",
+      "en": "Glory lily",
+      "subject": "Gloriosa superba",
+      "verses": 40,
+      "size": "6–8 cm flower",
+      "mustMatch": "Six wavy tepals swept back, red with a yellow base; spreading stamens; climbing, with tendrils at the leaf tips",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Gloriosa_superba",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Silent Valley 2016 (CC BY-SA 4.0)",
+          "url": "https://commons.wikimedia.org/wiki/File:Gloriosa_superba-Silent_Valley-2016-08-14-001.jpg",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "செங்காந்தள் மலர்",
+          "url": "https://commons.wikimedia.org/wiki/File:%E0%AE%9A%E0%AF%86%E0%AE%99%E0%AF%8D%E0%AE%95%E0%AE%BE%E0%AE%A8%E0%AF%8D%E0%AE%A4%E0%AE%B3%E0%AF%8D_%E0%AE%AE%E0%AE%B2%E0%AE%B0%E0%AF%8D_-_Flame_lily_flower_-_Gloriosa_superba.jpg",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "kurinji",
+      "ta": "மயில்",
+      "en": "Peacock",
+      "subject": "Pavo cristatus, male",
+      "verses": 21,
+      "size": "about 1 m body; 1–1.5 m train",
+      "mustMatch": "Crest fan of spatula-tipped feathers, blue neck, a train with eye-spots",
+      "decide": false,
+      "references": [
+        {
+          "label": "Male category",
+          "url": "https://commons.wikimedia.org/wiki/Pavo_cristatus_(male",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Quality images",
+          "url": "https://commons.wikimedia.org/wiki/Category:Quality_images_of_Pavo_cristatus",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "mullai",
+      "ta": "முல்லை",
+      "en": "Jasmine",
+      "subject": "Jasminum auriculatum",
+      "verses": 66,
+      "size": "1.5 cm flower; 2–3 m climber",
+      "mustMatch": "Small white flowers with 5–8 lobes in loose clusters; small \"eared\" lateral leaflets",
+      "decide": false,
+      "references": [
+        {
+          "label": "Talakona forest, AP",
+          "url": "https://commons.wikimedia.org/wiki/File:Jasminum_auriculatum_(Juhi",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Plant (CC BY-SA 4.0)",
+          "url": "https://commons.wikimedia.org/wiki/File:Jasminum_auriculatum_plant_(Chukka_malle_chettu",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "mullai",
+      "ta": "கொன்றை",
+      "en": "Golden shower",
+      "subject": "Cassia fistula",
+      "verses": 27,
+      "size": "10–15 m",
+      "mustMatch": "Hanging racemes 30–60 cm long of bright yellow flowers; long dark cylindrical pods",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Cassia_fistula",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Flowers",
+          "url": "https://commons.wikimedia.org/wiki/Category:Cassia_fistula_(flowers",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Kolkata 2011",
+          "url": "https://commons.wikimedia.org/wiki/File:Cassia_fistula_-_Kolkata_2011-04-29_2367.JPG",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "mullai",
+      "ta": "பசு",
+      "en": "Cow",
+      "subject": "Bos indicus, a Tamil breed",
+      "verses": 8,
+      "size": "1.3 m at the shoulder",
+      "mustMatch": "Hump, dewlap, horns. decide: the Kangayam or the Umblachery breed",
+      "decide": true,
+      "references": [],
+      "searchHint": "Search Commons for \"Kangayam\"",
+      "approved": false
+    },
+    {
+      "tinai": "mullai",
+      "ta": "முயல்",
+      "en": "Hare",
+      "subject": "Lepus nigricollis",
+      "verses": 4,
+      "size": "45 cm",
+      "mustMatch": "Black patch on the nape; long ears with dark tips",
+      "decide": false,
+      "references": [],
+      "searchHint": "Search Commons for \"Lepus nigricollis\"",
+      "approved": false
+    },
+    {
+      "tinai": "marutham",
+      "ta": "ஆம்பல்",
+      "en": "White water lily",
+      "subject": "Nymphaea pubescens",
+      "verses": 32,
+      "size": "15 cm flower",
+      "mustMatch": "White, toothed pads lying flat on the water",
+      "decide": false,
+      "references": [],
+      "searchHint": "Search Commons for \"Nymphaea pubescens\"",
+      "approved": false
+    },
+    {
+      "tinai": "marutham",
+      "ta": "எருமை",
+      "en": "Water buffalo",
+      "subject": "Bubalus bubalis",
+      "verses": 20,
+      "size": "1.5 m at the shoulder",
+      "mustMatch": "Swept-back crescent horns, slate-black hide, often half-submerged",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Bubalus_bubalis",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "In Tamil Nadu",
+          "url": "https://commons.wikimedia.org/wiki/Category:Water_buffaloes_in_Tamil_Nadu",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "marutham",
+      "ta": "வயல்",
+      "en": "Paddy field",
+      "subject": "Transplanted rice",
+      "verses": 12,
+      "size": "20×20 m plot",
+      "mustMatch": "Earth bunds, standing water, rows of seedlings",
+      "decide": false,
+      "references": [],
+      "searchHint": "Habitat search only: \"paddy field Thanjavur\"",
+      "approved": false
+    },
+    {
+      "tinai": "marutham",
+      "ta": "நாரை",
+      "en": "Painted stork",
+      "subject": "Mycteria leucocephala",
+      "verses": 5,
+      "size": "95 cm",
+      "mustMatch": "Yellow down-curved bill, bare orange face, pink tertials, a black-and-white wing band",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Mycteria_leucocephala",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Juveniles at nest, AP (CC BY 3.0)",
+          "url": "https://commons.wikimedia.org/wiki/File:Painted_Stork_(Mycteria_leucocephala",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "marutham",
+      "ta": "மருதம்",
+      "en": "Arjuna tree",
+      "subject": "Terminalia arjuna",
+      "verses": 5,
+      "size": "20–25 m",
+      "mustMatch": "Smooth, pale grey-white bark peeling in flakes, a buttressed base, a riverbank setting",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Terminalia_arjuna",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Bark",
+          "url": "https://commons.wikimedia.org/wiki/File:Bark_of_Terminalia_arjuna.jpg",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Kakinada tree",
+          "url": "https://commons.wikimedia.org/wiki/File:(Terminalia_Arjuna",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "neytal",
+      "ta": "புன்னை",
+      "en": "Punnai",
+      "subject": "Calophyllum inophyllum",
+      "verses": 75,
+      "size": "8–20 m",
+      "mustMatch": "A dense crown of glossy oblong leaves with fine parallel veins; white flowers with yellow stamens; round fruit; leans over the shore",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Calophyllum_inophyllum",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Punna",
+          "url": "https://commons.wikimedia.org/wiki/File:Punna_(Malayalam-_%E0%B4%AA%E0%B5%81%E0%B4%A8%E0%B5%8D%E0%B4%A8",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Ponna",
+          "url": "https://commons.wikimedia.org/wiki/File:Ponna_(Telugu-_%E0%B0%AA%E0%B1%8A%E0%B0%A8%E0%B1%8D%E0%B0%A8",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "neytal",
+      "ta": "நெய்தல்",
+      "en": "Blue water lily",
+      "subject": "Nymphaea nouchali",
+      "verses": 50,
+      "size": "10–15 cm flower",
+      "mustMatch": "Star-shaped pale blue petals, yellow centre, held above the water",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Nymphaea_nouchali",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "South India 2014 (23)",
+          "url": "https://commons.wikimedia.org/wiki/File:Nymphaea_nouchali_-_Blue_Water_Lily_2014_(23",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "neytal",
+      "ta": "நாரை",
+      "en": "Egret",
+      "subject": "Ardea alba or Egretta garzetta",
+      "verses": 32,
+      "size": "65–90 cm",
+      "mustMatch": "White, with an S-curved neck and long legs. decide which species",
+      "decide": true,
+      "references": [],
+      "searchHint": "Search Commons for each species",
+      "approved": false
+    },
+    {
+      "tinai": "neytal",
+      "ta": "தாழை",
+      "en": "Screwpine",
+      "subject": "Pandanus odorifer (syn. odoratissimus)",
+      "verses": 30,
+      "size": "3–6 m",
+      "mustMatch": "Sword leaves arranged in a spiral, with spiny edges; stilt roots; a pineapple-like fruit",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Pandanus_odorifer",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Kewda",
+          "url": "https://commons.wikimedia.org/wiki/File:Kewda(Pandanus_odoratissimus",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "neytal",
+      "ta": "சுறா",
+      "en": "Shark",
+      "subject": "decide the species",
+      "verses": 18,
+      "size": "2–3 m",
+      "mustMatch": "Probably only a dorsal fin breaking the water",
+      "decide": true,
+      "references": [],
+      "searchHint": "Choose the species first",
+      "approved": false
+    },
+    {
+      "tinai": "neytal",
+      "ta": "கண்டல்",
+      "en": "Mangrove",
+      "subject": "decide: Rhizophora (stilt roots) or Avicennia (pneumatophores)",
+      "verses": 10,
+      "size": "3–8 m",
+      "mustMatch": "Depends on the choice",
+      "decide": true,
+      "references": [],
+      "searchHint": "Choose the genus first",
+      "approved": false
+    },
+    {
+      "tinai": "palai",
+      "ta": "சுரம்",
+      "en": "The wild road",
+      "subject": "A path through dry thorn scrub",
+      "verses": 106,
+      "size": "100 m stretch",
+      "mustMatch": "Cracked red earth, thorn scrub, a dry stream bed",
+      "decide": false,
+      "references": [],
+      "searchHint": "Habitat search only: \"thorn scrub Tamil Nadu\"",
+      "approved": false
+    },
+    {
+      "tinai": "palai",
+      "ta": "புலி",
+      "en": "Tiger",
+      "subject": "Panthera tigris tigris",
+      "verses": 46,
+      "size": "2.7–3 m including the tail",
+      "mustMatch": "Bengal stripe pattern, a white patch behind each ear, a heavy forequarter",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Panthera_tigris_tigris",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Tigers in India",
+          "url": "https://commons.wikimedia.org/wiki/Category:Tigers_in_India",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    },
+    {
+      "tinai": "palai",
+      "ta": "காக்கை",
+      "en": "Crow",
+      "subject": "decide: Corvus splendens (grey collar) or C. macrorhynchos",
+      "verses": 7,
+      "size": "40 cm",
+      "mustMatch": "Depends on the choice",
+      "decide": true,
+      "references": [],
+      "searchHint": "Choose the species first",
+      "approved": false
+    },
+    {
+      "tinai": "palai",
+      "ta": "நரி",
+      "en": "Jackal",
+      "subject": "Canis aureus indicus",
+      "verses": 6,
+      "size": "70 cm body",
+      "mustMatch": "Tawny coat with a black-flecked saddle, a black-tipped tail",
+      "decide": false,
+      "references": [
+        {
+          "label": "Category",
+          "url": "https://commons.wikimedia.org/wiki/Category:Canis_aureus_indicus",
+          "license": null,
+          "author": null,
+          "role": null
+        },
+        {
+          "label": "Male, Kanha",
+          "url": "https://commons.wikimedia.org/wiki/File:Golden_jackal_(Canis_aureus_indicus",
+          "license": null,
+          "author": null,
+          "role": null
+        }
+      ],
+      "searchHint": null,
+      "approved": false
+    }
+  ]
+}
