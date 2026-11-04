@@ -39,8 +39,9 @@ export default function AboutPage() {
           <h2 className="mb-2 font-display text-lg font-semibold text-ivory">What we&apos;re building</h2>
           <ul className="list-inside list-disc space-y-2">
             <li>
-              <strong className="text-ivory">Adhan (அதன்)</strong> — a 7B-parameter open AI model for 22+ Indian
-              languages, one unified model from Tamil to Hindi, Bengali to Telugu.
+              <strong className="text-ivory">Adhan (அதன்)</strong> — our open Indic foundation model, built for
+              22+ Indian languages, starting with Tamil and then the rest of the Dravidian family. It is still in
+              training; our roadmap, not a release, is where the language count lives today.
             </li>
             <li>
               <strong className="text-ivory">Sangam (சங்கம்)</strong> — analysis of classical Tamil literature
