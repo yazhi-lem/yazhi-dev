@@ -35,8 +35,8 @@ export const IDENTITY = {
   footerEn: "Sovereign Artificial Intelligence",
   // the plain-language layer: one sentence a ten-year-old can read,
   // sitting under the poetic/technical register — never replacing it
-  plainTa: "கணினிகள் தமிழையும் எல்லா இந்திய மொழிகளையும் புரிந்துகொள்ளவும் பேசவும் கற்றுத் தருகிறோம்.",
-  plainEn: "We teach computers to understand and speak Tamil — and every Indian language.",
+  plainTa: "கணினிகள் தமிழையும் இந்திய மொழிகளையும் புரிந்துகொள்ளவும் பேசவும் கற்றுத் தருகிறோம்.",
+  plainEn: "We teach computers to understand and speak Tamil — and the Indian languages after it.",
   // from the founding deck: the one-line pitch under the wordmark
   heroLineTa: "படிக்கவோ தட்டச்சு செய்யவோ இன்னும் அறியாத குழந்தைகளுக்கான குரல்வழி நண்பருடன் தொடங்குகிறோம்.",
   heroLineEn: "Starting with a voice friend for children who cannot yet read or type.",
@@ -53,7 +53,7 @@ export const ROADMAP = {
     { period: "Q3 2026", titleEn: "Private beta", status: "Planned launch", bodyEn: "Initial Yazh conversations on WhatsApp with 30+ founding families around Hyderabad." },
     { period: "Q4 2026", titleEn: "Adhan & Indic corpus", status: "In progress", bodyEn: "Cultural and local data collection, embedding the corpus to train Adhan." },
     { period: "Q1 2027", titleEn: "Public launch", status: "Committed", bodyEn: "Yazh opens to families in Tamil and Telugu, with paid subscriptions live." },
-    { period: "Q2–Q4 2027", titleEn: "API & Indian scale", status: "Bullseye", bodyEn: "Yazhi API opens to builders; Kannada and Malayalam enter the pipeline + Developer Community." },
+    { period: "Q2–Q4 2027", titleEn: "API & Indian scale", status: "Goal", bodyEn: "Yazhi API opens to builders; Kannada and Malayalam enter the pipeline + Developer Community." },
   ],
 };
 
@@ -80,10 +80,12 @@ export const SCRIPTS: { name: string; glyphs: string[] }[] = [
 export const YAZHI_SECTION = {
   subTa: "ஒரே உரையாடல் — எல்லா மொழிகளும்",
   subEn: "One conversation, every language",
+  // Wording narrowed 2026-11-05: the multi-language switch is the design, not
+  // the shipped state. ITERATION-1 had it claiming "22+ / online / all languages".
   bodyEn:
-    "Yazhi is sovereign AI for Indian languages — built here, owned here, and open. One conversation moves between Tamil, Telugu and Hindi with nothing lost in the switch, and reaches the tools a family already uses. Three products sit under it: Yazh, the voice friend families pay for; Adhan, the engine underneath; and Open Sangam, the memory we protect.",
-  plainTa: "எந்த இந்திய மொழியிலும் பேசுங்கள் — யாழி அதே மொழியில் பதிலளிக்கும்; நடுவில் மொழி மாறினாலும் தொடர்ந்து புரிந்துகொள்ளும்.",
-  plainEn: "Talk in any Indian language — Yazhi answers in the same one, and keeps up even when you switch mid-sentence.",
+    "Yazhi is sovereign AI for Indian languages — built here, owned here, and open. We are building one conversation that moves between Tamil, Telugu and Hindi with nothing lost in the switch, and reaches the tools a family already uses. Three products sit under it: Yazh, the voice friend families pay for; Adhan, the engine underneath; and Open Sangam, the memory we protect.",
+  plainTa: "தமிழிலும் தெலுங்கிலும் இந்தியிலும் பேசுங்கள் — யாழி அதே மொழியில் பதிலளிக்கும்; நடுவில் மொழி மாறினாலும் தொடர்ந்து புரிந்துகொள்ளும். இதை உருவாக்கிக்கொண்டிருக்கிறோம்.",
+  plainEn: "Talk in Tamil, Telugu or Hindi — Yazhi answers in the same one, and keeps up even when you switch mid-sentence. We are still building this.",
 };
 
 /** Adhan — deck p7, column 02 · "THE ENGINE UNDERNEATH". The open Indic
@@ -96,8 +98,11 @@ export const ADHAN = {
   eyebrowEn: "The engine underneath",
   subTa: "இந்திய மொழிகளுக்கான எங்கள் திறந்த அடிப்படை மாதிரி",
   subEn: "Our open Indic foundation model",
+  // Wording narrowed 2026-11-05 (ITERATION-1): the 22+ language family is the
+  // design goal. Today Tamil is the language in the pipeline (see
+  // LANGUAGE_ROADMAP); do not claim served languages the repos cannot show.
   bodyEn:
-    "Adhan is our open Indic foundation model, reaching 22+ Indian languages, with a tokenizer designed for agglutinative grammar rather than retrofitted from English. Open weights on GitHub, served from our own inference node in Sivakasi. It is not finished and is not meant to be — the model develops continuously, growing as the corpus grows and as each new language enters the pipeline.",
+    "Adhan is our open Indic foundation model, designed for 22+ Indian languages, with a tokenizer built for agglutinative grammar rather than retrofitted from English. Tamil comes first, then Telugu, Kannada and Malayalam. Training runs on our own machines in Sivakasi. It is not finished and is not meant to be — the model develops continuously, growing as the corpus grows and as each new language enters the pipeline.",
   tokenTax: {
     labelEn: "The token tax on Indian languages — tokens spent per word, same sentence",
     rows: [
@@ -121,7 +126,7 @@ export const LANGUAGE_ROADMAP = {
     { stageEn: "Now", langEn: "Tamil", bodyEn: "Our home language and hardest test case. Corpus, tokenizer, voice and the first families all live here." },
     { stageEn: "Next", langEn: "Telugu", bodyEn: "~96M speakers, agglutinative like Tamil, the same tokenizer problem — the natural second language." },
     { stageEn: "Then", langEn: "Kannada, Malayalam", bodyEn: "The rest of the Dravidian family — shared morphology means shared tokenizer gains." },
-    { stageEn: "Goal", langEn: "22+ languages", bodyEn: "One open model, one API, every scheduled language. Adhan is designed for this from day one." },
+    { stageEn: "Goal", langEn: "22+ languages", bodyEn: "One open model, one API, every scheduled language. That is the design goal, not a shipped result — today the pipeline holds Tamil, then Telugu, Kannada and Malayalam." },
   ],
   footEn:
     "Tamil and Telugu share a Dravidian grammar backbone and the same tokenizer problem. Solving Tamil properly is not a detour on the way to Telugu — it is most of the work.",

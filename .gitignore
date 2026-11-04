@@ -44,3 +44,18 @@ next-env.d.ts
 
 # Playwright MCP session artifacts (screenshots, console logs)
 .playwright-mcp/
+
+# Secrets, wherever a dev tool puts them. /data/ is ignored above because the
+# runtime stores live there today; these rules survive that layout changing,
+# so a stray key can never be swept in by `git add .`.
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+*.jks
+credentials*.enc
+circle_keys*.enc
+
+# Agent-local tool config; .mcp.json stays tracked because it is shared.
+.pi/
