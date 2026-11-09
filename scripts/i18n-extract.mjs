@@ -120,6 +120,45 @@ const EXCLUDE = [
 
 const isExcluded = (file) => EXCLUDE.some((prefix) => file === prefix || file.startsWith(prefix));
 
+/* ── 2b. the Bubble UI library's own catalogue ────────────────────────── */
+
+/** `packages/bubble` ships its own catalogue (`src/locales/{ta,en,hi}.ts`) —
+    the words *inside* a bubble, as opposed to the site chrome this file's
+    other scans cover. Two things need checking there:
+
+      - the catalogue itself (parity, placeholders, Hindi provenance), and
+      - every key the library's components ask for.
+
+    Keys in components are **namespaced**, not fully qualified: a component
+    writes `const t = useBubbleT("bubble.composer")` and then `t("send")`,
+    which reads `bubble.composer.send`. So a key is resolved against every
+    namespace its own file declares; it passes when *any* of them produces a
+    key that exists. That is deliberately strict — the bug this catches is a
+    key under the wrong namespace (a `t("total")` in a file scoped to
+    `bubble.commerce` silently renders the dotted key). */
+function scanBubbleUsage(bubbleKeys) {
+  const files = walk(join(ROOT, "packages/bubble/src")).filter((f) => !rel(f).includes("/locales/"));
+  const unresolved = [];
+  let calls = 0;
+  for (const full of files) {
+    const src = stripComments(readFileSync(full, "utf8"));
+    const namespaces = [...src.matchAll(/\buseBubbleT\(\s*"([^"]+)"/g)].map((m) => m[1]);
+    if (!namespaces.length) continue;
+    for (const m of src.matchAll(/\bt\(\s*"([^"]+)"/g)) {
+      const key = m[1];
+      calls += 1;
+      const candidates = new Set([key]);
+      for (const ns of namespaces) {
+        candidates.add(key.startsWith("bubble.") ? key : `${ns.endsWith(".") ? ns : `${ns}.`}${key}`);
+      }
+      if (![...candidates].some((candidate) => bubbleKeys.includes(candidate))) {
+        unresolved.push(`${rel(full)}: t("${key}") — tried ${[...candidates].join(", ")}`);
+      }
+    }
+  }
+  return { files: files.length, calls, unresolved };
+}
+
 function scanUsage() {
   const files = [];
   for (const dir of CANDIDATE_DIRS) walk(join(ROOT, dir), files);
@@ -296,6 +335,48 @@ async function main() {
     if (!matches.length) errors.push(`template key in code matches no catalogue key: \`${template}\``);
     else dynamicResolved.push({ template, matches: matches.length });
   }
+  // 6b. the Bubble UI library's catalogue: parity, placeholders, provenance
+  const bubble = await import("../packages/bubble/src/locales/ta.ts").then(async (ta) => ({
+    ta: ta.taBubbleCatalogue,
+    en: (await import("../packages/bubble/src/locales/en.ts")).enBubbleCatalogue,
+    hi: (await import("../packages/bubble/src/locales/hi.ts")).hiBubbleCatalogue,
+  }));
+  const bubbleTa = Object.keys(bubble.ta).sort();
+  const bubbleEn = Object.keys(bubble.en).sort();
+  const bubbleHi = Object.keys(bubble.hi).sort();
+  const bubbleOnlyTa = bubbleTa.filter((k) => !bubbleEn.includes(k));
+  const bubbleOnlyEn = bubbleEn.filter((k) => !bubbleTa.includes(k));
+  const bubbleHiMissing = bubbleTa.filter((k) => !bubbleHi.includes(k));
+  const bubbleHiExtra = bubbleHi.filter((k) => !bubbleTa.includes(k));
+  if (bubbleOnlyTa.length) errors.push(`bubble ta-only keys: ${bubbleOnlyTa.join(", ")}`);
+  if (bubbleOnlyEn.length) errors.push(`bubble en-only keys: ${bubbleOnlyEn.join(", ")}`);
+  if (bubbleHiMissing.length) errors.push(`bubble hi missing ${bubbleHiMissing.length} key(s): ${bubbleHiMissing.join(", ")}`);
+  if (bubbleHiExtra.length) errors.push(`bubble hi has unknown key(s): ${bubbleHiExtra.join(", ")}`);
+  for (const locale of ["ta", "en", "hi"]) {
+    for (const key of Object.keys(bubble[locale])) {
+      const text = textOf(bubble[locale], key);
+      if (!text.trim()) errors.push(`bubble ${locale}: empty value for ${key}`);
+      if (text.includes("\uFFFD")) errors.push(`bubble ${locale}: replacement character in ${key}`);
+    }
+  }
+  for (const key of bubbleTa) {
+    const sets = {
+      ta: placeholdersOf(textOf(bubble.ta, key)).join(","),
+      en: placeholdersOf(textOf(bubble.en, key)).join(","),
+      hi: placeholdersOf(textOf(bubble.hi, key)).join(","),
+    };
+    if (sets.ta !== sets.en) errors.push(`bubble ${key}: placeholders differ ta(${sets.ta}) vs en(${sets.en})`);
+    if (sets.hi && sets.ta !== sets.hi) errors.push(`bubble ${key}: placeholders differ ta(${sets.ta}) vs hi(${sets.hi})`);
+    // Hindi is machine-drafted until a native reviewer says otherwise; an
+    // entry that lost its provenance would be served as if it were reviewed.
+    const entry = bubble.hi[key];
+    if (!bubbleHiExtra.length && (typeof entry !== "object" || entry?.origin !== "mt" || entry?.reviewRequired !== true)) {
+      errors.push(`bubble hi: ${key} must carry { origin: "mt", reviewRequired: true } until reviewed`);
+    }
+  }
+  const bubbleUsage = scanBubbleUsage(bubbleTa);
+  for (const miss of bubbleUsage.unresolved) errors.push(`bubble key used in code but not in the catalogue: ${miss}`);
+
   const chromeKeys = new Set(Object.keys(strings.UI_STRINGS));
   for (const key of usage.chrome) {
     if (!chromeKeys.has(key)) errors.push(`used in code but missing from the chrome catalogue: ${key}`);
@@ -330,6 +411,7 @@ async function main() {
     filesScanned: usage.scanned,
     site: { keys: taKeys.length, hiDrafts: hiKeys.length, dynamicFamilies: contentPairs.dynamic },
     chrome: { keys: chromeKeys.size },
+    bubble: { keys: bubbleTa.length, hiDrafts: bubbleHi.length, calls: bubbleUsage.calls, files: bubbleUsage.files },
     used: { site: usage.site, chrome: usage.chrome, dynamic: dynamicResolved },
     migrated: { files: MIGRATED.length, findings: migratedFindings },
     errors,
@@ -350,7 +432,7 @@ async function main() {
     console.log(`\ni18n:check FAILED - ${errors.length} problem(s), ${warnings.length} warning(s).`);
     process.exit(1);
   }
-  const summary = `${taKeys.length} site keys x 3 locales, ${chromeKeys.size} chrome keys, ${MIGRATED.length} migrated files, ${warnings.length} warning(s)`;
+  const summary = `${taKeys.length} site keys x 3 locales, ${chromeKeys.size} chrome keys, ${bubbleTa.length} bubble keys x 3 locales (${bubbleUsage.calls} calls resolved), ${MIGRATED.length} migrated files, ${warnings.length} warning(s)`;
   console.log(CHECK ? `\ni18n:check OK - ${summary}.` : `\nwrote docs/i18n/CATALOGUE.json - ${summary}.`);
   process.exit(0);
 }

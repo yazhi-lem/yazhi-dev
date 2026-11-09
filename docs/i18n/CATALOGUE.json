@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-09T01:39:45.501Z",
-  "filesScanned": 276,
+  "generatedAt": "2026-11-09T12:29:55.597Z",
+  "filesScanned": 281,
   "site": {
     "keys": 204,
     "hiDrafts": 204,
@@ -8,6 +8,12 @@
   },
   "chrome": {
     "keys": 190
+  },
+  "bubble": {
+    "keys": 188,
+    "hiDrafts": 188,
+    "calls": 140,
+    "files": 68
   },
   "used": {
     "site": [
