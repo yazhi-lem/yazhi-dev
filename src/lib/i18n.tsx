@@ -18,11 +18,21 @@
     additive.
 
     Never read `window` during render — the server and the first client
-    render must produce identical markup. Both preferences therefore start
-    from their defaults (`both`, `ta` — exactly what the live site does)
-    and are corrected in an effect after hydration. */
+    render must produce identical markup. A preference the reader saved is
+    therefore read through `useSyncExternalStore`, whose *server* snapshot is
+    the value the HTML was rendered with: the hydrating render matches the
+    server exactly, and React re-renders once when the saved value differs. */
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 // Importing the catalogue registers the page copy in @yazhi/i18n, so a
 // `messageKey="site.…"` in any component resolves through `useT()`.
 import "@yazhi/i18n/catalogues";
@@ -86,13 +96,6 @@ type LangContextValue = {
    error we can name, not a silent "Tamil, always". */
 const LangContext = createContext<LangContextValue | null>(null);
 
-/** The locale the page was rendered in, read from `<html lang>`. */
-function localeFromDocument(): Locale | null {
-  if (typeof document === "undefined") return null;
-  const lang = document.documentElement.getAttribute("lang");
-  return isLocale(lang) ? lang : null;
-}
-
 function storedLocale(): Locale | null {
   try {
     const saved = window.localStorage.getItem(LOCALE_STORAGE_KEY);
@@ -114,6 +117,19 @@ function storedDisplay(): Lang | null {
     return null;
   }
 }
+
+/* The two saved preferences are an external store React can read without a
+   hydration mismatch. `useSyncExternalStore` takes a *server snapshot* for
+   the hydrating render (no saved value — the HTML was rendered without one)
+   and the client snapshot afterwards; React re-renders once if they differ.
+   Nothing pushes changes from outside this provider (the switcher writes
+   through `setLocale`), so the subscriber is a no-op. */
+
+const noSubscribe = () => () => {};
+/** no saved preference on the server (or during the hydrating render) */
+const noSavedPreference = () => null;
+const savedDisplaySnapshot = (): Lang | null => storedDisplay();
+const savedLocaleSnapshot = (): Locale | null => storedLocale();
 
 function store(key: string, value: string) {
   try {
@@ -172,40 +188,40 @@ export function LangProvider({
       not: TAM/ENG/BOTH lives in localStorage). */
   initialDisplay?: Lang;
 }) {
-  // The first render uses what the server used, so the HTML hydrates cleanly.
-  // A locally saved preference is applied in an effect (below) — never during
-  // render, where reading `window` would make the two renders disagree.
-  const [lang, setLangState] = useState<Lang>(initialDisplay ?? DEFAULT_DISPLAY);
-  const [locale, setLocaleState] = useState<Locale>(initialLocale ?? DEFAULT_LOCALE);
+  // A value this provider changed in this page's lifetime (the switcher),
+  // or `null` to follow the saved preference and then the server's.
+  const [displayOverride, setDisplayOverride] = useState<Lang | null>(null);
+  const [localeOverride, setLocaleOverride] = useState<Locale | null>(null);
 
-  // Restore the saved preferences after hydration. This runs once; setting
-  // state here re-renders the tree in the reader's language instead of
-  // reporting a mismatch, because the first (hydrating) render already
-  // matched the server.
-  useEffect(() => {
-    const savedDisplay = storedDisplay();
-    if (savedDisplay) setLangState((current) => (current === savedDisplay ? current : savedDisplay));
-    const savedLocale = storedLocale() ?? localeFromDocument();
-    if (savedLocale) setLocaleState((current) => (current === savedLocale ? current : savedLocale));
-  }, []);
+  // Saved preferences: absent during the hydrating render (so the markup is
+  // the server's), present in the render React does once hydration is done.
+  const savedDisplay = useSyncExternalStore<Lang | null>(noSubscribe, savedDisplaySnapshot, noSavedPreference);
+  const savedLocale = useSyncExternalStore<Locale | null>(noSubscribe, savedLocaleSnapshot, noSavedPreference);
+
+  // Precedence: what this page set → what the reader saved → what the server
+  // rendered → the default. A saved value never contradicts the HTML the
+  // server produced, because the locale the server used came from the same
+  // preference (the cookie mirror, `initialLocale`).
+  const lang = displayOverride ?? savedDisplay ?? initialDisplay ?? DEFAULT_DISPLAY;
+  const locale = localeOverride ?? savedLocale ?? initialLocale ?? DEFAULT_LOCALE;
 
   // A locale change announced from anywhere on the page (the switcher in a
   // sibling tree, a second provider) lands here as an external event.
   useEffect(
     () =>
       subscribeToLocale((next) => {
-        setLocaleState((current) => (current === next ? current : next));
+        setLocaleOverride((current) => (current === next ? current : next));
       }),
     []
   );
 
   const setLang = useCallback((l: Lang) => {
-    setLangState(l);
+    setDisplayOverride(l);
     store(DISPLAY_STORAGE_KEY, l);
   }, []);
 
   const setLocale = useCallback((next: Locale) => {
-    setLocaleState(next);
+    setLocaleOverride(next);
     store(LOCALE_STORAGE_KEY, next);
     // Keep the document language honest for screen readers and CSS
     // `:lang()` selectors, and for the server layout on the next request

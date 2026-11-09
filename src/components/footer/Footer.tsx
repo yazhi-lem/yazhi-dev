@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { LogoMark } from "@/components/ui/LogoMark";
 import { HairlineHorizon } from "@/components/ui/HairlineHorizon";
+import { LocaleSwitcher } from "@/components/ui/LocaleSwitcher";
 import { NAV_GROUPS } from "@/lib/content";
 import { useLang, useLocale, useSiteT } from "@/lib/i18n";
 
@@ -62,6 +63,11 @@ export function Footer() {
           <a href="#hero" lang={tongue} className="inline-flex items-center gap-1.5 hover:text-ivory">
             <span aria-hidden>↑</span> {t("site.nav.backToTop")}
           </a>
+          {/* The reader's language: the one control that changes the *locale*
+              (the TAM/ENG/BOTH preference is a separate, display-only idea).
+              In the last rule, so it is present on every page that has a
+              footer — the marketing site and the literature pages. */}
+          <LocaleSwitcher className="ml-auto" />
         </div>
       </div>
     </footer>
