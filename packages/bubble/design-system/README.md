@@ -1,5 +1,11 @@
 Yazhi's Bubble UI: a Tamil-first interface where every app, agent and tool is a bubble, every claim carries its source, and every screen lives in one of the five Sangam tiṇai — Palai, Mullai, Kurinji, Marutham, Neytal. The base is the Sovereign Palette (Ink, Cream, Gold, Cobalt); the landscapes dress it.
 
+## Two modes
+
+- **Bubble** (everything below) is the default: Ink and Cream grounds, gold for the one action, lit-sphere bubbles, 44px targets. Use it for yazhi.dev, Avai, Open Sangam and the builder surfaces.
+- **Thiṇai mode** is Bubble made plainer for Guru, Nyaya, Kural and the children's products: pastel landscape grounds plus High contrast and Night, a green go / red stop pair instead of gold, flat bubbles always shown with their name, 56–72px targets and text from 18px, all in rem. Its tokens carry the `tn-` prefix and its classes the `yz-` prefix; a screen opts in with `data-theme="light" data-tn="<landscape>"` on its root (Night: `data-theme="dark"`). Its rules are in the Thiṇai mode section and apply only inside such a screen.
+- Shared by both: the mark and its rules, Mission Control's gold-ringed bubble, the tiṇai-to-app mapping, citations and "I don't know", ConfirmGate, draft tags, Nunito and Baloo Thambi 2, and never letter-spacing Tamil.
+
 ## Content fundamentals
 
 - **Tamil first, English beside it.** Natural Tamil leads; English follows or sits as a gloss. Mark every Tamil line, persona name and gloss that has not passed native review with a DraftTag ("draft · native review") or "(draft gloss)". The screen says so; never hide it.
@@ -63,6 +69,7 @@ Yazhi's Bubble UI: a Tamil-first interface where every app, agent and tool is a 
 - Load the tokens, then `components/bundle.css`. Put a screen in a theme with `data-theme="dark"` or `"light"`, and in a landscape with `data-tinai="<tiṇai>"` plus the class `tinai-scope`.
 - The bundle stylesheet carries the Tailwind v4 utilities the components use (`bg-night-2/80`, `text-ivory-dim`, `border-palai/50` …), the Bubble classes (`.tinai-scope`, `.hair`, `.hair-lo`, `.tray-ring`, `.mission-wake`) and the Google Fonts import for Playfair Display and Noto Serif Tamil (headings). Nunito, Baloo Thambi 2 (Tamil subset) and IBM Plex Mono are self-hosted from `fonts/`.
 - The component cards are static renditions of the React 19 library in `@yazhi/bubble`; build with the real components and copy their class names exactly.
+- Thiṇai mode's cards (the "Thiṇai" groups) are plain HTML with the `yz-` classes; its icons and app icons are in `assets/Icons/` and `assets/AppIcons/`.
 
 ## Not synced
 
@@ -70,4 +77,5 @@ Yazhi's Bubble UI: a Tamil-first interface where every app, agent and tool is a 
 - **Fonts.** Body and Tamil text are Nunito and Baloo Thambi 2, matching `src/app/layout.tsx`. Playfair Display and Noto Serif Tamil (headings) load from Google Fonts in the previews; Nunito, Baloo Thambi 2 (Tamil subset) and IBM Plex Mono are in `fonts/`.
 - **Values not carried.** `--space-section` is `clamp(5rem, 12vh, 9rem)` in code (stored at its 9rem bound); per-tiṇai motion (springs, pace, settle) is described in the sections, not as tokens; the root `--palai` is `#c25b3c` while Bubble's dark value is `#d6704f` (this system uses Bubble's).
 - **Logos and written docs** live beside this folder (`../design/brand/logos/`, `../docs/`, `../themes/*/PERSONA.md`) and are not duplicated here.
+- **Thiṇai mode is not in code yet.** Its tokens, `yz-` classes, icons and screens come from the Yazhi Thiṇai design system, not from `@yazhi/bubble`; the React library does not implement them yet.
 - **Not brought in.** The design PDFs, theme sheets, karupporul data, Yazhi's agent definitions and the brand-kit PDF stay in the repo (`packages/bubble/design/`, `src/lib/`).

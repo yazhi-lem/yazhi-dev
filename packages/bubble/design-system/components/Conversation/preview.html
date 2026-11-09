@@ -1,0 +1,22 @@
+<!-- @dsCard group="Thiṇai · Bubble UI" height=520 width=900 subtitle="Messages, citation chips and the source card" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Conversation — preview</title>
+<style> body { margin: 0; } .wrap { padding: 24px; display: flex; flex-direction: column; gap: 20px; } .row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; } </style>
+</head>
+<body class="yz-root" data-theme="light" data-tn="marutham">
+<div class="wrap">
+<div class="row"><div class="yz-thread" role="log" aria-label="Conversation" style="flex:1 1 420px">
+ <div class="yz-msg yz-msg--me"><p class="yz-ta">இந்தச் சட்டம் எப்போது வந்தது?</p></div>
+ <div class="yz-msg yz-msg--app"><div class="yz-msg__who"><span class="yz-bubble yz-bubble--xs yz-bubble--nyaya" aria-hidden="true">நி</span>Nyaya</div>
+  <p class="yz-ta">இது [ஆண்டு] இல் இயற்றப்பட்டது. <a class="yz-cite" href="#s1"><svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 6.5C10 5 7 4.5 3.5 5v13.5c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5V20"/></svg>பிரிவு [n] · 1</a></p><p>It was enacted in [year]. <a class="yz-cite" href="#s1"><svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 6.5C10 5 7 4.5 3.5 5v13.5c3.5-.5 6.5 0 8.5 1.5 2-1.5 5-2 8.5-1.5V5C17 4.5 14 5 12 6.5z"/><path d="M12 6.5V20"/></svg>Section [n] · 1</a></p></div>
+</div>
+<div style="flex:0 1 300px"><article class="yz-source" id="s1"><div class="yz-source__head">1 · [Sample Act name], [year] <span class="yz-verified"><svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.8 2.8 5.2-5.6"/></svg>verified</span></div><p class="yz-source__where">Section [n] · [heading]</p><p class="yz-source__quote">[Exact text of the section.]</p></article></div></div></div>
+<script>
+  document.querySelectorAll('.yz-seg').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-seg__opt'); if (!b) return; g.querySelectorAll('.yz-seg__opt').forEach(function (o) { o.setAttribute(o.hasAttribute('aria-checked') ? 'aria-checked' : 'aria-pressed', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-switch').forEach(function (s) { s.addEventListener('click', function () { if (s.getAttribute('aria-disabled') === 'true') return; var on = s.getAttribute('aria-checked') !== 'true'; s.setAttribute('aria-checked', String(on)); var w = s.querySelector('.yz-switch__word'); if (w) w.textContent = on ? 'ஆம் · On' : 'இல்லை · Off'; }); });
+  document.querySelectorAll('.yz-swatches').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-swatch'); if (!b) return; g.querySelectorAll('.yz-swatch').forEach(function (o) { o.setAttribute('aria-checked', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-stepper').forEach(function (st) { var sizes = ['Default', 'Large', 'Larger', 'Largest'], i = 1, o = st.querySelector('output'); st.querySelectorAll('button').forEach(function (b, k) { b.addEventListener('click', function () { i = Math.max(0, Math.min(sizes.length - 1, i + (k ? 1 : -1))); o.textContent = sizes[i]; document.documentElement.style.fontSize = (100 + i * 12.5) + '%'; }); }); });
+</script>
+</body>
+</html>
