@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "i18n:check": "node scripts/i18n-extract.mjs --check",
+    "i18n:extract": "node scripts/i18n-extract.mjs"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.5",
