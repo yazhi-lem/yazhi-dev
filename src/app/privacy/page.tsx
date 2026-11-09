@@ -1,79 +1,74 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { LOCALE_COOKIE, readLocaleFromCookies } from "@/lib/locale-cookie";
+import { siteCopy } from "@/lib/site-copy";
 
-export const metadata: Metadata = {
-  title: "தனியுரிமை — யாழி • Privacy — Yazhi",
-  description: "What Yazhi collects, what stays on your device, and how families should use the site.",
-};
+async function requestLocale() {
+  const jar = await cookies();
+  return readLocaleFromCookies(jar.get(LOCALE_COOKIE)?.value);
+}
 
-/** Plain-English privacy note. Deliberately written to be readable by a
-    parent in two minutes — and kept honest: it describes what the site
-    actually does today, not a boilerplate maximal license. When accounts
-    move server-side, this page must be updated BEFORE anything is
-    collected. (Tamil body copy pending the editorial review gate —
-    see the note in lib/content.ts.) */
-export default function PrivacyPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await requestLocale();
+  const t = siteCopy(locale);
+  return {
+    title: t("site.privacy.metadataTitle"),
+    description: t("site.privacy.description"),
+  };
+}
+
+/** Plain-language privacy note. Deliberately readable by a parent in two
+    minutes — and kept honest: it describes what the site actually does
+    today, not a boilerplate maximal license. When accounts move
+    server-side, this page must be updated BEFORE anything is collected.
+
+    Copy comes from the site catalogue for the request's locale. The Tamil
+    and Hindi bodies are DRAFTS pending native review (see
+    `docs/i18n/HINDI-REVIEW.md`). */
+export default async function PrivacyPage() {
+  const locale = await requestLocale();
+  const t = siteCopy(locale);
+
   return (
-    <main className="mx-auto max-w-prose px-6 pb-24 pt-24 text-ivory">
+    <main lang={locale} className="mx-auto max-w-prose px-6 pb-24 pt-24 text-ivory">
       <Link href="/" className="text-sm text-ivory-dim transition-colors hover:text-ivory">
-        ← யாழி · Yazhi
+        {t("site.about.backLink")}
       </Link>
 
-      <h1 className="mt-8 font-display text-3xl font-semibold">
-        தனியுரிமை <span className="text-ivory-dim">·</span> Privacy
-      </h1>
-      <p className="mt-2 text-sm text-ivory-dim">Last updated: July 2026</p>
+      <h1 className="mt-8 font-display text-3xl font-semibold">{t("site.privacy.title")}</h1>
+      <p className="mt-2 text-sm text-ivory-dim">{t("site.privacy.updated")}</p>
 
       <section className="mt-10 space-y-8 leading-relaxed text-ivory-dim">
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">What we collect — and where it lives</h2>
-          <p>
-            When you join the network, the handle and phone number you enter are saved{" "}
-            <strong className="text-ivory">only in your own browser</strong> (localStorage). They are not sent to
-            or stored on our servers. Clearing your browser data removes them completely.
-          </p>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.privacy.collect.q")}</h2>
+          <p>{t("site.privacy.collect.p")}</p>
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">Location</h2>
-          <p>
-            We show an auto-detected region label (like a city name) during onboarding. It comes from our hosting
-            provider&apos;s network headers, resolved before our code runs. We read only that coarse label —{" "}
-            <strong className="text-ivory">your IP address is never read, stored, or forwarded by us</strong>, and
-            no precise location is ever collected.
-          </p>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.privacy.location.q")}</h2>
+          <p>{t("site.privacy.location.p")}</p>
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">Links that leave this site</h2>
-          <p>
-            The WhatsApp, Discord, and GitHub links take you to third-party platforms with their own terms and
-            privacy policies. Those platforms generally require users to be{" "}
-            <strong className="text-ivory">13 or older</strong> (16 in some regions).
-          </p>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.privacy.links.q")}</h2>
+          <p>{t("site.privacy.links.p")}</p>
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">Children</h2>
-          <p>
-            Kids are welcome to explore the site — there is nothing here that requires an account. If you are under
-            13, please only join the network or the chat communities together with a parent or guardian.
-          </p>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.privacy.children.q")}</h2>
+          <p>{t("site.privacy.children.p")}</p>
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">If this changes</h2>
-          <p>
-            Yazhi is pre-launch. If accounts ever move to a server, we will update this page{" "}
-            <strong className="text-ivory">before</strong> collecting anything, and say exactly what is stored and
-            why.
-          </p>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.privacy.changes.q")}</h2>
+          <p>{t("site.privacy.changes.p")}</p>
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">Contact</h2>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.privacy.contact.q")}</h2>
           <p>
-            Questions? Reach us at{" "}
+            {t("site.privacy.contact.p")}{" "}
             <a
               href="https://github.com/yazhi-lem"
               target="_blank"

@@ -11,7 +11,7 @@ export function LogoMark({ size = 36, className = "" }: { size?: number; classNa
       height={size}
       viewBox="0 0 100 100"
       role="img"
-      aria-label="Yazhi logo"
+      aria-label="Yazhi"
       className={className}
     >
       <circle cx="30.8" cy="30.6" r="12.3" fill="var(--ivory)" />

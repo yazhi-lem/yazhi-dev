@@ -1,104 +1,94 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { cookies } from "next/headers";
+import { LOCALE_COOKIE, readLocaleFromCookies } from "@/lib/locale-cookie";
+import { siteCopy } from "@/lib/site-copy";
 
-export const metadata: Metadata = {
-  title: "எங்களைப் பற்றி — யாழி • About — Yazhi",
-  description: "Who is behind Yazhi, what we're building, and what the Awakening countdown means.",
-};
+async function requestLocale() {
+  const jar = await cookies();
+  return readLocaleFromCookies(jar.get(LOCALE_COOKIE)?.value);
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await requestLocale();
+  const t = siteCopy(locale);
+  return {
+    title: t("site.about.metadataTitle"),
+    description: t("site.about.description"),
+  };
+}
+
+const linkClass =
+  "text-ivory underline decoration-ivory/30 underline-offset-4 hover:decoration-ivory";
 
 /** The trust page: who we are, what we're building, what the countdown
     means, how to reach us. Answers the questions a parent (or anyone
-    cautious) asks before sharing anything with an unfamiliar site. */
-export default function AboutPage() {
+    cautious) asks before sharing anything with an unfamiliar site.
+
+    Copy is read from the site catalogue for the request's locale: Tamil,
+    English, or the machine-drafted Hindi (marked for native review). */
+export default async function AboutPage() {
+  const locale = await requestLocale();
+  const t = siteCopy(locale);
+
   return (
-    <main className="mx-auto max-w-prose px-6 pb-24 pt-24 text-ivory">
+    <main lang={locale} className="mx-auto max-w-prose px-6 pb-24 pt-24 text-ivory">
       <Link href="/" className="text-sm text-ivory-dim transition-colors hover:text-ivory">
-        ← யாழி · Yazhi
+        {t("site.about.backLink")}
       </Link>
 
-      <h1 className="mt-8 font-display text-3xl font-semibold">
-        யாழியைப் பற்றி <span className="text-ivory-dim">·</span> About Yazhi
-      </h1>
+      <h1 className="mt-8 font-display text-3xl font-semibold">{t("site.about.title")}</h1>
 
       <section className="mt-10 space-y-8 leading-relaxed text-ivory-dim">
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">What is Yazhi?</h2>
-          <p>
-            Yazhi (யாழி) is a community initiative building{" "}
-            <strong className="text-ivory">sovereign AI for Indian languages</strong> — starting from Tamil. In
-            plain words: we teach computers to understand, read, and speak Tamil and every other Indian language,
-            with the work done in the open, by the community, for the community.
-          </p>
-          <p className="mt-2">
-            The name comes from the yazhi, the mythical guardian carved on Tamil temple pillars — part lion, part
-            elephant — the keeper at the threshold.
-          </p>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.about.what.q")}</h2>
+          <p>{t("site.about.what.p1")}</p>
+          <p className="mt-2">{t("site.about.what.p2")}</p>
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">What we&apos;re building</h2>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.about.building.q")}</h2>
           <ul className="list-inside list-disc space-y-2">
+            <li>{t("site.about.building.adhan")}</li>
             <li>
-              <strong className="text-ivory">Adhan (அதன்)</strong> — our open Indic foundation model, built for
-              22+ Indian languages, starting with Tamil and then the rest of the Dravidian family. It is still in
-              training; our roadmap, not a release, is where the language count lives today.
-            </li>
-            <li>
-              <strong className="text-ivory">Sangam (சங்கம்)</strong> — analysis of classical Tamil literature
-              through the five landscapes (ஐந்திணை) of Sangam poetry. Live at{" "}
-              <a
-                href="https://sangam.yazhi.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-ivory underline decoration-ivory/30 underline-offset-4 hover:decoration-ivory"
-              >
+              {t("site.about.building.sangam")}{" "}
+              <a href="https://sangam.yazhi.dev" target="_blank" rel="noopener noreferrer" className={linkClass}>
                 sangam.yazhi.dev
               </a>
               .
             </li>
-            <li>
-              <strong className="text-ivory">Yazh Guardian (யாழ்)</strong> — an app protecting Tamil digital
-              heritage and community knowledge.
-            </li>
+            <li>{t("site.about.building.yazh")}</li>
           </ul>
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">What is the countdown?</h2>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.about.countdown.q")}</h2>
           <p>
-            The timer on the home page counts down to the{" "}
-            <strong className="text-ivory">Yazhi Awakening — 1 January 2027</strong>, our public launch: the day
-            the models, tools, and community programs open fully. Nothing mysterious — just a launch date we hold
-            ourselves to.
+            {t("site.about.countdown.pre")}{" "}
+            <strong className="text-ivory">
+              {t("site.about.countdown.bold", { date: t("site.about.countdown.date") })}
+            </strong>
+            {t("site.about.countdown.post")}
           </p>
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">The five landscapes on this site</h2>
-          <p>
-            The scenery you scroll through — mountain, forest, farmland, desert, sea — follows the ஐந்திணை, the
-            five landscapes of 2,000-year-old Sangam poetry. Each landscape is paired with its classical poetic
-            theme, exactly as taught in Tamil literature. It&apos;s our map: old land, new work.
-          </p>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.about.landscapes.q")}</h2>
+          <p>{t("site.about.landscapes.p")}</p>
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">Who runs this &amp; how to reach us</h2>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.about.who.q")}</h2>
           <p>
-            Yazhi is run by the volunteers who build it, in the open. All our work is public at{" "}
-            <a
-              href="https://github.com/yazhi-lem"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-ivory underline decoration-ivory/30 underline-offset-4 hover:decoration-ivory"
-            >
+            {t("site.about.who.p1")}{" "}
+            <a href="https://github.com/yazhi-lem" target="_blank" rel="noopener noreferrer" className={linkClass}>
               github.com/yazhi-lem
             </a>{" "}
-            — questions, issues, and hellos all welcome there. Also see our{" "}
-            <Link href="/privacy" className="text-ivory underline decoration-ivory/30 underline-offset-4 hover:decoration-ivory">
-              privacy note
+            {t("site.about.who.p2")}{" "}
+            <Link href="/privacy" className={linkClass}>
+              {t("site.about.who.p3")}
             </Link>
-            .
+            {t("site.about.who.p4")}
           </p>
         </div>
       </section>

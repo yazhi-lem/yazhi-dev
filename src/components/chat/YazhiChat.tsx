@@ -6,6 +6,7 @@ import { AGENTS, PROVIDER_META, getAgent } from "@/lib/chat/agents";
 import { streamReply, type ChatRuntime } from "@/lib/chat/stream";
 import type { Agent, Message } from "@/lib/chat/types";
 import { useChatStore } from "@/lib/chat/useChatStore";
+import { useUiT } from "@/lib/i18n";
 import { DEFAULT_DEVICE_ENDPOINT, getDeviceEndpoint, setDeviceEndpoint } from "@yazhi/bubble/lib/runtime";
 import { LogoMark } from "@/components/ui/LogoMark";
 import { CircleProvider } from "@/components/circle/CircleProvider";
@@ -238,11 +239,12 @@ function ChatRoom() {
 
   const ownItems = useMemo(() => OWN.map(toItem), []);
   const guestItems = useMemo(() => GUESTS.map(toItem), []);
+  const t = useUiT();
 
   return (
     <TinaiScope tinai={tinai} as="div" className="bubble-root yazhi-chat relative flex h-dvh flex-col overflow-hidden">
       <a href="#yazhi-composer" className="sr-only z-50 rounded-full bg-[color:var(--env-surface)] px-4 py-2 focus:not-sr-only focus:absolute focus:left-3 focus:top-3">
-        Skip to message box
+        {t("chat.skipToComposer")}
       </a>
 
       {/* the landscape, behind everything; purely decorative */}
@@ -253,28 +255,28 @@ function ChatRoom() {
       {/* header: logo, the agent you are with, settings */}
       <header className="relative z-20 flex h-16 shrink-0 items-center justify-between gap-3 border-b px-3 hair-lo sm:px-5" style={{ background: "color-mix(in oklab, var(--env-ground) 78%, transparent)" }}>
         <div className="flex min-w-0 items-center gap-3">
-          <Link href="/" className="flex shrink-0 items-center gap-2.5 rounded-full p-1 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[color:var(--env-hi)]" aria-label="Yazhi home">
+          <Link href="/" className="flex shrink-0 items-center gap-2.5 rounded-full p-1 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[color:var(--env-hi)]" aria-label={t("chat.homeLabel")}>
             <span style={{ ["--ivory" as string]: "var(--env-text)" }}>
               <LogoMark size={30} />
             </span>
             <span className="hidden font-display text-lg font-semibold tracking-tight sm:inline">
-              Yazhi <span className="font-normal text-[color:var(--env-text-dim)]">Chat</span>
+              {t("chat.brand")} <span className="font-normal text-[color:var(--env-text-dim)]">{t("chat.brandSuffix")}</span>
             </span>
           </Link>
         </div>
-        <h1 className="sr-only">Yazhi Chat, with {agent.name}</h1>
+        <h1 className="sr-only">{t("chat.pageTitle", { agent: agent.name })}</h1>
         <p className="min-w-0 truncate text-center font-display text-sm" aria-hidden>
           {agent.name}
         </p>
         <div className="flex shrink-0 items-center gap-1.5">
           <span
             className="hidden rounded-full border px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-[color:var(--env-text-dim)] hair-lo sm:inline"
-            title={runtime === "cloud" ? "Replies come from yazhi-api" : "Replies come from a model on this device"}
+            title={runtime === "cloud" ? t("chat.runtimeCloudTip") : t("chat.runtimeDeviceTip")}
           >
-            {runtime === "cloud" ? "yazhi-api" : "on device"}
-            {!online && " · offline"}
+            {runtime === "cloud" ? t("chat.runtimeCloudShort") : t("chat.runtimeDeviceShort")}
+            {!online && ` · ${t("chat.offlineSuffix")}`}
           </span>
-          <IconButton label="Threads" pressed={panel === "threads"} onClick={() => setPanel((p) => (p === "threads" ? null : "threads"))}>
+          <IconButton label={t("chat.threads")} pressed={panel === "threads"} onClick={() => setPanel((p) => (p === "threads" ? null : "threads"))}>
             <path d="M5 7h14M5 12h14M5 17h9" />
           </IconButton>
           <ModeSwitch compact />
@@ -283,17 +285,17 @@ function ChatRoom() {
 
       <div className="relative z-10 flex min-h-0 flex-1">
         {/* agents: a vertical tray of bubbles on wide screens */}
-        <nav aria-label="Agents" className="hidden shrink-0 flex-col items-center border-r pt-3 hair-lo md:flex md:w-[84px]">
-          <RailLabel>Yazhi</RailLabel>
-          <MagneticTray items={ownItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={40} vertical label="Yazhi agents" />
-          <RailLabel>Guests</RailLabel>
-          <MagneticTray items={guestItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={40} vertical label="Guest agents" />
+        <nav aria-label={t("chat.agentsNav")} className="hidden shrink-0 flex-col items-center border-r pt-3 hair-lo md:flex md:w-[84px]">
+          <RailLabel>{t("chat.railYazhi")}</RailLabel>
+          <MagneticTray items={ownItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={40} vertical label={t("chat.yazhiAgents")} />
+          <RailLabel>{t("chat.railGuests")}</RailLabel>
+          <MagneticTray items={guestItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={40} vertical label={t("chat.guestAgents")} />
           <button
             type="button"
             onClick={newThread}
             className="mt-2 grid h-11 w-11 place-items-center rounded-full border border-dashed text-[color:var(--env-text-dim)] transition-colors hair hover:text-[color:var(--env-text)]"
-            aria-label="New thread"
-            title="New thread"
+            aria-label={t("chat.newThread")}
+            title={t("chat.newThread")}
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden>
               <path d="M12 5v14M5 12h14" />
@@ -301,16 +303,16 @@ function ChatRoom() {
           </button>
         </nav>
 
-        <main id="conversation" className="flex min-w-0 flex-1 flex-col" aria-label={`Conversation with ${agent.name}`}>
+        <main id="conversation" className="flex min-w-0 flex-1 flex-col" aria-label={t("chat.conversationWith", { agent: agent.name })}>
           {/* agents on phones: the same bubbles in a row */}
-          <nav aria-label="Agents" className="-mb-3 shrink-0 md:hidden">
+          <nav aria-label={t("chat.agentsNav")} className="-mb-3 shrink-0 md:hidden">
             <div className="flex items-end overflow-x-auto [scrollbar-width:none]" data-lenis-prevent>
               <div className="shrink-0">
-                <MagneticTray items={ownItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={38} label="Yazhi agents" />
+                <MagneticTray items={ownItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={38} label={t("chat.yazhiAgents")} />
               </div>
               <span aria-hidden className="mb-8 h-8 w-px shrink-0 bg-[color:var(--env-edge)] opacity-40" />
               <div className="shrink-0">
-                <MagneticTray items={guestItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={38} label="Guest agents" />
+                <MagneticTray items={guestItems} tinai={tinai} activeId={agent.id} onSelect={chooseAgent} size={38} label={t("chat.guestAgents")} />
               </div>
             </div>
           </nav>
@@ -319,7 +321,7 @@ function ChatRoom() {
             {!started ? (
               <Welcome agent={agent} onPick={(q) => composer.current?.fill(q)} />
             ) : (
-              <div role="log" aria-label="Messages" aria-busy={streaming}>
+              <div role="log" aria-label={t("chat.messages")} aria-busy={streaming}>
                 <ol className="mx-auto flex max-w-3xl flex-col gap-7 px-4 pb-8 pt-8 sm:px-6">
                   {messages.map((m, i) => (
                     <ChatMessage key={m.id} agent={agent} message={m} live={streaming && i === messages.length - 1} />
@@ -336,7 +338,7 @@ function ChatRoom() {
                 onSend={(t) => void send(t)}
                 onStop={stop}
                 streaming={streaming}
-                placeholder={`Message ${agent.name}`}
+                placeholder={t("chat.placeholder", { agent: agent.name })}
                 leading={
                   <MissionButton
                     size={40}
@@ -347,8 +349,8 @@ function ChatRoom() {
                 }
                 hint={
                   <>
-                    Enter to send · Shift+Enter for a new line. Replies can be wrong — check what matters.{" "}
-                    <span className="whitespace-nowrap">{runtime === "cloud" ? "Runs on yazhi-api." : "Runs on this device."}</span>
+                    {t("chat.hintEnter")}{" "}
+                    <span className="whitespace-nowrap">{runtime === "cloud" ? t("chat.hintRunsApi") : t("chat.hintRunsDevice")}</span>
                   </>
                 }
               />
@@ -358,10 +360,10 @@ function ChatRoom() {
 
         {panel && (
           <>
-            <button type="button" aria-label="Close panel" tabIndex={-1} onClick={() => setPanel(null)} className="absolute inset-0 z-20 bg-black/40 md:hidden" />
+            <button type="button" aria-label={t("chat.closePanel")} tabIndex={-1} onClick={() => setPanel(null)} className="absolute inset-0 z-20 bg-black/40 md:hidden" />
             <aside
               id={panel === "mission" ? "mission-control" : undefined}
-              aria-label={panel === "threads" ? "Threads" : "Mission Control"}
+              aria-label={panel === "threads" ? t("chat.threads") : t("chat.panelMission")}
               className="absolute inset-y-0 right-0 z-30 flex w-[min(22rem,100%)] flex-col border-l bg-[color:var(--env-surface)] hair-lo"
             >
               {panel === "threads" ? (
@@ -426,6 +428,7 @@ function IconButton({ label, pressed, onClick, children }: { label: string; pres
 }
 
 function Welcome({ agent, onPick }: { agent: Agent; onPick: (q: string) => void }) {
+  const t = useUiT();
   const emblem = EMBLEM[agent.id];
   return (
     <section aria-labelledby="welcome-title" className="mx-auto flex max-w-3xl flex-col items-center px-4 pb-6 pt-6 text-center sm:pt-10">
@@ -439,7 +442,7 @@ function Welcome({ agent, onPick }: { agent: Agent; onPick: (q: string) => void 
       </h2>
       <p className="mt-3 max-w-md text-[0.95rem] leading-relaxed text-[color:var(--env-text-dim)]">{agent.description}</p>
       <Persona agent={agent} />
-      <ul className="mt-7 flex w-full max-w-xl flex-col gap-2" aria-label="Ways to start">
+      <ul className="mt-7 flex w-full max-w-xl flex-col gap-2" aria-label={t("chat.welcomeStarts")}>
         {agent.starters.map((q) => (
           <li key={q}>
             <button
@@ -470,14 +473,19 @@ function RailLabel({ children }: { children: ReactNode }) {
 
 /** Who the agent is: where it lives, its launch status, and the one rule it keeps. */
 function Persona({ agent }: { agent: Agent }) {
+  const t = useUiT();
   const provider = PROVIDER_META[agent.provider];
   const chips =
     agent.group === "yazhi"
-      ? [agent.home && `Lives in ${agent.home}`, `${provider.label} · yazhi-api`, agent.status && `Preview · ${agent.status}`]
-      : [`Guest · ${provider.label}`, "Runs on an outside model"];
+      ? [
+          agent.home && t("chat.agentLivesIn", { home: agent.home }),
+          t("chat.agentApi", { provider: provider.label }),
+          agent.status && t("chat.agentPreview", { status: agent.status }),
+        ]
+      : [t("chat.agentGuest", { provider: provider.label }), t("chat.agentExternal")];
   return (
     <div className="mt-5 flex w-full max-w-xl flex-col items-center gap-3">
-      <ul className="flex flex-wrap justify-center gap-1.5" aria-label="About this agent">
+      <ul className="flex flex-wrap justify-center gap-1.5" aria-label={t("chat.agentAbout")}>
         {chips.filter(Boolean).map((c) => (
           <li key={c as string} className="rounded-full border px-2.5 py-1 font-mono text-[10px] tracking-wide text-[color:var(--env-text-dim)] hair-lo">
             {c}
@@ -489,7 +497,7 @@ function Persona({ agent }: { agent: Agent }) {
         <p className="flex items-center gap-2 text-xs text-[color:var(--env-text-dim)]">
           <span aria-hidden className="h-px w-5 bg-[color:var(--env-edge)]" />
           <span>
-            <span className="font-mono uppercase tracking-wider text-[color:var(--env-hi)]">Rule</span> {agent.rule}
+            <span className="font-mono uppercase tracking-wider text-[color:var(--env-hi)]">{t("chat.rule")}</span> {agent.rule}
           </span>
           <span aria-hidden className="h-px w-5 bg-[color:var(--env-edge)]" />
         </p>
@@ -500,6 +508,7 @@ function Persona({ agent }: { agent: Agent }) {
 
 /** One illustrative exchange, folded away until asked for. */
 function Sample({ agent }: { agent: Agent }) {
+  const t = useUiT();
   if (!agent.sample) return null;
   return (
     <details
@@ -510,14 +519,14 @@ function Sample({ agent }: { agent: Agent }) {
       }}
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-2xl px-4 py-3 text-sm [&::-webkit-details-marker]:hidden">
-        <span>See how {agent.name} answers</span>
+        <span>{t("chat.seeAnswers", { agent: agent.name })}</span>
         <span aria-hidden className="text-[color:var(--env-text-dim)] transition-transform duration-300 group-open:rotate-90">
           ›
         </span>
       </summary>
       <div className="space-y-4 border-t px-4 pb-4 pt-4 hair-lo">
         <p className="ml-auto w-fit max-w-[85%] whitespace-pre-wrap rounded-[1.2rem] rounded-br-md border bg-[color:var(--env-surface)] px-3.5 py-2 text-sm hair-lo">
-          <span className="sr-only">Sample question: </span>
+          <span className="sr-only">{t("chat.sampleQuestion")} </span>
           {agent.sample.q}
         </p>
         <div className="flex gap-3">
@@ -525,12 +534,13 @@ function Sample({ agent }: { agent: Agent }) {
             {glyphOf(agent)}
           </span>
           <div className="min-w-0 text-sm">
-            <span className="sr-only">Sample answer: </span>
+            <span className="sr-only">{t("chat.sampleAnswer")} </span>
             <Markdown>{agent.sample.a}</Markdown>
           </div>
         </div>
         <p className="font-mono text-[10px] uppercase tracking-wider text-[color:var(--env-text-dim)]">
-          Sample · illustrative, not a live answer{agent.group === "yazhi" ? " · Tamil is a draft for native review" : ""}
+          {t("chat.sampleNote")}
+          {agent.group === "yazhi" ? t("chat.sampleNoteTamilDraft") : ""}
         </p>
       </div>
     </details>
@@ -538,12 +548,13 @@ function Sample({ agent }: { agent: Agent }) {
 }
 
 function ChatMessage({ agent, message, live }: { agent: Agent; message: Message; live: boolean }) {
+  const t = useUiT();
   const [copied, setCopied] = useState(false);
   if (message.role === "user") {
     return (
       <li className="flex justify-end">
         <div className="max-w-[85%] whitespace-pre-wrap rounded-[1.4rem] rounded-br-md border bg-[color:var(--env-surface)] px-4 py-2.5 text-[0.95rem] leading-relaxed hair-lo">
-          <span className="sr-only">You: </span>
+          <span className="sr-only">{t("chat.you")} </span>
           {message.content}
         </div>
       </li>
@@ -563,11 +574,15 @@ function ChatMessage({ agent, message, live }: { agent: Agent; message: Message;
         {message.content ? (
           <Markdown>{message.content}</Markdown>
         ) : (
-          <YazhStrings className="mt-1" label={`${agent.name} is thinking`} />
+          <YazhStrings className="mt-1" label={t("chat.agentIsThinking", { agent: agent.name })} />
         )}
         {message.content && !live && (
           <div className="mt-2 flex items-center gap-3 text-[11px] text-[color:var(--env-text-dim)] opacity-80 transition-opacity group-hover:opacity-100">
-            {message.via && <span className="font-mono uppercase tracking-wider">{message.via === "cloud" ? "yazhi-api" : "on device"}</span>}
+            {message.via && (
+              <span className="font-mono uppercase tracking-wider">
+                {message.via === "cloud" ? t("chat.viaApi") : t("chat.viaDevice")}
+              </span>
+            )}
             <button
               type="button"
               onClick={() => {
@@ -578,7 +593,7 @@ function ChatMessage({ agent, message, live }: { agent: Agent; message: Message;
               }}
               className="rounded px-1 underline decoration-[color:var(--env-edge)] underline-offset-2 hover:text-[color:var(--env-text)]"
             >
-              {copied ? "Copied" : "Copy"}
+              {copied ? t("chat.copied") : t("chat.copy")}
             </button>
           </div>
         )}
@@ -588,12 +603,13 @@ function ChatMessage({ agent, message, live }: { agent: Agent; message: Message;
 }
 
 function PanelHeader({ title, onClose }: { title: string; onClose: () => void }) {
+  const t = useUiT();
   const closeRef = useRef<HTMLButtonElement>(null);
   useEffect(() => closeRef.current?.focus(), []);
   return (
     <div className="flex items-center justify-between border-b px-4 py-3 hair-lo">
       <h2 className="font-display text-base font-semibold">{title}</h2>
-      <button ref={closeRef} type="button" onClick={onClose} aria-label={`Close ${title.toLowerCase()}`} className="grid h-9 w-9 place-items-center rounded-full border hair-lo hover:bg-[color:var(--env-ground)]">
+      <button ref={closeRef} type="button" onClick={onClose} aria-label={t("chat.close", { title })} className="grid h-9 w-9 place-items-center rounded-full border hair-lo hover:bg-[color:var(--env-ground)]">
         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden>
           <path d="M6 6l12 12M18 6L6 18" />
         </svg>
@@ -617,16 +633,17 @@ function ThreadsPanel({
   onNew: () => void;
   onClose: () => void;
 }) {
+  const t = useUiT();
   return (
     <>
-      <PanelHeader title="Threads" onClose={onClose} />
+      <PanelHeader title={t("chat.threads")} onClose={onClose} />
       <div className="p-3">
         <button type="button" onClick={onNew} className="w-full rounded-full border px-4 py-2.5 text-sm transition-colors hair hover:bg-[color:var(--env-ground)]">
-          New thread
+          {t("chat.newThread")}
         </button>
       </div>
       {sessions.length === 0 ? (
-        <p className="px-4 py-6 text-sm text-[color:var(--env-text-dim)]">No threads yet. They stay on this device.</p>
+        <p className="px-4 py-6 text-sm text-[color:var(--env-text-dim)]">{t("chat.noThreads")}</p>
       ) : (
         <ul className="chat-scroll min-h-0 flex-1 overflow-y-auto px-2 pb-4" data-lenis-prevent>
           {sessions.map((s) => {
@@ -651,7 +668,7 @@ function ThreadsPanel({
                 <button
                   type="button"
                   onClick={() => onDelete(s.id)}
-                  aria-label={`Delete thread: ${s.title}`}
+                  aria-label={t("chat.deleteThread", { title: s.title })}
                   className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-[color:var(--env-text-dim)] opacity-60 hover:bg-[color:var(--env-ground)] hover:text-[color:var(--env-text)] focus-visible:opacity-100 group-hover:opacity-100"
                 >
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden>
@@ -690,8 +707,9 @@ function MissionPanel({
   onEndpointCommit: () => void;
   onClose: () => void;
 }) {
+  const t = useUiT();
   const themes: { key: ThemeChoice; en: string; swatch: string; note: string }[] = [
-    { key: "auto", en: "Follow the agent", swatch: tone(agentTinai, "accent"), note: `Now ${ENV_BY_KEY[agentTinai].en}` },
+    { key: "auto", en: t("chat.followAgent"), swatch: tone(agentTinai, "accent"), note: t("chat.nowIn", { landscape: ENV_BY_KEY[agentTinai].en }) },
     ...ENVIRONMENTS.map((e) => ({ key: e.key as ThemeChoice, en: e.en, swatch: tone(e.key, "accent"), note: e.signature })),
   ];
   return (
@@ -699,12 +717,12 @@ function MissionPanel({
       <MissionHeader onClose={onClose} />
       <div className="chat-scroll min-h-0 flex-1 overflow-y-auto border-t hair-lo" data-lenis-prevent>
         <MissionAccount />
-        <MissionSection title="Theme">
+        <MissionSection title={t("chat.theme")}>
           <ModeSwitch />
         </MissionSection>
         <div className="space-y-7 border-t px-4 py-5 hair-lo">
           <fieldset>
-            <legend className="font-mono text-[11px] uppercase tracking-wider text-[color:var(--env-text-dim)]">Landscape</legend>
+            <legend className="font-mono text-[11px] uppercase tracking-wider text-[color:var(--env-text-dim)]">{t("chat.landscape")}</legend>
             <div className="mt-3 grid gap-1.5">
               {themes.map((t) => (
                 <label
@@ -730,13 +748,13 @@ function MissionPanel({
           </fieldset>
 
           <fieldset>
-            <legend className="font-mono text-[11px] uppercase tracking-wider text-[color:var(--env-text-dim)]">Where replies come from</legend>
+            <legend className="font-mono text-[11px] uppercase tracking-wider text-[color:var(--env-text-dim)]">{t("chat.whereReplies")}</legend>
             <div className="mt-3 grid gap-1.5">
               {(
                 [
-                  ["auto", "Automatic", "yazhi-api when online, this device when not"],
-                  ["cloud", "yazhi-api", "Yazhi's servers, through yazhi.dev"],
-                  ["device", "On this device", "A local model; nothing leaves your machine"],
+                  ["auto", t("chat.runtimeAuto"), t("chat.runtimeAutoNote")],
+                  ["cloud", t("chat.runtimeCloud"), t("chat.runtimeCloudNote")],
+                  ["device", t("chat.runtimeDevice"), t("chat.runtimeDeviceNote")],
                 ] as [RuntimeChoice, string, string][]
               ).map(([key, title, note]) => (
                 <label
@@ -759,7 +777,7 @@ function MissionPanel({
               ))}
             </div>
             <label className="mt-4 block text-sm">
-              <span className="block text-[11px] text-[color:var(--env-text-dim)]">On-device endpoint (OpenAI-compatible)</span>
+              <span className="block text-[11px] text-[color:var(--env-text-dim)]">{t("chat.endpointLabel")}</span>
               <input
                 value={endpoint}
                 onChange={(e) => onEndpoint(e.target.value)}
@@ -772,9 +790,9 @@ function MissionPanel({
           </fieldset>
 
           <p className="text-[11px] leading-relaxed text-[color:var(--env-text-dim)]">
-            Threads and these choices are kept in this browser only. The landscapes and their motion are described in the{" "}
+            {t("chat.localNote")}{" "}
             <Link href="/bubble#themes" className="underline decoration-[color:var(--env-edge)] underline-offset-2 hover:text-[color:var(--env-text)]">
-              Bubble UI library
+              {t("chat.localNoteLink")}
             </Link>
             .
           </p>

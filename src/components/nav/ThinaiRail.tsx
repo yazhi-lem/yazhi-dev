@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { TinaiMark } from "@yazhi/bubble";
 import type { ThinaiKey } from "@/lib/content";
 import { THINAI } from "@/lib/content";
-import { useLang } from "@/lib/i18n";
+import { useLang, useLocale, useSiteT } from "@/lib/i18n";
 
 /** Page sections in the order they appear on the page. THINAI (and the 3D
     world) list the landscapes in journey order, but the bubbles follow the
@@ -17,6 +17,9 @@ const RAIL = [...THINAI].sort((a, b) => SCROLL_ORDER.indexOf(a.section) - SCROLL
     Hit areas never move — only the drawing grows. */
 export function ThinaiRail() {
   const { lang } = useLang();
+  const { locale } = useLocale();
+  const t = useSiteT();
+  const tongue = locale !== "ta" && locale !== "en" ? locale : lang === "en" ? "en" : "ta";
   const [active, setActive] = useState<ThinaiKey>("kurinji");
 
   useEffect(() => {
@@ -45,19 +48,20 @@ export function ThinaiRail() {
 
   return (
     <nav
-      aria-label="ஐந்திணை / Five landscapes"
+      aria-label={t("site.nav.fiveLandscapes")}
       className="fixed z-40 max-lg:bottom-4 max-lg:left-1/2 max-lg:-translate-x-1/2 lg:left-5 lg:top-1/2 lg:-translate-y-1/2"
     >
       <ul className="flex items-center gap-1 max-lg:rounded-full max-lg:border max-lg:border-ivory/10 max-lg:bg-night/70 max-lg:p-1 max-lg:shadow-[0_10px_30px_-12px_rgba(0,0,0,0.7)] max-lg:backdrop-blur-xl lg:flex-col">
-        {RAIL.map((t) => {
-          const on = active === t.key;
-          const name = lang === "en" ? t.en : t.ta;
+        {RAIL.map((item, i) => {
+          const on = active === item.key;
+          const name = t(`site.thinai.landscape.${i}.name`);
+          const landscape = t(`site.section.${item.section}.landscape`);
           return (
-            <li key={t.key}>
+            <li key={item.key}>
               <button
                 type="button"
-                onClick={() => go(t.section)}
-                aria-label={`${t.ta} · ${t.en} — ${t.landscape}`}
+                onClick={() => go(item.section)}
+                aria-label={t("site.nav.thinaiItem", { ta: name, en: landscape, landscape })}
                 aria-current={on ? "true" : undefined}
                 className="group relative grid h-11 w-11 place-items-center rounded-full"
               >
@@ -71,21 +75,21 @@ export function ThinaiRail() {
                   }`}
                   style={
                     {
-                      "--tone": `var(--${t.key})`,
+                      "--tone": `var(--${item.key})`,
                       ...(on
                         ? {
-                            borderColor: `color-mix(in oklab, var(--${t.key}) 70%, transparent)`,
-                            background: `color-mix(in oklab, var(--${t.key}) 22%, rgba(10,10,10,0.7))`,
-                            color: `color-mix(in oklab, var(--${t.key}) 45%, white)`,
+                            borderColor: `color-mix(in oklab, var(--${item.key}) 70%, transparent)`,
+                            background: `color-mix(in oklab, var(--${item.key}) 22%, rgba(10,10,10,0.7))`,
+                            color: `color-mix(in oklab, var(--${item.key}) 45%, white)`,
                           }
                         : {}),
                     } as React.CSSProperties
                   }
                 >
-                  <TinaiMark tinai={t.key} size={on ? 22 : 17} />
+                  <TinaiMark tinai={item.key} size={on ? 22 : 17} />
                 </span>
                 <span
-                  lang={lang === "en" ? "en" : "ta"}
+                  lang={tongue}
                   className="pointer-events-none absolute left-full ml-3 hidden whitespace-nowrap rounded-full border border-ivory/10 bg-night/85 px-2.5 py-1 text-xs text-ivory opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 lg:block"
                 >
                   {name}

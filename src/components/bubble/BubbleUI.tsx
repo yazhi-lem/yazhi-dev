@@ -4,6 +4,7 @@ import { Markdown } from "@/components/chat/Markdown";
 import { Composer } from "@yazhi/bubble/components/Composer";
 import { firstGrapheme } from "@yazhi/bubble/text";
 import { MissionMenu } from "@/components/mission/Mission";
+import { useUiT } from "@/lib/i18n";
 import {
   chooseRuntime,
   DEFAULT_DEVICE_ENDPOINT,
@@ -56,6 +57,7 @@ export function BubbleUI({
   onActiveChange?: (id: string) => void;
   className?: string;
 }) {
+  const t = useUiT();
   const [localActive, setLocalActive] = useState(bubbles[0]?.id);
   const currentId = activeId ?? localActive;
   const active = bubbles.find((b) => b.id === currentId) ?? bubbles[0];
@@ -170,18 +172,18 @@ export function BubbleUI({
             className={`rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ${
               online ? "border-mullai/40 text-mullai" : "border-gold/50 text-gold"
             }`}
-            title={online ? "Online — yazhi-api reachable through yazhi.dev" : "Offline — on-device models only"}
+            title={online ? t("bubble.onlineTip") : t("bubble.offlineTip")}
           >
-            {online ? "online" : "offline"}
+            {online ? t("bubble.online") : t("bubble.offline")}
           </span>
           <button
             type="button"
             onClick={() => setSettingsOpen((v) => !v)}
             aria-expanded={settingsOpen}
             className="rounded-full border border-ivory/15 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-ivory-dim hover:text-ivory"
-            title="Runtime settings"
+            title={t("bubble.runtimeSettings")}
           >
-            {runtime === "device" ? "on-device" : "yazhi-api"} ▾
+            {runtime === "device" ? t("bubble.onDevice") : t("chat.runtimeCloudShort")} ▾
           </button>
         </div>
       </div>
@@ -189,7 +191,7 @@ export function BubbleUI({
       {settingsOpen && (
         <div className="grid gap-3 border-b border-ivory/10 bg-night/70 px-4 py-3 text-xs text-ivory-dim sm:grid-cols-2">
           <fieldset>
-            <legend className="mb-1.5 font-semibold text-ivory">Runtime</legend>
+            <legend className="mb-1.5 font-semibold text-ivory">{t("bubble.runtime")}</legend>
             {(["auto", "device", "yazhi-api"] as RuntimeChoice[]).map((c) => (
               <label key={c} className="mr-3 inline-flex items-center gap-1.5">
                 <input
@@ -199,12 +201,12 @@ export function BubbleUI({
                   onChange={() => setChoice(c)}
                   className="accent-[var(--gold)]"
                 />
-                {c === "auto" ? "auto" : c === "device" ? "on-device" : "yazhi-api"}
+                {c === "auto" ? t("bubble.auto") : c === "device" ? t("bubble.onDevice") : t("chat.runtimeCloudShort")}
               </label>
             ))}
           </fieldset>
           <label className="block">
-            <span className="mb-1.5 block font-semibold text-ivory">On-device endpoint (OpenAI-compatible)</span>
+            <span className="mb-1.5 block font-semibold text-ivory">{t("bubble.endpointLabel")}</span>
             <input
               value={endpoint}
               onChange={(e) => setEndpoint(e.target.value)}
@@ -230,7 +232,7 @@ export function BubbleUI({
                   {m.content ? (
                     <Markdown>{m.content}</Markdown>
                   ) : (
-                    <span className="inline-flex gap-1" aria-label="Thinking">
+                    <span className="inline-flex gap-1" aria-label={t("bubble.thinking")}>
                       {[0, 1, 2].map((i) => (
                         <span key={i} className="h-1.5 w-1.5 animate-bounce rounded-full bg-ivory-dim" style={{ animationDelay: `${i * 120}ms` }} />
                       ))}
@@ -238,7 +240,7 @@ export function BubbleUI({
                   )}
                   {m.via && m.content && (
                     <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-ivory-dim/60">
-                      via {m.via === "device" ? "on-device model" : "yazhi-api"}
+                      {m.via === "device" ? t("bubble.viaDevice") : t("bubble.viaApi")}
                     </p>
                   )}
                 </div>
@@ -253,7 +255,7 @@ export function BubbleUI({
               onSend={(t) => void send(t)}
               onStop={() => abortRef.current?.abort()}
               streaming={streaming}
-              placeholder={`Message ${active.name}…`}
+              placeholder={t("bubble.placeholder", { bubble: active.name })}
             />
           </div>
         </div>

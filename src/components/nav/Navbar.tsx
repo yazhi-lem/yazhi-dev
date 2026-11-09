@@ -6,15 +6,15 @@ import { LangToggle } from "@/components/ui/LangToggle";
 import { LogoMark } from "@/components/ui/LogoMark";
 import { JoinCircle } from "@/components/circle/JoinCircle";
 import { MissionMenu } from "@/components/mission/Mission";
-import { useLang } from "@/lib/i18n";
-import { ADHAN, GUARDIAN, IDENTITY } from "@/lib/content";
+import { useLang, useLocale, useSiteT } from "@/lib/i18n";
 
-/** Four places, one word each, in the reader's language. */
+/** Four places, one word each, in the reader's language. The words are
+    catalogue keys now (`site.nav.link.N`) so they follow the locale. */
 const LINKS = [
-  { ta: GUARDIAN.nameTa, en: GUARDIAN.nameEn, href: "#guardian" },
-  { ta: ADHAN.nameTa, en: ADHAN.nameEn, href: "#adhan" },
-  { ta: "சங்கம்", en: "Sangam", href: "#sangam" },
-  { ta: "உருவாக்கு", en: "Build", href: "/bubble" },
+  { key: "site.nav.link.0", href: "#guardian" },
+  { key: "site.nav.link.1", href: "#adhan" },
+  { key: "site.nav.link.2", href: "#sangam" },
+  { key: "site.nav.link.3", href: "/bubble" },
 ];
 
 /** The site bar: the mark, four short links, the language and one call to
@@ -25,7 +25,9 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { lang } = useLang();
-  const word = (l: { ta: string; en: string }) => (lang === "en" ? l.en : l.ta);
+  const { locale } = useLocale();
+  const t = useSiteT();
+  const tongue = locale !== "ta" && locale !== "en" ? locale : lang === "en" ? "en" : "ta";
 
   useEffect(() => {
     let raf = 0;
@@ -53,23 +55,23 @@ export function Navbar() {
             : "border-transparent bg-transparent shadow-none"
         }`}
       >
-        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="Yazhi home">
+        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label={t("site.nav.home")}>
           <LogoMark size={28} />
-          <span lang={lang === "en" ? "en" : "ta"} className="font-serif text-lg font-black">
-            {lang === "en" ? IDENTITY.nameEn : IDENTITY.nameTa}
+          <span lang={tongue} className="font-serif text-lg font-black">
+            {t("site.identity.name")}
           </span>
         </Link>
 
-        <nav aria-label="Yazhi" className="hidden md:block">
+        <nav aria-label={t("site.nav.label")} className="hidden md:block">
           <ul className="flex items-center gap-1">
             {LINKS.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
-                  lang={lang === "en" ? "en" : "ta"}
+                  lang={tongue}
                   className="rounded-full px-3 py-2 text-sm text-ivory-dim transition-colors hover:bg-ivory/[0.06] hover:text-ivory"
                 >
-                  {word(l)}
+                  {t(l.key)}
                 </a>
               </li>
             ))}
@@ -83,7 +85,7 @@ export function Navbar() {
             className="grid h-10 w-10 place-items-center rounded-full text-ivory-dim hover:bg-ivory/10 hover:text-ivory md:hidden"
             aria-expanded={open}
             aria-controls="site-menu"
-            aria-label="Menu"
+            aria-label={t("site.nav.menu")}
             onClick={() => setOpen((v) => !v)}
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden>
@@ -97,7 +99,7 @@ export function Navbar() {
         {open && (
           <motion.nav
             id="site-menu"
-            aria-label="Yazhi"
+            aria-label={t("site.nav.label")}
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -110,10 +112,10 @@ export function Navbar() {
                   <a
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    lang={lang === "en" ? "en" : "ta"}
+                    lang={tongue}
                     className="block rounded-2xl px-4 py-3 text-ivory-dim hover:bg-ivory/[0.06] hover:text-ivory"
                   >
-                    {word(l)}
+                    {t(l.key)}
                   </a>
                 </li>
               ))}
