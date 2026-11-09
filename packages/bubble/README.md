@@ -102,6 +102,63 @@ import theme from "@yazhi/bubble/themes/marutham/theme.json";
 | `bubble-ui-screens.pdf` | Yazhi Chat with each agent, Mission Control asleep and awake, and the library — dark and light |
 | `../brand/yazhi-brand-kit.pdf` | Brand Identity System v1.1 (source spec) |
 
+## Localisation (`src/locales/`)
+
+The library carries its own copy — the words *inside* a bubble — in Tamil,
+English and Hindi: `bubble.<area>.<name>` keys in `src/locales/{ta,en,hi}.ts`
+(188 keys each; the area list is at the top of `en.ts`). Site chrome is a
+separate catalogue (`packages/i18n/src/strings`); the two never mix.
+
+```tsx
+// once, high in the host (yazhi.dev does it in <LangProvider>)
+import { BubbleLocaleScope } from "@yazhi/bubble/locales";
+
+<BubbleLocaleScope locale={locale} display={lang}>{children}</BubbleLocaleScope>
+
+// inside any component in this package
+const t = useBubbleT("bubble.composer");
+<Composer placeholder={t("placeholder")} sendLabel={t("send")} />
+```
+
+Three rules keep it honest:
+
+1. **Props stay overrides.** A prop the caller passes always wins; only an
+   absent one falls back to the catalogue, so existing callers render as
+   they did. With no scope (the design book, tests) the library answers in
+   Tamil with English fallback — never blank, never a key.
+2. **No `@/lib/*` import.** The locale arrives as a prop or through the
+   scope, never through the site's hook, because `src/lib/chat/agents.ts`
+   imports this package and the reverse edge would be a cycle.
+3. **Plain `ts` lookup for non-React code:** `bubbleT("bubble.common.total", locale)`.
+
+Keys are validated, not just typed: `npm run i18n:check` (from the repo root)
+resolves every `t("…")` call through its file's `useBubbleT` namespace and
+fails on a key that does not exist — a key filed under the wrong namespace
+renders the dotted key, so it is checked for, not trusted.
+
+- `node --test --experimental-strip-types --import ./packages/i18n/scripts/ts-resolve.mjs packages/bubble/src/locales/catalogue.test.mjs`
+  — catalogue invariants, the lookup seam, and a source scan for bare
+  English JSX text and attributes (`npm run test:bubble`)
+- [../docs/i18n/HINDI-REVIEW.md](../../docs/i18n/HINDI-REVIEW.md) — every
+  Hindi line here is a machine draft (`origin: "mt"`,
+  `reviewRequired: true`) until a native speaker signs it off
+
+## API
+
+A bubble can be published, browsed, reviewed and run through one typed API —
+the same handler cores whether you call it over HTTP (`/api/...`, NDJSON or
+`?format=sse`) or in-process with `createClient(await localPort())`. The
+manifest schema, its validator and the semver helpers live in this package
+(`src/lib/manifest.ts`, `src/lib/bubble.ts`) so a builder and the server agree
+on one definition.
+
+- [../docs/API.md](../../docs/API.md) — the public v1 surface: auth, error
+  codes, one curl and one TypeScript example per route, runtimes, and what is
+  not built yet
+- `GET /api/openapi.json` — the same surface as an OpenAPI 3.1 document
+- `node --import ./scripts/api-kernel.hooks.mjs --test scripts/api-kernel.test.mjs`
+  from the repo root — the kernel's tests
+
 ## Rebuilding
 
 ```sh

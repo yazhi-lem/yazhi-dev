@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { Bubble } from "../components/Bubble";
 import type { BubbleSize } from "../lib/manifest";
 import { packColumn } from "./pack";
+import { useBubbleT } from "../locales";
 
 export interface TrayItem {
   id: string;
@@ -21,18 +22,20 @@ export function BubbleTray({
   activeId,
   onSelect,
   width = 150,
-  label = "Bubbles",
+  label,
 }: {
   items: TrayItem[];
   activeId?: string;
   onSelect?: (id: string) => void;
   width?: number;
-  /** the tray's accessible name; make it unique when a page has two */
+  /** the tray's accessible name; defaults to `bubble.tray.label`, make it
+      unique when a page has two */
   label?: string;
 }) {
+  const t = useBubbleT("bubble.tray");
   const { placed, height } = useMemo(() => packColumn(items.map((i) => i.size), width), [items, width]);
   return (
-    <nav aria-label={label}>
+    <nav aria-label={label ?? t("label")}>
       <ul className="flex gap-2 overflow-x-auto px-3 py-2 md:hidden" data-lenis-prevent>
         {items.map((b) => (
           <li key={b.id}>

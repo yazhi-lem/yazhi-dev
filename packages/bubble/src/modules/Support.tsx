@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ConfirmGate, type GateState } from "../components/ConfirmGate";
 import { Panel } from "../components/Panel";
 import { Pill, type Tone } from "../components/Pill";
+import { useBubbleT } from "../locales";
 import type { RunbookStep, Ticket } from "../samples";
 
 const PRIORITY: Record<Ticket["priority"], Tone> = { low: "neutral", normal: "info", high: "warn", urgent: "risk" };
@@ -36,11 +37,12 @@ export function TicketCard({ ticket, selected = false, onSelect }: { ticket: Tic
 /** Kural's runbook: numbered steps the agent proposes. Read-only steps can
     be ticked off; any step that changes a system sits behind a ConfirmGate
     with its rollback stated. Nothing runs without a person. */
-export function RunbookPanel({ title, steps }: { title: string; steps: RunbookStep[] }) {
+export function RunbookPanel({ title, steps }: { title?: string; steps: RunbookStep[] }) {
+  const t = useBubbleT("bubble.support");
   const [done, setDone] = useState<Record<string, boolean>>({});
   const [gates, setGates] = useState<Record<string, GateState>>({});
   return (
-    <Panel eyebrow="Kural runbook" title={title} accentEdge>
+    <Panel eyebrow={t("runbookEyebrow")} title={title ?? t("runbookTitle")} accentEdge>
       <ol className="space-y-3">
         {steps.map((s, i) => (
           <li key={s.id} className="flex gap-3">

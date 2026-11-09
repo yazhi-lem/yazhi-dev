@@ -1,6 +1,7 @@
 "use client";
 import { forwardRef, useEffect, useRef, useState, type ReactNode } from "react";
 import { MarkBubble } from "./MarkBubble";
+import { useBubbleT } from "../locales";
 
 /** Mission Control: the three-mark bubble that leads every composer and
     header. It wakes when a Circle account is signed in; until then it
@@ -41,7 +42,12 @@ export const MissionControl = forwardRef<
     was.current = active;
   }, [active]);
 
-  const label = active ? `Mission Control${who ? ` — signed in as ${who}` : ""}` : busy ? "Mission Control — checking your Circle account" : "Mission Control — sign in with Circle to start";
+  const t = useBubbleT("bubble.mission");
+  const label = active
+    ? t("labelActive", { who: who ? t("whoSignedIn", { who }) : "" })
+    : busy
+      ? t("labelBusy")
+      : t("labelAsleep");
 
   return (
     <button
@@ -49,7 +55,7 @@ export const MissionControl = forwardRef<
       type="button"
       onClick={onPress}
       aria-label={label}
-      title={active ? "Mission Control" : "Sign in with Circle to open Mission Control"}
+      title={active ? t("titleActive") : t("titleAsleep")}
       aria-haspopup="dialog"
       aria-expanded={active ? open : undefined}
       aria-controls={active && open ? controls : undefined}
@@ -78,20 +84,22 @@ export function MissionSection({ title, children, aside }: { title: string; chil
 }
 
 /** The panel's head: the awake mark, a title and a close button that takes focus. */
-export function MissionHeader({ title = "Mission Control", onClose }: { title?: string; onClose: () => void }) {
+export function MissionHeader({ title, onClose }: { title?: string; onClose: () => void }) {
+  const t = useBubbleT("bubble.mission");
+  const heading = title ?? t("title");
   const close = useRef<HTMLButtonElement>(null);
   useEffect(() => close.current?.focus(), []);
   return (
     <div className="flex items-center justify-between gap-3 px-4 py-3">
       <div className="flex items-center gap-2.5">
         <MarkBubble size={28} />
-        <h2 className="font-display text-base font-semibold text-ivory">{title}</h2>
+        <h2 className="font-display text-base font-semibold text-ivory">{heading}</h2>
       </div>
       <button
         ref={close}
         type="button"
         onClick={onClose}
-        aria-label={`Close ${title}`}
+        aria-label={t("close", { title: heading })}
         className="grid h-11 w-11 place-items-center rounded-full text-ivory-dim transition-colors hover:bg-ivory/10 hover:text-ivory"
       >
         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden>

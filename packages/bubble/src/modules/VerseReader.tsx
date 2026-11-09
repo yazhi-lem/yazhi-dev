@@ -4,6 +4,7 @@ import { Panel } from "../components/Panel";
 import { Pill } from "../components/Pill";
 import type { Couplet } from "../samples";
 import { truncateGraphemes } from "../text";
+import { useBubbleT } from "../locales";
 
 /** Open Sangam's reader: a corpus of numbered verses on the left, the
     selected verse with its gloss and review state on the right. The
@@ -17,17 +18,19 @@ export function VerseReader({
   verses: Couplet[];
   reviewed?: boolean;
 }) {
+  const t = useBubbleT("bubble.reader");
+  const tinaiReaderEyebrow = useBubbleT("bubble.app")("openSangam.name");
   const [current, setCurrent] = useState(verses[0]?.number);
   const verse = verses.find((v) => v.number === current) ?? verses[0];
   if (!verse) return null;
   return (
     <Panel
-      eyebrow="Open Sangam"
+      eyebrow={tinaiReaderEyebrow}
       title={title}
-      actions={reviewed ? <Pill tone="ok">scholar-verified</Pill> : <Pill tone="warn">awaiting scholar review</Pill>}
+      actions={reviewed ? <Pill tone="ok">{t("scholarVerified")}</Pill> : <Pill tone="warn">{t("awaitingReview")}</Pill>}
     >
       <div className="grid gap-4 md:grid-cols-[10rem_1fr]">
-        <ol className="flex gap-1 overflow-x-auto md:flex-col" aria-label="Verses" data-lenis-prevent>
+        <ol className="flex gap-1 overflow-x-auto md:flex-col" aria-label={t("verses")} data-lenis-prevent>
           {verses.map((v) => (
             <li key={v.number}>
               <button
@@ -50,7 +53,7 @@ export function VerseReader({
           <ol lang="ta" className="space-y-1 text-lg text-ivory">
             {verse.lines.map((line, i) => (
               <li key={i} className="flex gap-3">
-                <span className="w-5 shrink-0 pt-1.5 text-right font-mono text-[11px] text-ivory-dim/70" aria-label={`line ${i + 1}`}>
+                <span className="w-5 shrink-0 pt-1.5 text-right font-mono text-[11px] text-ivory-dim/70" aria-label={t("line", { n: i + 1 })}>
                   {i + 1}
                 </span>
                 <span>{line}</span>
@@ -58,7 +61,7 @@ export function VerseReader({
             ))}
           </ol>
           <div className="mt-4 rounded-lg border border-ivory/10 bg-night/60 p-3">
-            <p className="text-[11px] text-ivory-dim">Gloss · draft, pending scholar review</p>
+            <p className="text-[11px] text-ivory-dim">{t("glossLabel")}</p>
             <p className="mt-1 text-sm text-ivory">{verse.gloss}</p>
           </div>
         </article>

@@ -1,6 +1,7 @@
 "use client";
 import { useId } from "react";
 import { useColorMode, type ColorMode } from "../mode";
+import { useBubbleT } from "../locales";
 
 const ICONS: Record<ColorMode, React.ReactNode> = {
   system: (
@@ -18,7 +19,9 @@ const ICONS: Record<ColorMode, React.ReactNode> = {
   dark: <path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10Z" />,
 };
 
-const NAMES: Record<ColorMode, string> = { system: "System", light: "Light", dark: "Dark" };
+/** Mode id → catalogue key under `bubble.mode.*`; the ids are state, the
+    names are copy. */
+const NAMES: Record<ColorMode, string> = { system: "system", light: "light", dark: "dark" };
 const ORDER: ColorMode[] = ["system", "light", "dark"];
 
 function Icon({ mode }: { mode: ColorMode }) {
@@ -34,6 +37,7 @@ function Icon({ mode }: { mode: ColorMode }) {
     three-way choice with names. */
 export function ModeSwitch({ compact = false, className = "" }: { compact?: boolean; className?: string }) {
   const { mode, setMode } = useColorMode();
+  const t = useBubbleT("bubble.mode");
   const name = useId();
   if (compact) {
     const next = ORDER[(ORDER.indexOf(mode) + 1) % ORDER.length];
@@ -41,8 +45,8 @@ export function ModeSwitch({ compact = false, className = "" }: { compact?: bool
       <button
         type="button"
         onClick={() => setMode(next)}
-        aria-label={`Theme: ${NAMES[mode]}. Switch to ${NAMES[next]}`}
-        title={`Theme: ${NAMES[mode]}`}
+        aria-label={t("switch", { current: t(NAMES[mode]), next: t(NAMES[next]) })}
+        title={t("current", { current: t(NAMES[mode]) })}
         className={`grid h-11 w-11 shrink-0 place-items-center rounded-full text-ivory-dim transition-colors hover:bg-ivory/10 hover:text-ivory ${className}`}
       >
         <Icon mode={mode} />
@@ -51,7 +55,7 @@ export function ModeSwitch({ compact = false, className = "" }: { compact?: bool
   }
   return (
     <fieldset className={`grid grid-cols-3 gap-1 rounded-full border border-ivory/15 p-1 ${className}`}>
-      <legend className="sr-only">Theme</legend>
+      <legend className="sr-only">{t("label")}</legend>
       {ORDER.map((m) => (
         <label
           key={m}
@@ -61,7 +65,7 @@ export function ModeSwitch({ compact = false, className = "" }: { compact?: bool
         >
           <input type="radio" name={name} className="sr-only" checked={mode === m} onChange={() => setMode(m)} />
           <Icon mode={m} />
-          {NAMES[m]}
+          {t(NAMES[m])}
         </label>
       ))}
     </fieldset>

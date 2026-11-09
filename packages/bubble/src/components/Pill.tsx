@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useBubbleT } from "../locales";
 
 export type Tone = "neutral" | "ok" | "warn" | "risk" | "info" | "accent";
 
@@ -35,18 +36,24 @@ export function Pill({
   );
 }
 
-/** Where an answer was computed. Every AI surface shows one. */
+/** Where an answer was computed. Every AI surface shows one. The words
+    come from the locale catalogue (`bubble.pill.*`); the `runtime` values
+    themselves are fixed identifiers, not copy. */
 export function RuntimeBadge({ runtime }: { runtime: "device" | "yazhi-api" | "offline" }) {
-  if (runtime === "device") return <Pill tone="ok" title="Ran on this device — nothing left it">on-device</Pill>;
-  if (runtime === "offline") return <Pill tone="warn" title="No network — on-device models only">offline</Pill>;
-  return <Pill tone="info" title="Ran on Adhan through yazhi-api">yazhi-api</Pill>;
+  const t = useBubbleT("bubble.pill");
+  if (runtime === "device") return <Pill tone="ok" title={t("onDeviceTitle")}>{t("onDevice")}</Pill>;
+  if (runtime === "offline") return <Pill tone="warn" title={t("offlineTitle")}>{t("offline")}</Pill>;
+  return <Pill tone="info" title={t("apiTitle")}>yazhi-api</Pill>;
 }
 
 /** Marks Tamil copy that has not passed native-speaker review yet. */
-export function DraftTag({ what = "Tamil copy" }: { what?: string }) {
+export function DraftTag({ what }: { what?: string }) {
+  const t = useBubbleT("bubble.pill");
+  // `what` stays an override; absent, the label is the localised default.
+  const subject = what ?? t("draftWhat");
   return (
-    <Pill tone="warn" title={`${what} is a draft until a native speaker reviews it`}>
-      draft · native review
+    <Pill tone="warn" title={t("draftTitle", { what: subject })}>
+      {t("draft")}
     </Pill>
   );
 }

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useBubbleT } from "../locales";
 
 export interface Source {
   id: string;
@@ -16,7 +17,8 @@ export interface Source {
 /** Inline citation marker: [n] linking to the source. Aram rule 1 — every
     claim carries one, or the answer says it doesn't know. */
 export function CitationMark({ n, source }: { n: number; source: Source }) {
-  const label = `Source ${n}: ${source.title}, ${source.locator}`;
+  const t = useBubbleT("bubble.citation");
+  const label = t("label", { n, title: source.title, locator: source.locator });
   const cls =
     "ml-0.5 inline-grid h-4 min-w-4 place-items-center rounded bg-[color:var(--accent)]/20 px-1 align-super font-mono text-[10px] text-[color:var(--accent)] no-underline hover:bg-[color:var(--accent)]/35";
   return source.href ? (
@@ -32,15 +34,16 @@ export function CitationMark({ n, source }: { n: number; source: Source }) {
 
 /** A source in a list: title, locator, excerpt, verification state. */
 export function SourceCard({ n, source, footer }: { n: number; source: Source; footer?: ReactNode }) {
+  const t = useBubbleT("bubble");
   return (
     <article id={`src-${source.id}`} className="scroll-mt-20 rounded-xl border border-ivory/10 bg-night/60 p-3">
       <header className="flex items-baseline gap-2">
         <span className="font-mono text-[11px] text-[color:var(--accent)]">[{n}]</span>
         <p className="min-w-0 flex-1 truncate text-sm font-semibold text-ivory">{source.title}</p>
         {source.verified ? (
-          <span className="text-[10px] text-mullai" title="Checked by a reviewer">✓ verified</span>
+          <span className="text-[10px] text-mullai" title={t("common.verifiedTitle")}>✓ {t("common.verified")}</span>
         ) : (
-          <span className="text-[10px] text-gold" title="Not yet checked by a reviewer">unverified</span>
+          <span className="text-[10px] text-gold" title={t("common.unverifiedTitle")}>{t("common.unverified")}</span>
         )}
       </header>
       <p className="mt-0.5 text-xs text-ivory-dim">{source.locator}</p>
@@ -51,7 +54,7 @@ export function SourceCard({ n, source, footer }: { n: number; source: Source; f
         <div className="mt-2 flex items-center justify-between gap-2 text-xs">
           {source.href ? (
             <a href={source.href} target="_blank" rel="noopener noreferrer" className="text-[color:var(--accent)] hover:underline">
-              Open source ↗
+              {t("citation.openSource")}
             </a>
           ) : (
             <span />

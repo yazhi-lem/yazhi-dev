@@ -21,6 +21,7 @@ import {
   SAMPLE_TICKETS,
   kuralSource,
 } from "../samples";
+import { useBubbleT } from "../locales";
 import { AppFrame } from "./AppFrame";
 import { AVAI, GURU, KADAI, KURAL_DESK, NYAYA, OPEN_SANGAM, YAZH_PARENT, type TemplateSlug } from "./catalog";
 
@@ -33,27 +34,34 @@ type PageProps = { account?: ReactNode; /** shown inside another page: no main/a
 let n = 0;
 const id = () => `t${(n += 1)}`;
 
-const TEMPLATE_REPLY = "Template preview — connect this page to a bubble runtime to answer.";
-
-/** Composer that appends to a sample thread with a placeholder reply. */
+/** Composer that appends to a sample thread with a placeholder reply. The
+    initial turns are built by the caller *after* its own `t()` call, so the
+    catalogue is read during render, never at module load. */
 function useSampleThread(initial: ThreadTurn[]) {
   const [turns, setTurns] = useState(initial);
   const send = (text: string) =>
     setTurns((t) => [
       ...t,
       { id: id(), role: "user", content: text },
-      { id: id(), role: "assistant", content: <span className="text-ivory-dim">{TEMPLATE_REPLY}</span> },
+      { id: id(), role: "assistant", content: <TemplateReply /> },
     ]);
   return { turns, send };
+}
+
+/** The placeholder reply a template thread answers with. */
+function TemplateReply() {
+  const t = useBubbleT("bubble.page");
+  return <span className="text-ivory-dim">{t("templateReply")}</span>;
 }
 
 /* ------------------------------------------------------------------ Avai */
 
 export function AvaiPage({ account, embedded }: PageProps) {
+  const t = useBubbleT("bubble.page.avai");
   const k = KURALS[1];
   const sources = [kuralSource(k)];
   const { turns, send } = useSampleThread([
-    { id: "a1", role: "user", content: "What does the Kural say about listening to others?" },
+    { id: "a1", role: "user", content: t("anchorQuestion") },
     {
       id: "a2",
       role: "assistant",
@@ -62,21 +70,21 @@ export function AvaiPage({ account, embedded }: PageProps) {
         <div className="space-y-3">
           <CitedAnswer
             sources={sources}
-            parts={[{ text: "Couplet 423 says wisdom is finding the truth in what you hear, whoever says it.", cite: 0 }]}
+            parts={[{ text: t("anchorAnswer"), cite: 0 }]}
           />
           <KuralQuote number={k.number} lines={k.lines} gloss={k.gloss} />
         </div>
       ),
     },
-    { id: "a3", role: "user", content: "In which year was the Thirukkural written?" },
+        { id: "a3", role: "user", content: t("unknownQuestion") },
     {
       id: "a4",
       role: "assistant",
       runtime: "yazhi-api",
       content: (
         <IDontKnow
-          reason="Scholars propose different dates, and no stored source settles a single year."
-          next="I can show what each dating argument rests on, with its sources."
+          reason={t("unknownReason")}
+          next={t("unknownNext")}
         />
       ),
     },
@@ -90,11 +98,11 @@ export function AvaiPage({ account, embedded }: PageProps) {
           <SourcesPanel sources={sources} />
           <FivePostureTrace
             results={[
-              { posture: "context", pass: true, note: "English question about a Tamil text; answer bilingual." },
-              { posture: "reason", pass: true, note: "One stored source matched: Thirukkural 423." },
-              { posture: "plan", pass: true, note: "Quote, gloss, cite. No step needs a human." },
-              { posture: "respond", pass: true, note: "Every sentence cited." },
-              { posture: "reflect", pass: true, note: "Second question had no source — declined." },
+              { posture: "context", pass: true, note: t("posture1") },
+              { posture: "reason", pass: true, note: t("posture2") },
+              { posture: "plan", pass: true, note: t("posture3") },
+              { posture: "respond", pass: true, note: t("posture4") },
+              { posture: "reflect", pass: true, note: t("posture5") },
             ]}
           />
         </>
@@ -103,7 +111,7 @@ export function AvaiPage({ account, embedded }: PageProps) {
       <Panel accentEdge>
         <ChatThread turns={turns} className="max-h-[36rem] pr-1" />
         <div className="mt-3 border-t border-ivory/10 pt-3">
-          <Composer onSend={send} placeholder="Ask Avai about a verse, a word, a rule…" />
+          <Composer onSend={send} placeholder={t("composer")} />
         </div>
       </Panel>
     </AppFrame>
@@ -113,34 +121,35 @@ export function AvaiPage({ account, embedded }: PageProps) {
 /* ----------------------------------------------------------------- Nyaya */
 
 export function NyayaPage({ account, embedded }: PageProps) {
+  const t = useBubbleT("bubble.page.nyaya");
   return (
     <AppFrame
       app={NYAYA}
       account={account} embedded={embedded}
       aside={
-        <Panel title="Need advice on your situation?" eyebrow="Get help">
+        <Panel title={t("asideTitle")} eyebrow={t("asideEyebrow")}>
           <ul className="space-y-2 text-sm text-ivory-dim">
             <li>
-              <span className="text-ivory">District Legal Services Authority</span> — free legal aid for those who qualify.
+              <span className="text-ivory">{t("dlsa")}</span> — {t("dlsaNote")}
             </li>
             <li>
-              <span className="text-ivory">A lawyer</span> — for advice about your own case.
+              <span className="text-ivory">{t("lawyer")}</span> — {t("lawyerNote")}
             </li>
           </ul>
-          <p className="mt-3 text-xs text-ivory-dim">Nyaya explains the law. It does not advise and is not a lawyer.</p>
+          <p className="mt-3 text-xs text-ivory-dim">{t("disclaimer")}</p>
         </Panel>
       }
     >
       <LegalAnswerCard
-        question="[Sample question about a tenant's rights]"
+        question={t("question")}
         validity={1}
         sources={SAMPLE_LEGAL_SOURCES}
         parts={[
-          { text: "[Plain-language explanation of what the first provision says.]", cite: 0 },
-          { text: "[What the rules add about the procedure.]", cite: 1 },
+          { text: t("part1"), cite: 0 },
+          { text: t("part2"), cite: 1 },
         ]}
       />
-      <Composer onSend={() => {}} placeholder="Ask about a law, in Tamil or English…" />
+      <Composer onSend={() => {}} placeholder={t("composer")} />
     </AppFrame>
   );
 }
@@ -148,6 +157,7 @@ export function NyayaPage({ account, embedded }: PageProps) {
 /* ----------------------------------------------------------------- Kural */
 
 export function KuralDeskPage({ account, embedded }: PageProps) {
+  const t = useBubbleT("bubble.page.kural");
   const [selected, setSelected] = useState(SAMPLE_TICKETS[0].id);
   const ticket = SAMPLE_TICKETS.find((t) => t.id === selected) ?? SAMPLE_TICKETS[0];
   return (
@@ -155,7 +165,7 @@ export function KuralDeskPage({ account, embedded }: PageProps) {
       app={KURAL_DESK}
       account={account} embedded={embedded}
       aside={
-        <Panel title="Queue" eyebrow={`${SAMPLE_TICKETS.length} open`}>
+        <Panel title={t("queue")} eyebrow={t("open", { count: SAMPLE_TICKETS.length })}>
           <div className="space-y-2">
             {SAMPLE_TICKETS.map((t) => (
               <TicketCard key={t.id} ticket={t} selected={t.id === selected} onSelect={() => setSelected(t.id)} />
@@ -176,12 +186,13 @@ export function KuralDeskPage({ account, embedded }: PageProps) {
       >
         <p className="text-sm text-ivory-dim">{ticket.summary}</p>
       </Panel>
+      {/* the title is the ticket's own subject, i.e. sample data — see src/samples.ts */}
       {ticket.id === SAMPLE_TICKETS[0].id ? (
-        <RunbookPanel title="Printer unreachable on the office network" steps={SAMPLE_RUNBOOK} />
+        <RunbookPanel title={SAMPLE_TICKETS[0].title} steps={SAMPLE_RUNBOOK} />
       ) : (
         <IDontKnow
-          reason="No runbook in the knowledge base matches this ticket yet."
-          next="Kural will hand it to a person with what it has checked so far."
+          reason={t("noRunbook")}
+          next={t("noRunbookNext")}
         />
       )}
     </AppFrame>
@@ -191,20 +202,19 @@ export function KuralDeskPage({ account, embedded }: PageProps) {
 /* ------------------------------------------------------------------ Guru */
 
 export function GuruPage({ account, embedded }: PageProps) {
+  const t = useBubbleT("bubble.page.guru");
   return (
     <AppFrame
       app={GURU}
       account={account} embedded={embedded}
       aside={
-        <Panel title="Where this runs" eyebrow="Institute data">
-          <p className="text-sm text-ivory-dim">
-            Guru runs on the institute&apos;s own machine. Student work and hint usage never leave it.
-          </p>
+        <Panel title={t("asideTitle")} eyebrow={t("asideEyebrow")}>
+          <p className="text-sm text-ivory-dim">{t("asideBody")}</p>
         </Panel>
       }
     >
-      <Panel title="Linear equations · lesson 3" eyebrow="Algebra">
-        <Stepper steps={["Read", "Try", "Hints", "Check"]} current={2} />
+      <Panel title={t("lessonTitle")} eyebrow={t("lessonEyebrow")}>
+        <Stepper steps={[t("stepRead"), t("stepTry"), t("stepHints"), t("stepCheck")]} current={2} />
       </Panel>
       <HintLadder prompt={SAMPLE_PROBLEM.prompt} hints={SAMPLE_PROBLEM.hints} handBack={SAMPLE_PROBLEM.handBack} />
     </AppFrame>
@@ -214,6 +224,7 @@ export function GuruPage({ account, embedded }: PageProps) {
 /* ----------------------------------------------------------------- Kadai */
 
 export function KadaiPage({ account, embedded }: PageProps) {
+  const t = useBubbleT("bubble");
   const [lines, setLines] = useState<CartLine[]>([]);
   const add = (p: CartLine["product"]) =>
     setLines((ls) => {
@@ -230,7 +241,7 @@ export function KadaiPage({ account, embedded }: PageProps) {
         <ChatThread
           turns={[
             { id: "k1", role: "user", content: "அரிசி ஒரு மூட்டை வேணும்" },
-            { id: "k2", role: "assistant", runtime: "yazhi-api", content: "Here's what the shop has — add what you need, and the shop will confirm." },
+            { id: "k2", role: "assistant", runtime: "yazhi-api", content: t("page.kadai.shopReply") },
           ]}
         />
       </Panel>
@@ -246,20 +257,18 @@ export function KadaiPage({ account, embedded }: PageProps) {
 /* ---------------------------------------------------------- Open Sangam */
 
 export function SangamReaderPage({ account, embedded }: PageProps) {
+  const t = useBubbleT("bubble.page.sangam");
   return (
     <AppFrame
       app={OPEN_SANGAM}
       account={account} embedded={embedded}
       aside={
-        <Panel title="About this corpus" eyebrow="Provenance">
-          <p className="text-sm text-ivory-dim">
-            Sample corpus: four Thirukkural couplets. The reader is built for Maduraikanchi lines 1–100, which publish after
-            scholar sign-off on every line.
-          </p>
+        <Panel title={t("asideTitle")} eyebrow={t("asideEyebrow")}>
+          <p className="text-sm text-ivory-dim">{t("asideBody")}</p>
         </Panel>
       }
     >
-      <VerseReader title="Thirukkural — sample" verses={KURALS} />
+      <VerseReader title={t("readerTitle")} verses={KURALS} />
     </AppFrame>
   );
 }
@@ -267,10 +276,11 @@ export function SangamReaderPage({ account, embedded }: PageProps) {
 /* ------------------------------------------------------------------- Yazh */
 
 export function YazhParentPage({ account, embedded }: PageProps) {
+  const t = useBubbleT("bubble.page.yazh");
   return (
     <AppFrame app={YAZH_PARENT} account={account} embedded={embedded}>
       <ConsentGate verified={false}>
-        <p>Behind the gate: the parent&apos;s view of their child&apos;s Yazh.</p>
+        <p>{t("behindGate")}</p>
       </ConsentGate>
     </AppFrame>
   );

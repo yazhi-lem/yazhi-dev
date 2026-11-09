@@ -1,6 +1,7 @@
 "use client";
 import { useSyncExternalStore } from "react";
 import { pluck, strum, wake } from "./yazhVoice";
+import { useBubbleT } from "../locales";
 
 /** Whether the yazh may sound. Off until a person turns it on; the choice
     is remembered in this browser only. */
@@ -56,13 +57,14 @@ export function voiceStage(stage: HTMLElement, enabled: () => boolean) {
 /** The speaker button beside a yazh. Turning it on wakes the audio (it must
     come from this press) and answers with a soft run up the strings. */
 export function SoundToggle({ className = "" }: { className?: string }) {
+  const t = useBubbleT("bubble.sound");
   const [on, setOn] = useYazhSound();
   return (
     <button
       type="button"
       aria-pressed={on}
-      aria-label={on ? "Yazh sound on. Turn off" : "Yazh sound off. Turn on to hear the strings"}
-      title={on ? "Sound on" : "Turn on the yazh's sound"}
+      aria-label={on ? t("ariaOn") : t("ariaOff")}
+      title={on ? t("titleOn") : t("titleOff")}
       onClick={async () => {
         if (on) return setOn(false);
         setOn(true);
@@ -85,7 +87,7 @@ export function SoundToggle({ className = "" }: { className?: string }) {
           <path d="M16 9.5l5 5M21 9.5l-5 5" />
         )}
       </svg>
-      {on ? "Sound on" : "Sound"}
+      {on ? t("on") : t("off")}
     </button>
   );
 }

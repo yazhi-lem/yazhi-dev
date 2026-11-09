@@ -16,6 +16,9 @@ after each review pass; do not hand-edit the tables.
    - `src/lib/content.hi.ts` — site copy (`site.*`)
    - `packages/i18n/src/locales/ui.ts` — the language switcher's own chrome
    - `packages/i18n/src/strings/{chat,app}.ts` — in-app chrome
+   - `packages/bubble/src/locales/hi.ts` — the Bubble UI library's own copy
+     (the words *inside* a bubble: composer, citations, guardrails, Mission
+     Control, the Kadai product row)
 3. Sign a line off by setting `origin: "reviewed", reviewRequired: false`
    (site: in `content.hi.ts`; chrome: in the triple files). Clear
    `needsNativeReview` in `LOCALE_META` only when every row is signed off.
@@ -440,3 +443,200 @@ in the same table below (the Tamil column of `content.ts`'s `SITE_PAIRS`).
 | 188 | `whatsapp.groupLabel` | याझी WhatsApp समूह से जुड़ें | Join the Yazhi WhatsApp group | packages/i18n/src/strings/app.ts |
 | 189 | `workspaces.all` | सभी वर्कस्पेस | All workspaces | packages/i18n/src/strings/app.ts |
 | 190 | `workspaces.home` | याझी मुखपृष्ठ | Yazhi home | packages/i18n/src/strings/app.ts |
+
+## Bubble UI library — 188 keys
+
+The words inside a bubble (`@yazhi/bubble`), drafted from the English
+source the library shipped with and the Tamil written beside it. Tamil is
+the ecosystem's voice, so where the two disagree translate the Tamil.
+
+| # | Key | Hindi (draft, MT) | English source | Where |
+|---|---|---|---|---|
+| 1 | `bubble.answer.fallbackNext` | जिस पाठ, श्लोक या धारा का अभिप्राय है उसका नाम बताएँ। | Try naming the text, verse or section you mean. | packages/bubble/src/locales/hi.ts |
+| 2 | `bubble.answer.fallbackReason` | इस प्रश्न का उत्तर किसी संग्रहीत स्रोत से समर्थित नहीं है। | No stored source supports an answer to this question. | packages/bubble/src/locales/hi.ts |
+| 3 | `bubble.answer.matched` | {pct}% मेल खाया | {pct}% matched | packages/bubble/src/locales/hi.ts |
+| 4 | `bubble.answer.matchedTitle` | उद्धृत धाराएँ संग्रहीत अधिनियम पाठ से मेल खाती हैं | Cited sections matched to stored Act text | packages/bubble/src/locales/hi.ts |
+| 5 | `bubble.answer.noSources` | कोई स्रोत नहीं — इसलिए कोई दावा नहीं। | No sources — so no claim is made. | packages/bubble/src/locales/hi.ts |
+| 6 | `bubble.answer.sources` | स्रोत | Sources | packages/bubble/src/locales/hi.ts |
+| 7 | `bubble.app.avai.name` | अवै | Avai | packages/bubble/src/locales/hi.ts |
+| 8 | `bubble.app.avai.tagline` | तमिल साहित्य, व्याकरण और प्रयोग — हर दावे के साथ स्रोत | Tamil literature, grammar and usage — every claim with its source | packages/bubble/src/locales/hi.ts |
+| 9 | `bubble.app.guru.name` | गुरु | Guru | packages/bubble/src/locales/hi.ts |
+| 10 | `bubble.app.guru.tagline` | गणित, विज्ञान और अंग्रेज़ी तमिल के माध्यम से — संकेत, उत्तर नहीं | Maths, science and English through Tamil — hints, never answers | packages/bubble/src/locales/hi.ts |
+| 11 | `bubble.app.kadai.name` | कडै | Kadai | packages/bubble/src/locales/hi.ts |
+| 12 | `bubble.app.kadai.tagline` | पड़ोस की दुकान जो तमिल में ऑर्डर लेती है, अण्णाच्ची के साथ | A neighbourhood shop that takes orders in Tamil, with Annachi | packages/bubble/src/locales/hi.ts |
+| 13 | `bubble.app.kuralDesk.name` | कुरल डेस्क | Kural Desk | packages/bubble/src/locales/hi.ts |
+| 14 | `bubble.app.kuralDesk.tagline` | तमिल में IT सहायता — रनबुक सुझाता है, स्वयं कोई सिस्टम नहीं बदलता | IT help in Tamil — proposes runbooks, never changes a system on its own | packages/bubble/src/locales/hi.ts |
+| 15 | `bubble.app.nyaya.name` | न्याय | Nyaya | packages/bubble/src/locales/hi.ts |
+| 16 | `bubble.app.nyaya.tagline` | कानून क्या कहता है, तमिल में — उस धारा के साथ जहाँ से वह आता है | What the law says, in Tamil — with the section it comes from | packages/bubble/src/locales/hi.ts |
+| 17 | `bubble.app.openSangam.name` | खुला संगम | Open Sangam | packages/bubble/src/locales/hi.ts |
+| 18 | `bubble.app.openSangam.tagline` | शास्त्रीय तमिल, पंक्ति-दर-पंक्ति — विद्वान की स्वीकृति के बाद ही प्रकाशित | Classical Tamil, line by line — published only after scholar sign-off | packages/bubble/src/locales/hi.ts |
+| 19 | `bubble.app.yazhParent.name` | याझ — अभिभावकों के लिए | Yazh — for parents | packages/bubble/src/locales/hi.ts |
+| 20 | `bubble.app.yazhParent.tagline` | याझ का अभिभावक-द्वार। बच्चे यह पृष्ठ कभी नहीं देखते। | The parent's door into Yazh. Children never see this page. | packages/bubble/src/locales/hi.ts |
+| 21 | `bubble.citation.hrefTo` | {label} खोलें | Open {label} | packages/bubble/src/locales/hi.ts |
+| 22 | `bubble.citation.label` | स्रोत {n}: {title}, {locator} | Source {n}: {title}, {locator} | packages/bubble/src/locales/hi.ts |
+| 23 | `bubble.citation.openSource` | स्रोत खोलें ↗ | Open source ↗ | packages/bubble/src/locales/hi.ts |
+| 24 | `bubble.commerce.inStock` | उपलब्ध | in stock | packages/bubble/src/locales/hi.ts |
+| 25 | `bubble.commerce.intentNote` | केवल भुगतान अनुरोध — दुकान पुष्टि करके सीधे भुगतान लेती है। याझी से होकर पैसा नहीं जाता। | Payment intent only — the shop confirms and collects payment directly. No money moves through Yazhi. | packages/bubble/src/locales/hi.ts |
+| 26 | `bubble.commerce.lowStock` | कम | low | packages/bubble/src/locales/hi.ts |
+| 27 | `bubble.commerce.nothingAdded` | अभी कुछ नहीं जोड़ा गया। | Nothing added yet. | packages/bubble/src/locales/hi.ts |
+| 28 | `bubble.commerce.order` | ऑर्डर | Order | packages/bubble/src/locales/hi.ts |
+| 29 | `bubble.commerce.outOfStock` | नहीं है | out | packages/bubble/src/locales/hi.ts |
+| 30 | `bubble.commerce.remove` | {name} हटाएँ | Remove {name} | packages/bubble/src/locales/hi.ts |
+| 31 | `bubble.common.add` | जोड़ें | Add | packages/bubble/src/locales/hi.ts |
+| 32 | `bubble.common.approvedBy` | ✓ स्वीकृत · {name} | ✓ approved · {name} | packages/bubble/src/locales/hi.ts |
+| 33 | `bubble.common.approvedTitle` | {name} द्वारा स्वीकृत | Approved by {name} | packages/bubble/src/locales/hi.ts |
+| 34 | `bubble.common.cited` | {count} उद्धृत | {count} cited | packages/bubble/src/locales/hi.ts |
+| 35 | `bubble.common.close` | {title} बंद करें | Close {title} | packages/bubble/src/locales/hi.ts |
+| 36 | `bubble.common.open` | {title} खोलें | Open {title} | packages/bubble/src/locales/hi.ts |
+| 37 | `bubble.common.total` | कुल | Total | packages/bubble/src/locales/hi.ts |
+| 38 | `bubble.common.unverified` | असत्यापित | unverified | packages/bubble/src/locales/hi.ts |
+| 39 | `bubble.common.unverifiedTitle` | अभी किसी समीक्षक द्वारा नहीं जाँचा गया | Not yet checked by a reviewer | packages/bubble/src/locales/hi.ts |
+| 40 | `bubble.common.verified` | सत्यापित | verified | packages/bubble/src/locales/hi.ts |
+| 41 | `bubble.common.verifiedTitle` | किसी समीक्षक द्वारा जाँचा गया | Checked by a reviewer | packages/bubble/src/locales/hi.ts |
+| 42 | `bubble.composer.placeholder` | संदेश… | Message… | packages/bubble/src/locales/hi.ts |
+| 43 | `bubble.composer.send` | भेजें | Send | packages/bubble/src/locales/hi.ts |
+| 44 | `bubble.composer.stop` | रोकें | Stop | packages/bubble/src/locales/hi.ts |
+| 45 | `bubble.gate.affects` | प्रभाव | Affects | packages/bubble/src/locales/hi.ts |
+| 46 | `bubble.gate.confirmRun` | पुष्टि करें और चलाएँ | Confirm and run | packages/bubble/src/locales/hi.ts |
+| 47 | `bubble.gate.confirmed` | आपने पुष्टि की — दर्ज हो गया। | Confirmed by you — logged. | packages/bubble/src/locales/hi.ts |
+| 48 | `bubble.gate.declined` | अस्वीकृत — कुछ नहीं चला। | Declined — nothing ran. | packages/bubble/src/locales/hi.ts |
+| 49 | `bubble.gate.dontRun` | न चलाएँ | Don't run | packages/bubble/src/locales/hi.ts |
+| 50 | `bubble.gate.needsHuman` | मनुष्य की पुष्टि आवश्यक | Needs a human confirm | packages/bubble/src/locales/hi.ts |
+| 51 | `bubble.gate.rollback` | वापसी | Rollback | packages/bubble/src/locales/hi.ts |
+| 52 | `bubble.gate.typePrompt` | {word} लिखें | Type {word} | packages/bubble/src/locales/hi.ts |
+| 53 | `bubble.gate.typeToConfirm` | पुष्टि के लिए {word} लिखें | Type {word} to confirm | packages/bubble/src/locales/hi.ts |
+| 54 | `bubble.guardrails.childrenBody` | बच्चे याझ का उपयोग तभी करते हैं जब कोई माता-पिता सत्यापित सहमति देते हैं। हम केवल पहला नाम और आयु-वर्ग रखते हैं — और कुछ नहीं। | Children use Yazh only after a parent gives verified consent. We keep a first name and an age band — nothing else. | packages/bubble/src/locales/hi.ts |
+| 55 | `bubble.guardrails.childrenTitle` | माता-पिता और अभिभावकों के लिए | For parents and guardians | packages/bubble/src/locales/hi.ts |
+| 56 | `bubble.guardrails.idontknow` | मुझे नहीं पता | I don't know | packages/bubble/src/locales/hi.ts |
+| 57 | `bubble.guardrails.legalBody` | यह बताता है कि कानून क्या कहता है; यह आपकी स्थिति पर सलाह नहीं दे सकता। सलाह के लिए अपने ज़िला विधिक सेवा प्राधिकरण (DLSA) से संपर्क करें — कई लोगों के लिए विधिक सहायता नि:शुल्क है — या किसी वकील से। | This explains what the law says; it cannot advise you on your situation. For advice, contact your District Legal Services Authority (DLSA) — legal aid is free for many people — or a lawyer. | packages/bubble/src/locales/hi.ts |
+| 58 | `bubble.guardrails.legalTitle` | कानूनी जानकारी, कानूनी सलाह नहीं | Legal information, not legal advice | packages/bubble/src/locales/hi.ts |
+| 59 | `bubble.guardrails.sampleBody` | इस स्क्रीन पर सब कुछ उदाहरण के लिए है। यह लेआउट दिखाता है, वास्तविक उत्तर, उद्धरण, कीमतें या लोग नहीं। | Everything on this screen is illustrative. It shows the layout, not real answers, citations, prices or people. | packages/bubble/src/locales/hi.ts |
+| 60 | `bubble.guardrails.sampleTitle` | नमूना डेटा | Sample data | packages/bubble/src/locales/hi.ts |
+| 61 | `bubble.hintLadder.eyebrow` | गुरु | Guru | packages/bubble/src/locales/hi.ts |
+| 62 | `bubble.hintLadder.footnote` | गुरु संकेत देते हैं, उत्तर नहीं। आपके शिक्षक देखते हैं कि आपने कौन-से संकेत लिए। | Guru gives hints, not answers. Your teacher sees which hints you used. | packages/bubble/src/locales/hi.ts |
+| 63 | `bubble.hintLadder.hintN` | संकेत {n} | Hint {n} | packages/bubble/src/locales/hi.ts |
+| 64 | `bubble.hintLadder.next` | अगला संकेत ({next} / {total}) | Next hint ({next} of {total}) | packages/bubble/src/locales/hi.ts |
+| 65 | `bubble.hintLadder.stuck` | मैं अटका हूँ — एक संकेत दें | I'm stuck — give me a hint | packages/bubble/src/locales/hi.ts |
+| 66 | `bubble.message.thinking` | सोच रहा है | Thinking | packages/bubble/src/locales/hi.ts |
+| 67 | `bubble.mission.close` | {title} बंद करें | Close {title} | packages/bubble/src/locales/hi.ts |
+| 68 | `bubble.mission.labelActive` | मिशन कंट्रोल{who} | Mission Control{who} | packages/bubble/src/locales/hi.ts |
+| 69 | `bubble.mission.labelAsleep` | मिशन कंट्रोल — शुरू करने के लिए Circle से साइन इन करें | Mission Control — sign in with Circle to start | packages/bubble/src/locales/hi.ts |
+| 70 | `bubble.mission.labelBusy` | मिशन कंट्रोल — आपका Circle खाता जाँचा जा रहा है | Mission Control — checking your Circle account | packages/bubble/src/locales/hi.ts |
+| 71 | `bubble.mission.title` | मिशन कंट्रोल | Mission Control | packages/bubble/src/locales/hi.ts |
+| 72 | `bubble.mission.titleActive` | मिशन कंट्रोल | Mission Control | packages/bubble/src/locales/hi.ts |
+| 73 | `bubble.mission.titleAsleep` | मिशन कंट्रोल खोलने के लिए Circle से साइन इन करें | Sign in with Circle to open Mission Control | packages/bubble/src/locales/hi.ts |
+| 74 | `bubble.mission.whoSignedIn` | — {who} के रूप में साइन इन | — signed in as {who} | packages/bubble/src/locales/hi.ts |
+| 75 | `bubble.mode.current` | थीम: {current} | Theme: {current} | packages/bubble/src/locales/hi.ts |
+| 76 | `bubble.mode.dark` | गहरा | Dark | packages/bubble/src/locales/hi.ts |
+| 77 | `bubble.mode.label` | थीम | Theme | packages/bubble/src/locales/hi.ts |
+| 78 | `bubble.mode.light` | उजला | Light | packages/bubble/src/locales/hi.ts |
+| 79 | `bubble.mode.switch` | थीम: {current}। {next} पर स्विच करें | Theme: {current}. Switch to {next} | packages/bubble/src/locales/hi.ts |
+| 80 | `bubble.mode.system` | सिस्टम | System | packages/bubble/src/locales/hi.ts |
+| 81 | `bubble.page.avai.anchorAnswer` | कुरल 423 कहता है कि जो सुना जाए, उसमें जो भी कहे, सत्य देखना ही ज्ञान है। | Couplet 423 says wisdom is finding the truth in what you hear, whoever says it. | packages/bubble/src/locales/hi.ts |
+| 82 | `bubble.page.avai.anchorQuestion` | दूसरों को सुनने के बारे में कुरल क्या कहता है? | What does the Kural say about listening to others? | packages/bubble/src/locales/hi.ts |
+| 83 | `bubble.page.avai.composer` | अवै से किसी श्लोक, शब्द या नियम के बारे में पूछें… | Ask Avai about a verse, a word, a rule… | packages/bubble/src/locales/hi.ts |
+| 84 | `bubble.page.avai.posture1` | तमिल पाठ पर अंग्रेज़ी प्रश्न; उत्तर द्विभाषी। | English question about a Tamil text; answer bilingual. | packages/bubble/src/locales/hi.ts |
+| 85 | `bubble.page.avai.posture2` | एक संग्रहीत स्रोत मिला: तिरुक्कुरल 423। | One stored source matched: Thirukkural 423. | packages/bubble/src/locales/hi.ts |
+| 86 | `bubble.page.avai.posture3` | उद्धरण, अनुवाद, स्रोत। किसी चरण में मनुष्य की आवश्यकता नहीं। | Quote, gloss, cite. No step needs a human. | packages/bubble/src/locales/hi.ts |
+| 87 | `bubble.page.avai.posture4` | हर वाक्य उद्धृत। | Every sentence cited. | packages/bubble/src/locales/hi.ts |
+| 88 | `bubble.page.avai.posture5` | दूसरे प्रश्न का स्रोत नहीं था — अस्वीकार किया। | Second question had no source — declined. | packages/bubble/src/locales/hi.ts |
+| 89 | `bubble.page.avai.unknownNext` | मैं दिखा सकता हूँ कि प्रत्येक तिथि-तर्क किस पर टिका है, उसके स्रोतों सहित। | I can show what each dating argument rests on, with its sources. | packages/bubble/src/locales/hi.ts |
+| 90 | `bubble.page.avai.unknownQuestion` | तिरुक्कुरल किस वर्ष लिखा गया? | In which year was the Thirukkural written? | packages/bubble/src/locales/hi.ts |
+| 91 | `bubble.page.avai.unknownReason` | विद्वान भिन्न काल सुझाते हैं, और किसी संग्रहीत स्रोत से एक वर्ष तय नहीं होता। | Scholars propose different dates, and no stored source settles a single year. | packages/bubble/src/locales/hi.ts |
+| 92 | `bubble.page.guru.asideBody` | गुरु संस्थान की अपनी मशीन पर चलता है। छात्र का कार्य और संकेत-उपयोग बाहर नहीं जाते। | Guru runs on the institute's own machine. Student work and hint usage never leave it. | packages/bubble/src/locales/hi.ts |
+| 93 | `bubble.page.guru.asideEyebrow` | संस्थान डेटा | Institute data | packages/bubble/src/locales/hi.ts |
+| 94 | `bubble.page.guru.asideTitle` | यह कहाँ चलता है | Where this runs | packages/bubble/src/locales/hi.ts |
+| 95 | `bubble.page.guru.lessonEyebrow` | बीजगणित | Algebra | packages/bubble/src/locales/hi.ts |
+| 96 | `bubble.page.guru.lessonTitle` | रैखिक समीकरण · पाठ 3 | Linear equations · lesson 3 | packages/bubble/src/locales/hi.ts |
+| 97 | `bubble.page.guru.stepCheck` | जाँचें | Check | packages/bubble/src/locales/hi.ts |
+| 98 | `bubble.page.guru.stepHints` | संकेत | Hints | packages/bubble/src/locales/hi.ts |
+| 99 | `bubble.page.guru.stepRead` | पढ़ें | Read | packages/bubble/src/locales/hi.ts |
+| 100 | `bubble.page.guru.stepTry` | आज़माएँ | Try | packages/bubble/src/locales/hi.ts |
+| 101 | `bubble.page.kadai.shopReply` | दुकान में यह उपलब्ध है — जो चाहिए जोड़ें, दुकान पुष्टि करेगी। | Here's what the shop has — add what you need, and the shop will confirm. | packages/bubble/src/locales/hi.ts |
+| 102 | `bubble.page.kural.noRunbook` | ज्ञान-आधार में अभी इस टिकट से मेल खाती कोई रनबुक नहीं है। | No runbook in the knowledge base matches this ticket yet. | packages/bubble/src/locales/hi.ts |
+| 103 | `bubble.page.kural.noRunbookNext` | कुरल अब तक जाँचे गए के साथ इसे किसी व्यक्ति को सौंपेगा। | Kural will hand it to a person with what it has checked so far. | packages/bubble/src/locales/hi.ts |
+| 104 | `bubble.page.kural.open` | {count} खुले | {count} open | packages/bubble/src/locales/hi.ts |
+| 105 | `bubble.page.kural.queue` | कतार | Queue | packages/bubble/src/locales/hi.ts |
+| 106 | `bubble.page.nyaya.asideEyebrow` | सहायता लें | Get help | packages/bubble/src/locales/hi.ts |
+| 107 | `bubble.page.nyaya.asideTitle` | अपनी स्थिति पर सलाह चाहिए? | Need advice on your situation? | packages/bubble/src/locales/hi.ts |
+| 108 | `bubble.page.nyaya.composer` | किसी कानून के बारे में पूछें, तमिल या अंग्रेज़ी में… | Ask about a law, in Tamil or English… | packages/bubble/src/locales/hi.ts |
+| 109 | `bubble.page.nyaya.disclaimer` | न्याय कानून समझाता है। यह सलाह नहीं देता और वकील नहीं है। | Nyaya explains the law. It does not advise and is not a lawyer. | packages/bubble/src/locales/hi.ts |
+| 110 | `bubble.page.nyaya.dlsa` | ज़िला विधिक सेवा प्राधिकरण | District Legal Services Authority | packages/bubble/src/locales/hi.ts |
+| 111 | `bubble.page.nyaya.dlsaNote` | पात्र लोगों के लिए नि:शुल्क विधिक सहायता। | free legal aid for those who qualify. | packages/bubble/src/locales/hi.ts |
+| 112 | `bubble.page.nyaya.lawyer` | एक वकील | A lawyer | packages/bubble/src/locales/hi.ts |
+| 113 | `bubble.page.nyaya.lawyerNote` | आपके अपने मामले पर सलाह के लिए। | for advice about your own case. | packages/bubble/src/locales/hi.ts |
+| 114 | `bubble.page.nyaya.part1` | [पहला प्रावधान क्या कहता है, इसकी सरल व्याख्या।] | [Plain-language explanation of what the first provision says.] | packages/bubble/src/locales/hi.ts |
+| 115 | `bubble.page.nyaya.part2` | [प्रक्रिया पर नियम क्या जोड़ते हैं।] | [What the rules add about the procedure.] | packages/bubble/src/locales/hi.ts |
+| 116 | `bubble.page.nyaya.question` | [किरायेदार के अधिकारों पर नमूना प्रश्न] | [Sample question about a tenant's rights] | packages/bubble/src/locales/hi.ts |
+| 117 | `bubble.page.sangam.asideBody` | नमूना संकलन: चार तिरुक्कुरल। यह पाठक मदुरैक्काञ्चि की पंक्ति 1–100 के लिए बना है, जो हर पंक्ति पर विद्वान की स्वीकृति के बाद प्रकाशित होती हैं। | Sample corpus: four Thirukkural couplets. The reader is built for Maduraikanchi lines 1–100, which publish after scholar sign-off on every line. | packages/bubble/src/locales/hi.ts |
+| 118 | `bubble.page.sangam.asideEyebrow` | स्रोत | Provenance | packages/bubble/src/locales/hi.ts |
+| 119 | `bubble.page.sangam.asideTitle` | इस संकलन के बारे में | About this corpus | packages/bubble/src/locales/hi.ts |
+| 120 | `bubble.page.sangam.readerTitle` | तिरुक्कुरल — नमूना | Thirukkural — sample | packages/bubble/src/locales/hi.ts |
+| 121 | `bubble.page.templateReply` | टेम्पलेट पूर्वावलोकन — उत्तर के लिए इस पृष्ठ को बबल रनटाइम से जोड़ें। | Template preview — connect this page to a bubble runtime to answer. | packages/bubble/src/locales/hi.ts |
+| 122 | `bubble.page.yazh.behindGate` | द्वार के पीछे: अपने बच्चे के याझ पर अभिभावक का दृश्य। | Behind the gate: the parent's view of their child's Yazh. | packages/bubble/src/locales/hi.ts |
+| 123 | `bubble.pill.apiTitle` | yazhi-api के ज़रिए अधान पर चला | Ran on Adhan through yazhi-api | packages/bubble/src/locales/hi.ts |
+| 124 | `bubble.pill.draft` | मसौदा · मातृभाषा समीक्षा | draft · native review | packages/bubble/src/locales/hi.ts |
+| 125 | `bubble.pill.draftTitle` | {what} तब तक मसौदा है जब तक कोई मातृभाषी समीक्षा न करे | {what} is a draft until a native speaker reviews it | packages/bubble/src/locales/hi.ts |
+| 126 | `bubble.pill.draftWhat` | तमिल पाठ | Tamil copy | packages/bubble/src/locales/hi.ts |
+| 127 | `bubble.pill.offline` | ऑफ़लाइन | offline | packages/bubble/src/locales/hi.ts |
+| 128 | `bubble.pill.offlineTitle` | नेटवर्क नहीं — केवल डिवाइस मॉडल | No network — on-device models only | packages/bubble/src/locales/hi.ts |
+| 129 | `bubble.pill.onDevice` | इस डिवाइस पर | on-device | packages/bubble/src/locales/hi.ts |
+| 130 | `bubble.pill.onDeviceTitle` | इस डिवाइस पर चला — कुछ भी बाहर नहीं गया | Ran on this device — nothing left it | packages/bubble/src/locales/hi.ts |
+| 131 | `bubble.reader.awaitingReview` | विद्वान समीक्षा की प्रतीक्षा | awaiting scholar review | packages/bubble/src/locales/hi.ts |
+| 132 | `bubble.reader.glossLabel` | भावार्थ · मसौदा, विद्वान समीक्षा बाक़ी | Gloss · draft, pending scholar review | packages/bubble/src/locales/hi.ts |
+| 133 | `bubble.reader.line` | पंक्ति {n} | line {n} | packages/bubble/src/locales/hi.ts |
+| 134 | `bubble.reader.scholarVerified` | विद्वान द्वारा सत्यापित | scholar-verified | packages/bubble/src/locales/hi.ts |
+| 135 | `bubble.reader.verses` | श्लोक | Verses | packages/bubble/src/locales/hi.ts |
+| 136 | `bubble.sound.ariaOff` | याझ ध्वनि बंद है। तार सुनने के लिए चालू करें | Yazh sound off. Turn on to hear the strings | packages/bubble/src/locales/hi.ts |
+| 137 | `bubble.sound.ariaOn` | याझ ध्वनि चालू है। बंद करें | Yazh sound on. Turn off | packages/bubble/src/locales/hi.ts |
+| 138 | `bubble.sound.off` | ध्वनि | Sound | packages/bubble/src/locales/hi.ts |
+| 139 | `bubble.sound.on` | ध्वनि चालू | Sound on | packages/bubble/src/locales/hi.ts |
+| 140 | `bubble.sound.titleOff` | याझ की ध्वनि चालू करें | Turn on the yazh's sound | packages/bubble/src/locales/hi.ts |
+| 141 | `bubble.sound.titleOn` | ध्वनि चालू | Sound on | packages/bubble/src/locales/hi.ts |
+| 142 | `bubble.support.runbookEyebrow` | कुरल रनबुक | Kural runbook | packages/bubble/src/locales/hi.ts |
+| 143 | `bubble.support.runbookTitle` | रनबुक | Runbook | packages/bubble/src/locales/hi.ts |
+| 144 | `bubble.tinai.kurinji` | कुरिंजि | Kurinji | packages/bubble/src/locales/hi.ts |
+| 145 | `bubble.tinai.kurinji.landscape` | पहाड़ | Hills | packages/bubble/src/locales/hi.ts |
+| 146 | `bubble.tinai.kurinji.mood` | पहला मिलन — जिज्ञासा और खोज, जहाँ कथा आरंभ होती है | First meetings — curiosity and discovery, where a story starts | packages/bubble/src/locales/hi.ts |
+| 147 | `bubble.tinai.marutham` | मरुतम् | Marutham | packages/bubble/src/locales/hi.ts |
+| 148 | `bubble.tinai.marutham.landscape` | खेत | Farmland | packages/bubble/src/locales/hi.ts |
+| 149 | `bubble.tinai.marutham.mood` | रोज़मर्रा का जीवन — गणना, काम और परिवार; कलह और मेल | Everyday life — counting, work and family; quarrel and reconciliation | packages/bubble/src/locales/hi.ts |
+| 150 | `bubble.tinai.mullai` | मुल्लै | Mullai | packages/bubble/src/locales/hi.ts |
+| 151 | `bubble.tinai.mullai.landscape` | वन | Forest | packages/bubble/src/locales/hi.ts |
+| 152 | `bubble.tinai.mullai.mood` | प्रतीक्षा — धैर्य, पशु और बच्चों की लोककथाएँ | Waiting — patience, animals and the folk tales children know | packages/bubble/src/locales/hi.ts |
+| 153 | `bubble.tinai.neytal` | नेय्तल् | Neytal | packages/bubble/src/locales/hi.ts |
+| 154 | `bubble.tinai.neytal.landscape` | समुद्रतट | Seashore | packages/bubble/src/locales/hi.ts |
+| 155 | `bubble.tinai.neytal.mood` | विरह — यात्राएँ और दूरी, प्रवासी भूमि | Longing — voyages and distance, the diaspora's landscape | packages/bubble/src/locales/hi.ts |
+| 156 | `bubble.tinai.palai` | पालै | Palai | packages/bubble/src/locales/hi.ts |
+| 157 | `bubble.tinai.palai.landscape` | शुष्क भूमि | Drylands | packages/bubble/src/locales/hi.ts |
+| 158 | `bubble.tinai.palai.mood` | सहनशीलता — साहस और वियोग, कठिन कथाएँ | Endurance — courage and separation, the harder stories | packages/bubble/src/locales/hi.ts |
+| 159 | `bubble.tray.label` | बबल | Bubbles | packages/bubble/src/locales/hi.ts |
+| 160 | `bubble.trust.allPassed` | सभी उत्तीर्ण | all passed | packages/bubble/src/locales/hi.ts |
+| 161 | `bubble.trust.consentBullet1` | हम आपके बच्चे का पहला नाम और आयु-वर्ग रखते हैं। और कुछ नहीं। | We keep your child's first name and age band. Nothing else. | packages/bubble/src/locales/hi.ts |
+| 162 | `bubble.trust.consentBullet2` | चिह्नित बातचीत की समीक्षा कोई प्रतिदिन करता है। | A person reviews flagged conversations every day. | packages/bubble/src/locales/hi.ts |
+| 163 | `bubble.trust.consentBullet3` | आप कभी भी सब कुछ देख, रोक या हटा सकते हैं। | You can see, pause or delete everything at any time. | packages/bubble/src/locales/hi.ts |
+| 164 | `bubble.trust.consentCta` | मैं अभिभावक हूँ — मेरा सत्यापन करें | I'm the parent — verify me | packages/bubble/src/locales/hi.ts |
+| 165 | `bubble.trust.consentEyebrow` | याझ | Yazh | packages/bubble/src/locales/hi.ts |
+| 166 | `bubble.trust.consentSent` | हमने माता-पिता के फ़ोन पर सत्यापन चरण भेजा है। पूरा होने तक याझ बंद रहेगा। | We've sent a verification step to the parent's phone. Yazh stays closed until it is completed. | packages/bubble/src/locales/hi.ts |
+| 167 | `bubble.trust.consentTitle` | पहले माता-पिता की सहमति | A parent's consent comes first | packages/bubble/src/locales/hi.ts |
+| 168 | `bubble.trust.failed` | {count} विफल | {count} failed | packages/bubble/src/locales/hi.ts |
+| 169 | `bubble.trust.posture.context` | संदर्भ | Context | packages/bubble/src/locales/hi.ts |
+| 170 | `bubble.trust.posture.plan` | योजना | Plan | packages/bubble/src/locales/hi.ts |
+| 171 | `bubble.trust.posture.reason` | तर्क | Reason | packages/bubble/src/locales/hi.ts |
+| 172 | `bubble.trust.posture.reflect` | चिंतन | Reflect | packages/bubble/src/locales/hi.ts |
+| 173 | `bubble.trust.posture.respond` | उत्तर | Respond | packages/bubble/src/locales/hi.ts |
+| 174 | `bubble.trust.traceEyebrow` | पंच-अवस्था कर्नेल | Five-Posture kernel | packages/bubble/src/locales/hi.ts |
+| 175 | `bubble.trust.traceTitle` | तर्क-अनुक्रम | Reasoning trace | packages/bubble/src/locales/hi.ts |
+| 176 | `bubble.verse.draftGloss` | (मसौदा अनुवाद) | (draft gloss) | packages/bubble/src/locales/hi.ts |
+| 177 | `bubble.verse.kural` | तिरुक्कुरल {number} | Thirukkural {number} | packages/bubble/src/locales/hi.ts |
+| 178 | `bubble.workspace.chooseFiles` | फ़ाइलें चुनें | Choose files | packages/bubble/src/locales/hi.ts |
+| 179 | `bubble.workspace.handoffPickedUp` | लिया गया: {who} | Picked up by: {who} | packages/bubble/src/locales/hi.ts |
+| 180 | `bubble.workspace.handoffTitle` | किसी व्यक्ति को सौंपा गया | Handed to a person | packages/bubble/src/locales/hi.ts |
+| 181 | `bubble.workspace.machineDraftEn` | machine draft | machine draft | packages/bubble/src/locales/hi.ts |
+| 182 | `bubble.workspace.machineDraftTa` | इयந்திர வரைவு | இயந்திர வரைவு | packages/bubble/src/locales/hi.ts |
+| 183 | `bubble.workspace.machineDraftTitle` | किसी मॉडल द्वारा बनाया गया — कोई व्यक्ति स्वीकृति देता है, तभी मान्य | Generated by a model — a person approves it before it counts | packages/bubble/src/locales/hi.ts |
+| 184 | `bubble.workspace.pageNotVerified` | (अंश सत्यापित नहीं) | (span not verified) | packages/bubble/src/locales/hi.ts |
+| 185 | `bubble.workspace.sampleEn` | sample data | sample data | packages/bubble/src/locales/hi.ts |
+| 186 | `bubble.workspace.sampleTa` | मாதிரித் தரவு | மாதிரித் தரவு | packages/bubble/src/locales/hi.ts |
+| 187 | `bubble.workspace.sampleTitle` | डेमो मोड: कृत्रिम डेटा, वास्तविक उत्तर या लोग नहीं | Demo mode: synthetic data, not real answers or people | packages/bubble/src/locales/hi.ts |
+| 188 | `bubble.workspace.tickFirst` | फ़ाइलें चुनने के लिए ऊपर बॉक्स पर टिक करें | Tick the box above to choose files | packages/bubble/src/locales/hi.ts |
