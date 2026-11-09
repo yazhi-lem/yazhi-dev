@@ -95,7 +95,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         {/* a chosen light or dark theme applies before the first paint */}
         <script dangerouslySetInnerHTML={{ __html: MODE_SCRIPT }} />
-        <LangProvider>
+        {/* the same locale `<html lang>` carries, so the client's first
+            render matches the server's — see LangProvider */}
+        <LangProvider initialLocale={locale}>
           <ThinaiTheme />
           <Motion>
             <SmoothScroll>{children}</SmoothScroll>

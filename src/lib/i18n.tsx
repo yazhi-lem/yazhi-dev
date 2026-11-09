@@ -41,6 +41,11 @@ import {
   type Locale,
 } from "@yazhi/i18n";
 import type { Catalogue } from "@yazhi/i18n";
+// The Bubble UI library owns its own copy (`@yazhi/bubble/locales`); this
+// scope is the one place the site tells it which language to answer in. It
+// takes plain props rather than reading this hook, so the library keeps
+// working standalone (design book, tests, an embedding host).
+import { BubbleLocaleScope } from "@yazhi/bubble/locales";
 import { localeFromCookieString, serializeLocaleCookie } from "./locale-cookie";
 import { siteCopy, type SiteCopyOptions } from "./site-copy";
 import { ui as chromeCopy } from "@yazhi/i18n";
@@ -150,20 +155,39 @@ export type SiteCatalogues = Partial<Record<Locale, Catalogue>>;
 export function LangProvider({
   children,
   catalogues,
+  initialLocale,
+  initialDisplay,
 }: {
   children: ReactNode;
   /** Optional: the site's catalogues (`site.*`). Absent in Wave A, so
       `useT()` returns the key itself — nothing crashes. */
   catalogues?: SiteCatalogues;
+  /** The locale the server rendered this page in — the root layout reads the
+      `yazhi-locale` cookie and passes it here. The first client render must
+      use the same value or React tears the tree down with a hydration
+      mismatch (error #418) and rebuilds it, which is exactly what a
+      server-rendered English page must not do. */
+  initialLocale?: Locale;
+  /** Display preference, when a host knows it server-side (it normally does
+      not: TAM/ENG/BOTH lives in localStorage). */
+  initialDisplay?: Lang;
 }) {
-  // Both preferences start at the SSR value (display = "both", locale = Tamil)
-  // and a saved or cookie-resolved choice replaces them. On the server there
-  // is no `window`, so the initialisers return the SSR defaults and the HTML
-  // is identical; in the browser they read storage on the first client render.
-  const [lang, setLangState] = useState<Lang>(() => storedDisplay() ?? DEFAULT_DISPLAY);
-  const [locale, setLocaleState] = useState<Locale>(
-    () => storedLocale() ?? localeFromDocument() ?? DEFAULT_LOCALE
-  );
+  // The first render uses what the server used, so the HTML hydrates cleanly.
+  // A locally saved preference is applied in an effect (below) — never during
+  // render, where reading `window` would make the two renders disagree.
+  const [lang, setLangState] = useState<Lang>(initialDisplay ?? DEFAULT_DISPLAY);
+  const [locale, setLocaleState] = useState<Locale>(initialLocale ?? DEFAULT_LOCALE);
+
+  // Restore the saved preferences after hydration. This runs once; setting
+  // state here re-renders the tree in the reader's language instead of
+  // reporting a mismatch, because the first (hydrating) render already
+  // matched the server.
+  useEffect(() => {
+    const savedDisplay = storedDisplay();
+    if (savedDisplay) setLangState((current) => (current === savedDisplay ? current : savedDisplay));
+    const savedLocale = storedLocale() ?? localeFromDocument();
+    if (savedLocale) setLocaleState((current) => (current === savedLocale ? current : savedLocale));
+  }, []);
 
   // A locale change announced from anywhere on the page (the switcher in a
   // sibling tree, a second provider) lands here as an external event.
@@ -211,7 +235,17 @@ export function LangProvider({
     [lang, setLang, locale, setLocale, catalogue]
   );
 
-  return <LangContext.Provider value={value}>{children}</LangContext.Provider>;
+  // Every bubble (the `/app` canvas, `/chat`, the design book previews) reads
+  // the library catalogue through this scope. Both values start at the SSR
+  // defaults — Tamil and `"both"` — which are exactly the library's own
+  // standalone defaults, so the served HTML does not shift after hydration.
+  return (
+    <LangContext.Provider value={value}>
+      <BubbleLocaleScope locale={locale} display={lang}>
+        {children}
+      </BubbleLocaleScope>
+    </LangContext.Provider>
+  );
 }
 
 function useLangContext(): LangContextValue {
