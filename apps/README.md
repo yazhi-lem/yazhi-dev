@@ -121,8 +121,17 @@ light and dark and at phone width: no violations. Beyond that:
   surface) to `#cc6444` (4.87:1), so small accent text passes AA in every
   landscape.
 
-## Not yet wired
+## The backend
 
-Replies come from fixtures. In the product each module calls yazhi-api
-(gateway → Aram harness → inference API); the module boundaries are where
-those calls go.
+Modules do not answer questions from fixtures themselves; they call
+`backend()` ([`apps/backend.ts`](backend.ts)), which speaks the
+[workspace backend contract](../packages/contract/README.md). By default it
+answers in the browser from the sample data; with
+`NEXT_PUBLIC_YAZHI_BACKEND=api` the same calls go over HTTP to `/api/v1`,
+the mock gateway. Each workspace's side of the contract is
+`apps/<id>/backend.ts`.
+
+Wired so far: Guru's Ask, Nyaya's Ask and Kural's customer desk. The other
+modules still read fixtures directly; the contract's README lists what is
+left. In the product the gateway forwards to yazhi-api (gateway → Aram
+harness → inference API).

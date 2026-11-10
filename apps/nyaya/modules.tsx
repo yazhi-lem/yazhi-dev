@@ -2,11 +2,13 @@
 import { useState } from "react";
 import { Composer, Disclaimer, HandoffCard, PageChip, Panel, Pill, SampleTag, SourceCard, TypingDots, UploadCard, type UploadItem } from "@yazhi/bubble";
 import { uid, useShared, type ModuleContext, type ModuleDef } from "@yazhi/workspace";
-import { AGREEMENT, ASK_CHIPS, ELIGIBILITY, SAMPLE_FACTS, SAMPLE_SUMMARY, SECTIONS, findLegal } from "./samples";
+import { AGREEMENT, ANSWERS, ASK_CHIPS, ELIGIBILITY, SAMPLE_FACTS, SAMPLE_SUMMARY, SECTIONS, type LegalAnswer } from "./samples";
+import { backend } from "../backend";
 
 const useSection = () => useShared<string | null>("nyaya.section", null);
 
-type Turn = { id: string; q: string; pending: boolean; result?: ReturnType<typeof findLegal> };
+type Result = { kind: "answer"; a: LegalAnswer } | { kind: "advice" } | { kind: "none" } | { kind: "error" };
+type Turn = { id: string; q: string; pending: boolean; result?: Result };
 
 function download(name: string, type: string, body: string) {
   const a = document.createElement("a");
@@ -25,12 +27,22 @@ function Ask({ ctx }: { ctx: ModuleContext }) {
   const ask = (q: string) => {
     const id = uid();
     setTurns((ts) => [...ts, { id, q, pending: true }]);
-    window.setTimeout(() => {
-      const result = findLegal(q);
-      setTurns((ts) => ts.map((x) => (x.id === id ? { ...x, pending: false, result } : x)));
-      if (result.kind === "answer") ctx.log(`Answered with citations`, [...new Set(result.a.steps.map((s) => `${SECTIONS[s.cite].title} ${SECTIONS[s.cite].locator}`))]);
-      else ctx.log(result.kind === "advice" ? "Declined: asks for advice — handed to legal aid" : "Declined: no matching Act text — handed to legal aid");
-    }, 650);
+    // through the backend contract (apps/backend.ts): fixtures in the
+    // browser by default, /api/v1 in api mode. The steps and sections are
+    // then drawn from Nyaya's own data by id.
+    backend()
+      .nyaya.ask({ question: q, lang })
+      .then(({ data }) => {
+        const a = data.status === "answered" ? ANSWERS.find((x) => x.id === data.answer_id) : undefined;
+        const result: Result = a ? { kind: "answer", a } : data.status === "refused_advice" ? { kind: "advice" } : { kind: "none" };
+        setTurns((ts) => ts.map((x) => (x.id === id ? { ...x, pending: false, result } : x)));
+        if (result.kind === "answer") ctx.log(`Answered with citations`, [...new Set(result.a.steps.map((s) => `${SECTIONS[s.cite].title} ${SECTIONS[s.cite].locator}`))]);
+        else ctx.log(result.kind === "advice" ? "Declined: asks for advice — handed to legal aid" : "Declined: no matching Act text — handed to legal aid");
+      })
+      .catch(() => {
+        // say it failed; never fall back to an uncited answer
+        setTurns((ts) => ts.map((x) => (x.id === id ? { ...x, pending: false, result: { kind: "error" } } : x)));
+      });
   };
   const placeholder = lang === "te" ? "చట్టం గురించి తెలుగులో అడగండి…" : lang === "ta" ? "சட்டம் பற்றித் தமிழில் கேளுங்கள்…" : "Ask about a law…";
   return (
@@ -75,7 +87,9 @@ function Ask({ ctx }: { ctx: ModuleContext }) {
                       : `${t({ ta: "எனக்கு உறுதியாகத் தெரியவில்லை", en: "I don't know", te: "నాకు ఖచ్చితంగా తెలియదు" })} · I don't know`
                   }
                   reason={
-                    turn.result?.kind === "advice"
+                    turn.result?.kind === "error"
+                      ? t({ ta: "நியாயாவை இப்போது அணுக முடியவில்லை. எதுவும் பதிலளிக்கப்படவில்லை; மீண்டும் முயலுங்கள்.", en: "Nyaya could not be reached just now. Nothing was answered; please try again." })
+                      : turn.result?.kind === "advice"
                       ? t({
                           ta: "இது உங்கள் வழக்குக்கான ஆலோசனை அல்லது உத்தி. நியாயா சட்டம் என்ன சொல்கிறது என்பதை மட்டுமே விளக்கும்.",
                           en: "This asks for advice or strategy on your case. Nyaya only explains what the law says.",

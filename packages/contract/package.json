@@ -1,0 +1,11 @@
+{
+  "name": "@yazhi/contract",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The backend contract for Yazhi's product workspaces (Guru, Nyaya, Kural): openapi.yaml, the same shapes as TypeScript types, and a small client that answers from fixtures or over HTTP.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types.ts"
+  }
+}

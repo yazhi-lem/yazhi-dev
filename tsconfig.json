@@ -24,6 +24,8 @@
       "@yazhi/bubble/*": ["./packages/bubble/src/*"],
       "@yazhi/workspace": ["./packages/workspace/src/index.ts"],
       "@yazhi/workspace/*": ["./packages/workspace/src/*"],
+      "@yazhi/contract": ["./packages/contract/src/index.ts"],
+      "@yazhi/contract/*": ["./packages/contract/src/*"],
       "@yazhi/apps/*": ["./apps/*"]
     }
   },
