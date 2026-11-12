@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ADHAN_CHAT } from "@/lib/content";
+import { ADHAN_CHAT, IDENTITY } from "@/lib/content";
 import { stagger, fadeUp } from "@/lib/motionPresets";
 import { useSiteT } from "@/lib/i18n";
 
