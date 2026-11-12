@@ -16,8 +16,6 @@ import {
   SECTIONS_SHARED,
   SUGGESTIONS,
   TOP_QUESTIONS,
-  findAnswer,
-  findNear,
   sourceById,
   sourcesFor,
   tierLabel,
@@ -27,6 +25,7 @@ import {
   type Tier,
   type Tri,
 } from "./samples";
+import { backend } from "../backend";
 
 /* ----------------------------------------------------- shared state */
 
@@ -263,15 +262,23 @@ function Ask({ ctx }: { ctx: ModuleContext }) {
     const id = uid();
     setTurns((ts) => [...ts, { id, q, nb: nbId, pending: true, lang: guessLang(q, lang) }]);
     setStatus(t({ ta: `${count} மூலங்களில் தேடுகிறது…`, en: `Searching ${count} sources…` }));
-    // in the product the note agent answers through yazhi-api; the demo
-    // answers from the fixtures after a short think
-    window.setTimeout(() => {
-      const hit = findAnswer(q, nbId);
-      const near = hit ? null : (findNear(q)?.cite ?? null);
-      setTurns((ts) => ts.map((x) => (x.id === id ? { ...x, pending: false, answer: hit?.id ?? null, near } : x)));
-      setHistory((h) => [...h, { id, at: new Date().toISOString(), nb: nbId, kind: hit ? ("answered" as const) : ("not-in-notes" as const), q, detail: hit ? `${hit.cites.length}` : undefined }].slice(-100));
-      setStatus(hit ? t({ ta: `பதில் தயார் — ${hit.cites.length} மூலங்களுடன்.`, en: `Answer ready, with ${hit.cites.length} sources.` }) : t({ ta: "உங்கள் குறிப்புகளில் இல்லை.", en: "Not in your notes." }));
-    }, 700);
+    // the note agent answers through the backend contract: from the
+    // fixtures in the browser by default, or over /api/v1 (apps/backend.ts).
+    // The answer and its pages are then drawn from this notebook's data by id.
+    backend()
+      .guru.ask(nbId, { question: q, answer_lang: guessLang(q, lang) })
+      .then(({ data }) => {
+        const hit = data.status === "answered" ? data : null;
+        const near = data.status === "not_in_sources" ? (data.nearest?.id ?? null) : null;
+        setTurns((ts) => ts.map((x) => (x.id === id ? { ...x, pending: false, answer: hit?.answer_id ?? null, near } : x)));
+        setHistory((h) => [...h, { id, at: new Date().toISOString(), nb: nbId, kind: hit ? ("answered" as const) : ("not-in-notes" as const), q, detail: hit ? `${hit.citations.length}` : undefined }].slice(-100));
+        setStatus(hit ? t({ ta: `பதில் தயார் — ${hit.citations.length} மூலங்களுடன்.`, en: `Answer ready, with ${hit.citations.length} sources.` }) : t({ ta: "உங்கள் குறிப்புகளில் இல்லை.", en: "Not in your notes." }));
+      })
+      .catch(() => {
+        // no answer is better than a guessed one: drop the turn and say why
+        setTurns((ts) => ts.filter((x) => x.id !== id));
+        setStatus(t({ ta: "பதில் பெற முடியவில்லை. மீண்டும் முயலுங்கள்.", en: "Could not get an answer. Try again." }));
+      });
   };
 
   // a question asked from the notebooks view or history arrives here

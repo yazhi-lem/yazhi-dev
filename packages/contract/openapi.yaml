@@ -1,0 +1,853 @@
+openapi: 3.1.0
+info:
+  title: Yazhi workspace backend contract
+  version: 0.1.0
+  summary: What Guru, Nyaya and Kural ask of the backend, and what it must answer.
+  description: |
+    Draft for review. The same shapes are in `src/types.ts`; change both together.
+
+    **Who serves it.** The workspaces call a gateway over HTTPS and JSON. The
+    gateway holds no data of its own: it checks the caller, forwards to
+    yazhi-api and returns the shapes below. Until yazhi-api serves an
+    operation, the mock gateway in this repo (`/api/v1`) answers it from
+    sample data.
+
+    **Each operation carries `x-yazhi-status`:**
+    - `mock` — in the contract and answered by the mock gateway today.
+    - `planned` — in the contract so screens and backend can be built against
+      it; not mocked yet.
+
+    **Rules that hold for every operation**
+    1. *A source, or a refusal.* An answer carries the citations it rests on,
+       or a status that says which kind of "I don't know" it is. The backend
+       checks every citation in code before the answer leaves; a sentence
+       whose citation fails the check is not sent.
+    2. *Nothing changes without a yes.* An operation that would change a
+       system outside the conversation returns `202` with a `Confirmation`.
+       Nothing has happened yet. A person's `POST /confirmations/{id}` carries
+       it out or drops it, and the decision is written to the audit log.
+    3. *Text from customers and uploads is data, never instructions.* A
+       message that reads like instructions to the agent is marked
+       `injection: true` and goes to a person.
+    4. *Sample data says so.* `meta.sample` is true whenever a reply was
+       built from fixtures.
+    5. *India only.* `meta.region` is `IN`. Production requests are served
+       and stored in India or on the customer's own machine.
+    6. *Least data.* The legal-aid eligibility check stores nothing and its
+       reply is `Cache-Control: no-store`. Guru's question history stays on
+       the student's device; a flag to faculty carries no student identity.
+servers:
+  - url: /api/v1
+    description: Mock gateway in yazhi-dev (sample data)
+security:
+  - bearer: []
+tags:
+  - name: shared
+  - name: guru
+    description: Guru · குரு — the institute's own notebook
+  - name: nyaya
+    description: Nyaya · நியாயா — legal information with the section
+  - name: kural
+    description: Kural · குரல் — the shop's customer desk
+
+paths:
+  /health:
+    get:
+      tags: [shared]
+      operationId: getHealth
+      x-yazhi-status: mock
+      security: []
+      responses:
+        "200":
+          description: The gateway is up.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/Health" } }
+
+  /confirmations/{id}:
+    post:
+      tags: [shared]
+      operationId: decideConfirmation
+      x-yazhi-status: mock
+      summary: A person approves or declines a pending action.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ConfirmationDecision" }
+      responses:
+        "200":
+          description: The decision was recorded; on approve, the action was carried out.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/Confirmation" } }
+        "404": { $ref: "#/components/responses/Problem" }
+        "409": { $ref: "#/components/responses/Problem" }
+
+  /audit:
+    get:
+      tags: [shared]
+      operationId: listAudit
+      x-yazhi-status: planned
+      summary: Pettagam, the audit log, for one workspace. Hash-chained, IST.
+      parameters:
+        - { name: workspace, in: query, required: true, schema: { type: string, enum: [guru, nyaya, kural] } }
+        - { name: after, in: query, schema: { type: string }, description: Entry id to read after. }
+      responses:
+        "200":
+          description: Entries, oldest first.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/AuditEntry" }
+
+  # ------------------------------------------------------------------ Guru
+  /guru/notebooks:
+    get:
+      tags: [guru]
+      operationId: listGuruNotebooks
+      x-yazhi-status: mock
+      responses:
+        "200":
+          description: The notebooks this person may open.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/GuruNotebook" }
+
+  /guru/notebooks/{id}/sources:
+    get:
+      tags: [guru]
+      operationId: listGuruSources
+      x-yazhi-status: mock
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      responses:
+        "200":
+          description: The notebook's files and how far each is indexed.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/GuruSource" }
+        "404": { $ref: "#/components/responses/Problem" }
+    post:
+      tags: [guru]
+      operationId: uploadGuruSource
+      x-yazhi-status: planned
+      summary: Faculty uploads a file. It never leaves the institute machine.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file: { type: string, format: binary }
+      responses:
+        "202":
+          description: Accepted; the source is returned with status `indexing`.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/GuruSource" } }
+
+  /guru/notebooks/{id}/ask:
+    post:
+      tags: [guru]
+      operationId: askGuru
+      x-yazhi-status: mock
+      summary: Ask a question of one notebook's sources.
+      description: |
+        Answers only from this notebook's searchable sources. If nothing in
+        them supports an answer the status is `not_in_sources`, with the
+        closest page when there is one. Never a guess.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/GuruAskRequest" }
+            examples:
+              tamil: { value: { question: "சோழர் கால ஆட்சி முறை பற்றி விளக்குக", answer_lang: ta } }
+      responses:
+        "200":
+          description: A cited answer, or "not in these sources".
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/GuruAnswer" } }
+        "400": { $ref: "#/components/responses/Problem" }
+        "404": { $ref: "#/components/responses/Problem" }
+
+  /guru/citations/{id}:
+    get:
+      tags: [guru]
+      operationId: getGuruCitation
+      x-yazhi-status: mock
+      summary: The page and the verified span behind a page chip.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      responses:
+        "200":
+          description: The citation.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/GuruCitation" } }
+        "404": { $ref: "#/components/responses/Problem" }
+
+  /guru/notebooks/{id}/flags:
+    post:
+      tags: [guru]
+      operationId: flagGuruQuestion
+      x-yazhi-status: planned
+      summary: A student flags a question the notes did not answer. Anonymous.
+      description: The request and the stored flag carry no student identity.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [question]
+              properties: { question: { type: string, maxLength: 2000 } }
+      responses:
+        "201": { description: "Flag stored for the faculty's Questions tab." }
+
+  /guru/notebooks/{id}/practice:
+    get:
+      tags: [guru]
+      operationId: listGuruPractice
+      x-yazhi-status: planned
+      summary: Past-paper questions and quick-quiz items from this notebook.
+      parameters:
+        - $ref: "#/components/parameters/id"
+        - { name: kind, in: query, schema: { type: string, enum: [past_paper, quiz] } }
+        - { name: tier, in: query, schema: { type: string, enum: [IV, II, I] } }
+      responses:
+        "200": { description: "Practice items, each with its page citation." }
+
+  /guru/notebooks/{id}/summary:
+    get:
+      tags: [guru]
+      operationId: getGuruSummary
+      x-yazhi-status: planned
+      summary: One chapter summarised at an exam tier (IV, II or I).
+      parameters:
+        - $ref: "#/components/parameters/id"
+        - { name: chapter, in: query, required: true, schema: { type: string } }
+        - { name: tier, in: query, required: true, schema: { type: string, enum: [IV, II, I] } }
+      responses:
+        "200": { description: "The summary, with citations. A machine draft until faculty approves it." }
+
+  /guru/drafts/{id}/approve:
+    post:
+      tags: [guru]
+      operationId: approveGuruDraft
+      x-yazhi-status: planned
+      summary: Faculty approves a machine draft (study aid). Gated.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      responses:
+        "202": { $ref: "#/components/responses/Gate" }
+
+  /guru/notebooks/{id}/shares:
+    post:
+      tags: [guru]
+      operationId: shareGuruNotebook
+      x-yazhi-status: planned
+      summary: Share a notebook with a section. Gated.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [section_id]
+              properties: { section_id: { type: string } }
+      responses:
+        "202": { $ref: "#/components/responses/Gate" }
+
+  # ----------------------------------------------------------------- Nyaya
+  /nyaya/ask:
+    post:
+      tags: [nyaya]
+      operationId: askNyaya
+      x-yazhi-status: mock
+      summary: Ask what the law says. Information, not advice.
+      description: |
+        `answered` carries steps, each tied to a stored section. A question
+        that asks for advice or strategy is `refused_advice`; one that no
+        stored Act text supports is `no_source`. Both refusals carry the
+        legal-aid handoff. The disclaimer is always present.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/NyayaAskRequest" }
+            examples:
+              telugu: { value: { question: "చెక్ బౌన్స్ అయితే ఏమి చేయాలి?", lang: te } }
+      responses:
+        "200":
+          description: A cited answer, or a refusal with a handoff.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/NyayaAnswer" } }
+        "400": { $ref: "#/components/responses/Problem" }
+
+  /nyaya/sections/{id}:
+    get:
+      tags: [nyaya]
+      operationId: getNyayaSection
+      x-yazhi-status: mock
+      summary: The stored text of one section of an Act.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      responses:
+        "200":
+          description: The section.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/NyayaSection" } }
+        "404": { $ref: "#/components/responses/Problem" }
+
+  /nyaya/documents/explain:
+    post:
+      tags: [nyaya]
+      operationId: explainNyayaDocument
+      x-yazhi-status: planned
+      summary: Explain an uploaded document in plain words.
+      description: |
+        Returns a plain summary, the clauses worth a second look and why, and
+        every amount and date copied exactly from the document. It never says
+        a document is safe to sign. The upload is not kept after the reply.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file: { type: string, format: binary }
+                lang: { $ref: "#/components/schemas/Lang" }
+      responses:
+        "200": { description: "Summary, flagged clauses, amounts and dates, disclaimer." }
+
+  /nyaya/eligibility/check:
+    post:
+      tags: [nyaya]
+      operationId: checkNyayaEligibility
+      x-yazhi-status: planned
+      summary: Legal-aid eligibility check. Stores nothing.
+      description: "The answers are used for this reply only. The reply is sent with Cache-Control no-store; nothing is logged but the fact that a check ran."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [answers]
+              properties:
+                answers:
+                  type: object
+                  additionalProperties: { type: boolean }
+      responses:
+        "200": { description: "Whether the stated facts fall within the cited section, and the section." }
+
+  /nyaya/summaries:
+    post:
+      tags: [nyaya]
+      operationId: draftNyayaSummary
+      x-yazhi-status: planned
+      summary: Turn stated facts into a dated summary and a draft for a lawyer to edit.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [facts]
+              properties:
+                facts: { type: string, maxLength: 8000 }
+                lang: { $ref: "#/components/schemas/Lang" }
+      responses:
+        "200": { description: "A machine draft, marked as one." }
+
+  # ----------------------------------------------------------------- Kural
+  /kural/messages:
+    post:
+      tags: [kural]
+      operationId: sendKuralMessage
+      x-yazhi-status: mock
+      summary: A customer's message on chat or mail; Kural's reply.
+      description: |
+        Kural answers only from the shop's knowledge base and records, and
+        says which one in `source`. Anything else is a `handoff` with a
+        ticket for staff. No money moves through Yazhi.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/KuralMessageRequest" }
+            examples:
+              order: { value: { channel: chat, text: "என் ஆர்டர் எங்கே இருக்கிறது? KD-1042" } }
+      responses:
+        "200":
+          description: The reply.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/KuralReply" } }
+        "400": { $ref: "#/components/responses/Problem" }
+
+  /kural/tickets:
+    get:
+      tags: [kural]
+      operationId: listKuralTickets
+      x-yazhi-status: mock
+      summary: The owner's queue, each ticket with a suggested reply and its source.
+      responses:
+        "200":
+          description: Tickets, newest first.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties:
+                      data:
+                        type: array
+                        items: { $ref: "#/components/schemas/KuralTicket" }
+
+  /kural/tickets/{id}/reply:
+    post:
+      tags: [kural]
+      operationId: replyToKuralTicket
+      x-yazhi-status: mock
+      summary: Ask to send the suggested reply. Gated; sends nothing by itself.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      responses:
+        "202": { $ref: "#/components/responses/Gate" }
+        "403": { $ref: "#/components/responses/Problem" }
+        "404": { $ref: "#/components/responses/Problem" }
+        "409": { $ref: "#/components/responses/Problem" }
+
+  /kural/tickets/{id}/handoff:
+    post:
+      tags: [kural]
+      operationId: handOffKuralTicket
+      x-yazhi-status: planned
+      summary: Give the ticket to a named member of staff.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      responses:
+        "200": { description: "The ticket, now with status `staff`." }
+
+  /kural/kb:
+    get:
+      tags: [kural]
+      operationId: getKuralKb
+      x-yazhi-status: mock
+      summary: The knowledge base Kural may answer from, and nothing else.
+      responses:
+        "200":
+          description: Entries with their Live or Draft state.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/KuralKb" } }
+
+  /kural/kb/entries/{id}:
+    put:
+      tags: [kural]
+      operationId: putKuralKbEntry
+      x-yazhi-status: planned
+      summary: Add or change an entry; it stays Draft until the owner sets it Live. Gated.
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/KuralKbEntry" }
+      responses:
+        "202": { $ref: "#/components/responses/Gate" }
+
+  /kural/orders/{id}:
+    get:
+      tags: [kural]
+      operationId: getKuralOrder
+      x-yazhi-status: mock
+      parameters: [{ $ref: "#/components/parameters/id" }]
+      responses:
+        "200":
+          description: The order record.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Envelope"
+                  - properties: { data: { $ref: "#/components/schemas/KuralOrder" } }
+        "404": { $ref: "#/components/responses/Problem" }
+
+  /kural/returns:
+    post:
+      tags: [kural]
+      operationId: requestKuralReturn
+      x-yazhi-status: planned
+      summary: Record a return request against an order. Gated.
+      description: Records the request and, on approval, a refund *intent* for the shop to pay directly. No money moves through Yazhi.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [order_id, reason]
+              properties:
+                order_id: { type: string }
+                reason: { type: string, maxLength: 2000 }
+      responses:
+        "202": { $ref: "#/components/responses/Gate" }
+
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: |
+        A Circle session token (a signed-in person) or a workspace key (a
+        machine at the customer's site). The token names the tenant; a caller
+        never passes a tenant id in the body. The mock gateway does not check
+        it, because it holds only sample data.
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, maxLength: 64 }
+  responses:
+    Problem:
+      description: The request was refused or failed.
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Problem" }
+    Gate:
+      description: Nothing has happened yet. A person must decide the returned confirmation.
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: "#/components/schemas/Envelope"
+              - properties: { data: { $ref: "#/components/schemas/Confirmation" } }
+  schemas:
+    Lang: { type: string, enum: [ta, en, te] }
+    AnswerLang: { type: string, enum: [ta, en, tg], description: "tg is Tanglish: Tamil in Latin letters." }
+    Text:
+      type: object
+      description: One string per language. Tamil is required; te and tg only where the product offers them.
+      required: [ta, en]
+      properties:
+        ta: { type: string }
+        en: { type: string }
+        te: { type: string }
+        tg: { type: string }
+    Meta:
+      type: object
+      required: [request_id, sample, served_by, region, contract]
+      properties:
+        request_id: { type: string }
+        sample: { type: boolean, description: True when the reply was built from fixtures. }
+        served_by: { type: string, enum: [fixture, mock-gateway, yazhi-api] }
+        region: { type: string, const: IN }
+        contract: { type: string, examples: ["0.1.0"] }
+        model: { type: string }
+        latency_ms: { type: number }
+    Envelope:
+      type: object
+      required: [data, meta]
+      properties:
+        data: {}
+        meta: { $ref: "#/components/schemas/Meta" }
+    Problem:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, request_id]
+          properties:
+            code: { type: string, enum: [bad_request, unauthorized, forbidden, not_found, conflict, unavailable, not_implemented] }
+            message: { type: string }
+            request_id: { type: string }
+    Health:
+      type: object
+      required: [status, contract, served_by, workspaces]
+      properties:
+        status: { type: string, const: ok }
+        contract: { type: string }
+        served_by: { type: string, enum: [fixture, mock-gateway, yazhi-api] }
+        workspaces: { type: array, items: { type: string } }
+    Confirmation:
+      type: object
+      description: The ConfirmGate as data. Nothing has happened while status is pending.
+      required: [id, action, affects, undo, status, expires_at]
+      properties:
+        id: { type: string }
+        action: { type: string, description: What will happen, in words. }
+        affects: { type: string, description: What it touches. }
+        undo: { type: string, description: How to undo it, or that it cannot be undone. }
+        status: { type: string, enum: [pending, approved, declined] }
+        expires_at: { type: string, format: date-time }
+    ConfirmationDecision:
+      type: object
+      required: [decision]
+      properties:
+        decision: { type: string, enum: [approve, decline] }
+    AuditEntry:
+      type: object
+      required: [id, at, who, what, hash, prev_hash]
+      properties:
+        id: { type: string }
+        at: { type: string, format: date-time, description: IST. }
+        who: { type: string }
+        what: { type: string }
+        sources: { type: array, items: { type: string } }
+        hash: { type: string }
+        prev_hash: { type: string }
+
+    GuruNotebook:
+      type: object
+      required: [id, code, title, faculty, state, source_count, searchable_count]
+      properties:
+        id: { type: string }
+        code: { type: string }
+        title: { $ref: "#/components/schemas/Text" }
+        faculty: { type: string }
+        state: { type: string, enum: [ready, indexing] }
+        source_count: { type: integer }
+        searchable_count: { type: integer }
+    GuruSource:
+      type: object
+      required: [id, name, type, pages, status, past_paper, uploaded_by]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        type: { type: string, enum: [PDF, PPTX, DOCX, Image] }
+        pages: { type: integer }
+        status: { type: string, enum: [searchable, indexing, scanned] }
+        past_paper: { type: boolean }
+        uploaded_by: { type: string }
+        progress: { type: number, minimum: 0, maximum: 1 }
+        eta_minutes: { type: number }
+    GuruCitation:
+      type: object
+      required: [id, source_id, source_name, page, heading, span, verified]
+      properties:
+        id: { type: string }
+        source_id: { type: string }
+        source_name: { type: string }
+        page: { type: integer }
+        heading: { $ref: "#/components/schemas/Text" }
+        span: { $ref: "#/components/schemas/Text" }
+        verified: { type: boolean, description: The span was found in the stored page by the citation check, in code. }
+        pages: { type: string, description: "Only on `nearest`: the page range to open, e.g. 20–22." }
+    GuruAskRequest:
+      type: object
+      required: [question]
+      properties:
+        question: { type: string, minLength: 1, maxLength: 2000 }
+        answer_lang: { $ref: "#/components/schemas/AnswerLang" }
+    GuruAnswer:
+      oneOf:
+        - type: object
+          required: [status, answer_id, parts, citations]
+          properties:
+            status: { type: string, const: answered }
+            answer_id: { type: string }
+            parts:
+              type: array
+              minItems: 1
+              items:
+                type: object
+                required: [text, cite]
+                properties:
+                  text: { $ref: "#/components/schemas/Text" }
+                  cite: { type: integer, minimum: 1, description: 1-based index into citations. }
+            citations:
+              type: array
+              minItems: 1
+              items: { $ref: "#/components/schemas/GuruCitation" }
+        - type: object
+          required: [status]
+          properties:
+            status: { type: string, const: not_in_sources }
+            nearest: { $ref: "#/components/schemas/GuruCitation" }
+      discriminator: { propertyName: status }
+
+    NyayaSection:
+      type: object
+      required: [id, act, title, locator, excerpt, verified]
+      properties:
+        id: { type: string }
+        act: { type: string }
+        title: { type: string }
+        locator: { type: string, examples: ["s.138"] }
+        excerpt: { type: string }
+        verified: { type: boolean }
+    NyayaAskRequest:
+      type: object
+      required: [question]
+      properties:
+        question: { type: string, minLength: 1, maxLength: 2000 }
+        lang: { $ref: "#/components/schemas/Lang" }
+        jurisdiction: { type: string, examples: [tn, ts, ap] }
+    NyayaHandoff:
+      type: object
+      required: [kind, basis_section_id]
+      properties:
+        kind: { type: string, const: legal_services_authority }
+        basis_section_id: { type: string }
+    NyayaAnswer:
+      oneOf:
+        - type: object
+          required: [status, answer_id, steps, sections, disclaimer]
+          properties:
+            status: { type: string, const: answered }
+            answer_id: { type: string }
+            steps:
+              type: array
+              minItems: 1
+              items:
+                type: object
+                required: [text, section_id]
+                properties:
+                  text: { $ref: "#/components/schemas/Text" }
+                  section_id: { type: string }
+            sections:
+              type: array
+              minItems: 1
+              items: { $ref: "#/components/schemas/NyayaSection" }
+            disclaimer: { $ref: "#/components/schemas/Text" }
+        - type: object
+          required: [status, handoff, disclaimer]
+          properties:
+            status: { type: string, enum: [refused_advice, no_source] }
+            handoff: { $ref: "#/components/schemas/NyayaHandoff" }
+            disclaimer: { $ref: "#/components/schemas/Text" }
+
+    KuralOrder:
+      type: object
+      required: [id, customer, items, status, placed, channel]
+      properties:
+        id: { type: string, examples: ["KD-1042"] }
+        customer: { type: string }
+        items: { type: string }
+        status: { type: string, enum: [placed, confirmed, packed, out, delivered] }
+        placed: { type: string, description: DD-MM-YYYY. }
+        channel: { type: string, enum: [counter, chat, mail] }
+    KuralKbEntry:
+      type: object
+      required: [id, group, question, answer, state]
+      properties:
+        id: { type: string }
+        group: { type: string, enum: [faq, policy] }
+        question: { $ref: "#/components/schemas/Text" }
+        answer: { $ref: "#/components/schemas/Text" }
+        state: { type: string, enum: [live, draft] }
+    KuralKb:
+      type: object
+      required: [entries, updated]
+      properties:
+        entries: { type: array, items: { $ref: "#/components/schemas/KuralKbEntry" } }
+        updated: { type: string }
+    KuralMessageRequest:
+      type: object
+      required: [channel, text]
+      properties:
+        conversation_id: { type: string }
+        channel: { type: string, enum: [chat, mail] }
+        text: { type: string, minLength: 1, maxLength: 4000 }
+    KuralSource:
+      type: object
+      required: [type, id]
+      properties:
+        type: { type: string, enum: [record, kb] }
+        id: { type: string }
+    KuralReply:
+      oneOf:
+        - type: object
+          required: [kind, order, source]
+          properties:
+            kind: { type: string, const: order }
+            order: { $ref: "#/components/schemas/KuralOrder" }
+            source: { $ref: "#/components/schemas/KuralSource" }
+        - type: object
+          required: [kind]
+          properties:
+            kind: { type: string, const: ask_order_id }
+        - type: object
+          required: [kind, entry, source]
+          properties:
+            kind: { type: string, const: kb }
+            entry: { $ref: "#/components/schemas/KuralKbEntry" }
+            source: { $ref: "#/components/schemas/KuralSource" }
+        - type: object
+          required: [kind, ticket_id, reason]
+          properties:
+            kind: { type: string, const: handoff }
+            ticket_id: { type: string }
+            reason: { type: string, enum: [not_in_knowledge_base, order_not_found] }
+      discriminator: { propertyName: kind }
+    KuralTicket:
+      type: object
+      required: [id, channel, from, subject, body, category, priority, suggested, status, injection]
+      properties:
+        id: { type: string }
+        channel: { type: string, enum: [chat, mail] }
+        from: { type: string }
+        subject: { type: string }
+        body: { type: string }
+        category: { $ref: "#/components/schemas/Text" }
+        priority: { type: string, enum: [low, normal, high, urgent] }
+        suggested: { $ref: "#/components/schemas/Text" }
+        status: { type: string, enum: [open, sent, staff] }
+        injection: { type: boolean, description: The message reads like instructions to the agent; it is data and goes to a person. }
+        source: { type: string }

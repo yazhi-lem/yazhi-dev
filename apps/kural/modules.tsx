@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Composer, ConfirmGate, HandoffCard, PageChip, Panel, Pill, SampleTag, Segmented, Stepper, TypingDots, type Tone } from "@yazhi/bubble";
 import { uid, useShared, type ModuleContext, type ModuleDef } from "@yazhi/workspace";
 import { CATALOGUE, KB, RETURN_STAGES, STATUS_LABEL, useOrders, useReturns, useTickets, type Ticket } from "../shared/commerce";
+import { backend } from "../backend";
 
 type Reply =
   | { kind: "order"; id: string }
@@ -21,22 +22,6 @@ const CHIPS = [
   { ta: "நீங்கள் தங்க நகை விற்பீர்களா?", en: "Do you sell gold jewellery?" },
 ];
 
-/** Kural answers only from the knowledge base and the shop's records. In
-    the product this is retrieval through yazhi-api with the source
-    required in code; here, the same rules over the fixtures. */
-type Found = Exclude<Reply, { kind: "handoff" }>;
-function answer(text: string): Found | null {
-  const s = text.toLowerCase();
-  const id = s.match(/kd-?\s?(\d{3,5})/i);
-  if (id) return { kind: "order", id: `KD-${id[1]}` };
-  if (/(ஆர்டர்|order)/i.test(s)) return { kind: "ask-id" };
-  if (/(மணி|நேரம்|open|hours|timing|sunday|ஞாயிறு)/i.test(s)) return { kind: "kb", entry: "hours" };
-  if (/(திருப்பி|return|refund)/i.test(s)) return { kind: "kb", entry: "returns" };
-  if (/(டெலிவரி|delivery|area|பகுதி)/i.test(s)) return { kind: "kb", entry: "area" };
-  if (/(பணம்|pay|upi)/i.test(s)) return { kind: "kb", entry: "pay" };
-  return null;
-}
-
 const kbEntry = (id: string) => [...KB.faqs, ...KB.policies].find((x) => x.id === id)!;
 
 /* ------------------------------------------------------ customer desk */
@@ -51,31 +36,47 @@ function Desk({ ctx }: { ctx: ModuleContext }) {
   const send = (text: string) => {
     const id = uid();
     setTurns((ts) => [...ts, { id, text, channel, pending: true }]);
-    window.setTimeout(() => {
-      const hit = answer(text);
-      let reply: Reply;
-      if (hit && (hit.kind !== "order" || orders.some((o) => o.id === hit.id))) reply = hit;
-      else {
+    // Kural answers only from the knowledge base and the shop's records,
+    // through the backend contract (apps/backend.ts); anything else comes
+    // back as a handoff, and a ticket goes to the staff queue.
+    const handOff = (tid: string, why: string) => {
+      setTickets((ts) => [
+        {
+          id: tid,
+          channel,
+          from: "[Customer · this conversation]",
+          subject: text.slice(0, 60),
+          body: text,
+          category: { ta: "ஒப்படைப்பு", en: "Handoff" },
+          priority: "normal",
+          suggested: { ta: "வணக்கம். உங்கள் கேள்விக்குக் கடை ஊழியர் விரைவில் பதில் சொல்வார்.", en: "Hello. Someone from the shop will answer you shortly." },
+          status: "staff",
+        },
+        ...ts,
+      ]);
+      ctx.log(`Handed to staff (${channel}): ${why}`, [tid]);
+    };
+    backend()
+      .kural.message({ channel, text })
+      .then(({ data }) => {
+        let reply: Reply;
+        // an order the server knows but this counter does not is not shown
+        if (data.kind === "order" && orders.some((o) => o.id === data.order.id)) reply = { kind: "order", id: data.order.id };
+        else if (data.kind === "ask_order_id") reply = { kind: "ask-id" };
+        else if (data.kind === "kb") reply = { kind: "kb", entry: data.entry.id };
+        else {
+          const tid = data.kind === "handoff" ? data.ticket_id : `T-${300 + Math.floor(Math.random() * 600)}`;
+          reply = { kind: "handoff", ticket: tid };
+          handOff(tid, "not in the knowledge base");
+        }
+        setTurns((ts) => ts.map((x) => (x.id === id ? { ...x, pending: false, reply } : x)));
+      })
+      .catch(() => {
+        // the backend is down: a person answers instead of a guess
         const tid = `T-${300 + Math.floor(Math.random() * 600)}`;
-        reply = { kind: "handoff", ticket: tid };
-        setTickets((ts) => [
-          {
-            id: tid,
-            channel,
-            from: "[Customer · this conversation]",
-            subject: text.slice(0, 60),
-            body: text,
-            category: { ta: "ஒப்படைப்பு", en: "Handoff" },
-            priority: "normal",
-            suggested: { ta: "வணக்கம். உங்கள் கேள்விக்குக் கடை ஊழியர் விரைவில் பதில் சொல்வார்.", en: "Hello. Someone from the shop will answer you shortly." },
-            status: "staff",
-          },
-          ...ts,
-        ]);
-        ctx.log(`Handed to staff (${channel}): not in the knowledge base`, [tid]);
-      }
-      setTurns((ts) => ts.map((x) => (x.id === id ? { ...x, pending: false, reply } : x)));
-    }, 600);
+        handOff(tid, "the backend could not be reached");
+        setTurns((ts) => ts.map((x) => (x.id === id ? { ...x, pending: false, reply: { kind: "handoff", ticket: tid } } : x)));
+      });
   };
 
   const render = (r: Reply) => {

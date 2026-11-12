@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "contract:smoke": "node scripts/contract-smoke.mjs"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.5",
