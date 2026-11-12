@@ -1,0 +1,21 @@
+<!-- @dsCard group="Thiṇai · Bubble UI" height=220 width=900 subtitle="The bordered flat bubble: awake, asleep, and in Night" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>MissionControl — preview</title>
+<style> body { margin: 0; } .wrap { padding: 24px; display: flex; flex-direction: column; gap: 20px; } .row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; } </style>
+</head>
+<body class="yz-root" data-theme="light" data-tn="mullai">
+<div class="wrap">
+<div class="row" style="align-items:center;gap:32px">
+ <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><button type="button" class="yz-mission yz-mission--lg" aria-label="Mission Control: signed in as Valav" aria-haspopup="dialog"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46.5" fill="var(--tn-mission-wash)" stroke="var(--tn-mission)" stroke-width="2.5" vector-effect="non-scaling-stroke"/><g transform="translate(50 50) scale(0.56) translate(-50 -50)"><circle cx="30.8" cy="30.6" r="12.3" fill="var(--tn-ink)"/><circle cx="65.2" cy="26.9" r="16.3" fill="var(--tn-ink)"/><circle cx="47.2" cy="67.4" r="22" fill="var(--tn-ink)"/></g></svg></button><span class="yz-card__eyebrow">Awake · signed in</span></div>
+ <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><button type="button" class="yz-mission yz-mission--lg" aria-label="Mission Control: sign in" aria-haspopup="dialog"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46.5" fill="none" stroke="var(--tn-mission)" stroke-width="3" stroke-dasharray="7 6" vector-effect="non-scaling-stroke"/><g transform="translate(50 50) scale(0.56) translate(-50 -50)"><circle cx="30.8" cy="30.6" r="12.3" fill="none" stroke="var(--tn-ink)" stroke-width="6"/><circle cx="65.2" cy="26.9" r="16.3" fill="none" stroke="var(--tn-ink)" stroke-width="6"/><circle cx="47.2" cy="67.4" r="22" fill="none" stroke="var(--tn-ink)" stroke-width="6"/></g></svg></button><span class="yz-card__eyebrow">Asleep · press to sign in</span></div>
+ <div data-theme="dark" data-tn="night" style="display:flex;flex-direction:column;align-items:center;gap:8px;background:var(--tn-surface);color:var(--tn-ink);padding:16px 24px;border-radius:28px"><button type="button" class="yz-mission yz-mission--lg" aria-label="Mission Control: signed in as Valav" aria-haspopup="dialog"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46.5" fill="var(--tn-mission-wash)" stroke="var(--tn-mission)" stroke-width="2.5" vector-effect="non-scaling-stroke"/><g transform="translate(50 50) scale(0.56) translate(-50 -50)"><circle cx="30.8" cy="30.6" r="12.3" fill="var(--tn-ink)"/><circle cx="65.2" cy="26.9" r="16.3" fill="var(--tn-ink)"/><circle cx="47.2" cy="67.4" r="22" fill="var(--tn-ink)"/></g></svg></button><span class="yz-card__eyebrow">Night</span></div>
+</div></div>
+<script>
+  document.querySelectorAll('.yz-seg').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-seg__opt'); if (!b) return; g.querySelectorAll('.yz-seg__opt').forEach(function (o) { o.setAttribute(o.hasAttribute('aria-checked') ? 'aria-checked' : 'aria-pressed', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-switch').forEach(function (s) { s.addEventListener('click', function () { if (s.getAttribute('aria-disabled') === 'true') return; var on = s.getAttribute('aria-checked') !== 'true'; s.setAttribute('aria-checked', String(on)); var w = s.querySelector('.yz-switch__word'); if (w) w.textContent = on ? 'ஆம் · On' : 'இல்லை · Off'; }); });
+  document.querySelectorAll('.yz-swatches').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-swatch'); if (!b) return; g.querySelectorAll('.yz-swatch').forEach(function (o) { o.setAttribute('aria-checked', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-stepper').forEach(function (st) { var sizes = ['Default', 'Large', 'Larger', 'Largest'], i = 1, o = st.querySelector('output'); st.querySelectorAll('button').forEach(function (b, k) { b.addEventListener('click', function () { i = Math.max(0, Math.min(sizes.length - 1, i + (k ? 1 : -1))); o.textContent = sizes[i]; document.documentElement.style.fontSize = (100 + i * 12.5) + '%'; }); }); });
+</script>
+</body>
+</html>

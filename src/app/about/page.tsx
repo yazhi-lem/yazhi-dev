@@ -51,8 +51,19 @@ export default async function AboutPage() {
           <ul className="list-inside list-disc space-y-2">
             <li>{t("site.about.building.adhan")}</li>
             <li>
-              {t("site.about.building.sangam")}{" "}
-              <a href="https://sangam.yazhi.dev" target="_blank" rel="noopener noreferrer" className={linkClass}>
+              <strong className="text-ivory">Adhan (அதன்)</strong> — our open Indic foundation model, built for
+              22+ Indian languages, starting with Tamil and then the rest of the Dravidian family. It is still in
+              training; our roadmap, not a release, is where the language count lives today.
+            </li>
+            <li>
+              <strong className="text-ivory">Sangam (சங்கம்)</strong> — analysis of classical Tamil literature
+              through the five landscapes (ஐந்திணை) of Sangam poetry. Live at{" "}
+              <a
+                href="https://sangam.yazhi.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-ivory underline decoration-ivory/30 underline-offset-4 hover:decoration-ivory"
+              >
                 sangam.yazhi.dev
               </a>
               .

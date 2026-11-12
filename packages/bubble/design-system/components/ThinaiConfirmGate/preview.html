@@ -1,0 +1,19 @@
+<!-- @dsCard group="Thiṇai · Bubble UI" height=400 subtitle="Names the action, what it touches, and how to undo" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ConfirmGate — preview</title>
+<style> body { margin: 0; } .wrap { padding: 24px; display: flex; flex-direction: column; gap: 20px; } .row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; } </style>
+</head>
+<body class="yz-root" data-theme="light" data-tn="paalai">
+<div class="wrap">
+<div class="yz-confirm" role="dialog" aria-labelledby="cg1"><h2 class="yz-card__h" id="cg1"><span class="yz-ta">அனுப்பவா?</span> · Send this reply?</h2>
+<dl><dt>Action</dt><dd>Send the suggested reply to [Customer]</dd><dt>Affects</dt><dd>The customer's chat</dd><dt>Undo</dt><dd>Can't unsend. Edit it first if unsure.</dd></dl>
+<div class="yz-pair"><button type="button" class="yz-btn yz-btn--tn-stop"><svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>வேண்டாம் · No</button><button type="button" class="yz-btn yz-btn--tn-go">அனுப்பு · Send<svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 12h14M13 6l6 6-6 6"/></svg></button></div></div></div>
+<script>
+  document.querySelectorAll('.yz-seg').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-seg__opt'); if (!b) return; g.querySelectorAll('.yz-seg__opt').forEach(function (o) { o.setAttribute(o.hasAttribute('aria-checked') ? 'aria-checked' : 'aria-pressed', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-switch').forEach(function (s) { s.addEventListener('click', function () { if (s.getAttribute('aria-disabled') === 'true') return; var on = s.getAttribute('aria-checked') !== 'true'; s.setAttribute('aria-checked', String(on)); var w = s.querySelector('.yz-switch__word'); if (w) w.textContent = on ? 'ஆம் · On' : 'இல்லை · Off'; }); });
+  document.querySelectorAll('.yz-swatches').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-swatch'); if (!b) return; g.querySelectorAll('.yz-swatch').forEach(function (o) { o.setAttribute('aria-checked', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-stepper').forEach(function (st) { var sizes = ['Default', 'Large', 'Larger', 'Largest'], i = 1, o = st.querySelector('output'); st.querySelectorAll('button').forEach(function (b, k) { b.addEventListener('click', function () { i = Math.max(0, Math.min(sizes.length - 1, i + (k ? 1 : -1))); o.textContent = sizes[i]; document.documentElement.style.fontSize = (100 + i * 12.5) + '%'; }); }); });
+</script>
+</body>
+</html>

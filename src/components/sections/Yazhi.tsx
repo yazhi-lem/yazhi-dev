@@ -23,13 +23,13 @@ function ChatSpace({ name, alt, preview }: { name: string; alt: string; preview:
           {name[0]}
         </div>
         <div>
-          <p className="font-display text-sm font-semibold text-ivory">{name}</p>
+          <p className="font-display text-sm font-semibold text-ivory">{IDENTITY.nameEn}</p>
           {/* Preview state, labelled as such (ITERATION-1): the live /chat
               surface answers "not connected" until YAZHI_API_URL is set, so
               a green "online" dot here would be a claim the site can't back. */}
           <p className="flex items-center gap-1.5 text-xs text-ivory-dim">
             <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
-            {preview}
+            preview — Tamil, Telugu, Hindi
           </p>
         </div>
       </div>
