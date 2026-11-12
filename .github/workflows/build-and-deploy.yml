@@ -58,13 +58,17 @@ jobs:
             package.json
           retention-days: 7
 
-  deploy:
-    name: Deploy to Staging
+  package:
+    name: Package Build
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     timeout-minutes: 10
 
+    # This job packages a build record. It does NOT publish yazhi.dev: there is
+    # no hosting step here. The live site is served by its own deployment (see
+    # docs/DEPLOYMENT-GUIDE.md). Renamed from "Deploy to Staging" on 2026-11-05
+    # because a green run was being read as a successful deploy.
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -78,35 +82,30 @@ jobs:
       - name: Install Dependencies
         run: npm ci --prefer-offline --no-audit
 
-      - name: Run Deployment Script
+      - name: Run Packaging Script
         run: bash ./scripts/deploy.sh "./build-output"
 
-      - name: Create Deployment Summary
+      - name: Deployment Summary
         run: |
-          echo "## 📦 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## Build Package" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "> This is a build record, **not a deploy**. Nothing is published by this workflow." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Build Size:** $(du -sh ./build-output | cut -f1)" >> $GITHUB_STEP_SUMMARY
           echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### 📁 Contents" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "### Contents" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
           du -sh ./build-output/* >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
 
-      - name: Upload to Staging
-        run: |
-          echo "Deployment package prepared at: ./build-output"
-          echo "Ready for deployment to hosting service"
-          ls -lah ./build-output/
-
-      - name: Notify Deployment
-        run: |
-          echo "✓ Build successful"
-          echo "✓ Ready for deployment"
-          echo ""
-          echo "Deployment Package Contents:"
-          find ./build-output -type f -name "*.html" -o -name "*.md" | head -10
+      - name: Upload Build Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-package
+          path: build-output/
+          retention-days: 7
 
   test-performance:
     name: Performance Audit
