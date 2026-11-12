@@ -1,0 +1,22 @@
+<!-- @dsCard group="Thiṇai · Bubble UI" height=280 subtitle="Apps as pastel bubbles, always named" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>AppBubble — preview</title>
+<style> body { margin: 0; } .wrap { padding: 24px; display: flex; flex-direction: column; gap: 20px; } .row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; } </style>
+</head>
+<body class="yz-root" data-theme="light" data-tn="mullai">
+<div class="wrap">
+<div class="row" style="align-items:center">
+ <span class="yz-bubble yz-bubble--l yz-bubble--guru" role="img" aria-label="Guru">கு</span>
+ <span class="yz-bubble yz-bubble--nyaya" role="img" aria-label="Nyaya">நி</span>
+ <span class="yz-bubble yz-bubble--s yz-bubble--kural" role="img" aria-label="Kural">கு</span>
+</div>
+<div style="width:15.5rem;background:var(--tn-tint);border-radius:var(--radius-lg);padding:12px 8px 0"><div class="yz-tray" role="list" aria-label="Yazhi apps"><a class="yz-tray__app" role="listitem" href="#"><span class="yz-bubble yz-bubble--xs yz-bubble--guru" aria-hidden="true">கு</span>Guru</a><a class="yz-tray__app" role="listitem" href="#" aria-current="true"><span class="yz-bubble yz-bubble--xs yz-bubble--nyaya" aria-hidden="true">நி</span>Nyaya</a><a class="yz-tray__app" role="listitem" href="#"><span class="yz-bubble yz-bubble--xs yz-bubble--kural" aria-hidden="true">கு</span>Kural</a></div></div></div>
+<script>
+  document.querySelectorAll('.yz-seg').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-seg__opt'); if (!b) return; g.querySelectorAll('.yz-seg__opt').forEach(function (o) { o.setAttribute(o.hasAttribute('aria-checked') ? 'aria-checked' : 'aria-pressed', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-switch').forEach(function (s) { s.addEventListener('click', function () { if (s.getAttribute('aria-disabled') === 'true') return; var on = s.getAttribute('aria-checked') !== 'true'; s.setAttribute('aria-checked', String(on)); var w = s.querySelector('.yz-switch__word'); if (w) w.textContent = on ? 'ஆம் · On' : 'இல்லை · Off'; }); });
+  document.querySelectorAll('.yz-swatches').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-swatch'); if (!b) return; g.querySelectorAll('.yz-swatch').forEach(function (o) { o.setAttribute('aria-checked', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-stepper').forEach(function (st) { var sizes = ['Default', 'Large', 'Larger', 'Largest'], i = 1, o = st.querySelector('output'); st.querySelectorAll('button').forEach(function (b, k) { b.addEventListener('click', function () { i = Math.max(0, Math.min(sizes.length - 1, i + (k ? 1 : -1))); o.textContent = sizes[i]; document.documentElement.style.fontSize = (100 + i * 12.5) + '%'; }); }); });
+</script>
+</body>
+</html>

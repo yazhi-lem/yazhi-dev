@@ -1,0 +1,34 @@
+<!-- @dsCard group="Thiṇai screens · Kural" height=740 width=1200 subtitle="Customer chat with handoff, and the owner's confirm gate" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>KuralCustomerChat</title>
+<style> body { margin: 0; } .wrap { padding: 24px; display: flex; flex-direction: column; gap: 20px; } .row { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; } </style>
+</head>
+<body class="yz-root" data-theme="light" data-tn="paalai">
+<div style="display:flex;justify-content:center;gap:32px;padding:32px;background:var(--tn-surface);min-height:720px;box-sizing:border-box;flex-wrap:wrap">
+<section aria-label="Shop chat" style="width:400px;background:var(--tn-panel);color:var(--tn-ink);border-radius:28px;box-shadow:inset 0 0 0 2px var(--tn-tint-strong),0 4px 0 var(--tn-tint-strong);display:flex;flex-direction:column;overflow:hidden">
+ <header style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:var(--tn-tint)"><span class="yz-bubble yz-bubble--s yz-bubble--kural" aria-hidden="true">கு</span><div><p class="yz-item__title" style="margin:0">[Shop name]</p><p class="yz-item__meta" style="margin:0">Answers from the shop's own records</p></div></header>
+ <div class="yz-thread" role="log" style="padding:20px;flex:1">
+  <div class="yz-msg yz-msg--me"><p class="yz-ta">என் ஆர்டர் எங்கே?</p></div>
+  <div class="yz-msg yz-msg--app"><p class="yz-ta">உங்கள் ஆர்டர் [#order] வழியில் உள்ளது.</p><p class="yz-msg__sub">On its way · arrives [date]</p></div>
+  <div class="yz-msg yz-msg--me"><p class="yz-ta">பணத்தைத் திருப்பித் தர முடியுமா?</p></div>
+  <div class="yz-notice" role="status"><svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="8" cy="7.5" r="3"/><path d="M2.5 19a5.5 5.5 0 0 1 11 0"/><path d="M15 10.5h6.5M18.5 7.5l3 3-3 3"/></svg><p class="yz-notice__h"><span class="yz-ta">ஊழியரிடம் இணைக்கிறேன்</span></p><p>Connecting you to the shop. They can see this whole chat.</p></div>
+ </div>
+ <form class="yz-composer" style="margin:0 16px 20px" onsubmit="return false"><input class="yz-composer__input" aria-label="Message" placeholder="எழுதுங்கள்"><button type="button" class="yz-btn yz-btn--tn-go yz-btn--small">அனுப்பு<svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 12h14M13 6l6 6-6 6"/></svg></button></form>
+</section>
+<section style="width:520px;display:flex;flex-direction:column;gap:20px;color:var(--tn-ink)" aria-label="Refund approval on the owner's screen">
+ <p class="yz-card__eyebrow">Owner's screen, same moment</p>
+ <div class="yz-confirm" role="dialog" aria-labelledby="cg"><h2 class="yz-card__h" id="cg"><span class="yz-ta">பணம் திருப்புதல்?</span> · Refund this order?</h2>
+  <dl><dt>Action</dt><dd>Record a refund of ₹ — for [#order]</dd><dt>Affects</dt><dd>Order status, the customer's chat</dd><dt>Undo</dt><dd>Reopen the order within 24 hours</dd></dl>
+  <div class="yz-notice" role="note"><svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.8" r=".6" fill="currentColor"/></svg><p class="yz-notice__h">No money moves through Yazhi</p><p>You pay the refund yourself.</p></div>
+  <div class="yz-pair"><button type="button" class="yz-btn yz-btn--tn-stop"><svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>வேண்டாம் · No</button><button type="button" class="yz-btn yz-btn--tn-go">ஒப்புதல் · Approve<svg class="yz-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button></div>
+ </div>
+</section></div>
+<script>
+  document.querySelectorAll('.yz-seg').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-seg__opt'); if (!b) return; g.querySelectorAll('.yz-seg__opt').forEach(function (o) { o.setAttribute(o.hasAttribute('aria-checked') ? 'aria-checked' : 'aria-pressed', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-switch').forEach(function (s) { s.addEventListener('click', function () { if (s.getAttribute('aria-disabled') === 'true') return; var on = s.getAttribute('aria-checked') !== 'true'; s.setAttribute('aria-checked', String(on)); var w = s.querySelector('.yz-switch__word'); if (w) w.textContent = on ? 'ஆம் · On' : 'இல்லை · Off'; }); });
+  document.querySelectorAll('.yz-swatches').forEach(function (g) { g.addEventListener('click', function (e) { var b = e.target.closest('.yz-swatch'); if (!b) return; g.querySelectorAll('.yz-swatch').forEach(function (o) { o.setAttribute('aria-checked', String(o === b)); }); }); });
+  document.querySelectorAll('.yz-stepper').forEach(function (st) { var sizes = ['Default', 'Large', 'Larger', 'Largest'], i = 1, o = st.querySelector('output'); st.querySelectorAll('button').forEach(function (b, k) { b.addEventListener('click', function () { i = Math.max(0, Math.min(sizes.length - 1, i + (k ? 1 : -1))); o.textContent = sizes[i]; document.documentElement.style.fontSize = (100 + i * 12.5) + '%'; }); }); });
+</script>
+</body>
+</html>

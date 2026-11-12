@@ -1,0 +1,23 @@
+<!-- @dsCard group="Thiṇai · Controls" height=120 subtitle="தமிழ் · English · Both" -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>LanguageToggle — preview</title>
+<style> body { margin: 0; } .wrap { padding: 24px; } </style>
+</head>
+<body class="yz-root" data-theme="light" data-tn="mullai">
+<div class="wrap">
+  <div class="yz-seg" role="group" aria-label="Language">
+    <button class="yz-seg__opt yz-ta" aria-pressed="true">தமிழ்</button>
+    <button class="yz-seg__opt" aria-pressed="false">English</button>
+    <button class="yz-seg__opt" aria-pressed="false">இரண்டும் · Both</button>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.yz-seg__opt').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.yz-seg__opt').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+    });
+  });
+</script>
+</body>
+</html>
