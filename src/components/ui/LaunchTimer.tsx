@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useLang } from "@/lib/i18n";
+import { useLang, useUiT } from "@/lib/i18n";
 
 /** The Yazhi Awakening — the date the initiative wakes. The timer counts
     DOWN to this moment, reaching 0d 00:00:00 at the stroke of the new year. */
@@ -14,6 +14,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
     hydration mismatch — then it ticks live every second. */
 export function LaunchTimer() {
   const { lang } = useLang();
+  const t = useUiT();
   const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
@@ -29,24 +30,22 @@ export function LaunchTimer() {
   const mins = Math.floor((total % 3600) / 60);
   const secs = total % 60;
 
-  const label =
-    lang === "en"
-      ? "Yazhi Awakening"
-      : lang === "ta"
-        ? "யாழி விழிப்பு"
-        : "யாழி விழிப்பு · Awakening";
+  // the short label follows the display preference: TAM / ENG / both
+  // The "both" mode shows the Tamil label and the English name side by side.
+  const label = lang === "both" ? `${t("timer.label")} · ${t("timer.label", { language: "en" })}` : t("timer.label");
+  const dayWord = lang === "both" ? `${t("timer.dayShort")} / d` : t("timer.dayShort");
 
   return (
     <div
       role="timer"
-      aria-label={`Yazhi Awakening — ${days} days ${hrs} hours ${mins} minutes ${secs} seconds remaining`}
+      aria-label={t("timer.remaining", { days, hrs, mins, secs })}
       className="fixed right-3 top-16 z-40 flex items-center gap-2 rounded-full border border-ivory/15 bg-night-2/80 px-3 py-1.5 text-xs shadow-lg backdrop-blur lg:bottom-4 lg:right-4 lg:top-auto"
     >
       <span aria-hidden className="text-sm leading-none">🌅</span>
       <span className="hidden text-[color:var(--accent)] sm:inline">{label}</span>
       <span className="font-mono tabular-nums text-ivory">
         {days}
-        <span className="text-ivory-dim">d</span> {pad(hrs)}:{pad(mins)}:{pad(secs)}
+        <span className="text-ivory-dim">{dayWord}</span> {pad(hrs)}:{pad(mins)}:{pad(secs)}
       </span>
     </div>
   );

@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
     while a reply is on its way, each a little after the one before it
     (Hairline rule 02). Pure hairline: strokes only, in the landscape's ink.
     Under reduced motion the strings rest, one of them lit. */
-export function YazhStrings({ className = "", label = "Thinking" }: { className?: string; label?: string }) {
+export function YazhStrings({ className = "", label }: { className?: string; /** render an aria-label for the "thinking" mark */ label?: string }) {
   const ref = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export function YazhStrings({ className = "", label = "Thinking" }: { className?
   }, []);
 
   return (
-    <svg ref={ref} viewBox="0 0 38 24" className={`h-6 w-[38px] ${className}`} role="img" aria-label={label}>
+    <svg ref={ref} viewBox="0 0 38 24" className={`h-6 w-[38px] ${className}`} role="img" aria-label={label} aria-hidden={label ? undefined : true}>
       <path d="M4 21L32 21" fill="none" stroke="var(--env-lo)" strokeWidth={1} vectorEffect="non-scaling-stroke" />
       {[0, 1, 2, 3, 4].map((i) => {
         const x = 4 + i * 7, top = 3 + i * 1.2;

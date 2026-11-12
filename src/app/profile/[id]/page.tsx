@@ -4,15 +4,17 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { MOCK_FEED } from "@/data/mockFeed";
 import { useUser } from "@/lib/users";
+import { useUiT } from "@/lib/i18n";
 
 export default function UserProfilePage() {
+  const t = useUiT();
   const params = useParams<{ id: string }>();
   const user = useUser(params.id);
 
   if (user === undefined) return null;
 
   if (!user) {
-    return <div className="p-20 text-white text-center font-mono">User not found in regional nodes.</div>;
+    return <div className="p-20 text-white text-center font-mono">{t("profile.notFound")}</div>;
   }
 
   const userPosts = MOCK_FEED.filter((p) => p.authorId === user.id);
@@ -20,7 +22,7 @@ export default function UserProfilePage() {
   return (
     <div className="max-w-4xl mx-auto px-6 mt-12 mb-20">
       <Link href="/" className="text-zinc-500 hover:text-white font-mono text-sm mb-8 inline-block transition-colors">
-        ← Back to Network
+        {t("profile.backToNetwork")}
       </Link>
 
       <div className="bg-zinc-950 border border-zinc-800 p-8 shadow-2xl relative overflow-hidden mb-8">
@@ -44,21 +46,23 @@ export default function UserProfilePage() {
               <span>{user.handle}</span>
               <span>•</span>
               <span className="flex items-center">
-                <span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span> {user.city} Node
+                <span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span> {user.city} {t("profile.nodeSuffix")}
               </span>
             </div>
 
             <p className="text-zinc-300 leading-relaxed max-w-2xl">
-              {user.bio || "No bio yet — this node hasn't configured their profile."}
+              {user.bio || t("profile.noBio")}
             </p>
             {user.techStack && (
-              <p className="text-zinc-500 font-mono text-sm mt-3">Stack: {user.techStack}</p>
+              <p className="text-zinc-500 font-mono text-sm mt-3">
+                {t("profile.stackLabel")} {user.techStack}
+              </p>
             )}
           </div>
 
           <div className="flex flex-col space-y-3 w-full md:w-auto">
             <button className="bg-white text-black font-bold py-2 px-6 hover:bg-zinc-200 transition-colors">
-              Connect ⅄
+              {t("profile.connect")}
             </button>
             {user.github && (
               <a
@@ -75,9 +79,9 @@ export default function UserProfilePage() {
       </div>
 
       <div className="space-y-4">
-        <h3 className="text-xl font-bold text-white mb-6 border-b border-zinc-800 pb-2">Recent Activity</h3>
+        <h3 className="text-xl font-bold text-white mb-6 border-b border-zinc-800 pb-2">{t("profile.recentActivity")}</h3>
         {userPosts.length === 0 ? (
-          <p className="text-zinc-500 font-mono">No recent activity detected on the network.</p>
+          <p className="text-zinc-500 font-mono">{t("profile.noActivity")}</p>
         ) : (
           userPosts.map((post) => (
             <div key={post.id} className="bg-zinc-950 border border-zinc-800 p-6">

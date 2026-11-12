@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ThinaiKey } from "./keys";
 import { firstGrapheme } from "../text";
 import { ENV_BY_KEY } from "./environments";
+import { useBubbleT } from "../locales";
 
 export interface MagneticItem {
   id: string;
@@ -31,7 +32,7 @@ export function MagneticTray({
   size = 44,
   reach = 2.2,
   vertical = false,
-  label = "Bubbles",
+  label,
 }: {
   items: MagneticItem[];
   tinai: ThinaiKey;
@@ -42,9 +43,10 @@ export function MagneticTray({
   /** how far the swell reaches, in bubbles */
   reach?: number;
   vertical?: boolean;
-  /** accessible name of the tray */
+  /** accessible name of the tray; defaults to `bubble.tray.label` */
   label?: string;
 }) {
+  const t = useBubbleT("bubble.tray");
   const rowRef = useRef<HTMLUListElement>(null);
   const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const [pulse, setPulse] = useState<{ from: number; n: number } | null>(null);
@@ -118,7 +120,7 @@ export function MagneticTray({
   return (
     <ul
       ref={rowRef}
-      aria-label={label}
+      aria-label={label ?? t("label")}
       className={
         vertical
           ? "flex flex-col items-start py-2 pl-2"

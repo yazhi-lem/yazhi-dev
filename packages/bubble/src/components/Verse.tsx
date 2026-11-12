@@ -1,3 +1,5 @@
+import { useBubbleT } from "../locales";
+
 /** A Thirukkural couplet (or any two-line verse): number, Tamil lines,
     and an optional English gloss. Tamil is never letter-spaced. */
 export function KuralQuote({
@@ -12,6 +14,7 @@ export function KuralQuote({
   /** gloss not yet reviewed by a scholar */
   glossDraft?: boolean;
 }) {
+  const t = useBubbleT("bubble.verse");
   return (
     <figure className="rounded-xl border border-ivory/10 bg-night/60 p-4">
       <blockquote lang="ta" className="text-base text-ivory">
@@ -20,11 +23,11 @@ export function KuralQuote({
       </blockquote>
       <figcaption className="mt-2 flex flex-wrap items-baseline justify-between gap-2 text-xs text-ivory-dim">
         <span>
-          Thirukkural {number}
+          {t("kural", { number })}
         </span>
         {gloss && (
           <span className="max-w-prose italic">
-            “{gloss}”{glossDraft && <span className="ml-1 not-italic text-gold">(draft gloss)</span>}
+            “{gloss}”{glossDraft && <span className="ml-1 not-italic text-gold">{t("draftGloss")}</span>}
           </span>
         )}
       </figcaption>

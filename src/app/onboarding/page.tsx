@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createUser } from "@/lib/users";
 import { LINKS } from "@/lib/content";
+import { useUiT, useSiteT } from "@/lib/i18n";
 
 type Geo = { cluster: string; country: string | null };
 
@@ -19,6 +20,8 @@ type Geo = { cluster: string; country: string | null };
     /profile/edit — Discord today, a Yazhi API (Circle) account once
     self-serve provisioning ships. See docs/community/PRD-DEVELOPER-COMMUNITY.md. */
 function OnboardingForm() {
+  const t = useUiT();
+  const site = useSiteT();
   const router = useRouter();
   const isDeveloper = useSearchParams().get("track") === "developer";
   const [yazhName, setYazhName] = useState("");
@@ -32,7 +35,7 @@ function OnboardingForm() {
     fetch("/api/geo")
       .then((r) => r.json())
       .then((data: Geo) => setGeo(data))
-      .catch(() => setGeo({ cluster: "Unknown region", country: null }));
+      .catch(() => setGeo({ cluster: t("onboarding.unknownRegion"), country: null }));
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -42,7 +45,7 @@ function OnboardingForm() {
     const user = createUser({
       yazhName,
       phone,
-      city: geo?.cluster ?? "Unknown region",
+      city: geo?.cluster ?? t("onboarding.unknownRegion"),
       role: isDeveloper ? "Developer" : undefined,
     });
     if (isDeveloper) {
@@ -59,19 +62,24 @@ function OnboardingForm() {
         <div className="w-full max-w-md bg-zinc-950 border border-zinc-800 p-8 md:p-12 shadow-2xl text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/yazh/yazh-waving.png" alt="" aria-hidden className="mx-auto mb-6 h-24 w-24 object-contain" />
-          <h1 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-3">Welcome, builder</h1>
-          <p className="text-zinc-400 font-mono text-sm mb-8">
-            You&apos;re on the list. Two things happen from here:
-          </p>
+          <h1 className="text-2xl md:text-3xl font-black text-white tracking-tighter mb-3">{t("onboarding.welcomeBuilder")}</h1>
+          <p className="text-zinc-400 font-mono text-sm mb-8">{site("site.onboarding.developer.stepTwo")}</p>
           <ul className="text-left text-sm font-mono text-zinc-400 space-y-3 mb-8">
             <li>
-              <span className="text-zinc-200">1. Join the Discord</span> — that&apos;s where developers coordinate
-              today, ask questions, and see what&apos;s shipping.
+              <span className="text-zinc-200">
+                {"1. "}
+                {site("site.onboarding.developer.stepJoinDiscord")}
+              </span>
+              {" — "}
+              {site("site.onboarding.developer.nextSteps.1")}
             </li>
             <li>
-              <span className="text-zinc-200">2. Your Yazhi API account</span> — we provision these by hand while
-              self-serve account creation is still being built (tracked in
-              docs/community/PRD-DEVELOPER-COMMUNITY.md). We&apos;ll reach out on WhatsApp/Discord once it&apos;s ready.
+              <span className="text-zinc-200">
+                {"2. "}
+                {site("site.onboarding.developer.stepApiAccount")}
+              </span>
+              {" — "}
+              {site("site.onboarding.developer.nextSteps.2")}
             </li>
           </ul>
           <a
@@ -80,13 +88,13 @@ function OnboardingForm() {
             rel="noopener noreferrer"
             className="block w-full bg-white text-black font-bold py-4 hover:bg-zinc-200 transition-all mb-3"
           >
-            Join the Discord →
+            {t("onboarding.joinDiscord")}
           </a>
           <Link
             href={`/profile/edit?id=${joinedDeveloper.id}`}
             className="block w-full border border-zinc-800 text-zinc-300 font-bold py-4 hover:border-zinc-600 transition-all"
           >
-            Continue to profile →
+            {t("onboarding.continueProfile")}
           </Link>
         </div>
       </div>
@@ -98,20 +106,20 @@ function OnboardingForm() {
       <div className="w-full max-w-md bg-zinc-950 border border-zinc-800 p-8 md:p-12 shadow-2xl">
         <div className="mb-8 text-center">
           <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-2">
-            {isDeveloper ? "Join as a Developer" : "Join the Network"}
+            {isDeveloper ? t("onboarding.joinDeveloper") : t("onboarding.joinNetwork")}
           </h1>
           <p className="text-zinc-500 font-mono text-sm">
-            {isDeveloper ? "Building for your mother tongue? Start here." : "Identify your node."}
+            {isDeveloper ? t("onboarding.subDeveloper") : t("onboarding.subNetwork")}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-3">
-            <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block">Yazh Name</label>
+            <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block">{t("onboarding.yazhName")}</label>
             <input
               type="text"
               required
-              placeholder="e.g. shadow_coder"
+              placeholder={t("onboarding.yazhNamePlaceholder")}
               value={yazhName}
               onChange={(e) => setYazhName(e.target.value)}
               className="w-full bg-zinc-900 border border-zinc-800 px-4 py-4 text-white focus:outline-none focus:border-white transition-colors font-mono"
@@ -119,22 +127,22 @@ function OnboardingForm() {
           </div>
 
           <div className="space-y-3">
-            <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block">Phone Number</label>
+            <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block">{t("onboarding.phone")}</label>
             <input
               type="tel"
               required
               inputMode="tel"
               pattern="[+]?[0-9\s\-()]{7,16}"
-              title="7–16 digits; +, spaces, dashes, and parentheses allowed"
-              placeholder="Enter phone number"
+              title={t("onboarding.phoneTitle")}
+              placeholder={t("onboarding.phonePlaceholder")}
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full bg-zinc-900 border border-zinc-800 px-4 py-4 text-white focus:outline-none focus:border-white transition-colors font-mono"
             />
             <p className="text-xs font-mono text-zinc-500">
-              Stays in your browser — never sent to a server.{" "}
+              {t("onboarding.staysBrowser")}{" "}
               <Link href="/privacy" className="text-zinc-300 underline hover:text-white">
-                Privacy note
+                {t("onboarding.privacyNote")}
               </Link>
             </p>
           </div>
@@ -148,21 +156,16 @@ function OnboardingForm() {
               className="mt-0.5 h-4 w-4 shrink-0 accent-white"
             />
             <span>
-              {isDeveloper
-                ? "I've read the privacy note."
-                : "I'm 13 or older — or a parent/guardian is helping me — and I've read the privacy note."}
+              {isDeveloper ? t("onboarding.consentDeveloper") : t("onboarding.consentNetwork")}
             </span>
           </label>
 
           <div className="flex items-start gap-2 text-xs font-mono text-zinc-500">
             <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-green-500" aria-hidden />
             {geo ? (
-              <span>
-                Node region: <span className="text-zinc-300">{geo.cluster}</span> — auto-detected, anonymized to
-                city level only.
-              </span>
+              <span>{site("site.onboarding.nodeRegion", { region: geo.cluster })}</span>
             ) : (
-              <span>Detecting node region…</span>
+              <span>{site("site.onboarding.detecting")}</span>
             )}
           </div>
 
@@ -171,7 +174,11 @@ function OnboardingForm() {
             disabled={!yazhName || !phone || !consent || submitting}
             className="w-full bg-white text-black font-bold py-4 disabled:opacity-50 hover:bg-zinc-200 transition-all"
           >
-            {submitting ? "Joining…" : isDeveloper ? "Join as a Developer →" : "Join the Network →"}
+            {submitting
+              ? t("onboarding.joining")
+              : isDeveloper
+                ? t("onboarding.joinDeveloperCta")
+                : t("onboarding.joinNetworkCta")}
           </button>
         </form>
       </div>

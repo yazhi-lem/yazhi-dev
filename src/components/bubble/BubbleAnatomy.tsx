@@ -1,8 +1,15 @@
 /** Labelled diagram of the Bubble UI host, drawn after the founding sketch:
     the window, the packed tray on the right, the composer along the bottom
     with Mission Control and send, and the two things outside the frame —
-    Capitol above, the insider-risk boundary beside the tray. */
+    Capitol above, the insider-risk boundary beside the tray.
+
+    Every label is chrome (`useUiT`); under a right-to-left locale the figure
+    would need mirroring, which no LTR-only locale here does. */
+"use client";
+import { useUiT } from "@/lib/i18n";
+
 export function BubbleAnatomy() {
+  const t = useUiT();
   const tray: [number, number, number][] = [
     [452, 58, 16], [492, 52, 20], [535, 60, 18], [470, 98, 22], [520, 106, 24],
     [556, 140, 12], [480, 146, 18], [530, 160, 16], [500, 196, 22], [548, 208, 18],
@@ -16,7 +23,7 @@ export function BubbleAnatomy() {
         aria-labelledby="anatomy-title anatomy-desc"
         className="w-full rounded-xl border border-ivory/10 bg-night-2"
       >
-        <title id="anatomy-title">Bubble UI anatomy</title>
+        <title id="anatomy-title">{t("anatomy.title")}</title>
         <desc id="anatomy-desc">
           A rounded window. The conversation canvas fills the left. A tray of packed, non-touching circles runs down
           the right edge. Along the bottom: Mission Control (the three-bubble mark inside a bubble), the message input and the send arrow. Above the window
@@ -27,7 +34,7 @@ export function BubbleAnatomy() {
           <path d="M40 46 q-4-18 16-20 q6-14 24-8 q12-8 22 4 q16 0 14 14 q8 10-6 14 h-62 q-14-2-8-4z" />
           <path d="M70 90 V68" markerEnd="url(#arrow)" />
         </g>
-        <text x="71" y="44" textAnchor="middle" fontSize="11" fill="var(--ivory)">Capitol</text>
+        <text x="71" y="44" textAnchor="middle" fontSize="11" fill="var(--ivory)">{t("anatomy.capitol")}</text>
         <defs>
           <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10z" fill="var(--ivory-dim)" />
@@ -36,8 +43,8 @@ export function BubbleAnatomy() {
 
         {/* window */}
         <rect x="30" y="92" width="550" height="226" rx="22" fill="var(--night)" stroke="var(--ivory)" strokeOpacity="0.5" />
-        <text x="54" y="128" fontSize="15" fill="var(--ivory)" fontWeight="600">Canvas</text>
-        <text x="54" y="146" fontSize="11" fill="var(--ivory-dim)">the active bubble&apos;s conversation</text>
+        <text x="54" y="128" fontSize="15" fill="var(--ivory)" fontWeight="600">{t("anatomy.canvas")}</text>
+        <text x="54" y="146" fontSize="11" fill="var(--ivory-dim)">{t("anatomy.canvasNote")}</text>
         {[170, 196].map((y, i) => (
           <rect key={y} x={i ? 190 : 54} y={y} width={i ? 200 : 230} height="16" rx="8" fill="var(--ivory)" fillOpacity={i ? 0.12 : 0.06} />
         ))}
@@ -48,14 +55,14 @@ export function BubbleAnatomy() {
             <circle key={i} cx={cx} cy={cy} r={r} fill="var(--accent)" fillOpacity={0.25 + (i % 4) * 0.12} stroke="var(--ivory)" strokeOpacity="0.35" />
           ))}
         </g>
-        <text x="506" y="86" textAnchor="middle" fontSize="11" fill="var(--ivory)">Tray</text>
+        <text x="506" y="86" textAnchor="middle" fontSize="11" fill="var(--ivory)">{t("anatomy.tray")}</text>
 
         {/* insider-risk boundary */}
         <line x1="594" y1="96" x2="594" y2="314" stroke="var(--palai)" strokeWidth="2" strokeDasharray="5 4" />
-        <text x="604" y="180" fontSize="11" fill="var(--ivory)">Insider</text>
-        <text x="604" y="194" fontSize="11" fill="var(--ivory)">risk</text>
-        <text x="604" y="212" fontSize="9.5" fill="var(--ivory-dim)">only declared</text>
-        <text x="604" y="224" fontSize="9.5" fill="var(--ivory-dim)">permissions cross</text>
+        <text x="604" y="180" fontSize="11" fill="var(--ivory)">{t("anatomy.insider")}</text>
+        <text x="604" y="194" fontSize="11" fill="var(--ivory)">{t("anatomy.risk")}</text>
+        <text x="604" y="212" fontSize="9.5" fill="var(--ivory-dim)">{t("anatomy.onlyDeclared")}</text>
+        <text x="604" y="224" fontSize="9.5" fill="var(--ivory-dim)">{t("anatomy.permissions")}</text>
 
         {/* composer */}
         <circle cx="66" cy="284" r="15" fill="none" stroke="var(--gold)" strokeWidth="1.8" />
@@ -67,13 +74,13 @@ export function BubbleAnatomy() {
         </g>
         <rect x="94" y="270" width="300" height="28" rx="14" fill="none" stroke="var(--ivory)" strokeOpacity="0.5" />
         <path d="M404 274 l18 10 -18 10z" fill="var(--gold)" />
-        <text x="110" y="288" fontSize="11" fill="var(--ivory-dim)">Composer</text>
-        <text x="66" y="314" textAnchor="middle" fontSize="9.5" fill="var(--ivory-dim)">Mission Control</text>
-        <text x="413" y="314" textAnchor="middle" fontSize="9.5" fill="var(--ivory-dim)">send</text>
+        <text x="110" y="288" fontSize="11" fill="var(--ivory-dim)">{t("anatomy.composer")}</text>
+        <text x="66" y="314" textAnchor="middle" fontSize="9.5" fill="var(--ivory-dim)">{t("anatomy.missionControl")}</text>
+        <text x="413" y="314" textAnchor="middle" fontSize="9.5" fill="var(--ivory-dim)">{t("anatomy.send")}</text>
 
         {/* principles along the top */}
-        <text x="330" y="30" textAnchor="middle" fontSize="12" fill="var(--ivory)">Runs without internet · on-device models</text>
-        <text x="330" y="48" textAnchor="middle" fontSize="10.5" fill="var(--ivory-dim)">0% cloud by default — Circle identity throughout</text>
+        <text x="330" y="30" textAnchor="middle" fontSize="12" fill="var(--ivory)">{t("anatomy.offlineTop")}</text>
+        <text x="330" y="48" textAnchor="middle" fontSize="10.5" fill="var(--ivory-dim)">{t("anatomy.offlineSub")}</text>
       </svg>
       <figcaption className="mt-2 text-xs text-ivory-dim">
         Redrawn from the founding notebook sketch. Capitol and the insider-risk line sit outside the frame on purpose:

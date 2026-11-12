@@ -1,0 +1,192 @@
+{
+  "generatedAt": "2026-11-09T12:38:06.338Z",
+  "filesScanned": 281,
+  "site": {
+    "keys": 204,
+    "hiDrafts": 204,
+    "dynamicFamilies": []
+  },
+  "chrome": {
+    "keys": 190
+  },
+  "bubble": {
+    "keys": 188,
+    "hiDrafts": 188,
+    "calls": 140,
+    "files": 68
+  },
+  "used": {
+    "site": [
+      "site.about.backLink",
+      "site.about.building.adhan",
+      "site.about.building.q",
+      "site.about.building.sangam",
+      "site.about.building.yazh",
+      "site.about.countdown.bold",
+      "site.about.countdown.date",
+      "site.about.countdown.post",
+      "site.about.countdown.pre",
+      "site.about.countdown.q",
+      "site.about.description",
+      "site.about.landscapes.p",
+      "site.about.landscapes.q",
+      "site.about.metadataTitle",
+      "site.about.title",
+      "site.about.what.p1",
+      "site.about.what.p2",
+      "site.about.what.q",
+      "site.about.who.p1",
+      "site.about.who.p2",
+      "site.about.who.p3",
+      "site.about.who.p4",
+      "site.about.who.q",
+      "site.adhan.body",
+      "site.adhan.cta",
+      "site.adhan.eyebrow",
+      "site.adhan.tokenTax.label",
+      "site.adhan.tokenTax.source",
+      "site.community.chatAge",
+      "site.developers.body",
+      "site.developers.cta",
+      "site.developers.discordCta",
+      "site.developers.eyebrow",
+      "site.developers.title",
+      "site.hero.eyebrow",
+      "site.hero.landscapesLabel",
+      "site.hero.openChatCta",
+      "site.hero.scrollCue",
+      "site.hero.skipIntro",
+      "site.hero.talkCta",
+      "site.hero.yazhCaption",
+      "site.identity.copyright",
+      "site.identity.footer",
+      "site.identity.heroLine",
+      "site.identity.name",
+      "site.identity.tagline",
+      "site.languageRoadmap.foot",
+      "site.languageRoadmap.title",
+      "site.nav.backToTop",
+      "site.nav.fiveLandscapes",
+      "site.nav.home",
+      "site.nav.label",
+      "site.nav.menu",
+      "site.nav.thinaiItem",
+      "site.privacy.changes.p",
+      "site.privacy.changes.q",
+      "site.privacy.children.p",
+      "site.privacy.children.q",
+      "site.privacy.collect.p",
+      "site.privacy.collect.q",
+      "site.privacy.contact.p",
+      "site.privacy.contact.q",
+      "site.privacy.description",
+      "site.privacy.links.p",
+      "site.privacy.links.q",
+      "site.privacy.location.p",
+      "site.privacy.location.q",
+      "site.privacy.metadataTitle",
+      "site.privacy.title",
+      "site.privacy.updated",
+      "site.repos.allIssues",
+      "site.repos.goodFirst",
+      "site.repos.intro",
+      "site.repos.link",
+      "site.repos.note",
+      "site.repos.reference",
+      "site.repos.title",
+      "site.sangam.body",
+      "site.sangam.cta",
+      "site.sangam.eyebrow",
+      "site.sangam.source",
+      "site.services.asideLabel",
+      "site.services.comingSoon",
+      "site.services.label",
+      "site.thinai.eyebrow",
+      "site.thinai.foot",
+      "site.thinai.title",
+      "site.yazh.artAlt",
+      "site.yazh.body",
+      "site.yazh.caption",
+      "site.yazh.cta",
+      "site.yazh.eyebrow",
+      "site.yazh.markAlt",
+      "site.yazh.whatsappCta",
+      "site.yazh.whatsappNote",
+      "site.yazhi.body",
+      "site.yazhi.chatAlt",
+      "site.yazhi.preview"
+    ],
+    "chrome": [
+      "chat.metadataDescription",
+      "chat.metadataTitle"
+    ],
+    "dynamic": [
+      {
+        "template": "site.adhan.tokenTax.row.${i}",
+        "matches": 4
+      },
+      {
+        "template": "site.community.card.${i}.body",
+        "matches": 6
+      },
+      {
+        "template": "site.community.card.${i}.title",
+        "matches": 6
+      },
+      {
+        "template": "site.languageRoadmap.step.${i}.body",
+        "matches": 12
+      },
+      {
+        "template": "site.languageRoadmap.step.${i}.lang",
+        "matches": 12
+      },
+      {
+        "template": "site.languageRoadmap.step.${i}.stage",
+        "matches": 12
+      },
+      {
+        "template": "site.nav.groups.${gi}.items.${ii}",
+        "matches": 17
+      },
+      {
+        "template": "site.nav.groups.${gi}.label",
+        "matches": 17
+      },
+      {
+        "template": "site.repos.what.${index}",
+        "matches": 7
+      },
+      {
+        "template": "site.sangam.pillar.${i}",
+        "matches": 3
+      },
+      {
+        "template": "site.section.${item.section}.landscape",
+        "matches": 10
+      },
+      {
+        "template": "site.services.${i}",
+        "matches": 6
+      },
+      {
+        "template": "site.thinai.landscape.${i}.body",
+        "matches": 15
+      },
+      {
+        "template": "site.thinai.landscape.${i}.mood",
+        "matches": 15
+      },
+      {
+        "template": "site.thinai.landscape.${i}.name",
+        "matches": 15
+      }
+    ]
+  },
+  "migrated": {
+    "files": 34,
+    "findings": {}
+  },
+  "errors": [],
+  "warnings": []
+}

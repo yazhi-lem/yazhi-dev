@@ -3,14 +3,18 @@ import { CitationMark, SourceCard, type Source } from "../components/Citation";
 import { Disclaimer, IDontKnow } from "../components/Guardrails";
 import { Panel } from "../components/Panel";
 import { Pill } from "../components/Pill";
+import { useBubbleT } from "../locales";
 
 /** Numbered sources for an answer — the evidence column of Avai, Nyaya,
     Guru. Numbering matches the CitationMarks in the answer. */
-export function SourcesPanel({ sources, title = "Sources" }: { sources: Source[]; title?: string }) {
+export function SourcesPanel({ sources, title }: { sources: Source[]; title?: string }) {
+  const t = useBubbleT("bubble.answer");
+  const tc = useBubbleT("bubble.common");
+  const heading = title ?? t("sources");
   return (
-    <Panel title={title} eyebrow={`${sources.length} cited`}>
+    <Panel title={heading} eyebrow={tc("cited", { count: sources.length })}>
       {sources.length === 0 ? (
-        <p className="text-sm text-ivory-dim">No sources — so no claim is made.</p>
+        <p className="text-sm text-ivory-dim">{t("noSources")}</p>
       ) : (
         <div className="space-y-2">
           {sources.map((s, i) => (
@@ -33,14 +37,15 @@ export interface AnswerPart {
 export function CitedAnswer({
   parts,
   sources,
-  fallbackReason = "No stored source supports an answer to this question.",
+  fallbackReason,
 }: {
   parts: AnswerPart[];
   sources: Source[];
   fallbackReason?: ReactNode;
 }) {
+  const t = useBubbleT("bubble.answer");
   if (sources.length === 0 || parts.length === 0) {
-    return <IDontKnow reason={fallbackReason} next="Try naming the text, verse or section you mean." />;
+    return <IDontKnow reason={fallbackReason ?? t("fallbackReason")} next={t("fallbackNext")} />;
   }
   return (
     <p className="text-sm leading-relaxed text-ivory">
@@ -69,13 +74,14 @@ export function LegalAnswerCard({
   /** share of cited sections matched to stored Act text, 0–1 */
   validity: number;
 }) {
+  const t = useBubbleT("bubble.answer");
   const pct = Math.round(validity * 100);
   return (
     <Panel
       accentEdge
       eyebrow="Nyaya"
       title={question}
-      actions={<Pill tone={pct >= 95 ? "ok" : "risk"} title="Cited sections matched to stored Act text">{pct}% matched</Pill>}
+      actions={<Pill tone={pct >= 95 ? "ok" : "risk"} title={t("matchedTitle")}>{t("matched", { pct })}</Pill>}
     >
       <div className="space-y-4">
         <CitedAnswer parts={parts} sources={sources} />

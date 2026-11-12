@@ -6,6 +6,7 @@ import { SunkenRuins } from "@/components/ui/SunkenRuins";
 import { Bubbles } from "@/components/ui/Bubbles";
 import { IDENTITY } from "@/lib/content";
 import { Bi } from "@/components/ui/Bi";
+import { useSiteT } from "@/lib/i18n";
 
 /** Intro loader: a generic, brand-only moment (no per-thinai carousel —
     that content lives in the site itself, not the loading screen) styled
@@ -14,6 +15,7 @@ import { Bi } from "@/components/ui/Bi";
     a few bubbles rise past it, and the sunken ruins sit faintly on the
     floor below. Skips under reduced motion; plays once per session. */
 export function ThinaiIntro() {
+  const t = useSiteT();
   const [done, setDone] = useState(true); // SSR-safe default: hidden
 
   useEffect(() => {
@@ -73,7 +75,7 @@ export function ThinaiIntro() {
             onClick={() => { window.sessionStorage.setItem("yazhi-intro", "1"); setDone(true); }}
             className="absolute bottom-8 text-xs uppercase tracking-widest text-ivory-dim hover:text-ivory"
           >
-            skip →
+            {t("site.hero.skipIntro")}
           </button>
         </motion.div>
       )}

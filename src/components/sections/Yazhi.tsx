@@ -2,24 +2,25 @@
 import { motion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { ADHAN_CHAT, IDENTITY, YAZHI_SECTION } from "@/lib/content";
+import { ADHAN_CHAT } from "@/lib/content";
 import { stagger, fadeUp } from "@/lib/motionPresets";
+import { useSiteT } from "@/lib/i18n";
 
 /** Yazhi itself, shown as a live conversation: one chat sliding between
     Tamil, Telugu and Hindi with no restart in between, reaching the tools
     a family already uses. This is the umbrella the three products sit
     under (deck p1) — Yazh, Adhan and Open Sangam each get their own
     section after it. */
-function ChatSpace() {
+function ChatSpace({ name, alt, preview }: { name: string; alt: string; preview: string }) {
   return (
     <div
       role="img"
-      aria-label="A chat with Yazhi moving between Tamil, Telugu, and Hindi without restarting, including a corpus search and a WhatsApp send"
+      aria-label={alt}
       className="mx-auto w-full max-w-md overflow-hidden rounded-[var(--radius-card)] border border-ivory/12 bg-night-2/70 shadow-2xl"
     >
       <div className="flex items-center gap-3 border-b border-ivory/10 px-5 py-4">
         <div className="grid h-9 w-9 place-items-center rounded-full bg-[color:var(--accent)]/20 font-display text-sm font-semibold text-[color:var(--accent)]">
-          {IDENTITY.nameEn[0]}
+          {name[0]}
         </div>
         <div>
           <p className="font-display text-sm font-semibold text-ivory">{IDENTITY.nameEn}</p>
@@ -82,13 +83,15 @@ function ChatSpace() {
 }
 
 export function Yazhi() {
+  const t = useSiteT();
   return (
     <Section id="yazhi">
       <SectionHeading
-        thinaiTa="குறிஞ்சி" thinaiEn="Kurinji" landscapeTa="மலை · கூடல்" landscape="Mountains · first meetings"
-        titleTa={IDENTITY.nameTa} titleEn={IDENTITY.nameEn}
-        subTa={YAZHI_SECTION.subTa} subEn={YAZHI_SECTION.subEn}
-        plainTa={YAZHI_SECTION.plainTa} plainEn={YAZHI_SECTION.plainEn}
+        thinaiKey="site.section.yazhi.thinai"
+        landscapeKey="site.section.yazhi.landscape"
+        titleKey="site.identity.name"
+        subKey="site.yazhi.sub"
+        plainKey="site.yazhi.plain"
       />
 
       <motion.div
@@ -98,15 +101,18 @@ export function Yazhi() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="mb-10"
       >
-        <ChatSpace />
+        <ChatSpace
+          name={t("site.identity.name")}
+          alt={t("site.yazhi.chatAlt")}
+          preview={t("site.yazhi.preview")}
+        />
       </motion.div>
 
       <motion.p
         variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-        lang="en"
         className="mx-auto max-w-prose text-center text-ivory-dim"
       >
-        {YAZHI_SECTION.bodyEn}
+        {t("site.yazhi.body")}
       </motion.p>
     </Section>
   );

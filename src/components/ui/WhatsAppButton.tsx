@@ -1,16 +1,18 @@
 "use client";
 import { LINKS } from "@/lib/content";
+import { useUiT } from "@/lib/i18n";
 
 /** Floating invite to the community WhatsApp group. Fixed to the viewport,
     stacked above the LaunchTimer's bottom-left position on mobile / opposite
     corner on desktop so the two never overlap. */
 export function WhatsAppButton() {
+  const t = useUiT();
   return (
     <a
       href={LINKS.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Join the Yazhi WhatsApp group"
+      aria-label={t("whatsapp.groupLabel")}
       className="fixed bottom-4 left-4 z-40 grid h-12 w-12 place-items-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-105"
     >
       <svg

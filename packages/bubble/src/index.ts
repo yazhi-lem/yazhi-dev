@@ -48,6 +48,9 @@ export { YAZHI_AGENTS } from "./lib/agents";
 export type { Agent } from "./lib/agent-types";
 export { BUBBLE_SCHEMA, validateManifest, effectiveSystemPrompt, withFivePosture, type BubbleManifest, type BubbleRuntime } from "./lib/manifest";
 export { STARTER_BUBBLES } from "./lib/starters";
+// API kernel (agent: api-kernel) — additive: manifest v1 + semver helpers
+export { BUBBLE_SCHEMA_V1, validateManifestV1, checkManifest, isLanguageTag, languageMatches, type BubbleManifestV1, type AnyBubbleManifest, type ManifestCheck, type ManifestNote, type ManifestNoteLevel, type BubblePermission, type BubbleSize } from "./lib/manifest";
+export { compareVersion, bumpVersion, isVersion, parseVersion, latestVersion, versionDelta, isValidBubbleName, manifestSizeBytes, versionLabel, MAX_MANIFEST_BYTES, type BumpKind, type ParsedVersion } from "./lib/bubble";
 
 export { MarkBubble } from "./mission/MarkBubble";
 export { MissionControl, MissionSection, MissionHeader } from "./mission/MissionControl";
@@ -58,3 +61,7 @@ export { tone, type Palette } from "./tinai/environments";
 export { TinaiMark } from "./tinai/TinaiMark";
 export { SoundToggle, useYazhSound, voiceStage } from "./sound/SoundToggle";
 export { wake as wakeYazh, pluck as pluckYazh, strum as strumYazh, YAZH_SCALE } from "./sound/yazhVoice";
+
+// Bubble UI host (`/app`, agent: bubble-ui) — barrel only: src/host.ts re-exports
+// the library pieces the host composes. Appended once, at the very end.
+export * from "./host";

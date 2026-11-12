@@ -1,10 +1,12 @@
 import type { ReactNode } from "react";
 import { RuntimeBadge } from "./Pill";
+import { useBubbleT } from "../locales";
 
 /** Three dots while a reply streams. */
 export function TypingDots() {
+  const t = useBubbleT("bubble.message");
   return (
-    <span className="inline-flex gap-1" role="status" aria-label="Thinking">
+    <span className="inline-flex gap-1" role="status" aria-label={t("thinking")}>
       {[0, 1, 2].map((i) => (
         <span key={i} className="h-1.5 w-1.5 animate-bounce rounded-full bg-ivory-dim" style={{ animationDelay: `${i * 120}ms` }} />
       ))}

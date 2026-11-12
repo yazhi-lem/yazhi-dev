@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useCircleSession } from "./CircleProvider";
+import { useUiT } from "@/lib/i18n";
 
 type Mode = "signin" | "signup";
 
@@ -10,6 +11,7 @@ const field =
 
 /** Sign in / join / account panel for a Circle account on yazhi-api. */
 export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () => void; /** "signup" opens straight on joining */ initialMode?: Mode }) {
+  const t = useUiT();
   const { state, signIn, signUp, signOut } = useCircleSession();
   const [mode, setMode] = useState<Mode>(initialMode);
   const [busy, setBusy] = useState(false);
@@ -66,16 +68,20 @@ export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () 
       <div className="p-6">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-widest text-gold">Circle · Mission Control</p>
+            <p className="font-mono text-[11px] uppercase tracking-widest text-gold">{t("circle.eyebrow")}</p>
             <h2 id="circle-dialog-title" className="display font-display text-2xl font-bold">
-              {state.status === "signed-in" ? "Your Circle" : mode === "signin" ? "Sign in" : "Join as a builder"}
+              {state.status === "signed-in"
+                ? t("circle.yourCircle")
+                : mode === "signin"
+                  ? t("circle.signIn")
+                  : t("circle.joinBuilder")}
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
             className="grid h-11 w-11 place-items-center rounded-full border border-ivory/15 text-ivory-dim hover:text-ivory"
-            aria-label="Close"
+            aria-label={t("circle.close")}
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" aria-hidden>
               <path d="M6 6l12 12M18 6L6 18" />
@@ -83,7 +89,7 @@ export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () 
           </button>
         </div>
 
-        {state.status === "loading" && <p className="text-sm text-ivory-dim">Checking your session…</p>}
+        {state.status === "loading" && <p className="text-sm text-ivory-dim">{t("circle.checking")}</p>}
 
         {state.status === "error" && (
           <p className="rounded-lg border border-palai/40 bg-palai/10 p-3 text-sm text-ivory">{state.message}</p>
@@ -92,18 +98,17 @@ export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () 
         {state.status === "signed-in" && (
           <div className="space-y-4 text-sm">
             <dl className="grid grid-cols-[6rem_1fr] gap-y-2 rounded-xl border border-ivory/10 bg-night/60 p-4">
-              <dt className="text-ivory-dim">Name</dt>
+              <dt className="text-ivory-dim">{t("circle.name")}</dt>
               <dd>{state.account.fullName}</dd>
-              <dt className="text-ivory-dim">Email</dt>
+              <dt className="text-ivory-dim">{t("circle.email")}</dt>
               <dd className="break-all">{state.account.email}</dd>
-              <dt className="text-ivory-dim">Account</dt>
+              <dt className="text-ivory-dim">{t("circle.account")}</dt>
               <dd className="break-all font-mono text-xs">{state.account.accountId}</dd>
             </dl>
             <p className="text-ivory-dim">
-              Mission Control is on: press the three-bubble mark for your account, the theme and your chat settings.
-              Bubbles you publish are signed with this account — build them from the{" "}
+              {t("circle.missionOn")}{" "}
               <Link href="/bubble#templates" className="text-gold underline-offset-4 hover:underline">
-                UI library
+                {t("circle.uiLibrary")}
               </Link>
               .
             </p>
@@ -112,7 +117,7 @@ export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () 
               onClick={onClose}
               className="w-full rounded-lg bg-gold px-4 py-2 font-semibold text-night transition hover:bg-bronze hover:text-ivory"
             >
-              Done
+              {t("circle.done")}
             </button>
             <button
               type="button"
@@ -120,37 +125,40 @@ export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () 
               onClick={() => void run(signOut)}
               className="w-full rounded-lg border border-ivory/20 px-4 py-2 font-semibold text-ivory-dim transition hover:border-palai/60 hover:text-ivory disabled:opacity-50"
             >
-              Sign out
+              {t("circle.signOut")}
             </button>
           </div>
         )}
 
         {state.status === "signed-out" && !state.configured && (
           <p className="rounded-lg border border-ivory/10 bg-night/60 p-4 text-sm text-ivory-dim">
-            Circle sign-in isn&apos;t connected on this deployment yet. Set <code className="font-mono text-xs text-ivory">YAZHI_GRPC_TARGET</code>{" "}
-            to reach yazhi-api — see <Link href="/bubble#circle" className="text-gold">Bubble UI → Circle</Link>.
-            The Bubble UI and the UI library still work locally.
+            {t("circle.notConnected")}{" "}
+            <code className="font-mono text-xs text-ivory">YAZHI_GRPC_TARGET</code> {t("circle.notConnected2")}{" "}
+            <Link href="/bubble#circle" className="text-gold">
+              {t("circle.circleDocsLink")}
+            </Link>
+            . {t("circle.notConnected3")}
           </p>
         )}
 
         {state.status === "signed-out" && state.configured && (
-          <p className="-mt-2 mb-4 text-sm text-ivory-dim">Mission Control wakes once you have a Circle account.</p>
+          <p className="-mt-2 mb-4 text-sm text-ivory-dim">{t("circle.wakesAfter")}</p>
         )}
 
         {state.status === "signed-out" && state.configured && (
           <form onSubmit={onSubmit} className="space-y-3">
             {mode === "signup" && (
               <label className="block text-sm">
-                <span className="mb-1 block text-ivory-dim">Name</span>
+                <span className="mb-1 block text-ivory-dim">{t("circle.name")}</span>
                 <input name="fullName" required maxLength={120} autoComplete="name" className={field} />
               </label>
             )}
             <label className="block text-sm">
-              <span className="mb-1 block text-ivory-dim">Email</span>
+              <span className="mb-1 block text-ivory-dim">{t("circle.email")}</span>
               <input name="email" type="email" required autoComplete="email" className={field} />
             </label>
             <label className="block text-sm">
-              <span className="mb-1 block text-ivory-dim">Password</span>
+              <span className="mb-1 block text-ivory-dim">{t("circle.password")}</span>
               <input
                 name="password"
                 type="password"
@@ -165,16 +173,16 @@ export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () 
               <div className="space-y-2 pt-1 text-xs text-ivory-dim">
                 <label className="flex items-start gap-2">
                   <input name="adult" type="checkbox" required className="mt-0.5 accent-[var(--gold)]" />
-                  <span>I am 18 or older. (Children use Yazh through the family flow, with a parent.)</span>
+                  <span>{t("circle.adult")}</span>
                 </label>
                 <label className="flex items-start gap-2">
                   <input name="conduct" type="checkbox" required className="mt-0.5 accent-[var(--gold)]" />
                   <span>
-                    I&apos;ll follow the{" "}
+                    {t("circle.conductPre")}{" "}
                     <Link href="/bubble#conduct" className="text-gold">
-                      builder code of conduct
+                      {t("circle.conductLink")}
                     </Link>
-                    .
+                    {t("circle.conductPost")}
                   </span>
                 </label>
               </div>
@@ -191,12 +199,12 @@ export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () 
               disabled={busy}
               className="w-full rounded-lg bg-gold px-4 py-2 font-semibold text-night transition hover:bg-bronze hover:text-ivory disabled:opacity-50"
             >
-              {busy ? "…" : mode === "signin" ? "Sign in" : "Create Circle account"}
+              {busy ? "…" : mode === "signin" ? t("circle.signIn") : t("circle.createAccount")}
             </button>
 
             {state.signupOpen ? (
               <p className="text-center text-xs text-ivory-dim">
-                {mode === "signin" ? "New here? " : "Already have a Circle account? "}
+                {mode === "signin" ? `${t("circle.newHere")} ` : `${t("circle.haveAccount")} `}
                 <button
                   type="button"
                   onClick={() => {
@@ -205,13 +213,11 @@ export function CircleDialog({ onClose, initialMode = "signin" }: { onClose: () 
                   }}
                   className="text-gold underline-offset-4 hover:underline"
                 >
-                  {mode === "signin" ? "Join as a builder" : "Sign in"}
+                  {mode === "signin" ? t("circle.joinBuilder") : t("circle.signIn")}
                 </button>
               </p>
             ) : (
-              <p className="text-center text-xs text-ivory-dim">
-                Builder sign-up is invite-only during the pilot — ask in Discord.
-              </p>
+              <p className="text-center text-xs text-ivory-dim">{t("circle.inviteOnly")}</p>
             )}
           </form>
         )}

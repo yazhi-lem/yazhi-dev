@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useBubbleT } from "../locales";
 
 export type GateState = "pending" | "confirmed" | "declined";
 
@@ -27,6 +28,7 @@ export function ConfirmGate({
   onDecline?: () => void;
   state?: GateState;
 }) {
+  const t = useBubbleT("bubble.gate");
   const [local, setLocal] = useState<GateState>("pending");
   const [typed, setTyped] = useState("");
   const state = controlled ?? local;
@@ -38,12 +40,12 @@ export function ConfirmGate({
         state === "confirmed" ? "border-mullai/50 bg-mullai/5" : state === "declined" ? "border-ivory/15 opacity-70" : "border-palai/50 bg-palai/5"
       }`}
     >
-      <p className="font-mono text-[10px] uppercase tracking-wider text-palai">Needs a human confirm</p>
+      <p className="font-mono text-[10px] uppercase tracking-wider text-palai">{t("needsHuman")}</p>
       <p className="mt-1 font-semibold text-ivory">{action}</p>
       <dl className="mt-2 grid grid-cols-[4.5rem_1fr] gap-x-2 gap-y-1 text-xs">
-        <dt className="text-ivory-dim">Affects</dt>
+        <dt className="text-ivory-dim">{t("affects")}</dt>
         <dd className="text-ivory">{impact}</dd>
-        <dt className="text-ivory-dim">Rollback</dt>
+        <dt className="text-ivory-dim">{t("rollback")}</dt>
         <dd className="text-ivory">{rollback}</dd>
       </dl>
       {state === "pending" ? (
@@ -52,8 +54,8 @@ export function ConfirmGate({
             <input
               value={typed}
               onChange={(e) => setTyped(e.target.value)}
-              placeholder={`Type ${confirmWord}`}
-              aria-label={`Type ${confirmWord} to confirm`}
+              placeholder={t("typePrompt", { word: confirmWord })}
+              aria-label={t("typeToConfirm", { word: confirmWord })}
               className="min-h-10 w-32 rounded-md border border-ivory/15 bg-night px-2 font-mono text-xs text-ivory focus:border-gold/60 focus:outline-none"
             />
           )}
@@ -66,7 +68,7 @@ export function ConfirmGate({
             }}
             className="min-h-10 rounded-full bg-gold px-4 text-xs font-semibold text-night hover:bg-bronze disabled:opacity-40"
           >
-            Confirm and run
+            {t("confirmRun")}
           </button>
           <button
             type="button"
@@ -76,11 +78,11 @@ export function ConfirmGate({
             }}
             className="min-h-10 rounded-full border border-ivory/20 px-4 text-xs text-ivory-dim hover:text-ivory"
           >
-            Don&apos;t run
+            {t("dontRun")}
           </button>
         </div>
       ) : (
-        <p className="mt-2 text-xs text-ivory-dim">{state === "confirmed" ? "Confirmed by you — logged." : "Declined — nothing ran."}</p>
+        <p className="mt-2 text-xs text-ivory-dim">{state === "confirmed" ? t("confirmed") : t("declined")}</p>
       )}
     </div>
   );

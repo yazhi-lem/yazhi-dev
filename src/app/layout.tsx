@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import localFont from "next/font/local";
 import { Playfair_Display, Nunito, Baloo_Thambi_2, Baloo_Tammudu_2 } from "next/font/google";
 import "@/styles/globals.css";
 import { LangProvider } from "@/lib/i18n";
+import { LOCALE_COOKIE, readLocaleFromCookies } from "@/lib/locale-cookie";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { ThinaiTheme } from "@/components/providers/ThinaiTheme";
 import { Motion } from "@/components/providers/Motion";
@@ -67,11 +69,19 @@ export const metadata: Metadata = {
   description: "Reclaiming the agentic power of Thenmadurai. Sovereign Intelligence.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // The locale the reader chose (ta by default, see `@yazhi/i18n`), read on
+  // the server from the cookie `LocaleSwitcher` writes, so `<html lang>` is
+  // right in the served HTML — not corrected after hydration. A missing or
+  // unknown cookie falls back to Tamil; the page can never be blank.
+  const cookieValue = (await cookies()).get(LOCALE_COOKIE)?.value;
+  const locale = readLocaleFromCookies(cookieValue);
+
   return (
     <html
-      lang="ta"
+      lang={locale}
       // the Bubble theme script below may set data-mode before hydration
+      // (and LocaleSwitcher sets `lang` again if it disagrees)
       suppressHydrationWarning
       className={mono.variable}
       style={
@@ -85,7 +95,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {/* a chosen light or dark theme applies before the first paint */}
         <script dangerouslySetInnerHTML={{ __html: MODE_SCRIPT }} />
-        <LangProvider>
+        {/* the same locale `<html lang>` carries, so the client's first
+            render matches the server's — see LangProvider */}
+        <LangProvider initialLocale={locale}>
           <ThinaiTheme />
           <Motion>
             <SmoothScroll>{children}</SmoothScroll>
