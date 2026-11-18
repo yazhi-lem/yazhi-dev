@@ -53,7 +53,6 @@ export function Guardian() {
   const { lang: siteLang } = useLang();
   const [selectedLang, setSelectedLang] = useState<string>("ta");
   const [showGreeting, setShowGreeting] = useState(false);
-  const [greetingKey, setGreetingKey] = useState(0);
 
   // Sync initial language with display preference
   useEffect(() => {
@@ -68,7 +67,7 @@ export function Guardian() {
       setShowGreeting(false);
     }, 10000);
     return () => clearTimeout(timer);
-  }, [showGreeting, greetingKey]);
+  }, [showGreeting, selectedLang]);
 
   const speakGreeting = useCallback((text: string, voiceCode: string) => {
     try {
@@ -92,7 +91,6 @@ export function Guardian() {
     setShowGreeting((prev) => {
       const next = !prev;
       if (next) {
-        setGreetingKey((k) => k + 1);
         const active = GREETINGS[selectedLang] || GREETINGS.ta;
         speakGreeting(active.main, active.voiceLang);
       } else {
@@ -107,7 +105,6 @@ export function Guardian() {
   const handleLanguageSelect = (targetLang: string) => {
     setSelectedLang(targetLang);
     setShowGreeting(true);
-    setGreetingKey((prev) => prev + 1);
     const activeGreeting = GREETINGS[targetLang] || GREETINGS.ta;
     speakGreeting(activeGreeting.main, activeGreeting.voiceLang);
   };
@@ -201,14 +198,18 @@ export function Guardian() {
             <AnimatePresence>
               {showGreeting && (
                 <motion.div
-                  key={`msg-popup-${greetingKey}`}
+                  key="mascot-greeting-popup"
                   initial={{ opacity: 0, y: 16, scale: 0.88 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.92 }}
                   transition={{ type: "spring", stiffness: 420, damping: 26 }}
-                  className="absolute -top-34 sm:-top-38 z-50 flex flex-col items-center select-none"
+                  className="absolute -top-[185px] sm:-top-[195px] z-50 flex flex-col items-center select-none"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="relative flex flex-col rounded-2xl border border-gold/60 bg-[#0a0a0f]/98 p-3.5 sm:p-4 shadow-[0_24px_60px_rgba(0,0,0,0.95),0_0_30px_rgba(211,179,106,0.3)] backdrop-blur-2xl max-w-[295px] sm:max-w-[345px]">
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative flex flex-col rounded-2xl border border-gold/60 bg-[#0a0a0f]/98 p-3.5 sm:p-4 shadow-[0_24px_60px_rgba(0,0,0,0.95),0_0_30px_rgba(211,179,106,0.3)] backdrop-blur-2xl max-w-[295px] sm:max-w-[345px]"
+                  >
                     <div className="flex items-start gap-3">
                       {/* Yazhi brand logo avatar thumbnail */}
                       <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-gold/60 bg-[#141624] p-1.5 shadow-md flex items-center justify-center">
@@ -351,7 +352,6 @@ export function Guardian() {
                 size="lg"
                 priority
                 alt="Yazh — sovereign mythical temple guardian animation"
-                onInteraction={() => toggleMascotGreeting()}
               />
             </div>
 

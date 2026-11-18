@@ -32,20 +32,23 @@ export function LaunchTimer() {
 
   // the short label follows the display preference: TAM / ENG / both
   // The "both" mode shows the Tamil label and the English name side by side.
-  const label = lang === "both" ? `${t("timer.label")} · ${t("timer.label", { language: "en" })}` : t("timer.label");
-  const dayWord = lang === "both" ? `${t("timer.dayShort")} / d` : t("timer.dayShort");
+  const label =
+    lang === "both"
+      ? `${t("timer.label", undefined, { language: "ta" })} · ${t("timer.label", undefined, { language: "en" })}`
+      : t("timer.label");
+  const dayWord = lang === "both" ? `${t("timer.dayShort", undefined, { language: "ta" })} / d` : t("timer.dayShort");
 
   return (
     <div
       role="timer"
       aria-label={t("timer.remaining", { days, hrs, mins, secs })}
-      className="fixed right-3 top-16 z-40 flex items-center gap-2 rounded-full border border-ivory/15 bg-night-2/80 px-3 py-1.5 text-xs shadow-lg backdrop-blur lg:bottom-4 lg:right-4 lg:top-auto"
+      className="fixed right-3 bottom-4 z-40 flex items-center gap-2 whitespace-nowrap rounded-full border border-ivory/15 bg-night-2/90 px-3.5 py-1.5 text-xs shadow-lg backdrop-blur sm:right-4"
     >
       <span aria-hidden className="text-sm leading-none">🌅</span>
       <span className="hidden text-[color:var(--accent)] sm:inline">{label}</span>
       <span className="font-mono tabular-nums text-ivory">
         {days}
-        <span className="text-ivory-dim">{dayWord}</span> {pad(hrs)}:{pad(mins)}:{pad(secs)}
+        <span className="text-ivory-dim"> {dayWord}</span> {pad(hrs)}:{pad(mins)}:{pad(secs)}
       </span>
     </div>
   );
