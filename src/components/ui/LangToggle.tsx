@@ -38,12 +38,11 @@ const LOCALE_TAG: Record<Locale, string> = { ta: "TA", en: "EN", hi: "HI" };
     phonetically by English voice settings. */
 export function LangToggle({
   compact = false,
-  showLocale = compact,
+  showLocale = false,
 }: {
   compact?: boolean;
-  /** Show the locale step beside the display toggle (compact variant only
-      by default; the full variant stays exactly a 3-way TAM/ENG/BOTH
-      radiogroup). */
+  /** Show the locale step beside the display toggle (disabled by default
+      to preserve the pure TAM/ENG/BOTH experience). */
   showLocale?: boolean;
 }) {
   const { lang, setLang } = useLang();

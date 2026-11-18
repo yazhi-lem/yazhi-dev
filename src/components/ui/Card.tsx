@@ -21,7 +21,7 @@ export function Card({
     <motion.div
       variants={fadeUp}
       {...(interactive ? cardHover : {})}
-      className={`relative rounded-[var(--radius-card)] border border-ivory/10 bg-night-2/80 p-6 backdrop-blur transition-colors hover:border-[color:var(--accent)]/50 ${
+      className={`relative rounded-[var(--radius-card)] border border-white/14 bg-[#0c0d14]/92 p-6 backdrop-blur-xl shadow-lg transition-colors hover:border-[color:var(--accent)]/50 ${
         accent ? "border-l-2 border-l-[color:var(--accent)]" : ""
       } ${className}`}
     >

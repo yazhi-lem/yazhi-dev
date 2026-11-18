@@ -15,8 +15,8 @@ export function Sangam() {
   return (
     <Section id="sangam" className="py-6 sm:py-8 lg:py-10">
       <div className="grid items-center gap-6 lg:grid-cols-12 lg:gap-10">
-        {/* Left Column (5 cols): Narrative, Pillars & CTA */}
-        <div className="flex flex-col justify-center lg:col-span-5">
+        {/* Left Column (5 cols): Narrative, Pillars & CTA with deep dark backdrop */}
+        <div className="flex flex-col justify-center lg:col-span-5 rounded-[var(--radius-card)] bg-[#0a0b10]/85 p-5 sm:p-6 border border-white/[0.09] backdrop-blur-xl shadow-xl">
           <SectionHeading
             thinaiKey="site.section.sangam.thinai"
             landscapeKey="site.section.sangam.landscape"
@@ -46,7 +46,7 @@ export function Sangam() {
             className="mt-4 grid grid-cols-3 gap-2"
           >
             {SANGAM.pillars.map((p, i) => (
-              <Card key={p.en} accent className="p-2.5 text-center">
+              <Card key={p.en} accent className="p-2.5 text-center bg-[#090a0f]/95">
                 <p aria-hidden className="mb-1 text-lg">{p.icon}</p>
                 <Bi
                   ta={t(`site.sangam.pillar.${i}`, undefined, { listingTerms: true })}
@@ -79,7 +79,7 @@ export function Sangam() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="lg:col-span-7"
         >
-          <figure className="glass-card rounded-[var(--radius-card)] border-l-2 border-l-[color:var(--accent)] p-4 sm:p-5">
+          <figure className="glass-card rounded-[var(--radius-card)] border-l-4 border-l-[color:var(--accent)] bg-[#08090f]/95 p-5 sm:p-6 shadow-2xl backdrop-blur-2xl">
             <figcaption className="mb-3 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-ivory-dim">
               <Bi
                 ta={MADURAI_KANCHI.poemTa}

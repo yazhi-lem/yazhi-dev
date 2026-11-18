@@ -20,7 +20,7 @@ export function Adhan() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="flex flex-col justify-center lg:col-span-5"
+          className="flex flex-col justify-center lg:col-span-5 rounded-[var(--radius-card)] bg-[#0a0b10]/85 p-5 sm:p-6 border border-white/[0.09] backdrop-blur-xl shadow-xl"
         >
           <SectionHeading
             thinaiKey="site.section.adhan.thinai"
@@ -76,7 +76,7 @@ export function Adhan() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="flex flex-col justify-center lg:col-span-7"
+          className="flex flex-col justify-center lg:col-span-7 rounded-[var(--radius-card)] bg-[#0a0b10]/85 p-5 sm:p-6 border border-white/[0.09] backdrop-blur-xl shadow-xl"
         >
           <motion.div variants={fadeUp} className="mb-3">
             <Bi
@@ -95,8 +95,8 @@ export function Adhan() {
               <motion.li
                 key={s.langEn}
                 variants={fadeUp}
-                className={`glass-card relative flex flex-col justify-between rounded-[var(--radius-card)] p-3 sm:p-3.5 ${
-                  i === 0 ? "border-[color:var(--accent)]/50 ring-1 ring-[color:var(--accent)]/30" : ""
+                className={`glass-card relative flex flex-col justify-between rounded-[var(--radius-card)] bg-[#090a0f]/95 p-3.5 sm:p-4 border border-white/12 ${
+                  i === 0 ? "border-[color:var(--accent)]/60 ring-1 ring-[color:var(--accent)]/40" : ""
                 }`}
               >
                 <div>
@@ -104,8 +104,8 @@ export function Adhan() {
                     <span
                       className={`rounded-full px-2 py-0.2 text-[9px] font-mono uppercase tracking-widest ${
                         i === 0
-                          ? "bg-[color:var(--accent)]/25 text-[color:var(--accent)] border border-[color:var(--accent)]/40"
-                          : "bg-white/[0.06] text-ivory-dim/70"
+                          ? "bg-[color:var(--accent)]/30 text-[color:var(--accent)] border border-[color:var(--accent)]/50 font-bold"
+                          : "bg-white/[0.08] text-ivory-dim/80"
                       }`}
                     >
                       {t(`site.languageRoadmap.step.${i}.stage`)}
@@ -128,10 +128,10 @@ export function Adhan() {
           {/* Token Tax Empirical Glass Card beneath the roadmap */}
           <motion.div
             variants={fadeUp}
-            className="glass-card mt-2.5 rounded-[var(--radius-card)] p-3.5 sm:p-4"
+            className="glass-card mt-3 rounded-[var(--radius-card)] bg-[#090a0f]/95 p-3.5 sm:p-4 border border-white/12 shadow-lg"
           >
             <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-white/10 pb-2">
-              <p className="text-[11px] font-mono uppercase tracking-wider text-[color:var(--accent)]">
+              <p className="text-[11px] font-mono uppercase tracking-wider text-[color:var(--accent)] font-semibold">
                 {t("site.adhan.tokenTax.label")}
               </p>
               <span className="font-mono text-[9px] text-ivory-dim/60">

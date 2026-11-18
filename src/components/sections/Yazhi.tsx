@@ -10,8 +10,8 @@ import { useSiteT } from "@/lib/i18n";
 
 const LANGUAGES = [
   { code: "ta", label: "தமிழ்", en: "Tamil" },
+  { code: "en", label: "ஆங்கிலம்", en: "English" },
   { code: "te", label: "தெலுங்கு", en: "Telugu" },
-  { code: "hi", label: "இந்தி", en: "Hindi" },
   { code: "kn", label: "கன்னடம்", en: "Kannada" },
   { code: "ml", label: "மலையாளம்", en: "Malayalam" },
   { code: "all", label: "+17 இந்திய மொழிகள்", en: "+17 more" },
@@ -29,7 +29,7 @@ export function Yazhi() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="flex flex-col justify-center lg:col-span-7"
+          className="flex flex-col justify-center lg:col-span-7 rounded-[var(--radius-card)] bg-[#0a0b10]/85 p-5 sm:p-6 border border-white/[0.09] backdrop-blur-xl shadow-xl"
         >
           <SectionHeading
             thinaiKey="site.section.yazhi.thinai"
@@ -53,7 +53,7 @@ export function Yazhi() {
             {LANGUAGES.map((l) => (
               <span
                 key={l.code}
-                className="rounded-full border border-white/10 bg-night-2/80 px-2.5 py-0.5 font-mono text-[10px] text-ivory-dim transition-colors hover:border-gold/40 hover:text-ivory"
+                className="rounded-full border border-white/12 bg-[#090a0f]/90 px-2.5 py-0.5 font-mono text-[10px] text-ivory-dim transition-colors hover:border-gold/50 hover:text-ivory"
               >
                 <Bi ta={l.label} en={l.en} separator={<span className="opacity-50"> · </span>} />
               </span>

@@ -268,14 +268,14 @@ export function InteractiveDevice() {
           {/* In-App Header */}
           <div className="relative z-20 flex items-center justify-between border-b border-white/[0.08] bg-[#111216]/90 px-3.5 py-2.5 backdrop-blur-md shrink-0">
             <div className="flex items-center gap-2">
-              <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border border-gold/50 bg-night-2 shadow-sm">
+              <div className="relative h-8 w-8 shrink-0 overflow-hidden rounded-full border border-gold/50 bg-[#151722] shadow-sm flex items-center justify-center p-1">
                 <Image
-                  src="/images/mascot/yazhidp.png"
-                  alt="Yazhi DP"
-                  width={32}
-                  height={32}
+                  src="/logos/yazhi-mark.svg"
+                  alt="Yazhi Logo"
+                  width={22}
+                  height={22}
                   priority
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain"
                 />
                 <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-emerald-400 ring-1 ring-black" />
               </div>
@@ -461,15 +461,15 @@ export function InteractiveDevice() {
                 <motion.div
                   animate={{ scale: [1, 1.05, 0.98, 1] }}
                   transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-                  className="relative flex h-24 w-24 items-center justify-center rounded-full border-2 border-gold/60 bg-night-2 shadow-2xl overflow-hidden p-1"
+                  className="relative flex h-24 w-24 items-center justify-center rounded-full border-2 border-gold/60 bg-[#141624] shadow-2xl p-4 overflow-hidden"
                 >
                   <Image
-                    src="/images/mascot/yazhidp.png"
-                    alt="Yazhi Voice Avatar"
-                    width={96}
-                    height={96}
+                    src="/logos/yazhi-mark.svg"
+                    alt="Yazhi Voice Logo"
+                    width={56}
+                    height={56}
                     priority
-                    className="h-full w-full rounded-full object-cover drop-shadow-[0_4px_16px_rgba(211,179,106,0.3)]"
+                    className="h-full w-full object-contain drop-shadow-[0_4px_16px_rgba(211,179,106,0.35)]"
                   />
                   <span className="absolute -inset-3 rounded-full border border-[color:var(--accent)]/40 animate-ping opacity-50 pointer-events-none" />
                 </motion.div>
