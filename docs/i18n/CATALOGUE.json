@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-18T17:12:09.129Z",
-  "filesScanned": 281,
+  "generatedAt": "2026-11-21T17:55:18.776Z",
+  "filesScanned": 285,
   "site": {
     "keys": 204,
     "hiDrafts": 204,
@@ -103,12 +103,9 @@
       "site.thinai.eyebrow",
       "site.thinai.foot",
       "site.thinai.title",
-      "site.yazh.artAlt",
       "site.yazh.body",
-      "site.yazh.caption",
       "site.yazh.cta",
       "site.yazh.eyebrow",
-      "site.yazh.markAlt",
       "site.yazh.whatsappCta",
       "site.yazh.whatsappNote",
       "site.yazhi.body",
