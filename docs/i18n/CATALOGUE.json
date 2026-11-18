@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-18T17:12:09.129Z",
-  "filesScanned": 281,
+  "generatedAt": "2026-11-21T17:58:41.838Z",
+  "filesScanned": 282,
   "site": {
     "keys": 204,
     "hiDrafts": 204,
@@ -111,9 +111,7 @@
       "site.yazh.markAlt",
       "site.yazh.whatsappCta",
       "site.yazh.whatsappNote",
-      "site.yazhi.body",
-      "site.yazhi.chatAlt",
-      "site.yazhi.preview"
+      "site.yazhi.body"
     ],
     "chrome": [
       "chat.metadataDescription",
