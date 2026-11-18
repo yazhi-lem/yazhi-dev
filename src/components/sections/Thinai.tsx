@@ -27,12 +27,12 @@ export function Thinai() {
         as="h2"
         ta={t("site.thinai.title")}
         en={t("site.thinai.title", undefined, { language: "en" })}
-        className="mt-3 flex flex-col gap-1 font-display text-[length:var(--text-3xl)] font-bold"
+        className="mt-2 flex flex-col gap-0.5 font-display text-2xl sm:text-3xl font-bold"
       />
 
       <motion.ul
         variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }}
-        className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5"
+        className="mt-6 sm:mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5"
       >
         {THINAI_WORLD.landscapes.map((l, i) => (
           <motion.li

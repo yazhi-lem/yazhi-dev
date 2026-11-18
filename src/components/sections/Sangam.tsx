@@ -13,10 +13,10 @@ export function Sangam() {
   const t = useSiteT();
 
   return (
-    <Section id="sangam" className="py-6 sm:py-8 lg:py-10">
-      <div className="grid items-center gap-6 lg:grid-cols-12 lg:gap-10">
-        {/* Left Column (5 cols): Narrative, Pillars & CTA with deep dark backdrop */}
-        <div className="flex flex-col justify-center lg:col-span-5 rounded-[var(--radius-card)] bg-[#0a0b10]/85 p-5 sm:p-6 border border-white/[0.09] backdrop-blur-xl shadow-xl">
+    <Section id="sangam">
+      <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
+        {/* Left Column (5 cols): Narrative, Pillars & CTA - Clean Floating Typography */}
+        <div className="flex flex-col justify-center lg:col-span-5 min-w-0">
           <SectionHeading
             thinaiKey="site.section.sangam.thinai"
             landscapeKey="site.section.sangam.landscape"

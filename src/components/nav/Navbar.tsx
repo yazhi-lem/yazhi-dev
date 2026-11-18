@@ -49,7 +49,7 @@ export function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5">
       <div
-        className={`mx-auto flex h-14 max-w-[var(--max-w)] items-center justify-between gap-3 rounded-full border pl-4 pr-2 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+        className={`mx-auto flex h-14 max-w-[86rem] items-center justify-between gap-3 rounded-full border pl-4 pr-2 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           scrolled || open
             ? "border-ivory/10 bg-night/70 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.65),0_2px_10px_-4px_rgba(0,0,0,0.4)] backdrop-blur-xl"
             : "border-transparent bg-transparent shadow-none"
@@ -104,7 +104,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-2 max-w-[var(--max-w)] rounded-3xl border border-ivory/10 bg-night/85 p-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl md:hidden"
+            className="mx-auto mt-2 max-w-[86rem] rounded-3xl border border-ivory/10 bg-night/85 p-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl md:hidden"
           >
             <ul className="flex flex-col">
               {LINKS.map((l) => (

@@ -12,15 +12,15 @@ export function Adhan() {
   const t = useSiteT();
 
   return (
-    <Section id="adhan" className="py-6 sm:py-8 lg:py-10">
-      <div className="grid items-center gap-6 lg:grid-cols-12 lg:gap-10">
-        {/* Left Column (5 cols): Narrative, Philosophy & CTA */}
+    <Section id="adhan">
+      <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
+        {/* Left Column (5 cols): Narrative, Philosophy & CTA - Clean Typography */}
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="flex flex-col justify-center lg:col-span-5 rounded-[var(--radius-card)] bg-[#0a0b10]/85 p-5 sm:p-6 border border-white/[0.09] backdrop-blur-xl shadow-xl"
+          className="flex flex-col justify-center lg:col-span-5 min-w-0"
         >
           <SectionHeading
             thinaiKey="site.section.adhan.thinai"
@@ -76,7 +76,7 @@ export function Adhan() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="flex flex-col justify-center lg:col-span-7 rounded-[var(--radius-card)] bg-[#0a0b10]/85 p-5 sm:p-6 border border-white/[0.09] backdrop-blur-xl shadow-xl"
+          className="flex flex-col justify-center lg:col-span-7 rounded-[var(--radius-card)] bg-[#08090f]/90 p-5 sm:p-6 border border-white/10 backdrop-blur-2xl shadow-2xl"
         >
           <motion.div variants={fadeUp} className="mb-3">
             <Bi

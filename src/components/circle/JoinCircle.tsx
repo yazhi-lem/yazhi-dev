@@ -17,7 +17,9 @@ export function JoinCircle({ className = "", signedIn = null }: { className?: st
   const label =
     lang === "both"
       ? `${t("circle.joinCta", undefined, { language: "ta" })} · ${t("circle.joinCta", undefined, { language: "en" })}`
-      : t("circle.joinCta");
+      : lang === "en"
+      ? t("circle.joinCta", undefined, { language: "en" })
+      : t("circle.joinCta", undefined, { language: "ta" });
   return (
     <>
       <button

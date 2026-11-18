@@ -17,7 +17,7 @@ export function Footer() {
     <footer className="relative isolate bg-[linear-gradient(to_bottom,transparent,var(--night)_7rem)] pb-20 lg:pb-6">
       <HairlineHorizon className="pointer-events-none block h-24 w-full sm:h-32" />
 
-      <div className="mx-auto max-w-[var(--max-w)] px-6 sm:px-8">
+      <div className="mx-auto max-w-[86rem] px-6 sm:px-8 lg:px-12 lg:pl-28 xl:pl-32 xl:pr-16">
         <div className="grid md:grid-cols-[1.3fr_repeat(3,1fr)]">
           <div className="py-10 md:pr-8">
             <Link href="/" className="inline-flex items-center gap-2.5" aria-label={t("site.nav.home")}>

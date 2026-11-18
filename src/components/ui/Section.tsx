@@ -26,7 +26,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`mx-auto max-w-[var(--max-w)] px-6 py-[var(--space-section)] sm:px-8 lg:pl-28 lg:pr-10 ${className}`.trim()}
+      className={`relative min-h-[100dvh] w-full flex flex-col justify-center mx-auto max-w-[86rem] px-6 py-20 sm:px-8 lg:px-12 lg:pl-28 lg:py-12 xl:pl-32 xl:pr-16 ${className}`.trim()}
     >
       {children}
     </section>

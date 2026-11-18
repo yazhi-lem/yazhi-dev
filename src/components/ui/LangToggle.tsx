@@ -55,7 +55,11 @@ export function LangToggle({
       <span className="flex items-center gap-1">
         <button
           type="button"
-          onClick={() => setLang(next)}
+          onClick={() => {
+            setLang(next);
+            if (next === "en") setLocale("en");
+            else setLocale("ta");
+          }}
           aria-label={`Display mode: ${DISPLAY_NAMES[lang]}. Switch to ${
             DISPLAY_NAMES[next]
           } — ${ui("display.current", locale, { mode: ui(`display.label.${lang}`, locale) })}`}

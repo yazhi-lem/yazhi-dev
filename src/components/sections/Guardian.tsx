@@ -112,15 +112,15 @@ export function Guardian() {
   const currentGreeting = GREETINGS[selectedLang] || GREETINGS.ta;
 
   return (
-    <Section id="guardian" className="py-6 sm:py-8 lg:py-10">
-      <div className="grid items-center gap-6 lg:grid-cols-12 lg:gap-10">
+    <Section id="guardian">
+      <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
         {/* Left Column: Story, Voice Guardian Narrative & Dual CTAs */}
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="flex flex-col justify-center lg:col-span-7"
+          className="flex flex-col justify-center lg:col-span-7 min-w-0"
         >
           <SectionHeading
             thinaiKey="site.section.guardian.thinai"

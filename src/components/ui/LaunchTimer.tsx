@@ -35,8 +35,15 @@ export function LaunchTimer() {
   const label =
     lang === "both"
       ? `${t("timer.label", undefined, { language: "ta" })} · ${t("timer.label", undefined, { language: "en" })}`
-      : t("timer.label");
-  const dayWord = lang === "both" ? `${t("timer.dayShort", undefined, { language: "ta" })} / d` : t("timer.dayShort");
+      : lang === "en"
+      ? t("timer.label", undefined, { language: "en" })
+      : t("timer.label", undefined, { language: "ta" });
+  const dayWord =
+    lang === "both"
+      ? `${t("timer.dayShort", undefined, { language: "ta" })} / d`
+      : lang === "en"
+      ? t("timer.dayShort", undefined, { language: "en" })
+      : t("timer.dayShort", undefined, { language: "ta" });
 
   return (
     <div

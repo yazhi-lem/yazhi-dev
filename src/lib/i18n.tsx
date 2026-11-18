@@ -323,8 +323,9 @@ export function useT(namespace?: string): TranslateFn {
  *   <h2>{t("site.adhan.name")}</h2>
  */
 export function useSiteT(): (key: string, params?: InterpolationParams, options?: SiteCopyOptions) => string {
-  const { locale } = useLangContext();
-  return useMemo(() => siteCopy(locale), [locale]);
+  const { locale, lang } = useLangContext();
+  const effective = locale !== "ta" && locale !== "en" ? locale : lang === "en" ? "en" : "ta";
+  return useMemo(() => siteCopy(effective), [effective]);
 }
 
 /**
@@ -339,7 +340,8 @@ export function useUiT(): (
   params?: InterpolationParams | { language?: Locale },
   options?: { language?: Locale }
 ) => string {
-  const { locale } = useLangContext();
+  const { locale, lang } = useLangContext();
+  const effective = locale !== "ta" && locale !== "en" ? locale : lang === "en" ? "en" : "ta";
   return useCallback(
     (
       key: string,
@@ -354,9 +356,9 @@ export function useUiT(): (
           actualParams = undefined;
         }
       }
-      return chromeCopy(key, opt?.language ?? locale, actualParams);
+      return chromeCopy(key, opt?.language ?? effective, actualParams);
     },
-    [locale]
+    [effective]
   );
 }
 

@@ -25,14 +25,14 @@ export function Hero() {
   const tongue = locale !== "ta" && locale !== "en" ? locale : lang === "en" ? "en" : "ta";
 
   return (
-    <section id="hero" className="relative flex min-h-[100svh] items-center overflow-hidden px-5 pb-20 pt-28 lg:pl-24">
+    <section id="hero" className="relative flex min-h-[100dvh] items-center overflow-hidden px-6 sm:px-8 lg:px-12 lg:pl-28 xl:pl-32 xl:pr-16 max-w-[86rem] mx-auto w-full pt-24 pb-16">
       {/* a soft pool of night behind the words, so they read over the world */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-0"
         style={{ background: "radial-gradient(70% 60% at 30% 50%, rgba(5,7,13,0.72), transparent 70%)" }}
       />
-      <div className="relative z-10 mx-auto grid w-full max-w-[var(--max-w)] items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="relative z-10 w-full grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <motion.div variants={stagger} initial="hidden" animate="show" className="min-w-0">
           <motion.p variants={fadeUp} lang={tongue} className="inline-flex items-center gap-2 rounded-full border border-ivory/15 bg-night/50 px-3 py-1 text-xs text-ivory-dim backdrop-blur">
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[color:var(--accent)]" />
