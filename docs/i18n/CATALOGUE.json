@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-09T12:38:06.338Z",
-  "filesScanned": 281,
+  "generatedAt": "2026-11-18T15:29:32.815Z",
+  "filesScanned": 285,
   "site": {
     "keys": 204,
     "hiDrafts": 204,
@@ -20,7 +20,6 @@
       "site.about.backLink",
       "site.about.building.adhan",
       "site.about.building.q",
-      "site.about.building.sangam",
       "site.about.building.yazh",
       "site.about.countdown.bold",
       "site.about.countdown.date",
