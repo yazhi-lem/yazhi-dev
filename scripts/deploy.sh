@@ -115,9 +115,9 @@ Paths are served by the Next.js server, with no file-server rewrite needed.
 
 ## What this package is
 This package is NOT a standalone static site. Next.js writes hashed assets to
-`.next/static/` but serves them from `/_next/static/`, and every page
-(`/`, `/about`, `/repos`, …) lives in the dynamic `/profile/[id]` and the 7
-`/api/*` route handlers too — those need a Node server (`npm start`), not a
+\`.next/static/\` but serves them from \`/_next/static/\`, and every page
+(\`/\`, \`/about\`, \`/repos\`, …) lives in the dynamic \`/profile/[id]\` and the 7
+\`/api/*\` route handlers too — those need a Node server (\`npm start\`), not a
 plain file server. Serve the whole app instead:
 
 \`\`\`bash
