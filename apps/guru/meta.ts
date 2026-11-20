@@ -72,6 +72,16 @@ export const GURU_META: WorkspaceMeta = {
       },
       layout: { main: ["guru.faculty"], aside: ["guru.sharing", "guru.languages", "audit"] },
     },
+    {
+      id: "demo",
+      icon: "ask",
+      label: { ta: "டெமோ", en: "Demo" },
+      purpose: {
+        ta: "குமிழ் உரையாடல் டெமோ — குரூப் IV மாதிரிப் பாடக் குறிப்புகளிலிருந்து மட்டும் பதில். பதில்களைச் சரிபார்க்கவும்.",
+        en: "Bubble chat demo — answers only from the Group IV sample lesson notes. Check every answer.",
+      },
+      layout: { main: ["guru.demo"], aside: ["guru.demo-about", "guru.glossary"] },
+    },
   ],
   workflows: [
     {
