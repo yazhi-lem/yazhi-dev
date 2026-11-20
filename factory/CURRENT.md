@@ -1,5 +1,7 @@
 # CURRENT — yazhi-dev · 2026-10-27
 
+> **Plan reset, 20 Nov 2026:** we are replanning from scratch, so every launch and due date in this doc is TBD (replanning).
+
 > Reset every Monday. Facts only; each number cites its source. The template and rules are in [`README.md`](README.md).
 
 ## 1. Headline
@@ -19,27 +21,27 @@ About page currently misstates the model that campaign is about.
 | Public accuracy | 🔴 | About page: "Adhan (அதன்) — a 7B-parameter open AI model for 22+ Indian languages" (`src/app/about/page.tsx:42`). The real model is 14.5M params, Tamil-first, research stage, and the name is ஆதன் | Fixed by 30 Oct |
 | circle.yazhi.dev (Dev Spaces) | 🔴 | Due 18 Oct; the README unlinked it "until it is live" on 23 Oct; community platform choice not recorded | New launch date |
 | Contributor funnel | 🔴 | 40 good-first tasks (due 16 Oct) not yet labelled; `/repos` index live | 40 labelled tasks |
-| Upstream LLM-security track | 🔴 | Pick two projects (due 25 Oct) not done; next: 4 upstream contributions opened by 30 Nov, 2 merged by 31 Dec | Decision 29 Oct |
+| Upstream LLM-security track | 🔴 | Pick two projects (due 25 Oct) not done; next: 4 upstream contributions opened by TBD (replanning), 2 merged by TBD (replanning) | Decision 29 Oct |
 | Governance docs | 🟢 | Code of conduct, contribution guide, moderation rota, GPL-3.0 | Rota staffed |
 | Circle sign-in / Bubble UI | 🟡 | Bubble UI + Circle sign-in merged on 23 Oct; the platform-side session API it relies on is not live yet; a large follow-up (Bubble UI v2, Mission Control, Yazhi Chat) is in review | Review the follow-up |
-| Avai chat on yazhi.dev | 🟡 | Due 18 Oct (internal alpha); a `/chat` workspace exists (Gemini/ChatGPT agents with sessions); Avai is not wired in | Wire it to `/avai/ask` before 21 Nov |
-| Media | 🟡 | Campaigns: 31 Oct tokenizer, 14 Nov Open Sangam, 21 Nov Avai, 5 Dec Illakiya, 26 Dec Adhan Kutty; status of the Tinai media pipeline (due 19 Oct) not recorded | Tokenizer post ready, 30 Oct |
-| Academy / FDE Foundry | ⚪ | Programme page 15 Nov · rubric 20 Nov · capstone showcase 25 Nov · cohort-2 form 1 Dec | Page outline, 7 Nov |
+| Avai chat on yazhi.dev | 🟡 | Due TBD (replanning) (internal alpha); a `/chat` workspace exists (Gemini/ChatGPT agents with sessions); Avai is not wired in | Wire it to `/avai/ask` before TBD (replanning) |
+| Media | 🟡 | Campaigns: TBD (replanning) tokenizer, TBD (replanning) Open Sangam, TBD (replanning) Avai, TBD (replanning) Illakiya, TBD (replanning) Adhan Kutty; status of the Tinai media pipeline (due TBD (replanning)) not recorded | Tokenizer post ready, 30 Oct |
+| Academy / FDE Foundry | ⚪ | Programme page TBD (replanning) · rubric TBD (replanning) · capstone showcase TBD (replanning) · cohort-2 form TBD (replanning) | Page outline, 7 Nov |
 | Tamil copy | 🟡 | Main-site strings were rewritten by an AI reviewer and are marked "needs scholar confirmation" | Native sign-off |
 | CI quality gate | 🟡 | CI only builds and deploys; no lint or test gate before merge | Add lint |
 
 ## 3. Key metrics
 
-| Metric | Now | Target (31 Dec) | Source |
+| Metric | Now | Target (TBD (replanning)) | Source |
 |---|---|---|---|
 | circle.yazhi.dev members | 0 (not live) | 150 | Q4 plan |
 | External contributors (merged) | _count it_ | 20 | org-wide history |
 | Merged external contributions | _count it_ | 30 | same |
 | Labelled good-first tasks | _count it_ | 40 (was due 16 Oct) | label search across the public repos |
 | First-review time on external contributions | up to 4 weeks (two open-sangam contributions waiting since 30 Sep) | ≤ 48 h | review queues |
-| Dev Space sessions held | 0 | 3 (31 Oct online, 28 Nov Madurai, 19 Dec Sivakasi) | — |
+| Dev Space sessions held | 0 | 3 (31 Oct online, TBD (replanning) Madurai, TBD (replanning) Sivakasi) | — |
 | Upstream LLM-security contributions merged | 0 | 2 | — |
-| Cohort-2 complete applications | 0 (form opens 1 Dec) | 100 | — |
+| Cohort-2 complete applications | 0 (form opens TBD (replanning)) | 100 | — |
 
 ## 4. In review
 

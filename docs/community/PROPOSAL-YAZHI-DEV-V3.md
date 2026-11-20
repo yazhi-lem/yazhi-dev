@@ -1,5 +1,7 @@
 # Yazhi Dev v3 — from developer portal to community platform
 
+> **Plan reset, 20 Nov 2026:** we are replanning from scratch, so every launch and due date in this doc is TBD (replanning).
+
 **Status:** Draft proposal for review — nothing below Phase A is built.
 **Date:** 3 October 2026
 **Proposed owner:** Supriya Padmashini K (O4 — human community of builders, Dev Spaces)
@@ -206,7 +208,7 @@ Dates follow the launch line (Dev Spaces 18 October; December public launch).
 - [ ] `/onboarding?track=developer` → Circle sign-up
 - [ ] Native-speaker review of the new Tamil labels
 
-### Phase B — Registry (19 Oct → 30 Nov)
+### Phase B — Registry (TBD (replanning))
 
 - [ ] G1 interim + G10 on yazhi-api (§6.3)
 - [ ] `YazhiBubbles` service and `/api/hub/*`
@@ -215,7 +217,7 @@ Dates follow the launch line (Dev Spaces 18 October; December public launch).
 - [ ] Streaming chat RPC on yazhi-api; `/chat` moves to Adhan bubbles, foreign agents removed
 - [ ] Public sign-up opens once §6 is done
 
-### Phase C — Community (1 Dec → launch)
+### Phase C — Community (TBD (replanning))
 
 - [ ] Spaces
 - [ ] `/app` — offline-capable Bubble UI (installable web app)
@@ -244,7 +246,7 @@ Targets are proposals for the owner to set; there is no baseline yet.
    apart from other apps' users and gives yazhi.dev a narrowly scoped app key).
 3. **Registry visibility:** are drafts in a Space visible to the whole Space,
    or only to people the author adds?
-4. **On-device default model:** Adhan Kutty is scheduled for 26 Dec; until
+4. **On-device default model:** Adhan Kutty's release date is TBD (replanning); until
    then, do we recommend a specific open model for builders to test with?
 5. **Billing:** do builders get a free yazhi-api quota, and does
    yazhi-api's credits system (blocked on G17) meter bubble runs?

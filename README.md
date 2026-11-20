@@ -63,7 +63,7 @@ Yazhi is built across Sivakasi and Madurai, which are our build, cultural and co
 
 **Federals.** Work is organised into Federals: small pods that each own a project end to end. Each Federal shows one shipped thing at a weekly demo.
 
-**FDE Foundry.** Through the Yazhi Academy, the FDE Foundry is our Forward Deployed Engineering apprenticeship. It started with a first cohort in Sivakasi and covers Git workflows, SSH, access to our own inference hardware, LLMOps, evals and guardrails. **Applications for cohort 2 open on 1 December 2026.**
+**FDE Foundry.** Through the Yazhi Academy, the FDE Foundry is our Forward Deployed Engineering apprenticeship. It started with a first cohort in Sivakasi and covers Git workflows, SSH, access to our own inference hardware, LLMOps, evals and guardrails. **Applications for cohort 2: opening date TBD (replanning).**
 
 ---
 
