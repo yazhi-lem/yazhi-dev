@@ -58,12 +58,7 @@ import type { Catalogue } from "@yazhi/i18n";
 import { BubbleLocaleScope } from "@yazhi/bubble/locales";
 import { localeFromCookieString, serializeLocaleCookie } from "./locale-cookie";
 import { siteCopy, type SiteCopyOptions } from "./site-copy";
-import { appText, ui as localeUi, uiHasKey } from "@yazhi/i18n";
-
-function chromeCopy(key: string, locale: Locale = "ta", params?: InterpolationParams): string {
-  if (uiHasKey(key)) return appText(key, locale, params);
-  return localeUi(key, locale, params);
-}
+import { ui as chromeCopy } from "@yazhi/i18n";
 
 /**
  * The display preference. Unchanged public type: the live site's
@@ -334,28 +329,11 @@ export function useSiteT(): (key: string, params?: InterpolationParams, options?
  *   const t = useUiT();
  *   <button>{t("chat.send")}</button>
  */
-export function useUiT(): (
-  key: string,
-  params?: InterpolationParams | { language?: Locale },
-  options?: { language?: Locale }
-) => string {
+export function useUiT(): (key: string, params?: InterpolationParams, options?: { language?: Locale }) => string {
   const { locale } = useLangContext();
   return useCallback(
-    (
-      key: string,
-      params?: InterpolationParams | { language?: Locale },
-      options?: { language?: Locale }
-    ) => {
-      let opt = options;
-      let actualParams = params as InterpolationParams | undefined;
-      if (params && "language" in params && typeof (params as { language?: Locale }).language === "string") {
-        if (!options) {
-          opt = params as { language?: Locale };
-          actualParams = undefined;
-        }
-      }
-      return chromeCopy(key, opt?.language ?? locale, actualParams);
-    },
+    (key: string, params?: InterpolationParams, options?: { language?: Locale }) =>
+      chromeCopy(key, options?.language ?? locale, params),
     [locale]
   );
 }
