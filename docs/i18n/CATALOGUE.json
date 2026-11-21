@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T17:50:49.773Z",
+  "generatedAt": "2026-11-21T19:10:19.485Z",
   "filesScanned": 281,
   "site": {
     "keys": 204,
@@ -95,7 +95,6 @@
       "site.repos.title",
       "site.sangam.body",
       "site.sangam.cta",
-      "site.sangam.eyebrow",
       "site.sangam.source",
       "site.services.asideLabel",
       "site.services.comingSoon",
@@ -155,10 +154,6 @@
       {
         "template": "site.repos.what.${index}",
         "matches": 7
-      },
-      {
-        "template": "site.sangam.pillar.${i}",
-        "matches": 3
       },
       {
         "template": "site.section.${item.section}.landscape",
