@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T17:58:41.838Z",
+  "generatedAt": "2026-11-21T19:15:42.768Z",
   "filesScanned": 282,
   "site": {
     "keys": 204,
@@ -42,6 +42,7 @@
       "site.adhan.body",
       "site.adhan.cta",
       "site.adhan.eyebrow",
+      "site.adhan.name",
       "site.adhan.tokenTax.label",
       "site.adhan.tokenTax.source",
       "site.community.chatAge",
@@ -111,7 +112,8 @@
       "site.yazh.markAlt",
       "site.yazh.whatsappCta",
       "site.yazh.whatsappNote",
-      "site.yazhi.body"
+      "site.yazhi.body",
+      "site.yazhi.preview"
     ],
     "chrome": [
       "chat.metadataDescription",
