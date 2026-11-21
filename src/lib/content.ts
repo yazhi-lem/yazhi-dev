@@ -541,6 +541,7 @@ export const SITE_PAIRS: SitePair = {
   "site.yazh.caption": [IDENTITY.nameTa, "temple guardian"], // DRAFT: pair pending review
   "site.yazh.artAlt": ["யாழி — புராணக் காவலர்", "Yazhi — mythical guardian"], // DRAFT: native review pending
   "site.yazh.markAlt": ["யாழி காவலரின் குறியீட்டுச் சின்னம்", "Abstract yazhi guardian mark"], // DRAFT: native review pending
+  "site.yazh.greeting": ["வணக்கம்! நான் யாழ்!", "Hello! I am Yazh!"],
 
   // ── Open Sangam ───────────────────────────────────────────────────────
   "site.sangam.name": [SANGAM.nameTa, SANGAM.nameEn],

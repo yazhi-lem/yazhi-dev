@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-18T17:12:09.129Z",
-  "filesScanned": 281,
+  "generatedAt": "2026-11-21T19:33:00.292Z",
+  "filesScanned": 282,
   "site": {
-    "keys": 204,
-    "hiDrafts": 204,
+    "keys": 205,
+    "hiDrafts": 205,
     "dynamicFamilies": []
   },
   "chrome": {
@@ -107,8 +107,7 @@
       "site.yazh.body",
       "site.yazh.caption",
       "site.yazh.cta",
-      "site.yazh.eyebrow",
-      "site.yazh.markAlt",
+      "site.yazh.greeting",
       "site.yazh.whatsappCta",
       "site.yazh.whatsappNote",
       "site.yazhi.body",

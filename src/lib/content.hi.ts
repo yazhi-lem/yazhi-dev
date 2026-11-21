@@ -107,6 +107,7 @@ const hi: Record<string, TranslationEntry> = {
   "site.yazh.caption": mt("யாழி · मंदिर का संरक्षक"),
   "site.yazh.artAlt": mt("याझी — पौराणिक संरक्षक"),
   "site.yazh.markAlt": mt("याझी संरक्षक का अमूर्त चिह्न"),
+  "site.yazh.greeting": mt("नमस्ते! मैं याज़ हूँ!"),
 
   // ── Open Sangam ───────────────────────────────────────────────────────
   "site.sangam.name": mt("ओपन संगम"),
