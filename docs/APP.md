@@ -3,7 +3,7 @@
 **An app is a set of bubbles in one host.** `/app` is that host: a packed tray
 of app bubbles, a canvas that runs the selected one, a composer led by Mission
 Control, and deep links for every state. It is the end state
-[`PROPOSAL-YAZHI-DEV-V3.md` §4](../community/PROPOSAL-YAZHI-DEV-V3.md) promised
+[`PROPOSAL-YAZHI-DEV-V3.md` §4](community/PROPOSAL-YAZHI-DEV-V3.md) promised
 and the packaging of the library at `/bubble` (which stays the builder's page —
 docs, anatomy, manifest).
 

@@ -4,7 +4,7 @@
 `{ origin: "mt", reviewRequired: true }` in the code, and Hindi is never
 served as `reviewed` until a native speaker signs the line off here.
 
-Generated from the catalogues by `scripts/.gen-hindi-review.mjs` — regenerate
+Generated from the catalogues by `scripts/gen-hindi-review.mjs` — regenerate
 after each review pass; do not hand-edit the tables.
 
 ## How to review

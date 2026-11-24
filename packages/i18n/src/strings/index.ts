@@ -7,7 +7,7 @@
 
     ⚠️ Tamil is a DRAFT pending native review (the site's Tamil cannot simply
     be reused for chrome that never had it); ⚠️ Hindi is a MACHINE DRAFT.
-    `docs/i18n/HINDI-REVIEW.md` lists both for a reviewer. */
+    `archives/2026-11-09-hindi-machine-review.md` lists both for a reviewer. */
 
 import { createCatalogues, messagesOf, t as translate } from "../catalogue";
 import { LOCALES, type Locale } from "../locale";

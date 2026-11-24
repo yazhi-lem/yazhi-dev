@@ -64,6 +64,19 @@ card has its own "Download SVG" link.
   sides.
 - **Never substitute the wordmark typeface.**
 
+## Using a logo in another repo
+
+Copy the SVG you need into your repo and inline it, or reference the raw file
+from this canonical kit:
+
+```
+https://raw.githubusercontent.com/yazhi-lem/yazhi-dev/main/brand-kit/logos/yazhi-mark.svg
+```
+
+In this repo the `@/*` alias points at `src/`, so a top-level `brand-kit/` file
+is not importable as `@/brand-kit/...`. Copy the asset into the app (or `public/`)
+before importing it, and keep the equal-gap and colour-pairing rules above.
+
 ## Color palette — the Sovereign Palette
 
 | Token | Hex | Role |

@@ -6,7 +6,7 @@
 ## 1. The situation
 
 The public repos promise a **48-hour first review**
-(`CONTRIBUTING.md`, yazhi-dev `factory/CURRENT.md`). Eight contributions from
+(`CONTRIBUTING.md`, yazhi-dev `README.md`). Eight contributions from
 outside the org are waiting:
 
 | Repo | PR | Age | Author | State | Size |
@@ -88,5 +88,5 @@ Template:
    at +30k is not reviewable by one person, and pretending otherwise is why it has
    waited 35 days.
 4. **The 48-hour promise is currently aspirational.** Either staff the rota
-   (`factory/CURRENT.md` lists one), or change the promise in `CONTRIBUTING.md` to
+   (see `README.md`), or change the promise in `CONTRIBUTING.md` to
    something true. Do not leave a broken promise published.

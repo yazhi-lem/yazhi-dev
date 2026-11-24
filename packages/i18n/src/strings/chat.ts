@@ -7,7 +7,7 @@
 
     ⚠️ Tamil here is a DRAFT pending native review; ⚠️ Hindi here is a
     MACHINE DRAFT (`origin: "mt"`, `reviewRequired: true`). See
-    `docs/i18n/HINDI-REVIEW.md`.
+    `archives/2026-11-09-hindi-machine-review.md`.
 
     One entry per line, `[ta, en, hi]`. */
 export type UiTriple = [ta: string, en: string, hi: string];

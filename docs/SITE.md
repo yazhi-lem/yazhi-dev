@@ -47,7 +47,7 @@ gallery and the 3D zones (`src/lib/content.ts`, `src/three/materials/zones.ts`).
 - **Accessibility:** zone colours are checked for contrast against their backgrounds (accent on dark ≈ 10:1); focus
   states are visible; motion respects user settings.
 - **Copy rule:** narrative lines must not overstate the models. The July copy ("22+ scripts uniting around one
-  model") came from the same source as the "7B" claim (see `factory/NEXT.md` Y1).
+  model") came from the same source as the "7B" claim (see `archives/2026-10-27-docs-digest.md`).
 
 ## 4. Audio (framework only)
 
@@ -69,6 +69,6 @@ bash scripts/deploy.sh ./build-output   # packages static assets + docs into a f
   their own server-side configuration.
 - CI (`.github/workflows/build-and-deploy.yml`) builds on every change, packages on `main`, and runs a Lighthouse
   audit on proposed changes. **It does not publish anywhere.** The "deploy" job only prepares a package, so the step
-  that actually serves yazhi.dev is not documented in this repo (`factory/CURRENT.md`).
+  that actually serves yazhi.dev is not documented in this repo (see `README.md` and `archives/2026-10-27-docs-digest.md`).
 - Next.js 16 has breaking changes from earlier versions. Read `node_modules/next/dist/docs/` before changing
   routing or config (`AGENTS.md`).

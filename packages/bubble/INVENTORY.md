@@ -21,7 +21,7 @@ from this package and the old copies are deleted.
 | Yazhi's agents and the chat data model | `src/lib/chat/{yazhi-agents,types}.ts` | `src/lib/{agents,agent-types}.ts` |
 | Karupporul data | `src/lib/sangam/karupporul.ts` | `src/lib/karupporul.ts` (draft) |
 | Design tokens, Tailwind colour names, tinai CSS | `src/styles/{tokens,globals}.css` | `styles/{tokens,bubble}.css` |
-| Brand kit (PDF, specimen, logos) | `brand-kit/` | `design/brand/` (copy; the root folder stays for the site) |
+| Brand kit (PDF, specimen, logos) | `brand-kit/` | `brand-kit/` (canonical; `design/brand/` keeps only a pointer README) |
 | Design PDFs | — | `design/pdf/`, generated |
 
 ## Still in the app (yazhi-dev), by design
@@ -61,5 +61,6 @@ of `/bubble`.
    Playfair Display (titles), EB Garamond (body) and Noto Sans Tamil (every
    Tamil run). Since Nov 2026 body and Tamil text are Nunito and Baloo
    Thambi 2 (rounded, see `design-system/`); titles stay Playfair Display.
-3. **Brand kit README paths.** `design/brand/README.md` was written for the
-   repo root; its `../src/...` links point at the app's sources.
+3. **Brand kit README paths.** Resolved on 2026-11-21: the package's duplicate
+   assets were removed and `design/brand/README.md` is now a pointer to the
+   canonical `brand-kit/README.md`.

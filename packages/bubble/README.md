@@ -100,7 +100,7 @@ import theme from "@yazhi/bubble/themes/marutham/theme.json";
 | `bubble-ui-library-dark.pdf`, `bubble-ui-library-light.pdf` | The whole library page (`/bubble`) in each mode |
 | `tinai-palai.pdf` … `tinai-neytal.pdf` | One theme sheet per tinai: both palettes, motion, persona, copy, karupporul |
 | `bubble-ui-screens.pdf` | Yazhi Chat with each agent, Mission Control asleep and awake, and the library — dark and light |
-| `../brand/yazhi-brand-kit.pdf` | Brand Identity System v1.1 (source spec) |
+| `../../brand-kit/yazhi-brand-kit.pdf` | Brand Identity System v1.1 (source spec) |
 
 ## Localisation (`src/locales/`)
 
@@ -139,7 +139,7 @@ renders the dotted key, so it is checked for, not trusted.
 - `node --test --experimental-strip-types --import ./packages/i18n/scripts/ts-resolve.mjs packages/bubble/src/locales/catalogue.test.mjs`
   — catalogue invariants, the lookup seam, and a source scan for bare
   English JSX text and attributes (`npm run test:bubble`)
-- [../docs/i18n/HINDI-REVIEW.md](../../docs/i18n/HINDI-REVIEW.md) — every
+- [../../archives/2026-11-09-hindi-machine-review.md](../../archives/2026-11-09-hindi-machine-review.md) — every
   Hindi line here is a machine draft (`origin: "mt"`,
   `reviewRequired: true`) until a native speaker signs it off
 

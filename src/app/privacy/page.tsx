@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
     Copy comes from the site catalogue for the request's locale. The Tamil
     and Hindi bodies are DRAFTS pending native review (see
-    `docs/i18n/HINDI-REVIEW.md`). */
+    `archives/2026-11-09-hindi-machine-review.md`). */
 export default async function PrivacyPage() {
   const locale = await requestLocale();
   const t = siteCopy(locale);

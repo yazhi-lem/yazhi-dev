@@ -1,5 +1,6 @@
-// Generates docs/i18n/HINDI-REVIEW.md from the catalogues (one row per key).
-// Run: node --experimental-strip-types --import ./packages/i18n/scripts/register.mjs scripts/.gen-hindi-review.mjs
+// Generates archives/2026-11-09-hindi-machine-review.md from the catalogues
+// (one row per key).
+// Run: node --experimental-strip-types --import ./packages/i18n/scripts/register.mjs scripts/gen-hindi-review.mjs
 import { writeFileSync, mkdirSync } from "node:fs";
 import { SITE_CATALOGUE } from "../packages/i18n/src/catalogues/index.ts";
 import { UI_STRINGS } from "../packages/i18n/src/strings/index.ts";
@@ -19,7 +20,7 @@ let out = `# Hindi review — every machine-drafted string, with its English sou
 \`{ origin: "mt", reviewRequired: true }\` in the code, and Hindi is never
 served as \`reviewed\` until a native speaker signs the line off here.
 
-Generated from the catalogues by \`scripts/.gen-hindi-review.mjs\` — regenerate
+Generated from the catalogues by \`scripts/gen-hindi-review.mjs\` — regenerate
 after each review pass; do not hand-edit the tables.
 
 ## How to review
@@ -75,8 +76,8 @@ bubbleKeys.forEach((k, i) => {
   out += `| ${i + 1} | \`${k}\` | ${esc(text(hiBubbleCatalogue[k]))} | ${esc(text(enBubbleCatalogue[k]))} | packages/bubble/src/locales/hi.ts |\n`;
 });
 
-mkdirSync("docs/i18n", { recursive: true });
-writeFileSync("docs/i18n/HINDI-REVIEW.md", out);
+mkdirSync("archives", { recursive: true });
+writeFileSync("archives/2026-11-09-hindi-machine-review.md", out);
 console.log(
-  `wrote docs/i18n/HINDI-REVIEW.md — ${keys.length} site rows + ${chromeKeys.length} chrome rows + ${bubbleKeys.length} bubble rows`
+  `wrote archives/2026-11-09-hindi-machine-review.md — ${keys.length} site rows + ${chromeKeys.length} chrome rows + ${bubbleKeys.length} bubble rows`
 );

@@ -1,7 +1,7 @@
 /** Every word `/app` says — one object, three locales.
 
     ⚠️ Tamil here is a **DRAFT pending native review**; ⚠️ Hindi is a
-    **MACHINE DRAFT**. Both follow the rules in `docs/i18n/HINDI-REVIEW.md`:
+    **MACHINE DRAFT**. Both follow the rules in `archives/2026-11-09-hindi-machine-review.md`:
     terms that name a thing (Bubble UI, tray, workspace, Mission Control,
     yazhi-api, Adhan, Avai …) stay as terms and are transliterated, never
     paraphrased into a different concept.

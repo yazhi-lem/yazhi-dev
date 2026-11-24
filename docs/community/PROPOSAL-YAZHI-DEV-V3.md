@@ -6,7 +6,7 @@
 **Date:** 3 October 2026
 **Proposed owner:** Supriya Padmashini K (O4 — human community of builders, Dev Spaces)
 **With:** Deepika (O1 — yazhi-api), Valavan K (engineering and editorial gate)
-**Related:** `docs/community/PRD-DEVELOPER-COMMUNITY.md`, `/bubble`, `packages/bubble`, yazhi-api `docs/access/CIRCLE.md` §6a, `factory/RUNWAY.md`
+**Related:** `docs/community/PRD-DEVELOPER-COMMUNITY.md`, `/bubble`, `packages/bubble`, yazhi-api `docs/access/CIRCLE.md` §6a, `docs/README.md`
 
 > Owners are proposed from the Pulavar map; confirm them in Linear before
 > work is assigned. Tamil strings in this proposal and in the new pages are
