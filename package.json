@@ -12,7 +12,8 @@
     "gen:hindi-review": "node --experimental-strip-types --import ./packages/i18n/scripts/register.mjs scripts/gen-hindi-review.mjs",
     "gen:locale-switcher": "node scripts/gen-locale-switcher.mjs",
     "api-kernel:test": "node --import ./scripts/api-kernel.hooks.mjs --test scripts/api-kernel.test.mjs",
-    "test:bubble": "node --test --experimental-strip-types --import ./packages/i18n/scripts/ts-resolve.mjs packages/bubble/src/locales/catalogue.test.mjs"
+    "test:bubble": "node --test --experimental-strip-types --import ./packages/i18n/scripts/ts-resolve.mjs packages/bubble/src/locales/catalogue.test.mjs",
+    "test:guru-demo": "node --test --experimental-strip-types --import ./packages/i18n/scripts/ts-resolve.mjs apps/guru/demo-retrieval.test.mjs"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.5",
