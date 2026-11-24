@@ -10,10 +10,6 @@ This repository is [yazhi.dev](https://yazhi.dev): the public, Tamil-first commu
 - **Code of Conduct:** everyone who takes part follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
 - **Moderation Rota:** our weekly community moderation schedule, response SLAs, and incident guidelines are in [docs/community/MODERATION_ROTA.md](./docs/community/MODERATION_ROTA.md).
 
-## Getting Started
-
----
-
 ## Our mission
 
 Yazhi builds AI that thinks in Tamil instead of translating into it. Our word for "sovereign" is **தற்சார்பு**, which means self-reliance. We are working towards keeping Indian citizen data in India. Safety-critical logic lives in code, not only in prompts. Every Tamil string you see is written natively and checked by a native speaker, never translated from English.
@@ -73,13 +69,30 @@ A Next.js 16 (App Router) site with React 19, Tailwind CSS 4, and three.js throu
 
 | Route | What it does |
 |---|---|
-| `/` | Sangam-era 3D landing, project stories, and community calls to action |
-| `/about`, `/privacy` | About Yazhi; privacy notice |
+| `/` | Countdown to the Yazhi Awakening (1 January 2027) |
+| `/about` | About Yazhi, the full manifesto, and community CTAs |
+| `/services`, `/contact` | Products and services; contact channels |
+| `/privacy` | Privacy notice |
 | `/onboarding` | Join flow, including `?track=developer` for builders |
 | `/profile/[id]`, `/profile/edit` | Community profiles |
 | `/chat` | AI chat workspace (see below) |
 
-More detail is in [`docs/`](docs): [`SITE.md`](docs/SITE.md) (3D world, design tokens, audio, build) and `PRD-DEVELOPER-COMMUNITY.md`. Plan and status live in [`factory/`](factory) (`CURRENT` · `NEXT` · `RUNWAY`); retired docs are summarised in [`archives/`](archives).
+### Repository structure
+
+| Path | What it is |
+|---|---|
+| `src/` | The Next.js app: routes, components, 3D scenes, API handlers |
+| `apps/` | Product workspaces: Guru, Nyaya, Kural, Kadai |
+| `packages/` | Shared packages: `@yazhi/bubble`, `@yazhi/i18n`, `@yazhi/workspace` |
+| `public/` | Static assets served by the site |
+| `docs/` | Documentation and doc-only assets |
+| `archives/` | Dated snapshots of retired or unreviewed docs |
+| `brand-kit/` | Canonical brand kit: logos, specimen, Brand Identity System PDF |
+| `scripts/` | Build, test and deployment helpers |
+| `skills/` | Repo-local skills (none yet; see the shared catalog) |
+| `.github/` | CI workflow |
+
+Start with [`src/README.md`](src/README.md) for the app layout, [`docs/README.md`](docs/README.md) for the full documentation index (including [`SITE.md`](docs/SITE.md) — 3D world, design tokens, audio, build — and the community docs), [`packages/README.md`](packages/README.md) for shared code, and [`scripts/README.md`](scripts/README.md) for the helpers. Retired plans are summarised in [`archives/`](archives); the old `factory/` status files were removed on 2026-11-21.
 
 ---
 

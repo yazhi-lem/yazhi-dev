@@ -65,6 +65,27 @@ body {
   .floaty { animation: none !important; }
 }
 
+/* ── the Awakening home screen ─────────────────────────────────────────
+   a slow, deep breath behind the countdown: the pool of light and the
+   ring pulse in and out, out of phase. The keyframes carry the centring
+   translate because the animation overrides the utility transform. */
+@keyframes awakening-breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.35; }
+  50% { transform: translate(-50%, -50%) scale(1.06); opacity: 0.75; }
+}
+.awakening-glow {
+  background: radial-gradient(circle, color-mix(in oklab, var(--accent) 55%, transparent) 0%, transparent 68%);
+  filter: blur(50px);
+  animation: awakening-breathe 9s ease-in-out infinite;
+}
+.awakening-ring {
+  animation: awakening-breathe 9s ease-in-out infinite;
+  animation-delay: -4.5s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .awakening-glow, .awakening-ring { animation: none; }
+}
+
 /* mobile: keep page bottom clear of the fixed thinai dot bar */
 @media (max-width: 1023px) {
   body { padding-bottom: 4.5rem; }

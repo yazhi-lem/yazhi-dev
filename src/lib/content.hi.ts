@@ -8,7 +8,7 @@
     serves an `mt` entry as `reviewed`:
 
       - A native Hindi speaker reviews each line against
-        `docs/i18n/HINDI-REVIEW.md` (one row per key: Hindi vs English
+        `archives/2026-11-09-hindi-machine-review.md` (one row per key: Hindi vs English
         source), then sets `origin: "reviewed", reviewRequired: false` here.
       - Until then the Hindi string may appear behind the `hi` locale, always
         labelled as a draft in the review doc.
@@ -245,6 +245,47 @@ const hi: Record<string, TranslationEntry> = {
   ),
   "site.about.who.p3": mt("गोपनीयता नोट भी देखें"),
 
+  // ── About page: community CTAs + manifesto ────────────────────────────
+  "site.about.cta.heading": mt("याझी समुदाय से जुड़ें"),
+  "site.about.cta.body": mt(
+    "रोज़ की बातचीत के लिए Discord से जुड़ें और अपडेट के लिए WhatsApp चैनल से जुड़ें।"
+  ),
+  "site.about.cta.discord": mt("Discord से जुड़ें"),
+  "site.about.cta.whatsapp": mt("WhatsApp चैनल से जुड़ें"),
+  "site.about.manifesto.title": mt("याझी घोषणापत्र"),
+  "site.about.manifesto.tagline": mt("सुरक्षा। संप्रभुता। समाज।"),
+  "site.about.manifesto.subtitle": mt(
+    "யாழி · याझी सॉवरेन टेक्नोलॉजीज़ — तमिल-जड़ें · ओपन-सोर्स · भारत से, भारत के लिए, सबके लिए"
+  ),
+  "site.about.manifesto.quote": mt(
+    "யந்திரம் மனிதர்க்கே — மனிதர் யந்திரத்திற்கேன்று"
+  ),
+  "site.about.manifesto.quoteTranslation": mt(
+    "मशीन मनुष्य के लिए है — मनुष्य मशीन के लिए नहीं।"
+  ),
+  "site.about.manifesto.note": mt(
+    "अंग्रेज़ी मूल; हिंदी अनुवाद लंबित।"
+  ),
+
+  // ── Services page ─────────────────────────────────────────────────────
+  "site.services.title": mt("सेवाएँ"),
+  "site.services.description": mt("याझी के उत्पाद और सेवाएँ।"),
+  "site.services.intro": mt("तीन उत्पाद, एक संप्रभु आधार।"),
+  "site.services.yazh.title": mt("याझ"),
+  "site.services.adhan.title": mt("आधन"),
+  "site.services.sangam.title": mt("ओपन संगम"),
+  "site.services.cta": mt("संपर्क करें"),
+
+  // ── Contact page ──────────────────────────────────────────────────────
+  "site.contact.title": mt("संपर्क"),
+  "site.contact.description": mt("याझी टीम से संपर्क करें।"),
+  "site.contact.intro": mt(
+    "प्रश्न, सुझाव, या बस नमस्ते — हम तक पहुँचें।"
+  ),
+  "site.contact.note": mt(
+    "व्यवसाय, योगदान या सुरक्षा — सबके लिए Discord या WhatsApp सबसे तेज़ है।"
+  ),
+
   // ── Privacy page ──────────────────────────────────────────────────────
   "site.privacy.title": mt("गोपनीयता"),
   "site.privacy.description": mt(
@@ -299,6 +340,9 @@ const hi: Record<string, TranslationEntry> = {
   "site.nav.fiveLandscapes": mt("पाँच भूदृश्य"),
   "site.nav.thinaiItem": mt("{ta} · {en} — {landscape}"),
   "site.nav.backToTop": mt("ऊपर जाएँ"),
+  "site.nav.about": mt("हमारे बारे में"),
+  "site.nav.services": mt("सेवाएँ"),
+  "site.nav.contact": mt("संपर्क"),
   "site.nav.link.0": mt("याझ"),
   "site.nav.link.1": mt("आधन"),
   "site.nav.link.2": mt("संगम"),

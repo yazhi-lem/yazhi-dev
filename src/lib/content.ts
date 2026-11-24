@@ -441,6 +441,9 @@ export const SITE_PAIRS: SitePair = {
   "site.nav.fiveLandscapes": ["ஐந்திணை / ஐந்து நிலங்கள்", "Five landscapes"], // DRAFT: native review pending
   "site.nav.thinaiItem": ["{ta} · {en} — {landscape}", "{ta} · {en} — {landscape}"],
   "site.nav.backToTop": ["மேலே செல்ல", "Back to top"], // DRAFT: native review pending
+  "site.nav.about": ["எங்களைப் பற்றி", "About"],
+  "site.nav.services": ["சேவைகள்", "Services"],
+  "site.nav.contact": ["தொடர்பு", "Contact"],
   ...[
     [GUARDIAN.nameTa, GUARDIAN.nameEn],
     [ADHAN.nameTa, ADHAN.nameEn],
@@ -732,6 +735,60 @@ export const SITE_PAIRS: SitePair = {
   ],
   "site.about.who.p3": ["தனியுரிமைக் குறிப்பையும்", "privacy note"],
   "site.about.who.p4": ["பாருங்கள்.", "See"],
+
+  // ── About page: community CTAs + manifesto ────────────────────────────
+  "site.about.cta.heading": ["யாழி சமூகத்தில் இணைக", "Join the Yazhi community"],
+  "site.about.cta.body": [
+    "அன்றாட உரையாடலுக்கு Discord-இல் இணைக; அறிவிப்புகளுக்கு WhatsApp சேனலில் இணைக.",
+    "Join the daily conversation on Discord and get updates on the WhatsApp channel.",
+  ],
+  "site.about.cta.discord": ["Discord-இல் இணைக", "Join the Discord"],
+  "site.about.cta.whatsapp": ["WhatsApp சேனலில் இணைக", "Join the WhatsApp Channel"],
+  "site.about.manifesto.title": ["யாழி அறிக்கை", "The Yazhi Manifesto"],
+  "site.about.manifesto.tagline": ["பாதுகாப்பு. இறையாண்மை. சமூகம்.", "Security. Sovereign. Societal."],
+  "site.about.manifesto.subtitle": [
+    "யாழி · யாழி இறையாண்மை தொழில்நுட்பங்கள் — தமிழ் வேரூன்றிய · திறந்த மூல · இந்தியாவிலிருந்து, இந்தியாவுக்காக, அனைவருக்கும் சொந்தம்",
+    "யாழி · Yazhi Sovereign Technologies — Tamil-Rooted · Open-Source · From India, For India, Owned by All",
+  ],
+  "site.about.manifesto.quote": [
+    "யந்திரம் மனிதர்க்கே — மனிதர் யந்திரத்திற்கேன்று",
+    "யந்திரம் மனிதர்க்கே — மனிதர் யந்திரத்திற்கேன்று",
+  ],
+  "site.about.manifesto.quoteTranslation": [
+    "The machine is for the human — not the human for the machine.",
+    "The machine is for the human — not the human for the machine.",
+  ],
+  "site.about.manifesto.note": [
+    "ஆங்கில மூலம்; தமிழ் மொழிபெயர்ப்பு நிலுவையில் உள்ளது.",
+    "English original; Tamil translation pending.",
+  ],
+
+  // ── Services page ─────────────────────────────────────────────────────
+  "site.services.title": ["சேவைகள்", "Services"],
+  "site.services.description": [
+    "யாழி வழங்கும் தயாரிப்புகள் மற்றும் சேவைகள்.",
+    "The products and services Yazhi offers.",
+  ],
+  "site.services.intro": ["மூன்று தயாரிப்புகள், ஒரு இறையாண்மை அடித்தளம்.", "Three products, one sovereign foundation."],
+  "site.services.yazh.title": ["யாழ்", "Yazh"],
+  "site.services.adhan.title": ["ஆதன்", "Adhan"],
+  "site.services.sangam.title": ["திறந்த சங்கம்", "Open Sangam"],
+  "site.services.cta": ["தொடர்பு கொள்ளுங்கள்", "Get in touch"],
+
+  // ── Contact page ──────────────────────────────────────────────────────
+  "site.contact.title": ["தொடர்பு", "Contact"],
+  "site.contact.description": [
+    "யாழி குழுவைத் தொடர்பு கொள்ளுங்கள்.",
+    "Get in touch with the Yazhi team.",
+  ],
+  "site.contact.intro": [
+    "கேள்விகள், கருத்துகள், அல்லது வெறும் வணக்கம் — எங்களுக்கு எழுதுங்கள்.",
+    "Questions, feedback, or just a hello — reach us.",
+  ],
+  "site.contact.note": [
+    "வணிகம், பங்களிப்பு, பாதுகாப்பு — எல்லாவற்றுக்கும் Discord அல்லது WhatsApp சிறந்தது.",
+    "For business, contributions, or security, Discord or WhatsApp is the fastest.",
+  ],
 
   // ── Privacy page ──────────────────────────────────────────────────────
   "site.privacy.title": ["தனியுரிமை", "Privacy"],

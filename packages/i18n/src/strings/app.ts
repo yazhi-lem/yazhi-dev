@@ -2,7 +2,7 @@
     chrome and the onboarding / profile pages.
 
     ⚠️ Tamil here is a DRAFT pending native review; ⚠️ Hindi here is a
-    MACHINE DRAFT. See `docs/i18n/HINDI-REVIEW.md`. One entry per line,
+    MACHINE DRAFT. See `archives/2026-11-09-hindi-machine-review.md`. One entry per line,
     `[ta, en, hi]`.
 
     Persona text, system prompts and conversation starters are NOT here —
@@ -114,6 +114,18 @@ export const APP_STRINGS = {
 
   // ── Footer chrome ────────────────────────────────────────────────────
   "timer.label": ["யாழி விழிப்பு", "Yazhi Awakening", "याझी जागरण"],
+  "timer.until": ["யாழி விழிப்பு வரை", "Until the Yazhi Awakening", "याझी जागरण तक"],
+  "timer.date": ["1 ஜனவரி 2027", "1 January 2027", "1 जनवरी 2027"],
+  "timer.days": ["நாட்கள்", "Days", "दिन"],
+  "timer.hours": ["மணி", "Hours", "घंटे"],
+  "timer.minutes": ["நிமிடம்", "Minutes", "मिनट"],
+  "timer.seconds": ["வினாடி", "Seconds", "सेकंड"],
+  "timer.quote": [
+    "யந்திரம் மனிதர்க்கே — மனிதர் யந்திரத்திற்கேன்று",
+    "The machine is for the human — not the human for the machine.",
+    "मशीन मनुष्य के लिए है — मनुष्य मशीन के लिए नहीं।",
+  ],
+  "timer.manifestoLink": ["அறிக்கையைப் படியுங்கள்", "Read the manifesto", "घोषणापत्र पढ़ें"],
   "timer.remaining": [
     "{days} நாட்கள் {hrs} மணி {mins} நிமிடம் {secs} வினாடிகள் எஞ்சியுள்ளன",
     "{days} days {hrs} hours {mins} minutes {secs} seconds remaining",

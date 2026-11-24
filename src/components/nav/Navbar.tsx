@@ -8,19 +8,20 @@ import { JoinCircle } from "@/components/circle/JoinCircle";
 import { MissionMenu } from "@/components/mission/Mission";
 import { useLang, useLocale, useSiteT } from "@/lib/i18n";
 
-/** Four places, one word each, in the reader's language. The words are
-    catalogue keys now (`site.nav.link.N`) so they follow the locale. */
+/** Three places, one word each, in the reader's language. The words are
+    catalogue keys (`site.nav.about`, `site.nav.services`, `site.nav.contact`)
+    so they follow the locale. */
 const LINKS = [
-  { key: "site.nav.link.0", href: "#guardian" },
-  { key: "site.nav.link.1", href: "#adhan" },
-  { key: "site.nav.link.2", href: "#sangam" },
-  { key: "site.nav.link.3", href: "/bubble" },
+  { key: "site.nav.about", href: "/about" },
+  { key: "site.nav.services", href: "/services" },
+  { key: "site.nav.contact", href: "/contact" },
 ];
 
-/** The site bar: the mark, four short links, the language and one call to
-    action — Join Circle, which becomes Mission Control once an account
-    exists. Clear over the hero; once the page moves it gathers a soft
-    shadow, a hairline and a blur so it reads over anything beneath. */
+/** The site bar: the mark, three short links — About, Services, Contact —
+    the language and one call to action: Join Circle, which becomes Mission
+    Control once an account exists. Clear over the countdown; once the page
+    moves it gathers a soft shadow, a hairline and a blur so it reads over
+    anything beneath. */
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);

@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-18T17:12:09.129Z",
-  "filesScanned": 281,
+  "generatedAt": "2026-11-24T19:37:21.336Z",
+  "filesScanned": 285,
   "site": {
-    "keys": 204,
-    "hiDrafts": 204,
+    "keys": 228,
+    "hiDrafts": 228,
     "dynamicFamilies": []
   },
   "chrome": {
-    "keys": 190
+    "keys": 198
   },
   "bubble": {
     "keys": 188,
@@ -26,9 +26,19 @@
       "site.about.countdown.post",
       "site.about.countdown.pre",
       "site.about.countdown.q",
+      "site.about.cta.body",
+      "site.about.cta.discord",
+      "site.about.cta.heading",
+      "site.about.cta.whatsapp",
       "site.about.description",
       "site.about.landscapes.p",
       "site.about.landscapes.q",
+      "site.about.manifesto.note",
+      "site.about.manifesto.quote",
+      "site.about.manifesto.quoteTranslation",
+      "site.about.manifesto.subtitle",
+      "site.about.manifesto.tagline",
+      "site.about.manifesto.title",
       "site.about.metadataTitle",
       "site.about.title",
       "site.about.what.p1",
@@ -45,6 +55,10 @@
       "site.adhan.tokenTax.label",
       "site.adhan.tokenTax.source",
       "site.community.chatAge",
+      "site.contact.description",
+      "site.contact.intro",
+      "site.contact.note",
+      "site.contact.title",
       "site.developers.body",
       "site.developers.cta",
       "site.developers.discordCta",
@@ -99,7 +113,11 @@
       "site.sangam.source",
       "site.services.asideLabel",
       "site.services.comingSoon",
+      "site.services.cta",
+      "site.services.description",
+      "site.services.intro",
       "site.services.label",
+      "site.services.title",
       "site.thinai.eyebrow",
       "site.thinai.foot",
       "site.thinai.title",
@@ -166,7 +184,7 @@
       },
       {
         "template": "site.services.${i}",
-        "matches": 6
+        "matches": 13
       },
       {
         "template": "site.thinai.landscape.${i}.body",
