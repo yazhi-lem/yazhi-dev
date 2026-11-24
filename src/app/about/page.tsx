@@ -3,6 +3,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { LINKS } from "@/lib/content";
 import { MANIFESTO } from "@/lib/manifesto";
+import { YAZHI_AGENTS } from "@yazhi/bubble/lib/agents";
 import { LOCALE_COOKIE, readLocaleFromCookies } from "@/lib/locale-cookie";
 import { siteCopy } from "@/lib/site-copy";
 
@@ -26,10 +27,20 @@ const linkClass =
 const ctaClass =
   "inline-flex min-h-11 items-center justify-center rounded-full px-5 text-sm font-semibold transition-transform hover:scale-[1.02]";
 
-/** The trust page: who we are, what we're building, what the countdown
-    means, how to reach us — and the full Yazhi Manifesto. Answers the
-    questions a parent (or anyone cautious) asks before sharing anything
-    with an unfamiliar site.
+/** Where each agent lives. The app names come from the agent registry
+    (`home`); the routes are the app's canonical entry point. */
+const AGENT_APP_ROUTES: Record<string, string> = {
+  Avai: "/app",
+  Nyaya: "/nyaya",
+  "Kural Desk": "/kural",
+  Guru: "/guru",
+  Kadai: "/kadai",
+};
+
+/** The trust page: who we are, the agents we offer and the apps they live
+    in, what the countdown means, how to reach us — and the full Yazhi
+    Manifesto. Answers the questions a parent (or anyone cautious) asks
+    before sharing anything with an unfamiliar site.
 
     Copy is read from the site catalogue for the request's locale: Tamil,
     English, or the machine-drafted Hindi (marked for native review). The
@@ -85,29 +96,36 @@ export default async function AboutPage() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.about.building.q")}</h2>
-          <ul className="list-inside list-disc space-y-2">
-            <li>{t("site.about.building.adhan")}</li>
-            <li>
-              <strong className="text-ivory">Adhan (அதன்)</strong> — our open Indic foundation model, built for
-              22+ Indian languages, starting with Tamil and then the rest of the Dravidian family. It is still in
-              training; our roadmap, not a release, is where the language count lives today.
-            </li>
-            <li>
-              <strong className="text-ivory">Sangam (சங்கம்)</strong> — analysis of classical Tamil literature
-              through the five landscapes (ஐந்திணை) of Sangam poetry. Live at{" "}
-              <a
-                href="https://sangam.yazhi.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-ivory underline decoration-ivory/30 underline-offset-4 hover:decoration-ivory"
-              >
-                sangam.yazhi.dev
-              </a>
-              .
-            </li>
-            <li>{t("site.about.building.yazh")}</li>
+          <h2 className="mb-2 font-display text-lg font-semibold text-ivory">{t("site.about.agents.q")}</h2>
+          <p>{t("site.about.agents.p")}</p>
+          <ul className="mt-5 space-y-4" lang="en">
+            {YAZHI_AGENTS.map((agent) => (
+              <li key={agent.id} className="rounded-2xl border border-ivory/10 bg-ivory/[0.03] p-5">
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 className="font-display text-lg font-semibold text-ivory">
+                    {agent.name}
+                    <span lang="ta" className="ml-2 text-sm font-normal text-ivory-dim">
+                      · {agent.taName}
+                    </span>
+                  </h3>
+                  <span className="text-xs text-ivory-dim">{agent.status}</span>
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-ivory-dim">{agent.description}</p>
+                <p className="mt-2 text-xs text-ivory-dim">
+                  <span className="text-ivory">{t("site.about.agents.app")}:</span>{" "}
+                  <a
+                    href={AGENT_APP_ROUTES[agent.home ?? ""] ?? "/app"}
+                    className="text-ivory underline decoration-ivory/30 underline-offset-4 hover:decoration-ivory"
+                  >
+                    {agent.home}
+                  </a>
+                  {" · "}
+                  <span className="text-ivory">{t("site.about.agents.rule")}:</span> {agent.rule}
+                </p>
+              </li>
+            ))}
           </ul>
+          <p className="mt-4 text-xs text-ivory-dim">{t("site.about.agents.note")}</p>
         </div>
 
         <div>

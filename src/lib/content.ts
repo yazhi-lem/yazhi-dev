@@ -691,7 +691,21 @@ export const SITE_PAIRS: SitePair = {
     "இந்தப் பெயர் யாழியிலிருந்து வந்தது — தமிழ்க் கோயில் தூண்களில் செதுக்கப்பட்ட புராணக் காவலர்; பாதி சிங்கம், பாதி யானை — வாசலின் காவலர்.",
     "The name comes from the yazhi, the mythical guardian carved on Tamil temple pillars — part lion, part elephant — the keeper at the threshold.",
   ],
-  "site.about.building.q": ["நாம் என்ன உருவாக்குகிறோம்", "What we're building"],
+  "site.about.agents.q": ["யாழி முகவர்கள் — ஒரு சேவையாக", "Yazhi agents as a service"],
+  "site.about.agents.p": [
+    // DRAFT: native review pending
+    "ஒவ்வொரு முகவரும் ஒரு செயலியில் வாழ்கிறார்; ஒரு பணிக்காக ஒரு முகவர். இதோ எங்கள் முகவர்களும் அவர்களின் செயலிகளும்.",
+    "Each agent lives in an app, and each app has one job. Here are our agents and the apps they live in.",
+  ],
+  "site.about.agents.app": ["செயலி", "App"],
+  "site.about.agents.rule": ["விதி", "Rule"],
+  "site.about.agents.status": ["நிலை", "Status"],
+  "site.about.agents.open": ["செயலியைத் திற", "Open the app"],
+  "site.about.agents.note": [
+    // DRAFT: native review pending
+    "முகவர்கள் அனைவரும் Adhan-ல் இயங்குகிறார்கள்; ஒவ்வொரு முகவரும் ஒரு விதியை ஒருபோதும் மீறுவதில்லை.",
+    "Every agent runs on Adhan, and each one has a rule it never breaks.",
+  ],
   "site.about.building.adhan": [
     // DRAFT: native review pending
     "ஆதன் — எங்கள் திறந்த இந்திய மொழி அடிப்படை மாதிரி, 22-க்கும் மேற்பட்ட இந்திய மொழிகளுக்காக உருவாக்கப்பட்டது; முதலில் தமிழ், பின்னர் திராவிடக் குடும்பத்தின் ஏனையவை. இது இன்னும் பயிற்சியில் உள்ளது; மொழிகளின் எண்ணிக்கை இன்று நமது வழித்திட்டத்தில் உள்ளது, வெளியீட்டில் அல்ல.",

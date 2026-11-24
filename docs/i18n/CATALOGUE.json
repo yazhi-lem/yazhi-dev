@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-24T19:37:21.336Z",
+  "generatedAt": "2026-11-24T20:04:14.934Z",
   "filesScanned": 285,
   "site": {
-    "keys": 228,
-    "hiDrafts": 228,
+    "keys": 234,
+    "hiDrafts": 234,
     "dynamicFamilies": []
   },
   "chrome": {
@@ -17,10 +17,12 @@
   },
   "used": {
     "site": [
+      "site.about.agents.app",
+      "site.about.agents.note",
+      "site.about.agents.p",
+      "site.about.agents.q",
+      "site.about.agents.rule",
       "site.about.backLink",
-      "site.about.building.adhan",
-      "site.about.building.q",
-      "site.about.building.yazh",
       "site.about.countdown.bold",
       "site.about.countdown.date",
       "site.about.countdown.post",
