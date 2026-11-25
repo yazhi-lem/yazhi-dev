@@ -44,6 +44,7 @@ export function WorkspaceShell({
   viewId,
   Link = PlainLink,
   navigate,
+  viewHref,
   account,
   home,
   embeddedIn,
@@ -54,6 +55,10 @@ export function WorkspaceShell({
   Link?: LinkLike;
   /** the host router's push; a full page load by default */
   navigate?: (href: string) => void;
+  /** where a view's tab points. Defaults to the workspace's own routes
+      (`/guru`, `/guru/<view>`); a host mounting the shell in place (the
+      Bubble UI's `/app`) passes its own scheme so the shell stays put. */
+  viewHref?: (viewId: string) => string;
   /** right end of the header — Mission Control */
   account?: ReactNode;
   /** left end of the header — usually a link back to all workspaces */
@@ -70,7 +75,10 @@ export function WorkspaceShell({
   const page = useRef<HTMLDivElement>(null);
   useSlashToAsk(page);
 
-  const href = useCallback((id: string) => (id === manifest.views[0].id ? manifest.base : `${manifest.base}/${id}`), [manifest]);
+  const href = useCallback(
+    (id: string) => viewHref?.(id) ?? (id === manifest.views[0].id ? manifest.base : `${manifest.base}/${id}`),
+    [manifest, viewHref]
+  );
   const go = useCallback((id: string) => (navigate ?? ((h: string) => window.location.assign(h)))(href(id)), [navigate, href]);
   const log = useCallback((what: string, sources?: string[]) => appendAudit(manifest.id, what, sources), [manifest.id]);
   const ctx: ModuleContext = useMemo(

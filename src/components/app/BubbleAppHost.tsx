@@ -56,6 +56,8 @@ export interface AppHostProps {
   initialBubbleSlug: string;
   /** `?ws` — a workspace id whose screen the canvas mounts */
   initialWorkspace?: string;
+  /** `?view` — the workspace view to mount (a demo view, for instance) */
+  initialView?: string;
   /** `?t` — "new", or a thread id */
   initialThreadId: string;
   initialThread: InitialThread;
@@ -118,6 +120,7 @@ function isFresh(id: string | undefined): boolean {
 export function BubbleAppHost({
   initialBubbleSlug,
   initialWorkspace,
+  initialView,
   initialThreadId,
   initialThread,
   registry,
@@ -130,6 +133,7 @@ export function BubbleAppHost({
 
   const [selected, setSelected] = useState<string>(initialBubbleSlug);
   const [workspaceId, setWorkspaceId] = useState<string | undefined>(initialWorkspace);
+  const [viewId, setViewId] = useState<string | undefined>(initialView);
   const [threadId, setThreadId] = useState<string>(initialThreadId);
   const [questionList, setQuestionList] = useState<string[]>(initialThread.questions);
   const [linkThread, setLinkThread] = useState<boolean>(Boolean(initialThread.fromLink));
@@ -163,6 +167,24 @@ export function BubbleAppHost({
     });
   }, []);
 
+  /* ── props → state ───────────────────────────────────────────────────
+     The address bar is the source of truth. A tab click inside a mounted
+     workspace, a shared link or a history step re-renders this page with new
+     props; folding them in keeps the host on the URL without a remount.
+     Compared by value, so a re-render with the same query changes nothing. */
+  const propsKey = `${initialBubbleSlug}|${initialWorkspace ?? ""}|${initialView ?? ""}|${initialThreadId}|${initialThread.questions.join("\u0001")}|${initialThread.fromLink ? 1 : 0}`;
+  const lastPropsKey = useRef(propsKey);
+  useEffect(() => {
+    if (lastPropsKey.current === propsKey) return;
+    lastPropsKey.current = propsKey;
+    setSelected(initialBubbleSlug);
+    setWorkspaceId(initialWorkspace);
+    setViewId(initialView);
+    setThreadId(initialThreadId);
+    setQuestionList(initialThread.questions);
+    setLinkThread(Boolean(initialThread.fromLink));
+  }, [propsKey, initialBubbleSlug, initialWorkspace, initialView, initialThreadId, initialThread.questions, initialThread.fromLink]);
+
   /* ── URL ← state ─────────────────────────────────────────────────────
      push = a new history entry (a place a person chose); replace = the same
      screen with more detail (a question added, a run finished). */
@@ -172,6 +194,8 @@ export function BubbleAppHost({
         bubble?: string;
         /** `null` = leave the workspace; `undefined` = keep it */
         workspace?: string | null;
+        /** `null` = drop the view; `undefined` = keep it */
+        view?: string | null;
         thread?: string;
         questions?: string[];
       },
@@ -180,10 +204,12 @@ export function BubbleAppHost({
       const params = new URLSearchParams();
       const b = next.bubble ?? selected;
       const ws = next.workspace === undefined ? workspaceId : next.workspace ?? undefined;
+      const vw = next.view === undefined ? viewId : next.view ?? undefined;
       const th = next.thread ?? threadId;
       const qs = next.questions ?? questionList;
       if (b && b !== DEFAULT_BUBBLE_SLUG) params.set("b", b);
       if (ws) params.set("ws", ws);
+      if (ws && vw) params.set("view", vw);
       if (!isFresh(th)) {
         params.set("t", th);
         for (const q of qs.slice(-MAX_LINK_TURNS)) params.set("q", q);
@@ -192,7 +218,7 @@ export function BubbleAppHost({
       if (mode === "push") router.push(href, { scroll: false });
       else router.replace(href, { scroll: false });
     },
-    [router, selected, workspaceId, threadId, questionList]
+    [router, selected, workspaceId, viewId, threadId, questionList]
   );
 
   /* ── URL → state, when the browser goes back / forward ────────────── */
@@ -201,9 +227,11 @@ export function BubbleAppHost({
       const params = new URLSearchParams(window.location.search);
       const b = params.get("b");
       const ws = params.get("ws");
+      const vw = params.get("view");
       const th = params.get("t");
       const qs = params.getAll("q");
       setWorkspaceId(ws ?? undefined);
+      setViewId(vw ?? undefined);
       setSelected(b ?? (ws ? `ws.${ws}` : DEFAULT_BUBBLE_SLUG));
       setThreadId(th ?? "new");
       setQuestionList(qs);
@@ -224,13 +252,18 @@ export function BubbleAppHost({
 
   const select = useCallback(
     (bubble: AppBubble, options: { push?: boolean; focus?: boolean } = {}) => {
-      const workspace = bubble.kind === "workspace" ? bubble.slug.replace(/^ws\./, "") : null;
+      // a demo bubble opens its workspace at its own view, so the real
+      // screen runs inside the host instead of a standalone route
+      const workspace =
+        bubble.kind === "workspace" ? bubble.slug.replace(/^ws\./, "") : bubble.kind === "demo" ? bubble.workspace ?? null : null;
+      const view = bubble.kind === "demo" ? bubble.view ?? null : null;
       setSelected(bubble.slug);
       setWorkspaceId(workspace ?? undefined);
+      setViewId(view ?? undefined);
       setThreadId("new");
       setQuestionList([]);
       setLinkThread(false);
-      writeUrl({ bubble: bubble.slug, workspace, thread: "new", questions: [] }, options.push === false ? "replace" : "push");
+      writeUrl({ bubble: bubble.slug, workspace, view, thread: "new", questions: [] }, options.push === false ? "replace" : "push");
       if (options.focus !== false) requestAnimationFrame(() => headingRef.current?.focus());
     },
     [writeUrl]
@@ -238,6 +271,7 @@ export function BubbleAppHost({
 
   const backToTray = useCallback(() => {
     setWorkspaceId(undefined);
+    setViewId(undefined);
     setSelected(DEFAULT_BUBBLE_SLUG);
     setThreadId("new");
     setQuestionList([]);
@@ -268,13 +302,15 @@ export function BubbleAppHost({
       setLinkThread(false);
       const params = new URLSearchParams();
       if (bubble.slug !== DEFAULT_BUBBLE_SLUG) params.set("b", bubble.slug);
+      if (workspaceId) params.set("ws", workspaceId);
+      if (workspaceId && viewId) params.set("view", viewId);
       if (!isFresh(id)) {
         params.set("t", id);
         for (const q of questions.slice(-MAX_LINK_TURNS)) params.set("q", q);
       }
       router.replace(`/app?${params.toString()}`, { scroll: false });
     },
-    [router]
+    [router, workspaceId, viewId]
   );
 
   /* ── the keyboard map ─────────────────────────────────────────────── */
@@ -365,7 +401,9 @@ export function BubbleAppHost({
       <div ref={liveRef} role="status" aria-live="polite" aria-atomic="true" className="sr-only" />
 
       <div className="mx-auto flex max-w-[96rem] flex-col gap-4 px-3 pb-8 pt-3 md:flex-row md:items-start md:gap-6 md:px-6">
+        {/* phones: a mounted workspace comes first, the tray after it */}
         <BubbleLauncher
+          className={workspaceId ? "order-2 md:order-none" : ""}
           trayRef={trayRef}
           bubbles={bubbles}
           activeSlug={active.slug}
@@ -379,10 +417,15 @@ export function BubbleAppHost({
           onHelp={() => setHelpOpen(true)}
         />
 
-        <main id="app-canvas" className="min-w-0 flex-1" aria-label={t("app.canvasLabel")}>
+        <main
+          id="app-canvas"
+          className={`min-w-0 flex-1 ${workspaceId ? "order-1 md:order-none" : ""}`}
+          aria-label={t("app.canvasLabel")}
+        >
           <AppCanvas
             bubble={active}
             workspaceId={workspaceId}
+            viewId={viewId}
             threadId={threadId}
             questions={questionList}
             fromLink={linkThread}

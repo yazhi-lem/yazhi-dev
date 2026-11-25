@@ -143,6 +143,16 @@ starter questions and a phone-width layout.
 - The page says it is a demo and that answers are draft notes to be checked,
   not official TNPSC material. `npm run test:guru-demo` checks retrieval.
 
+### Two ways in
+
+| Route | What it draws |
+|---|---|
+| `/guru/demo` | the demo chat as a standalone workspace view |
+| `/app?ws=guru&view=demo` | the same view mounted in the Bubble UI host — tray, canvas and demo together |
+
+Bare `/app` opens the host on this demo (`?b=demo.guru`), so the first thing a
+visitor meets is a working agent rather than a preview.
+
 ## Not yet wired
 
 Replies come from fixtures. In the product each module calls yazhi-api

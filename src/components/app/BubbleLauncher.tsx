@@ -15,10 +15,11 @@
     and the first client render always agree.
 */
 
+import Link from "next/link";
 import { useEffect, useMemo, useState, type KeyboardEvent as ReactKeyboardEvent, type RefObject } from "react";
 import { Bubble } from "@yazhi/bubble";
 import { firstGrapheme } from "@yazhi/bubble/text";
-import { LANGUAGE_FILTERS, TRAY_DIAMETER, matchesLanguage, type AppBubble, type LanguageFilter } from "./bubbles";
+import { DEMO_BUBBLES, LANGUAGE_FILTERS, TRAY_DIAMETER, matchesLanguage, type AppBubble, type LanguageFilter } from "./bubbles";
 import type { AppKey } from "./copy";
 import { useAppText } from "./useAppText";
 
@@ -41,6 +42,7 @@ function glyphOf(bubble: AppBubble): string {
 }
 
 const GROUP_ORDER: { kind: AppBubble["kind"]; key: AppKey }[] = [
+  { kind: "demo", key: "app.groupDemos" },
   { kind: "agent", key: "app.groupAgents" },
   { kind: "template", key: "app.groupApp" },
   { kind: "workspace", key: "app.groupWorkspaces" },
@@ -55,6 +57,7 @@ export function BubbleLauncher({
   onOpen,
   onKeyDown,
   onHelp,
+  className = "",
 }: {
   trayRef: RefObject<HTMLElement | null>;
   bubbles: AppBubble[];
@@ -64,6 +67,9 @@ export function BubbleLauncher({
   onOpen: (slug: string) => void;
   onKeyDown: (e: ReactKeyboardEvent<HTMLElement>) => void;
   onHelp: () => void;
+  /** extra classes on the tray section — the host uses them to order the
+      tray after the canvas on phones when a real screen is mounted */
+  className?: string;
 }) {
   const t = useAppText();
   const [view, setView] = useState<"packed" | "rail">("packed");
@@ -101,8 +107,29 @@ export function BubbleLauncher({
       ref={trayRef}
       aria-label={t("app.launcherTitle")}
       onKeyDown={onKeyDown}
-      className="md:sticky md:top-3 md:w-[13.5rem] md:shrink-0"
+      className={`md:sticky md:top-3 md:w-[13.5rem] md:shrink-0 ${className}`}
     >
+      {/* the library's own identity, so Bubble UI reads as the product this
+          host is — not a settings drawer. The first demo is one press away. */}
+      <div className="mb-3 rounded-2xl border border-gold/25 bg-gradient-to-br from-gold/[0.10] via-transparent to-transparent p-3">
+        <div className="flex items-center gap-2">
+          <span aria-hidden className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-gold/40 text-gold">
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" aria-hidden>
+              <circle cx="12" cy="12" r="7.5" />
+              <path d="M12 4.5v15M4.5 12h15" opacity=".35" />
+            </svg>
+          </span>
+          <p className="font-display text-sm font-semibold text-ivory">{t("app.demoHeroTitle")}</p>
+        </div>
+        <p className="mt-2 text-[11px] leading-relaxed text-ivory-dim">{t("app.demoHeroBody")}</p>
+        <Link
+          href={DEMO_BUBBLES[0]?.href ?? "/app?b=demo.guru&ws=guru&view=demo"}
+          className="mt-2 inline-flex min-h-8 items-center gap-1 rounded-full bg-gold px-3 text-xs font-semibold text-night transition-colors hover:bg-bronze"
+        >
+          {t("app.demoHeroCta")} <span aria-hidden>→</span>
+        </Link>
+      </div>
+
       <header className="mb-2 flex items-center justify-between gap-2 px-1">
         <h2 className="font-display text-base font-semibold">{t("app.launcherTitle")}</h2>
         <div className="flex items-center gap-1">

@@ -42,6 +42,7 @@ export const APP_TEXT = {
   "app.navDocs": ["உருவாக்குநர் ஆவணங்கள்", "Builder docs", "बिल्डर दस्तावेज़"],
   "app.navChat": ["அரட்டை", "Chat", "चैट"],
   "app.navWorkspaces": ["பணியிடங்கள்", "Workspaces", "वर्कस्पेस"],
+  "app.navDemoLink": ["நேரடி டெமோ", "Live demo", "लाइव डेमो"],
   "app.backToTray": ["தட்டுக்குத் திரும்பு", "Back to the tray", "ट्रे पर वापस"],
   "app.skip": ["உள்ளடக்கத்திற்குச் செல்", "Skip to the canvas", "कैनवास पर जाएँ"],
   "app.viewToggle": ["தட்டுத் தோற்றத்தை மாற்று", "Switch the tray view", "ट्रे दृश्य बदलें"],
@@ -59,6 +60,15 @@ export const APP_TEXT = {
   "app.groupAgents": ["முகவர்கள்", "Agent bubbles", "एजेंट बबल"],
   "app.groupWorkspaces": ["பணியிடங்கள்", "Workspaces", "वर्कस्पेस"],
   "app.groupTemplates": ["பக்க வார்ப்புருக்கள்", "Page templates", "पेज टेम्पलेट"],
+  "app.groupDemos": ["நேரடி டெமோக்கள்", "Live demos", "लाइव डेमो"],
+  "app.demoHeroTitle": ["குமிழ் UI · Bubble UI", "Bubble UI", "बबल UI"],
+  "app.demoHeroBody": [
+    "ஒரு ஹோஸ்ட், ஒரு தட்டு, உண்மையான முகவர்கள். முகவரைத் தேர்ந்தெடுத்து நேரடியாகக் கேளுங்கள்.",
+    "One host, one tray, real agents. Pick a bubble and ask it for real.",
+    "एक होस्ट, एक ट्रे, असली एजेंट। बबल चुनें और सचमुच पूछें।",
+  ],
+  "app.demoHeroCta": ["நேரடி டெமோவைத் திற", "Open the live demo", "लाइव डेमो खोलें"],
+  "app.demoBadge": ["நேரடி டெமோ", "Live demo", "लाइव डेमो"],
   "app.filterLabel": ["வடிகட்டு", "Filter", "फ़िल्टर"],
   "app.filterAll": ["அனைத்தும்", "All", "सभी"],
   "app.filterTamil": ["தமிழ்", "Tamil", "तमिल"],
@@ -180,6 +190,12 @@ export const APP_TEXT = {
     "இது UI நூலகத்திலிருந்து வரும் பக்க வார்ப்புரு — மாதிரித் தரவுடன்.",
     "This is a page template from the UI library — filled with sample data.",
     "यह UI लाइब्रेरी का पेज टेम्पलेट है — नमूना डेटा के साथ।",
+  ],
+
+  "app.demoNote": [
+    "இது நேரடி டெமோ — உண்மையான பணியிடம், மாதிரித் தரவுடன். கேள்விகளைக் கேட்டுப் பதில்களைச் சரிபார்க்கவும்.",
+    "A live demo — the real workspace, on sample data. Ask questions and check the answers.",
+    "यह लाइव डेमो है — असली वर्कस्पेस, नमूना डेटा पर। प्रश्न पूछें और उत्तर जाँचें।",
   ],
 
   // ── the deep-link line (server-rendered) ─────────────────────────────

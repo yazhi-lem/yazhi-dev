@@ -33,17 +33,25 @@ Owner: `bubble-ui` (task-6). Branch: `yazhi-mission-control`.
 | **agent** | the bubble's greeting and a sample question, then your messages and streamed replies | `yazhi-api` (Circle-gated) or the on-device model, per its manifest | `STARTER_BUBBLES` (`packages/bubble/src/lib/starters.ts`) + the registry (`GET /api/bubbles`) |
 | **template** | one of the seven UI-library page templates, with sample data | nothing — a preview of a page shape | `PAGE_TEMPLATES` (`packages/bubble/src/pages/catalog.ts`); **Avai** leads |
 | **workspace** | the real workspace shell: Guru, Nyaya, Kural, Kadai — the same screen `/guru` serves | the workspace's own modules (all auth-free) | `@yazhi/apps/registry` + `apps/*/meta.ts` |
+| **demo** | a real workspace view, mounted in place: Guru's Demo chat over the Group IV lesson notes | the workspace's own retrieval module (on-device) | `DEMO_BUBBLES` (`src/components/app/bubbles.ts`); **Guru** leads |
 
-First demo surface: the **Avai** page template (the bare `/app` opens it), then
-the auth-free workspaces and Open Sangam. Kadai's payments and Guru's 1 397-line
-module file are deliberately off the first-paint path; a workspace mounts only
-when you choose it.
+First demo surface: the **live Guru demo** — the real Guru workspace mounted in
+the canvas at its Demo view, answering only from the Group IV lesson notes.
+After it come the agent bubbles, the auth-free workspaces and the page
+templates (Avai first). Kadai's payments and Guru's 1 397-line module file are
+deliberately off the first-paint path; a workspace mounts only when you choose
+it.
 
-Tray order: agent bubbles, app templates, workspaces. A **language filter**
-(All / Tamil / English / Telugu) narrows it; sizes come from each bubble's
-manifest `size` (`s` 40 px, `m` 48 px, `l` 56 px). The tray has two looks — packed
-(the default) and rail — remembered per browser and applied after mount, so the
-server output never disagrees with the first client render.
+Tray order: **live demos**, agent bubbles, app templates, workspaces. A
+**language filter** (All / Tamil / English / Telugu) narrows it; sizes come
+from each bubble's manifest `size` (`s` 40 px, `m` 48 px, `l` 56 px). The tray
+has two looks — packed (the default) and rail — remembered per browser and
+applied after mount, so the server output never disagrees with the first client
+render.
+
+A **demo** bubble is a link to a real workspace view, opened in place:
+`/app?b=demo.guru&ws=guru&view=demo` keeps the tray, the canvas and the
+workspace's own composer on screen instead of leaving for a standalone route.
 
 ---
 
@@ -53,12 +61,13 @@ server output never disagrees with the first client render.
 |---|---|---|
 | `b` | the selected bubble's slug | `/app?b=yazhi.pulavar` |
 | `ws` | a workspace whose screen is mounted in the canvas | `/app?ws=guru` |
+| `view` | the workspace view mounted in the canvas (`ws` required) | `/app?ws=guru&view=demo` |
 | `t` | the thread id (`new`, or a generated id once you ask) | `/app?b=yazhi.pulavar&t=th3&q=…` |
 | `q` | the questions in the thread, repeated, oldest first (last 6 kept) | `…&q="இன்றைய சொல் என்ன?"` |
 
 Rules:
 
-- **Bare `/app`** = the tray with Avai selected.
+- **Bare `/app`** = the tray with the live Guru demo selected and mounted.
 - **A choice changes history** (`push`): selecting a bubble, opening a
   workspace, Esc. Back and forward therefore walk your own steps.
 - **Detail changes the current entry** (`replace`): each question you ask, so
@@ -66,7 +75,12 @@ Rules:
   This never enters history, so Back does not undo a message.
 - **Reload and history restore the same screen**: the server page reads the
   very same query parameters and hands them to the host as props (`?ws=` alone
-  selects `ws.<id>`; an unknown `?b=` falls back to Avai rather than 404).
+  selects `ws.<id>`; an unknown `?b=` falls back to the default bubble rather
+  than 404). Props are folded into state by value, so a workspace tab click
+  (`?ws=guru&view=ask`) updates the canvas without a remount.
+- **A mounted workspace keeps its tabs in the host**: every view link points at
+  `/app?ws=<id>&view=<view>`, so the tray and canvas stay around the workspace
+  instead of a full page load.
 - **Answers never travel in a link** — only questions do. A shared thread says
   so, in the visitor's language, and offers "New conversation".
 
@@ -230,8 +244,9 @@ move is mechanical. Until then, no string in `/app` is hard-coded in a component
 # one server at a time on this box
 npm run dev -- --port 3131
 
-curl -s localhost:3131/app | head -c 400            # tray + Avai, no JS
+curl -s localhost:3131/app | head -c 400            # tray + the live Guru demo, no JS
 curl -s "localhost:3131/app?ws=guru" | grep -c 'குரு'  # workspace shell from the URL
+curl -s "localhost:3131/app?ws=guru&view=demo" | grep -c 'நேரடி டெமோ'  # demo view from the URL
 curl -s localhost:3131/sitemap.xml | head -5
 curl -s -o /dev/null -w '%{http_code}\n' -X POST localhost:3131/api/bubble/run \
   -H 'content-type: application/json' \

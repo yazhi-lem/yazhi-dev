@@ -69,6 +69,8 @@ export function seedTurns(bubble: AppBubble): RunTurn[] {
 export interface AppCanvasProps {
   bubble: AppBubble;
   workspaceId?: string;
+  /** `?view=` — the workspace view to mount (a demo view, for instance) */
+  viewId?: string;
   threadId: string;
   questions: string[];
   fromLink: boolean;
@@ -85,6 +87,7 @@ export interface AppCanvasProps {
 export function AppCanvas({
   bubble,
   workspaceId,
+  viewId,
   threadId,
   questions,
   fromLink,
@@ -170,10 +173,22 @@ export function AppCanvas({
     return (
       <div className="space-y-3">
         {header}
+        {bubble.kind === "demo" && (
+          <p className="rounded-xl border border-gold/40 bg-gold/5 px-3 py-2 text-xs text-ivory">
+            <span className="mr-2 rounded-full bg-gold/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-gold">
+              {t("app.demoBadge")}
+            </span>
+            {t("app.demoNote")}
+          </p>
+        )}
         {!circleReady && <CircleNote />}
         <div className="overflow-hidden rounded-2xl border border-ivory/10 bubble-root">
+          {/* every tab stays inside the host: the Bubble UI's tray and canvas
+              keep the workspace, instead of a full page load */}
           <WorkspaceShell
             manifest={manifest}
+            viewId={viewId}
+            viewHref={(id) => `/app?ws=${workspace.id}&view=${id}`}
             Link={LinkAdapter}
             navigate={(href) => {
               window.location.assign(href);

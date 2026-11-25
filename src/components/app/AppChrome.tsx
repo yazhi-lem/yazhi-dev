@@ -40,6 +40,12 @@ export function AppChrome({ children }: { children: ReactNode }) {
               >
                 {t("app.brandSuffix")}
               </Link>
+              <Link
+                href="/app?b=demo.guru&ws=guru&view=demo"
+                className="shrink-0 whitespace-nowrap rounded-full border border-gold/40 px-3 py-1.5 text-sm font-semibold text-gold transition hover:bg-gold/10"
+              >
+                {t("app.navDemoLink")}
+              </Link>
               <Link href="/bubble" className="shrink-0 whitespace-nowrap rounded-full px-3 py-1.5 text-sm text-ivory-dim transition hover:text-ivory">
                 {t("app.navDocs")}
               </Link>

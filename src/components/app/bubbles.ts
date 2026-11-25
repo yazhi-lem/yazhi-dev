@@ -22,7 +22,7 @@
 import { effectiveSystemPrompt, PAGE_TEMPLATES, STARTER_BUBBLES, type BubbleManifest, type ThinaiKey } from "@yazhi/bubble";
 import { WORKSPACES } from "@yazhi/apps/meta";
 
-export type AppBubbleKind = "agent" | "workspace" | "template";
+export type AppBubbleKind = "agent" | "workspace" | "template" | "demo";
 
 /** How a selection behaves: `link` changes the route (`/app?ws=guru`), `run`
     stays on the canvas with a live composer, `none` is a screen with no
@@ -67,6 +67,10 @@ export interface AppBubble {
   promptPreview?: string;
   /** `template` only: the library's template slug */
   template?: string;
+  /** `demo` only: the workspace whose real screen runs the demo */
+  workspace?: string;
+  /** `demo` only: the workspace view that holds the demo */
+  view?: string;
 }
 
 const TINAI_BY_WORKSPACE: Record<string, ThinaiKey> = {
@@ -184,10 +188,38 @@ function fromTemplate(t: (typeof PAGE_TEMPLATES)[number]): AppBubble {
   };
 }
 
-/** Built-in app bubbles, in tray order: the agent bubbles that run through
-    the API kernel, then the auth-free workspaces, then the page templates
+/** Live demos: real, working screens — not previews of a page shape.
+
+    A demo bubble stays inside the host (`?ws=<workspace>&view=<view>`), so the
+    Bubble UI stays on screen: the tray, the canvas and the workspace's own
+    composer. Nothing is faked and nothing leaves for a standalone route. */
+export const DEMO_BUBBLES: AppBubble[] = [
+  {
+    slug: "demo.guru",
+    kind: "demo",
+    name: "Guru — live demo",
+    taName: "குரு — நேரடி டெமோ",
+    accent: "var(--mullai)",
+    size: "l",
+    tinai: "mullai",
+    languages: ["ta", "en"],
+    summary: "Ask Guru — answers only from the Group IV lesson notes, each with its lesson and page.",
+    summaryTa: "குருவிடம் கேளுங்கள் — குரூப் IV பாடக் குறிப்புகளிலிருந்து மட்டும், ஒவ்வொரு பதிலும் அதன் பாடம், பக்கத்துடன்.",
+    action: "link",
+    // `b` keeps the demo bubble active in the tray; `ws` + `view` mount the
+    // real Guru screen at its Demo view
+    href: "/app?b=demo.guru&ws=guru&view=demo",
+    workspace: "guru",
+    view: "demo",
+  },
+];
+
+/** Built-in app bubbles, in tray order: the live demos first — the shortest
+    path from the tray to a working agent — then the agent bubbles that run
+    through the API kernel, the auth-free workspaces, and the page templates
     with Avai first. */
 export const APP_BUBBLES: AppBubble[] = [
+  ...DEMO_BUBBLES,
   ...STARTER_BUBBLES.map(fromAgent),
   ...WORKSPACES.map(fromWorkspace),
   ...PAGE_TEMPLATES.map(fromTemplate),
@@ -195,8 +227,9 @@ export const APP_BUBBLES: AppBubble[] = [
 
 export const APP_BUBBLE_BY_SLUG: Record<string, AppBubble> = Object.fromEntries(APP_BUBBLES.map((b) => [b.slug, b]));
 
-/** The bubble a bare `/app` shows: Avai, the Lead's first demo surface. */
-export const DEFAULT_BUBBLE_SLUG = "tpl.avai";
+/** The bubble a bare `/app` shows: the live Guru demo — the shortest path
+    from the host to a working agent, on the real workspace screen. */
+export const DEFAULT_BUBBLE_SLUG = "demo.guru";
 
 /** The workspace a `?ws=` value names, if any. */
 export function workspaceFor(slug: string | null | undefined) {

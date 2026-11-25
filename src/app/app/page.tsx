@@ -19,11 +19,17 @@ export default async function AppPage({ searchParams }: { searchParams: AppSearc
   const params = await searchParams;
   const requested = first(params.b);
   const wsParam = first(params.ws);
-  const workspace = workspaceFor(wsParam);
+  const viewParam = first(params.view);
+
+  const wsEntry = workspaceFor(wsParam);
 
   // `?ws=guru` alone selects that workspace's bubble; an explicit `?b` wins
-  const slug = requested ?? (workspace ? `ws.${workspace.id}` : DEFAULT_BUBBLE_SLUG);
+  const slug = requested ?? (wsEntry ? `ws.${wsEntry.id}` : DEFAULT_BUBBLE_SLUG);
   const bubble = bubbleFor(slug);
+
+  // a demo bubble knows its workspace even without `?ws`; `?ws` always wins
+  const workspace = wsEntry ?? (bubble.kind === "demo" ? workspaceFor(bubble.workspace) : undefined);
+  const view = viewParam ?? (bubble.kind === "demo" ? bubble.view : undefined);
 
   const threadId = first(params.t) ?? "new";
   const q = params.q;
@@ -46,6 +52,7 @@ export default async function AppPage({ searchParams }: { searchParams: AppSearc
     <BubbleAppHost
       initialBubbleSlug={bubble.slug}
       initialWorkspace={workspace?.id ?? (bubble.kind === "workspace" ? bubble.slug.replace(/^ws\./, "") : undefined)}
+      initialView={view}
       initialThreadId={threadId}
       initialThread={initialThread}
       registry={registry}
