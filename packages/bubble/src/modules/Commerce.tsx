@@ -50,6 +50,9 @@ export interface CartLine {
     merchant collects payment their usual way; no money moves through Yazhi. */
 export function PaymentIntentCard({ lines, onRemove }: { lines: CartLine[]; onRemove?: (id: string) => void }) {
   const t = useBubbleT("bubble.commerce");
+  // `total` lives under `bubble.common`, not `bubble.commerce`; a second
+  // translator keeps the fully qualified key from being double-prefixed.
+  const tc = useBubbleT("bubble.common");
   const total = lines.reduce((sum, l) => sum + l.product.price * l.qty, 0);
   return (
     <div className="rounded-xl border border-ivory/10 bg-night/60 p-3 text-sm">
@@ -76,7 +79,7 @@ export function PaymentIntentCard({ lines, onRemove }: { lines: CartLine[]; onRe
         </ul>
       )}
       <div className="mt-2 flex justify-between border-t border-ivory/10 pt-2 font-semibold text-ivory">
-        <span>{t("bubble.common.total")}</span>
+        <span>{tc("total")}</span>
         <span>{rupees(total)}</span>
       </div>
       <p className="mt-2 rounded-md bg-gold/10 p-2 text-[11px] text-ivory-dim">

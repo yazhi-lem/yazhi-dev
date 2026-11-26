@@ -58,7 +58,10 @@ import type { Catalogue } from "@yazhi/i18n";
 import { BubbleLocaleScope } from "@yazhi/bubble/locales";
 import { localeFromCookieString, serializeLocaleCookie } from "./locale-cookie";
 import { siteCopy, type SiteCopyOptions } from "./site-copy";
-import { ui as chromeCopy } from "@yazhi/i18n";
+// The in-app chrome catalogue (`packages/i18n/src/strings`), not the
+// language-switcher catalogue: `ui` from `./locales` prefixes every key with
+// `ui.`, which is why chrome labels used to render as `ui.chat.brand`.
+import { appText as chromeCopy } from "@yazhi/i18n";
 
 /**
  * The display preference. Unchanged public type: the live site's

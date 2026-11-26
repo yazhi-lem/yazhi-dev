@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T05:27:33.157Z",
+  "generatedAt": "2026-11-26T05:55:30.536Z",
   "filesScanned": 289,
   "site": {
     "keys": 234,
@@ -12,7 +12,7 @@
   "bubble": {
     "keys": 188,
     "hiDrafts": 188,
-    "calls": 140,
+    "calls": 139,
     "files": 68
   },
   "used": {

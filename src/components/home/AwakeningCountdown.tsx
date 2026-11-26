@@ -5,7 +5,7 @@ import { TinaiScope } from "@yazhi/bubble";
 import { HairlineFigure } from "@yazhi/bubble/hairline/HairlineFigure";
 import type { HairlineFigureDef } from "@yazhi/bubble/hairline/types";
 import yazh from "@yazhi/bubble/hairline/figures/yazh.js";
-import { useUiT } from "@/lib/i18n";
+import { useLocale, useUiT } from "@/lib/i18n";
 
 /** The Yazhi Awakening — the date the initiative wakes. The whole home
     screen is this countdown now; the timer reaches zero at the stroke of
@@ -19,6 +19,10 @@ const pad = (n: number) => String(n).padStart(2, "0");
     effect, so the server and first client render agree. */
 export function AwakeningCountdown() {
   const t = useUiT();
+  const { locale } = useLocale();
+  // Letter-spacing belongs to Latin only: tracking Tamil or Devanagari
+  // splits grapheme clusters and is a brand rule violation.
+  const latin = locale === "en";
   const [now, setNow] = useState<number | null>(null);
 
   useEffect(() => {
@@ -42,7 +46,10 @@ export function AwakeningCountdown() {
   ];
 
   return (
-    <main className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 pb-20 pt-28 text-center">
+    <main
+      lang={locale}
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 pb-20 pt-28 text-center"
+    >
       {/* the breathing ground: a slow radial pulse and a ring out of phase */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="awakening-glow absolute left-1/2 top-1/2 h-[78vmin] w-[78vmin] -translate-x-1/2 -translate-y-1/2 rounded-full" />
@@ -62,13 +69,13 @@ export function AwakeningCountdown() {
           </TinaiScope>
         </div>
 
-        <p className="mt-8 font-mono text-xs uppercase tracking-[0.35em] text-ivory-dim">
+        <p className={`mt-8 text-xs uppercase text-ivory-dim ${latin ? "font-mono tracking-[0.35em]" : "font-serif"}`}>
           {t("timer.until")}
         </p>
         <h1 className="mt-4 font-display text-5xl font-bold leading-none text-ivory sm:text-7xl lg:text-8xl">
           {t("timer.label")}
         </h1>
-        <p className="mt-4 font-mono text-sm uppercase tracking-[0.3em] text-ivory-dim">
+        <p className={`mt-4 text-sm uppercase text-ivory-dim ${latin ? "font-mono tracking-[0.3em]" : "font-serif"}`}>
           {t("timer.date")}
         </p>
 
@@ -81,7 +88,7 @@ export function AwakeningCountdown() {
               <div className="font-mono text-4xl tabular-nums text-ivory sm:text-5xl">
                 {unit.pad ? pad(unit.value) : unit.value}
               </div>
-              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.25em] text-ivory-dim">
+              <div className={`mt-2 text-[10px] uppercase text-ivory-dim ${latin ? "font-mono tracking-[0.25em]" : "font-serif"}`}>
                 {unit.label}
               </div>
             </div>
